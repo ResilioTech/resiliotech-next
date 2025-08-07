@@ -1,0 +1,47 @@
+[
+  {
+    "id": "john-doe",
+    "name": "John Doe",
+    "bio": "Senior DevOps Engineer with 8+ years of experience in cloud infrastructure and automation. Passionate about helping startups scale efficiently.",
+    "avatar": "/team/john-doe.jpg",
+    "social": {
+      "twitter": "johndoe_devops",
+      "linkedin": "john-doe-devops",
+      "github": "johndoe",
+      "website": "https://johndoe.dev"
+    }
+  },
+  {
+    "id": "sarah-chen",
+    "name": "Sarah Chen",
+    "bio": "Cloud Solutions Architect specializing in AWS and Kubernetes. Former engineering lead at two successful Y Combinator startups.",
+    "avatar": "/team/sarah-chen.jpg",
+    "social": {
+      "twitter": "sarahchen_cloud",
+      "linkedin": "sarah-chen-architect",
+      "github": "sarahchen"
+    }
+  },
+  {
+    "id": "mike-johnson",
+    "name": "Mike Johnson",
+    "bio": "Site Reliability Engineer and DevSecOps expert. Helps companies build secure, scalable infrastructure from day one.",
+    "avatar": "/team/mike-johnson.jpg",
+    "social": {
+      "twitter": "mike_sre",
+      "linkedin": "mike-johnson-sre",
+      "github": "mikejohnson"
+    }
+  },
+  {
+    "id": "resiliotech-team",
+    "name": "Resiliotech Team",
+    "bio": "Collective insights and experiences from the Resiliotech engineering team, sharing best practices and lessons learned from helping 100+ startups scale.",
+    "avatar": "/team/resiliotech-logo.jpg",
+    "social": {
+      "twitter": "resiliotech",
+      "linkedin": "company/resiliotech",
+      "website": "https://resiliotech.com"
+    }
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "devops",
+    "name": "DevOps",
+    "description": "Best practices, tools, and strategies for DevOps implementation and automation",
+    "slug": "devops",
+    "color": "from-blue-500 to-cyan-500"
+  },
+  {
+    "id": "cloud-infrastructure",
+    "name": "Cloud Infrastructure",
+    "description": "Cloud architecture, infrastructure-as-code, and scalable system design",
+    "slug": "cloud-infrastructure",
+    "color": "from-purple-500 to-pink-500"
+  },
+  {
+    "id": "cicd",
+    "name": "CI/CD",
+    "description": "Continuous integration and deployment pipelines, automation, and testing strategies",
+    "slug": "cicd",
+    "color": "from-green-500 to-emerald-500"
+  },
+  {
+    "id": "monitoring",
+    "name": "Monitoring & Observability",
+    "description": "Application monitoring, logging, alerting, and observability best practices",
+    "slug": "monitoring",
+    "color": "from-orange-500 to-red-500"
+  },
+  {
+    "id": "security",
+    "name": "Security",
+    "description": "DevSecOps, security automation, compliance, and infrastructure security",
+    "slug": "security",
+    "color": "from-red-500 to-pink-500"
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "description": "Container orchestration, K8s best practices, and cloud-native development",
+    "slug": "kubernetes",
+    "color": "from-indigo-500 to-blue-500"
+  },
+  {
+    "id": "aws",
+    "name": "AWS",
+    "description": "Amazon Web Services tutorials, best practices, and cost optimization",
+    "slug": "aws",
+    "color": "from-yellow-500 to-orange-500"
+  },
+  {
+    "id": "startup-devops",
+    "name": "Startup DevOps",
+    "description": "DevOps strategies specifically tailored for startups and early-stage companies",
+    "slug": "startup-devops",
+    "color": "from-teal-500 to-cyan-500"
+  },
+  {
+    "id": "tutorials",
+    "name": "Tutorials",
+    "description": "Step-by-step guides and hands-on tutorials for DevOps tools and practices",
+    "slug": "tutorials",
+    "color": "from-violet-500 to-purple-500"
+  },
+  {
+    "id": "case-studies",
+    "name": "Case Studies",
+    "description": "Real-world examples and success stories from our client implementations",
+    "slug": "case-studies",
+    "color": "from-emerald-500 to-teal-500"
+  }
+]
