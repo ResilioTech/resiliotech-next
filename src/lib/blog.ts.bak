@@ -1,0 +1,447 @@
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import readingTime from 'reading-time'
+import { format } from 'date-fns'
+import Fuse from 'fuse.js'
+import type { 
+  BlogPost, 
+  BlogPostFrontmatter, 
+  Author, 
+  Category, 
+  Tag, 
+  SearchResult, 
+  SearchFilters,
+  TableOfContentsItem,
+  BlogStats
+} from '@/types/blog'
+
+const POSTS_PATH = path.join(process.cwd(), 'src/content/blog')
+const AUTHORS_PATH = path.join(process.cwd(), 'src/content/authors.json')
+const CATEGORIES_PATH = path.join(process.cwd(), 'src/content/categories.json')
+
+// Cache for better performance
+let postsCache: BlogPost[] | null = null
+let authorsCache: Author[] | null = null
+let categoriesCache: Category[] | null = null
+
+export function getPostSlugs(): string[] {
+  if (!fs.existsSync(POSTS_PATH)) {
+    return []
+  }
+  return fs.readdirSync(POSTS_PATH).filter(file => file.endsWith('.mdx'))
+}
+
+export function getAuthors(): Author[] {
+  if (authorsCache) {
+    return authorsCache
+  }
+
+  if (!fs.existsSync(AUTHORS_PATH)) {
+    return []
+  }
+
+  const authorsContent = fs.readFileSync(AUTHORS_PATH, 'utf8')
+  authorsCache = JSON.parse(authorsContent)
+  return authorsCache!
+}
+
+export function getCategories(): Category[] {
+  if (categoriesCache) {
+    return categoriesCache
+  }
+
+  if (!fs.existsSync(CATEGORIES_PATH)) {
+    return []
+  }
+
+  const categoriesContent = fs.readFileSync(CATEGORIES_PATH, 'utf8')
+  categoriesCache = JSON.parse(categoriesContent)
+  return categoriesCache!
+}
+
+export function getPostBySlug(slug: string): BlogPost | null {
+  const realSlug = slug.replace(/\.mdx$/, '')
+  const fullPath = path.join(POSTS_PATH, `${realSlug}.mdx`)
+
+  if (!fs.existsSync(fullPath)) {
+    return null
+  }
+
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const { data, content } = matter(fileContents)
+  const frontmatter = data as BlogPostFrontmatter
+
+  // Skip draft posts in production
+  if (frontmatter.draft && process.env.NODE_ENV === 'production') {
+    return null
+  }
+
+  const readingTimeResult = readingTime(content)
+  const excerpt = generateExcerpt(content)
+  const tableOfContents = generateTableOfContents(content)
+
+  // Get related data
+  const authors = getAuthors()
+  const categories = getCategories()
+  const authorData = authors.find(author => author.id === frontmatter.author)
+  const categoryData = categories.find(category => category.slug === frontmatter.category)
+
+  // Generate tag data
+  const tagData = frontmatter.tags.map(tagName => ({
+    id: slugify(tagName),
+    name: tagName,
+    slug: slugify(tagName)
+  }))
+
+  if (!authorData || !categoryData) {
+    console.warn(`Missing author or category data for post: ${slug}`)
+    return null
+  }
+
+  return {
+    ...frontmatter,
+    slug: realSlug,
+    content,
+    readingTime: readingTimeResult,
+    excerpt,
+    tableOfContents,
+    authorData,
+    categoryData,
+    tagData,
+    url: `/blog/${realSlug}`
+  }
+}
+
+export function getAllPosts(): BlogPost[] {
+  if (postsCache) {
+    return postsCache
+  }
+
+  const slugs = getPostSlugs()
+  const posts = slugs
+    .map(slug => getPostBySlug(slug))
+    .filter((post): post is BlogPost => post !== null)
+    .sort((post1, post2) => 
+      new Date(post2.publishedAt).getTime() - new Date(post1.publishedAt).getTime()
+    )
+
+  postsCache = posts
+  return posts
+}
+
+export function getPostsByCategory(categorySlug: string): BlogPost[] {
+  const posts = getAllPosts()
+  return posts.filter(post => post.categoryData.slug === categorySlug)
+}
+
+export function getPostsByTag(tagSlug: string): BlogPost[] {
+  const posts = getAllPosts()
+  return posts.filter(post => 
+    post.tagData.some(tag => tag.slug === tagSlug)
+  )
+}
+
+export function getPostsByAuthor(authorId: string): BlogPost[] {
+  const posts = getAllPosts()
+  return posts.filter(post => post.author === authorId)
+}
+
+export function getFeaturedPosts(): BlogPost[] {
+  const posts = getAllPosts()
+  return posts.filter(post => post.featured)
+}
+
+export function getRecentPosts(count: number = 5): BlogPost[] {
+  const posts = getAllPosts()
+  return posts.slice(0, count)
+}
+
+export function getRelatedPosts(post: BlogPost, count: number = 3): BlogPost[] {
+  const allPosts = getAllPosts()
+  const otherPosts = allPosts.filter(p => p.slug !== post.slug)
+
+  // Calculate relevance score based on shared categories and tags
+  const scoredPosts = otherPosts.map(otherPost => {
+    let score = 0
+
+    // Same category gets higher score
+    if (otherPost.categoryData.slug === post.categoryData.slug) {
+      score += 10
+    }
+
+    // Shared tags get points
+    const sharedTags = otherPost.tagData.filter(tag =>
+      post.tagData.some(postTag => postTag.slug === tag.slug)
+    )
+    score += sharedTags.length * 3
+
+    // Same author gets points
+    if (otherPost.author === post.author) {
+      score += 5
+    }
+
+    return { post: otherPost, score }
+  })
+
+  return scoredPosts
+    .sort((a, b) => b.score - a.score)
+    .slice(0, count)
+    .map(item => item.post)
+}
+
+export function getAllTags(): Tag[] {
+  const posts = getAllPosts()
+  const tagCounts = new Map<string, number>()
+
+  posts.forEach(post => {
+    post.tagData.forEach(tag => {
+      tagCounts.set(tag.slug, (tagCounts.get(tag.slug) || 0) + 1)
+    })
+  })
+
+  return Array.from(tagCounts.entries()).map(([slug, count]) => {
+    const tagName = posts
+      .flatMap(post => post.tagData)
+      .find(tag => tag.slug === slug)?.name || slug
+
+    return {
+      id: slug,
+      name: tagName,
+      slug,
+      usageCount: count,
+      trending: count > 3 // Simple trending logic
+    }
+  }).sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0))
+}
+
+export function getBlogStats(): BlogStats {
+  const posts = getAllPosts()
+  const categories = getCategories()
+  const tags = getAllTags()
+  const authors = getAuthors()
+
+  return {
+    totalPosts: posts.length,
+    totalCategories: categories.length,
+    totalTags: tags.length,
+    totalAuthors: authors.length,
+    recentPosts: getRecentPosts(5),
+    popularPosts: getFeaturedPosts().slice(0, 5),
+    trendingTags: tags.filter(tag => tag.trending).slice(0, 10)
+  }
+}
+
+// Search functionality using Fuse.js
+export function searchPosts(
+  query: string, 
+  filters?: SearchFilters, 
+  limit: number = 20
+): SearchResult[] {
+  const posts = getAllPosts()
+  let filteredPosts = posts
+
+  // Apply filters
+  if (filters) {
+    if (filters.categories && filters.categories.length > 0) {
+      filteredPosts = filteredPosts.filter(post =>
+        filters.categories!.includes(post.categoryData.slug)
+      )
+    }
+
+    if (filters.tags && filters.tags.length > 0) {
+      filteredPosts = filteredPosts.filter(post =>
+        post.tagData.some(tag => filters.tags!.includes(tag.slug))
+      )
+    }
+
+    if (filters.authors && filters.authors.length > 0) {
+      filteredPosts = filteredPosts.filter(post =>
+        filters.authors!.includes(post.author)
+      )
+    }
+
+    if (filters.dateRange) {
+      const { from, to } = filters.dateRange
+      filteredPosts = filteredPosts.filter(post => {
+        const postDate = new Date(post.publishedAt)
+        if (from && postDate < from) return false
+        if (to && postDate > to) return false
+        return true
+      })
+    }
+  }
+
+  if (!query.trim()) {
+    // Return filtered posts without search scoring
+    return filteredPosts.slice(0, limit).map(post => ({
+      ...post,
+      relevanceScore: 1,
+      highlightedMatches: {}
+    }))
+  }
+
+  // Configure Fuse.js for fuzzy search
+  const fuse = new Fuse(filteredPosts, {
+    keys: [
+      { name: 'title', weight: 0.4 },
+      { name: 'description', weight: 0.3 },
+      { name: 'content', weight: 0.2 },
+      { name: 'tagData.name', weight: 0.1 }
+    ],
+    threshold: 0.4,
+    includeScore: true,
+    includeMatches: true,
+    minMatchCharLength: 2
+  })
+
+  const searchResults = fuse.search(query, { limit })
+
+  return searchResults.map(result => {
+    const post = result.item
+    const highlightedMatches: any = {}
+
+    // Process matches for highlighting
+    if (result.matches) {
+      result.matches.forEach(match => {
+        if (match.key === 'title' && match.value) {
+          highlightedMatches.title = highlightText(match.value, match.indices || [])
+        }
+        if (match.key === 'description' && match.value) {
+          highlightedMatches.excerpt = highlightText(match.value, match.indices || [])
+        }
+        if (match.key === 'content' && match.value) {
+          highlightedMatches.content = generateSearchSnippet(match.value, match.indices || [])
+        }
+      })
+    }
+
+    return {
+      ...post,
+      relevanceScore: 1 - (result.score || 0),
+      highlightedMatches
+    }
+  })
+}
+
+// Utility functions
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export function formatDate(date: string, formatStr: string = 'MMM dd, yyyy'): string {
+  return format(new Date(date), formatStr)
+}
+
+function generateExcerpt(content: string, maxLength: number = 160): string {
+  // Remove MDX/Markdown syntax and get plain text
+  const plainText = content
+    .replace(/^---[\s\S]*?---/, '') // Remove frontmatter
+    .replace(/#+\s/g, '') // Remove headings
+    .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+    .replace(/\*(.*?)\*/g, '$1') // Remove italic
+    .replace(/`(.*?)`/g, '$1') // Remove inline code
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // Remove links
+    .replace(/\n/g, ' ') // Replace newlines with spaces
+    .trim()
+
+  if (plainText.length <= maxLength) {
+    return plainText
+  }
+
+  // Find the last complete word within the limit
+  const truncated = plainText.substring(0, maxLength)
+  const lastSpaceIndex = truncated.lastIndexOf(' ')
+  
+  return truncated.substring(0, lastSpaceIndex) + '...'
+}
+
+function generateTableOfContents(content: string): TableOfContentsItem[] {
+  const headings: TableOfContentsItem[] = []
+  const headingRegex = /^(#{1,6})\s+(.+)$/gm
+  let match
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length
+    const title = match[2].trim()
+    const id = slugify(title)
+
+    headings.push({ id, title, level })
+  }
+
+  // Build nested structure
+  return buildNestedToc(headings)
+}
+
+function buildNestedToc(flatHeadings: TableOfContentsItem[]): TableOfContentsItem[] {
+  const toc: TableOfContentsItem[] = []
+  const stack: TableOfContentsItem[] = []
+
+  flatHeadings.forEach(heading => {
+    const newHeading = { ...heading, children: [] }
+
+    // Find the appropriate parent
+    while (stack.length > 0 && stack[stack.length - 1].level >= heading.level) {
+      stack.pop()
+    }
+
+    if (stack.length === 0) {
+      toc.push(newHeading)
+    } else {
+      const parent = stack[stack.length - 1]
+      if (!parent.children) parent.children = []
+      parent.children.push(newHeading)
+    }
+
+    stack.push(newHeading)
+  })
+
+  return toc
+}
+
+function highlightText(text: string, indices: [number, number][]): string {
+  if (!indices.length) return text
+
+  let highlighted = text
+  let offset = 0
+
+  // Sort indices by start position
+  const sortedIndices = indices.sort((a, b) => a[0] - b[0])
+
+  sortedIndices.forEach(([start, end]) => {
+    const before = highlighted.substring(0, start + offset)
+    const match = highlighted.substring(start + offset, end + 1 + offset)
+    const after = highlighted.substring(end + 1 + offset)
+
+    highlighted = `${before}<mark class="search-highlight">${match}</mark>${after}`
+    offset += '<mark class="search-highlight"></mark>'.length
+  })
+
+  return highlighted
+}
+
+function generateSearchSnippet(content: string, indices: [number, number][], maxLength: number = 150): string {
+  if (!indices.length) return content.substring(0, maxLength) + '...'
+
+  const firstMatch = indices[0]
+  const start = Math.max(0, firstMatch[0] - 50)
+  const end = Math.min(content.length, firstMatch[1] + 50)
+  
+  let snippet = content.substring(start, end)
+  
+  if (start > 0) snippet = '...' + snippet
+  if (end < content.length) snippet = snippet + '...'
+
+  return highlightText(snippet, indices.map(([s, e]) => [s - start, e - start]).filter(([s]) => s >= 0))
+}
+
+// Clear cache function for development
+export function clearCache(): void {
+  postsCache = null
+  authorsCache = null
+  categoriesCache = null
+}
