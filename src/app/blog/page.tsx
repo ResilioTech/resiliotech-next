@@ -279,7 +279,7 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
                       <a
                         key={category.slug}
                         href={`/blog?category=${category.slug}`}
-                        className="group flex items-center justify-between p-3 bg-background/50 hover:bg-background border border-border hover:border-primary/30 rounded-lg transition-all duration-300 hover:shadow-md"
+                        className="group flex items-center justify-between p-3 bg-background/50 hover:bg-background border border-border hover:border-primary/30 rounded-lg transition-all duration-300 hover:shadow-md min-h-[3.5rem]"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-2 h-2 bg-primary/60 rounded-full group-hover:bg-primary transition-colors"></div>

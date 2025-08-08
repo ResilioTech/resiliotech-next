@@ -142,7 +142,7 @@ export function ProductsTeaser() {
               <motion.div
                 key={product.name}
                 variants={itemVariants}
-                className="group p-8 bg-surface-elevated border border-border rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+                className="group p-8 bg-surface-elevated border border-border rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300 h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-6">
                   <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -153,27 +153,30 @@ export function ProductsTeaser() {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-text-primary mb-2">
-                  {product.name}
-                </h3>
-                
-                <p className="text-sm text-accent font-medium mb-4">
-                  {product.tagline}
-                </p>
-                
-                <p className="text-text-secondary text-sm leading-relaxed mb-6">
-                  {product.description}
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-text-primary mb-2">
+                    {product.name}
+                  </h3>
+                  
+                  <p className="text-sm text-accent font-medium mb-4">
+                    {product.tagline}
+                  </p>
+                  
+                  <p className="text-text-secondary text-sm leading-relaxed mb-6">
+                    {product.description}
+                  </p>
 
-                <div className="space-y-2 mb-6">
-                  {product.benefits.slice(0, 2).map((benefit, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm text-text-primary">
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                      <span>{benefit}</span>
-                    </div>
-                  ))}
+                  <div className="space-y-2 mb-6">
+                    {product.benefits.slice(0, 2).map((benefit, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm text-text-primary">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                        <span>{benefit}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
+                {/* Footer - Always at bottom */}
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div className="text-sm">
                     {product.pricing.isRevealed ? (

@@ -1,21 +1,9 @@
 {
   "/page": "app/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/blog/[slug]/page": "app/blog/[slug]/page.js",
-  "/about/page": "app/about/page.js",
-  "/blog/page": "app/blog/page.js",
-  "/products/deployflow/page": "app/products/deployflow/page.js",
-  "/products/cloudwatch-pro/page": "app/products/cloudwatch-pro/page.js",
-  "/products/infrascale/page": "app/products/infrascale/page.js",
-  "/products/secureops/page": "app/products/secureops/page.js",
-  "/projects/page": "app/projects/page.js",
-  "/projects/[slug]/page": "app/projects/[slug]/page.js",
-  "/services/cloud-infrastructure/page": "app/services/cloud-infrastructure/page.js",
-  "/services/observability/page": "app/services/observability/page.js",
-  "/services/devops-automation/page": "app/services/devops-automation/page.js",
-  "/services/mlops/page": "app/services/mlops/page.js",
-  "/services/security/page": "app/services/security/page.js",
   "/products/page": "app/products/page.js",
-  "/services/page": "app/services/page.js"
+  "/projects/page": "app/projects/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/about/page": "app/about/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }
