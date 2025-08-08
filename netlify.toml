@@ -9,9 +9,12 @@
 [functions]
   external_node_modules = ["@netlify/functions"]
 
-# Form processing
+# Next.js Runtime Configuration with form support
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    # Enable form detection for Next.js
+    forms = true
 
 # Security headers
 [[headers]]
