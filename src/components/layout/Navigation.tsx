@@ -15,31 +15,31 @@ interface ServiceItem {
 const services: ServiceItem[] = [
   {
     name: 'DevOps Automation',
-    href: '/contact?service=devops-automation',
+    href: '/services/devops-automation',
     description: 'End-to-end CI/CD pipelines and infrastructure automation',
     icon: '🔄'
   },
   {
     name: 'Cloud Infrastructure', 
-    href: '/contact?service=cloud-infrastructure',
+    href: '/services/cloud-infrastructure',
     description: 'Scalable, secure cloud architecture design and implementation',
     icon: '☁️'
   },
   {
     name: 'MLOps & Data Pipeline',
-    href: '/contact?service=mlops',
+    href: '/services/mlops',
     description: 'Machine learning operations and automated data workflows',
     icon: '🤖'
   },
   {
     name: 'Observability & Monitoring',
-    href: '/contact?service=observability',
+    href: '/services/observability',
     description: 'Comprehensive monitoring, logging, and alerting solutions',
     icon: '📊'
   },
   {
     name: 'Security & Compliance',
-    href: '/contact?service=security',
+    href: '/services/security',
     description: 'DevSecOps integration and compliance automation',
     icon: '🔒'
   },
@@ -53,7 +53,7 @@ const services: ServiceItem[] = [
 
 const navigationItems = [
   { name: 'Home', href: '/', hasDropdown: false },
-  { name: 'Services', href: '/contact', hasDropdown: true },
+  { name: 'Services', href: '/services', hasDropdown: true },
   { name: 'Products', href: '/products', hasDropdown: false },
   { name: 'Projects', href: '/projects', hasDropdown: false },
   { name: 'Blog', href: '/blog', hasDropdown: false },
