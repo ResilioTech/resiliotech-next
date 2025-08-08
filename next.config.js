@@ -7,8 +7,9 @@ const withMDX = require('@next/mdx')({
       () => import('remark-gfm').then(mod => mod.default),
     ],
     rehypePlugins: [
-      require('rehype-slug'),
-      require('rehype-autolink-headings'),
+      // Use dynamic imports for ES modules
+      () => import('rehype-slug').then(mod => mod.default),
+      () => import('rehype-autolink-headings').then(mod => mod.default),
     ],
   },
 })
