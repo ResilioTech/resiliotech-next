@@ -108,15 +108,15 @@ export const companyMilestones: CompanyMilestone[] = [
   },
   {
     year: '2023',
-    title: 'Platform Development',
-    description: 'Started development of ResilioPlatform to automate our proven methodologies and reach more companies.',
+    title: 'Product Innovation',
+    description: 'Started developing focused micro SaaS products to solve specific DevOps challenges with purpose-built tools.',
     metric: '100+ projects'
   },
   {
     year: '2024',
-    title: 'Platform Launch',
-    description: 'Preparing to launch ResilioPlatform and expand our reach to help thousands of development teams worldwide.',
-    metric: 'Coming Soon'
+    title: 'Product Portfolio Launch',
+    description: 'Launching our first micro SaaS products: DeployFlow and CloudWatch Pro, with more tools in development.',
+    metric: '4 Products'
   }
 ];
 

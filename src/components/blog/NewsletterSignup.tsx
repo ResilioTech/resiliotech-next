@@ -16,8 +16,8 @@ interface NewsletterSignupProps {
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
 export function NewsletterSignup({
-  title = "Stay in the Loop",
-  description = "Get the latest DevOps insights, tutorials, and industry trends delivered to your inbox weekly.",
+  title = "Join 5,000+ DevOps Professionals",
+  description = "Get weekly insights, tutorials, and industry updates delivered straight to your inbox. No spam, just actionable content.",
   source = "newsletter",
   compact = false,
   className
@@ -227,6 +227,28 @@ export function NewsletterSignup({
           No spam, just valuable DevOps insights.
         </p>
       </div>
+
+      {/* Social Proof */}
+      {!compact && (
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <div className="flex -space-x-2">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-full border-2 border-surface"
+                style={{
+                  background: `linear-gradient(${45 + i * 45}deg, #00D4FF, #6366f1, #10b981)`,
+                }}
+              />
+            ))}
+          </div>
+          <div>
+            <p className="text-xs font-medium text-text-primary">
+              5,000+ subscribers
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Features */}
       {!compact && (

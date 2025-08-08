@@ -14,6 +14,32 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Lighthouse plugin for performance monitoring
+[[plugins]]
+  package = "netlify-plugin-lighthouse"
+  
+  [plugins.inputs]
+    # URLs to audit (relative to your site)
+    audits = [
+      "/",
+      "/products", 
+      "/blog",
+      "/contact",
+      "/projects"
+    ]
+    
+    # Lighthouse settings
+    settings = { onlyCategories = ["performance", "accessibility", "best-practices", "seo"] }
+    
+    # Upload results to Netlify deploy
+    uploadResults = true
+    
+    # Set performance budget thresholds
+    budgetPath = "./lighthouse-budget.json"
+    
+    # Run audit only on production builds
+    skipAuditsOnBranches = ["preview", "branch-deploy"]
+
 # Security headers
 [[headers]]
   for = "/*"

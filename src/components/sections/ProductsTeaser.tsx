@@ -10,15 +10,35 @@ import {
   GitBranch,
   Cloud,
   Activity,
-  Users
+  Users,
+  Shield,
+  Zap,
+  TrendingUp,
+  Package
 } from 'lucide-react';
+import { microSaasProducts } from '@/data/product-features';
 
 export function ProductsTeaser() {
-  const features = [
-    { icon: GitBranch, title: 'Automated CI/CD', description: 'Production-ready pipelines in minutes' },
-    { icon: Cloud, title: 'Infrastructure as Code', description: 'Declarative infrastructure management' },
-    { icon: Activity, title: 'Intelligent Monitoring', description: 'AI-powered observability and alerts' }
-  ];
+  const iconMap = {
+    GitBranch,
+    Cloud,
+    Activity,
+    Shield,
+    Zap,
+    TrendingUp,
+    Package
+  };
+
+  const getStatusBadge = (status: string) => {
+    const statusStyles = {
+      'beta': 'bg-blue-100 text-blue-700 border-blue-200',
+      'development': 'bg-yellow-100 text-yellow-700 border-yellow-200',
+      'planning': 'bg-gray-100 text-gray-700 border-gray-200',
+      'launched': 'bg-green-100 text-green-700 border-green-200'
+    };
+    
+    return statusStyles[status as keyof typeof statusStyles] || statusStyles.planning;
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -87,121 +107,127 @@ export function ProductsTeaser() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+          className="text-center mb-16"
         >
-          {/* Content */}
-          <div className="space-y-8">
-            <motion.div variants={itemVariants}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
-                <Sparkles className="w-4 h-4" />
-                Coming Soon
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 leading-tight">
-                Introducing <span className="text-primary">ResilioPlatform</span>
-              </h2>
-              
-              <p className="text-lg text-text-secondary leading-relaxed mb-8">
-                The future of DevOps automation is here. Our comprehensive platform eliminates 
-                infrastructure complexity and accelerates development workflows with intelligent automation.
-              </p>
+          <motion.div variants={itemVariants}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
+              <Package className="w-4 h-4" />
+              Micro SaaS Products
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 leading-tight">
+              Purpose-Built <span className="text-primary">DevOps Tools</span>
+            </h2>
+            
+            <p className="text-lg text-text-secondary leading-relaxed mb-12 max-w-3xl mx-auto">
+              Instead of one monolithic platform, we're building focused micro SaaS products that solve specific DevOps challenges. 
+              Each tool excels at one thing and integrates seamlessly with your existing workflow.
+            </p>
+          </motion.div>
+        </motion.div>
 
-              {/* Key Benefits */}
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center gap-3 text-text-primary">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>Deploy from development to production in minutes, not hours</span>
+        {/* Products Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+        >
+          {microSaasProducts.map((product, index) => {
+            const topFeature = product.features[0];
+            const IconComponent = iconMap[topFeature.icon as keyof typeof iconMap] || Package;
+            
+            return (
+              <motion.div
+                key={product.name}
+                variants={itemVariants}
+                className="group p-8 bg-surface-elevated border border-border rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+              >
+                <div className="flex items-start justify-between mb-6">
+                  <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <IconComponent className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusBadge(product.status || 'planning')}`}>
+                    {product.status || 'Planning'}
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 text-text-primary">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>Achieve 99.9% uptime with self-healing infrastructure</span>
-                </div>
-                <div className="flex items-center gap-3 text-text-primary">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>Reduce cloud costs by up to 40% with intelligent optimization</span>
-                </div>
-              </div>
 
-              {/* Launch Info */}
-              <div className="flex items-center gap-4 p-4 bg-surface-elevated border border-border rounded-lg mb-8">
-                <Clock className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-text-primary font-medium">Launching December 2024</p>
-                  <p className="text-sm text-text-muted">Join 1,200+ developers on the waitlist</p>
-                </div>
-              </div>
-            </motion.div>
+                <h3 className="text-xl font-bold text-text-primary mb-2">
+                  {product.name}
+                </h3>
+                
+                <p className="text-sm text-accent font-medium mb-4">
+                  {product.tagline}
+                </p>
+                
+                <p className="text-text-secondary text-sm leading-relaxed mb-6">
+                  {product.description}
+                </p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
+                <div className="space-y-2 mb-6">
+                  {product.benefits.slice(0, 2).map((benefit, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-sm text-text-primary">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <div className="text-sm">
+                    {product.pricing.isRevealed ? (
+                      <span className="font-semibold text-text-primary">
+                        ${product.pricing.startingPrice}/{product.pricing.pricingModel?.split('/')[1]}
+                      </span>
+                    ) : (
+                      <span className="text-text-muted">Pricing TBA</span>
+                    )}
+                  </div>
+                  <div className="text-xs text-text-muted">
+                    {product.launchDate && new Date(product.launchDate).toLocaleDateString('en-US', { 
+                      month: 'short', 
+                      year: 'numeric' 
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* CTA Section */}
+        <motion.div variants={itemVariants} className="text-center">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-text-primary mb-4">
+              Ready to Streamline Your DevOps?
+            </h3>
+            <p className="text-text-secondary mb-8">
+              Join thousands of developers already using our focused tools to ship faster and more reliably.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/products"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
               >
-                Get Early Access
+                Explore All Products
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               
               <Link
-                href="/products"
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary font-medium rounded-lg transition-all duration-300"
               >
-                Learn More
+                Get Custom Solutions
               </Link>
-            </motion.div>
-
-            {/* Social Proof */}
-            <motion.div variants={itemVariants} className="flex items-center gap-2 text-text-muted">
-              <Users className="w-4 h-4" />
-              <span className="text-sm">Trusted by developers at</span>
-              <div className="flex items-center gap-2 ml-2">
-                <div className="w-6 h-6 bg-gradient-to-br from-primary to-secondary rounded opacity-60"></div>
-                <div className="w-6 h-6 bg-gradient-to-br from-secondary to-accent rounded opacity-60"></div>
-                <div className="w-6 h-6 bg-gradient-to-br from-accent to-primary rounded opacity-60"></div>
-                <span className="text-sm">50+ companies</span>
-              </div>
-            </motion.div>
+            </div>
           </div>
 
-          {/* Features Preview */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <div className="p-8 bg-surface-elevated border border-border rounded-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <Rocket className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-bold text-text-primary">Platform Features</h3>
-              </div>
-              
-              <div className="space-y-6">
-                {features.map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-start gap-4 p-4 bg-background/50 border border-border/50 rounded-lg hover:border-primary/30 transition-colors group"
-                  >
-                    <div className="p-2 bg-primary/10 border border-primary/20 rounded-lg group-hover:bg-primary/20 transition-colors">
-                      <feature.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-text-primary mb-1">{feature.title}</h4>
-                      <p className="text-sm text-text-secondary">{feature.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-border">
-                <Link
-                  href="/products"
-                  className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all group"
-                >
-                  Explore All Features
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </motion.div>
+          {/* Social Proof */}
+          <div className="flex items-center justify-center gap-2 text-text-muted mt-8">
+            <Users className="w-4 h-4" />
+            <span className="text-sm">Trusted by 50+ development teams</span>
+          </div>
         </motion.div>
       </div>
     </section>
