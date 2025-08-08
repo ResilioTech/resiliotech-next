@@ -3,7 +3,8 @@ const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [
-      require('remark-gfm'),
+      // Use dynamic import for ES modules
+      () => import('remark-gfm').then(mod => mod.default),
     ],
     rehypePlugins: [
       require('rehype-slug'),
