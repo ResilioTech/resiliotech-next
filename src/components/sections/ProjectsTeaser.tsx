@@ -166,7 +166,7 @@ export function ProjectsTeaser() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -8 }}
-                  className="group bg-surface-elevated border border-border rounded-xl overflow-hidden transition-all duration-300 hover:border-secondary/30 hover:shadow-lg hover:shadow-secondary/10"
+                  className="group bg-surface-elevated border border-border rounded-xl overflow-hidden transition-all duration-300 hover:border-secondary/30 hover:shadow-lg hover:shadow-secondary/10 h-full flex flex-col"
                 >
                   {/* Project Image */}
                   <div className="relative h-48 bg-gradient-to-br from-surface to-surface-elevated overflow-hidden">
@@ -203,29 +203,31 @@ export function ProjectsTeaser() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">
-                      {project.title}
-                    </h3>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">
+                        {project.title}
+                      </h3>
 
-                    {/* Key Result */}
-                    <div className="mb-4">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full">
-                        <TrendingUp className="w-3 h-3 text-accent" />
-                        <span className="text-sm font-medium text-accent">{project.result}</span>
+                      {/* Key Result */}
+                      <div className="mb-4">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full">
+                          <TrendingUp className="w-3 h-3 text-accent" />
+                          <span className="text-sm font-medium text-accent">{project.result}</span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tech.slice(0, 3).map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-2 py-1 bg-surface border border-border rounded text-xs text-text-muted"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                      {/* Technologies */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tech.slice(0, 3).map((tech, techIndex) => (
+                          <span
+                            key={techIndex}
+                            className="px-2 py-1 bg-surface border border-border rounded text-xs text-text-muted"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
                     {/* View Details */}

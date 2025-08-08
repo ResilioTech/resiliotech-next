@@ -205,7 +205,7 @@ export default function ServicesPage() {
             {services.map((service, index) => (
               <div
                 key={service.title}
-                className="group p-8 bg-surface border border-border rounded-xl hover:border-primary/30 hover:shadow-xl transition-all duration-300"
+                className="group p-8 bg-surface border border-border rounded-xl hover:border-primary/30 hover:shadow-xl transition-all duration-300 h-full flex flex-col"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
@@ -225,21 +225,23 @@ export default function ServicesPage() {
                   {service.title}
                 </h3>
                 
-                <p className="text-text-secondary leading-relaxed mb-6">
-                  {service.description}
-                </p>
+                <div className="flex-1">
+                  <p className="text-text-secondary leading-relaxed mb-6">
+                    {service.description}
+                  </p>
 
-                {/* Features */}
-                <div className="space-y-3 mb-8">
-                  {service.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-3">
-                      <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                      <span className="text-text-secondary text-sm">{feature}</span>
-                    </div>
-                  ))}
+                  {/* Features */}
+                  <div className="space-y-3 mb-8">
+                    {service.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                        <span className="text-text-secondary text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                {/* CTA */}
+                {/* CTA - Always at bottom */}
                 <Link
                   href={service.href}
                   className="block w-full text-center bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors group-hover:shadow-lg"
