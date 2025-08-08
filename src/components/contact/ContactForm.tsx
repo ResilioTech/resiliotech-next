@@ -186,7 +186,7 @@ export function ContactForm() {
           name="contact"
           method="POST" 
           data-netlify="true"
-          action="/forms/contact"
+          data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit(onSubmit)} 
           className="space-y-6"
         >
