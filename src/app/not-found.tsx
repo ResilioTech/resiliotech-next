@@ -1,11 +1,7 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { ArrowLeft, Home, Search } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Page Not Found | Resiliotech',
-  description: 'The page you are looking for could not be found. Explore our DevOps services and solutions.',
-};
 
 export default function NotFound() {
   return (
