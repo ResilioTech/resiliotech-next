@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="8" fill="#2496ED"/>
+  <g transform="translate(8, 16)">
+    <!-- Docker whale containers -->
+    <rect x="0" y="16" width="8" height="6" fill="white" rx="1"/>
+    <rect x="10" y="16" width="8" height="6" fill="white" rx="1"/>
+    <rect x="20" y="16" width="8" height="6" fill="white" rx="1"/>
+    <rect x="30" y="16" width="8" height="6" fill="white" rx="1"/>
+    <rect x="40" y="16" width="8" height="6" fill="white" rx="1"/>
+    
+    <rect x="0" y="8" width="8" height="6" fill="white" rx="1"/>
+    <rect x="10" y="8" width="8" height="6" fill="white" rx="1"/>
+    <rect x="20" y="8" width="8" height="6" fill="white" rx="1"/>
+    <rect x="30" y="8" width="8" height="6" fill="white" rx="1"/>
+    
+    <rect x="10" y="0" width="8" height="6" fill="white" rx="1"/>
+    <rect x="20" y="0" width="8" height="6" fill="white" rx="1"/>
+    
+    <!-- Whale body -->
+    <path d="M0 24h48c4 0 8 2 8 6v6c0 2-2 4-4 4H0z" fill="white"/>
+  </g>
+</svg>

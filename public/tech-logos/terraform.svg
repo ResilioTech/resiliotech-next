@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="8" fill="#7B42BC"/>
+  <g transform="translate(12, 12)">
+    <!-- Terraform logo triangles -->
+    <polygon points="0,10 10,4 10,26 0,32" fill="white"/>
+    <polygon points="12,2 22,8 22,20 12,14" fill="white"/>
+    <polygon points="12,22 22,28 22,40 12,34" fill="white"/>
+    <polygon points="24,8 34,14 34,26 24,20" fill="white"/>
+  </g>
+</svg>

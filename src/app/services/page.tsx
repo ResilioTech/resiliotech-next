@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import { StructuredData } from '@/components/seo/StructuredData';
 
 export const metadata: Metadata = {
   title: 'DevOps Services - Complete Solutions for Growing Companies | Resiliotech',
@@ -73,13 +74,65 @@ const stats = [
 ];
 
 export default function ServicesPage() {
+  const breadcrumbs = [
+    { name: "Home", url: "https://resiliotech.com" },
+    { name: "Services", url: "https://resiliotech.com/services" }
+  ];
+
+  const servicesData = [
+    {
+      name: "DevOps Automation",
+      description: "End-to-end CI/CD pipelines, automated testing, and deployment strategies that reduce deployment time from hours to minutes.",
+      provider: "Resiliotech",
+      serviceType: "DevOps Consulting",
+      areaServed: "Global",
+      url: "https://resiliotech.com/services/devops-automation"
+    },
+    {
+      name: "Cloud Infrastructure",
+      description: "Scalable, secure, and cost-optimized cloud architecture using Infrastructure-as-Code principles.",
+      provider: "Resiliotech", 
+      serviceType: "Cloud Consulting",
+      areaServed: "Global",
+      url: "https://resiliotech.com/services/cloud-infrastructure"
+    },
+    {
+      name: "MLOps & Data Pipeline",
+      description: "Machine learning operations and automated data workflows for AI-powered applications.",
+      provider: "Resiliotech",
+      serviceType: "MLOps Consulting", 
+      areaServed: "Global",
+      url: "https://resiliotech.com/services/mlops"
+    },
+    {
+      name: "Observability & Monitoring",
+      description: "Comprehensive monitoring, logging, and alerting solutions for proactive issue detection.",
+      provider: "Resiliotech",
+      serviceType: "Monitoring Solutions",
+      areaServed: "Global", 
+      url: "https://resiliotech.com/services/observability"
+    },
+    {
+      name: "Security & Compliance",
+      description: "DevSecOps integration with automated security scanning and compliance monitoring.",
+      provider: "Resiliotech",
+      serviceType: "Security Consulting",
+      areaServed: "Global",
+      url: "https://resiliotech.com/services/security"
+    }
+  ];
+
   return (
     <div className="min-h-screen">
+      <StructuredData
+        services={servicesData}
+        breadcrumbs={breadcrumbs}
+      />
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-background via-surface to-surface-elevated relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-[0.02]">
-          <svg className="w-full h-full" viewBox="0 0 60 60">
+          <svg className="w-full h-full" viewBox="0 0 60 60" aria-hidden="true">
             <defs>
               <pattern id="services-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
                 <circle cx="30" cy="30" r="1.5" fill="currentColor"/>
