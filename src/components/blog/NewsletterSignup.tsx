@@ -56,14 +56,20 @@ export function NewsletterSignup({
         }
       }
 
-      // TODO: Implement actual newsletter signup API call
-      const response = await fetch('/api/newsletter/subscribe', {
+      // Submit to Netlify forms
+      const formData = new FormData();
+      formData.append('form-name', 'newsletter');
+      formData.append('email', email.trim());
+      formData.append('firstName', name.trim());
+      formData.append('source', source);
+      formData.append('interests', 'devops,tutorials');
+      formData.append('gdprConsent', 'true');
+
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
+      });
 
       if (!response.ok) {
         throw new Error('Subscription failed')

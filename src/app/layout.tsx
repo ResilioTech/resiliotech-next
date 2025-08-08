@@ -77,6 +77,16 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="antialiased">
+        {/* Hidden Netlify forms for form detection */}
+        <form name="newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+          <input type="text" name="bot-field" />
+          <input type="email" name="email" />
+          <input type="text" name="firstName" />
+          <input type="text" name="interests" />
+          <input type="text" name="source" />
+          <input type="checkbox" name="gdprConsent" />
+        </form>
+
         <div className="flex min-h-screen flex-col">
           <Navigation />
           <main className="flex-1">
