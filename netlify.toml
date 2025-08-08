@@ -39,6 +39,4 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000"
 
-# Form spam protection
-[forms]
-  spam-protection = true
+# No Netlify forms used - using Kit API instead

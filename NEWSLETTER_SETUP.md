@@ -65,6 +65,7 @@ In your Netlify dashboard, add the following environment variables:
 
 ## Features
 
+- ✅ Direct Kit API integration (no Netlify Forms dependency)
 - ✅ GDPR compliant with consent tracking
 - ✅ Duplicate subscription handling
 - ✅ Error handling with user-friendly messages
@@ -72,6 +73,7 @@ In your Netlify dashboard, add the following environment variables:
 - ✅ LocalStorage integration to prevent modal reappearance
 - ✅ CORS support for cross-origin requests
 - ✅ Validation for email format and required fields
+- ✅ Compatible with @netlify/plugin-nextjs@5
 
 ## Testing
 
