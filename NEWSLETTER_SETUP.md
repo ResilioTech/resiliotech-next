@@ -66,17 +66,17 @@ In your Netlify dashboard, add the following environment variables:
 
 ## Features
 
-- ✅ **Dual Integration**: Kit API + Netlify Forms fallback
-- ✅ **Primary**: Kit API via serverless function (adds to Kit account)
-- ✅ **Fallback**: Netlify Forms (backup submission method)
+- ✅ **ConvertKit Integration**: Direct API integration with your Kit account
+- ✅ **Serverless Function**: Secure API calls via Netlify Functions
+- ✅ **Form ID**: Uses `6c7f10c1fa` from your embed script
 - ✅ GDPR compliant with consent tracking
 - ✅ Duplicate subscription handling
 - ✅ Error handling with user-friendly messages
-- ✅ Analytics tracking with subscription IDs and method
+- ✅ Analytics tracking with subscription IDs
 - ✅ LocalStorage integration to prevent modal reappearance
 - ✅ CORS support for cross-origin requests
 - ✅ Validation for email format and required fields
-- ✅ Compatible with @netlify/plugin-nextjs@5
+- ✅ Compatible with @netlify/plugin-nextjs@5 (no forms migration needed)
 
 ## Testing
 
