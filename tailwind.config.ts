@@ -21,8 +21,8 @@ const config: Config = {
         accent: '#10b981',
         text: {
           primary: '#ffffff',
-          secondary: '#a1a1aa',
-          muted: '#71717a',
+          secondary: '#d4d4d8', // Improved from #a1a1aa for better contrast  
+          muted: '#9ca3af', // Improved from #71717a for better contrast
         }
       },
       fontFamily: {

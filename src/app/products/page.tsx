@@ -190,7 +190,7 @@ export default function ProductsPage() {
                   >
                     {product.status === 'beta' ? 'Join Beta' : 
                      product.status === 'development' ? 'Get Notified' : 
-                     'Learn More'}
+                     `Learn About ${product.name}`}
                   </a>
                 </div>
               </div>
