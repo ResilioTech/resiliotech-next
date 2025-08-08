@@ -183,15 +183,9 @@ export function ContactForm() {
 
         {/* Netlify form with hidden input for bot detection */}
         <form 
-          name="contact" 
-          method="POST" 
-          data-netlify="true" 
-          data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit(onSubmit)} 
           className="space-y-6"
         >
-          {/* Hidden inputs for Netlify */}
-          <input type="hidden" name="form-name" value="contact" />
           <input type="hidden" name="bot-field" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

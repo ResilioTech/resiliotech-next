@@ -206,14 +206,6 @@ export function NewsletterSignup({
         </div>
       )}
 
-      {/* Hidden Netlify form */}
-      <form name="newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-        <input type="email" name="email" />
-        <input type="text" name="firstName" />
-        <input type="text" name="interests" />
-        <input type="text" name="source" />
-        <input type="checkbox" name="gdprConsent" />
-      </form>
 
       <form onSubmit={handleSubmit(onSubmit)} className={getFormClasses()}>
         {/* Name Field */}
