@@ -10,7 +10,7 @@ const services = [
     description: 'End-to-end CI/CD pipelines, automated testing, and deployment strategies that reduce deployment time from hours to minutes.',
     features: ['CI/CD Pipeline Setup', 'Automated Testing', 'Blue-Green Deployments', 'Rollback Strategies'],
     icon: '🔄',
-    href: '/contact?service=devops-automation',
+    href: '/services/devops-automation',
     color: 'from-primary to-blue-400',
   },
   {
@@ -18,7 +18,7 @@ const services = [
     description: 'Scalable, secure, and cost-optimized cloud architecture using Infrastructure-as-Code principles.',
     features: ['AWS/GCP/Azure Setup', 'Terraform/Pulumi IaC', 'Auto-scaling Configuration', 'Cost Optimization'],
     icon: '☁️',
-    href: '/contact?service=cloud-infrastructure',
+    href: '/services/cloud-infrastructure',
     color: 'from-secondary to-purple-400',
   },
   {
@@ -26,7 +26,7 @@ const services = [
     description: 'Machine learning operations and automated data workflows for AI-powered applications.',
     features: ['ML Model Deployment', 'Data Pipeline Automation', 'Model Monitoring', 'A/B Testing'],
     icon: '🤖',
-    href: '/contact?service=mlops',
+    href: '/services/mlops',
     color: 'from-accent to-green-400',
   },
   {
@@ -34,7 +34,7 @@ const services = [
     description: 'Comprehensive monitoring, logging, and alerting solutions for proactive issue detection.',
     features: ['Metrics & Dashboards', 'Log Aggregation', 'Alert Management', 'Performance Monitoring'],
     icon: '📊',
-    href: '/contact?service=observability',
+    href: '/services/observability',
     color: 'from-yellow-400 to-orange-400',
   },
   {
@@ -42,7 +42,7 @@ const services = [
     description: 'DevSecOps integration with automated security scanning and compliance monitoring.',
     features: ['Security Scanning', 'Compliance Automation', 'Access Control', 'Vulnerability Management'],
     icon: '🔒',
-    href: '/contact?service=security',
+    href: '/services/security',
     color: 'from-red-400 to-pink-400',
   },
   {
