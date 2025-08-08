@@ -352,7 +352,7 @@ export function ContactForm() {
               className="w-4 h-4 mt-0.5 text-primary bg-surface border-border rounded focus:ring-primary focus:ring-2"
             />
             <label htmlFor="newsletter" className="text-sm text-text-secondary leading-relaxed">
-              I'd like to receive updates about Resiliotech services, industry insights, and the ResilioPlatform launch. 
+              I'd like to receive updates about Resiliotech services, industry insights, and our product launches. 
               You can unsubscribe anytime.
             </label>
           </div>

@@ -1,0 +1,92 @@
+name: Lighthouse Performance Audit
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  # Allow manual triggers
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Start server
+        run: npm start &
+        env:
+          NODE_ENV: production
+
+      - name: Wait for server
+        run: |
+          timeout 60 bash -c 'until curl -f http://localhost:3000; do sleep 1; done'
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          configPath: './.lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Comment PR with Lighthouse results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Read Lighthouse results
+            const resultsPath = '.lighthouseci';
+            if (fs.existsSync(resultsPath)) {
+              const results = fs.readdirSync(resultsPath)
+                .filter(file => file.endsWith('.json'))
+                .map(file => JSON.parse(fs.readFileSync(path.join(resultsPath, file))))
+                .filter(result => result.lhr);
+
+              let comment = '## 🔍 Lighthouse Performance Report\n\n';
+              
+              results.forEach(result => {
+                const { lhr } = result;
+                const { finalUrl, categories } = lhr;
+                
+                comment += `### ${finalUrl}\n\n`;
+                comment += '| Category | Score | Status |\n';
+                comment += '|----------|-------|--------|\n';
+                
+                Object.entries(categories).forEach(([key, category]) => {
+                  const score = Math.round(category.score * 100);
+                  const emoji = score >= 90 ? '🟢' : score >= 50 ? '🟡' : '🔴';
+                  comment += `| ${category.title} | ${score} | ${emoji} |\n`;
+                });
+                
+                comment += '\n';
+              });
+              
+              comment += '\n*Lighthouse audit completed successfully* ✅';
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }

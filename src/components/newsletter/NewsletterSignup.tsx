@@ -42,7 +42,7 @@ interface NewsletterSignupProps {
 const newsletterTopics = [
   { id: 'devops-tips', name: 'DevOps Tips & Best Practices', icon: Code },
   { id: 'cloud-news', name: 'Cloud Infrastructure Updates', icon: Cloud },
-  { id: 'product-updates', name: 'ResilioPlatform Updates', icon: Sparkles },
+  { id: 'product-updates', name: 'Product Launch Updates', icon: Sparkles },
   { id: 'case-studies', name: 'Client Success Stories', icon: TrendingUp }
 ];
 
@@ -149,7 +149,7 @@ export function NewsletterSignup({
           <div className="text-xs text-text-muted">
             <p>• Weekly DevOps tips and best practices</p>
             <p>• Early access to new content and resources</p>
-            <p>• Exclusive updates on ResilioPlatform development</p>
+            <p>• Exclusive updates on our product launches</p>
           </div>
 
           {variant !== 'compact' && (

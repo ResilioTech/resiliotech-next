@@ -12,6 +12,8 @@ export interface ProductInfo {
   tagline: string;
   description: string;
   launchDate?: string;
+  status?: 'planning' | 'development' | 'beta' | 'launched';
+  category?: 'deployment' | 'monitoring' | 'security' | 'infrastructure' | 'analytics';
   features: ProductFeature[];
   benefits: string[];
   targetAudience: string[];
