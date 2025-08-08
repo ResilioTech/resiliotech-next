@@ -56,23 +56,25 @@ export function NewsletterSignup({
         }
       }
 
-      // Submit to Netlify forms
-      const formData = new FormData();
-      formData.append('form-name', 'newsletter');
-      formData.append('email', email.trim());
-      formData.append('firstName', name.trim());
-      formData.append('source', source);
-      formData.append('interests', 'devops,tutorials');
-      formData.append('gdprConsent', 'true');
-
-      const response = await fetch('/', {
+      // Submit to Kit API via Netlify function
+      const response = await fetch('/.netlify/functions/subscribe-newsletter', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString()
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          firstName: name.trim() || '',
+          source: source,
+          interests: ['devops', 'tutorials'],
+          gdprConsent: true
+        })
       });
 
-      if (!response.ok) {
-        throw new Error('Subscription failed')
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Subscription failed');
       }
 
       setState('success')
@@ -84,7 +86,16 @@ export function NewsletterSignup({
         ;(window as any).gtag('event', 'newsletter_signup', {
           event_category: 'engagement',
           event_label: source,
+          custom_parameters: {
+            subscription_id: result.data?.subscriptionId,
+            already_subscribed: result.alreadySubscribed || false
+          }
         })
+      }
+
+      // Store successful signup in localStorage to prevent modal reappearance
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('resiliotech_newsletter_subscribed', 'true');
       }
 
     } catch (error) {
