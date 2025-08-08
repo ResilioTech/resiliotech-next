@@ -1,93 +1,70 @@
-# Newsletter Kit Integration Setup
+# Newsletter Netlify Forms Setup
 
 ## Overview
-The newsletter system has been updated to integrate with Kit (formerly ConvertKit) for better email marketing capabilities.
+The newsletter and contact system uses Netlify Forms for simple, reliable form handling without external dependencies.
 
-## Environment Variables Required
+## No Environment Variables Required
 
-In your Netlify dashboard, add the following environment variables:
-
-### NETLIFY_TOKEN
-- **Description**: Your Kit API Secret (NOT the API Key)
-- **How to get it**: 
-  1. Log into your Kit account
-  2. Go to Settings → Advanced → API & Webhooks  
-  3. Look for "API Secret" section (NOT "API Key")
-  4. Copy the API Secret value (should be a long string starting with your account ID)
-  5. **Important**: Use the API Secret, not the API Key - they are different!
-
-### KIT_FORM_ID (Optional)
-- **Description**: The form ID in Kit you want to subscribe users to
-- **Default**: Uses form ID "6c7f10c1fa" (from your ConvertKit embed script)
-- **How to get it**: Found in your ConvertKit form embed script `data-uid` attribute
+All form submissions are handled directly by Netlify - no API keys or external services needed!
 
 ## How It Works
 
-1. **User subscribes** via any newsletter form on the website
-2. **Netlify function** (`/.netlify/functions/subscribe-newsletter`) receives the request
-3. **Kit API** is called to add the subscriber
-4. **Response** is sent back to the frontend with success/error status
+1. **User submits** newsletter or contact form on the website
+2. **Netlify Forms** automatically processes the submission
+3. **Form data** appears in your Netlify dashboard under "Forms"
+4. **Email notifications** can be configured in Netlify settings
 
-## API Endpoint
+## Form Submissions
 
-**URL**: `/.netlify/functions/subscribe-newsletter`
-**Method**: POST
-**Content-Type**: application/json
+Forms are submitted directly to Netlify using standard HTML form submission:
 
-### Request Body
-```json
-{
-  "email": "user@example.com",
-  "firstName": "John",
-  "source": "homepage",
-  "interests": ["devops", "tutorials"],
-  "gdprConsent": true
-}
-```
+**Method**: POST to `/` (root)
+**Content-Type**: application/x-www-form-urlencoded
 
-### Response
-```json
-{
-  "success": true,
-  "message": "Successfully subscribed to newsletter!",
-  "data": {
-    "subscriptionId": 12345,
-    "state": "active",
-    "subscriberState": "active"
-  }
-}
-```
+### Forms Available
+- **newsletter** - Main newsletter signup
+- **blog-newsletter** - Blog newsletter signup  
+- **contact** - Contact form submissions
 
 ## Components Updated
 
 1. **`/src/components/newsletter/NewsletterSignup.tsx`** - Main newsletter component
 2. **`/src/components/blog/NewsletterSignup.tsx`** - Blog newsletter component
-3. **`/netlify/functions/subscribe-newsletter.ts`** - Serverless function for Kit integration
+3. **`/src/components/contact/ContactForm.tsx`** - Contact form component
 
 ## Features
 
-- ✅ **ConvertKit Integration**: Direct API integration with your Kit account
-- ✅ **Serverless Function**: Secure API calls via Netlify Functions
-- ✅ **Form ID**: Uses `6c7f10c1fa` from your embed script
+- ✅ **Netlify Forms Integration**: Simple, reliable form handling
+- ✅ **No External Dependencies**: No API keys or third-party services needed
+- ✅ **Three Form Types**: Newsletter, blog newsletter, and contact forms
+- ✅ **Spam Protection**: Built-in honeypot and spam filtering
 - ✅ GDPR compliant with consent tracking
-- ✅ Duplicate subscription handling
 - ✅ Error handling with user-friendly messages
-- ✅ Analytics tracking with subscription IDs
+- ✅ Analytics tracking with Google Analytics
 - ✅ LocalStorage integration to prevent modal reappearance
-- ✅ CORS support for cross-origin requests
 - ✅ Validation for email format and required fields
-- ✅ Compatible with @netlify/plugin-nextjs@5 (no forms migration needed)
+- ✅ Compatible with @netlify/plugin-nextjs@5
 
 ## Testing
 
-1. Deploy to Netlify with environment variables set
+1. Deploy to Netlify (no environment variables needed)
 2. Test newsletter signup on various forms
-3. Check Kit dashboard for new subscribers
+3. Check Netlify dashboard "Forms" section for submissions
 4. Verify error handling with invalid emails
+5. Set up email notifications in Netlify settings
+
+## Netlify Dashboard
+
+After deployment, you can:
+- View all form submissions in **Site settings → Forms**
+- Set up email notifications for new submissions
+- Download submission data as CSV
+- Configure spam filtering settings
+- Set up webhooks for form submissions
 
 ## Security
 
-- API keys are stored as environment variables (never in code)
-- CORS headers properly configured
+- Built-in spam protection with honeypot fields
 - Input validation and sanitization
-- Error messages don't expose sensitive information
+- Rate limiting on form submissions
+- No API keys or sensitive data exposed

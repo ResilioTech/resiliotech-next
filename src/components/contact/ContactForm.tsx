@@ -182,6 +182,42 @@ export function ContactForm() {
         </div>
 
         {/* Netlify form with hidden input for bot detection */}
+        {/* Hidden form for Netlify detection */}
+        <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+          <input type="text" name="bot-field" />
+          <input type="text" name="name" />
+          <input type="email" name="email" />
+          <input type="text" name="company" />
+          <select name="projectType">
+            <option value="devops-transformation">DevOps Transformation</option>
+            <option value="cloud-migration">Cloud Migration</option>
+            <option value="ci-cd-setup">CI/CD Pipeline Setup</option>
+            <option value="monitoring-observability">Monitoring & Observability</option>
+            <option value="security-compliance">Security & Compliance</option>
+            <option value="platform-engineering">Platform Engineering</option>
+            <option value="consulting-strategy">Consulting & Strategy</option>
+            <option value="other">Other</option>
+          </select>
+          <select name="budget">
+            <option value="under-25k">Under $25,000</option>
+            <option value="25k-50k">$25,000 - $50,000</option>
+            <option value="50k-100k">$50,000 - $100,000</option>
+            <option value="100k-250k">$100,000 - $250,000</option>
+            <option value="over-250k">Over $250,000</option>
+            <option value="discuss">Let's discuss</option>
+          </select>
+          <select name="timeline">
+            <option value="asap">ASAP (Rush project)</option>
+            <option value="1-month">Within 1 month</option>
+            <option value="2-3-months">2-3 months</option>
+            <option value="3-6-months">3-6 months</option>
+            <option value="6-months-plus">6+ months</option>
+            <option value="flexible">Flexible timeline</option>
+          </select>
+          <textarea name="message"></textarea>
+          <input type="checkbox" name="newsletter" />
+        </form>
+
         <form 
           onSubmit={handleSubmit(onSubmit)} 
           className="space-y-6"

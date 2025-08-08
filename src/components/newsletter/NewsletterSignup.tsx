@@ -72,25 +72,23 @@ export function NewsletterSignup({
     setError(null);
 
     try {
-      // Try Kit API first via Netlify function
-      const response = await fetch('/.netlify/functions/subscribe-newsletter', {
+      // Create FormData for Netlify Forms submission
+      const formData = new FormData();
+      formData.append('form-name', 'newsletter');
+      formData.append('email', data.email);
+      formData.append('firstName', data.firstName || '');
+      formData.append('source', data.source || source || 'website');
+      formData.append('interests', data.interests ? data.interests.join(', ') : 'devops');
+      formData.append('gdprConsent', data.gdprConsent.toString());
+
+      // Submit to Netlify Forms
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          firstName: data.firstName || '',
-          source: data.source || source || 'website',
-          interests: data.interests || ['devops'],
-          gdprConsent: data.gdprConsent
-        })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        // Kit API worked
+      if (response.ok) {
         setIsSubmitted(true);
         reset();
         
@@ -100,9 +98,7 @@ export function NewsletterSignup({
             event_category: 'engagement',
             event_label: data.source || source,
             custom_parameters: {
-              subscription_id: result.data?.subscriptionId,
-              already_subscribed: result.alreadySubscribed || false,
-              method: 'kit_api'
+              method: 'netlify_forms'
             }
           });
         }
@@ -111,11 +107,9 @@ export function NewsletterSignup({
         if (typeof window !== 'undefined') {
           localStorage.setItem('resiliotech_newsletter_subscribed', 'true');
         }
-        return;
+      } else {
+        throw new Error('Failed to subscribe. Please try again.');
       }
-
-      // Kit API failed
-      throw new Error(result.error || 'Failed to subscribe to newsletter');
 
     } catch (err) {
       console.error('Newsletter subscription error:', err);
@@ -210,6 +204,15 @@ export function NewsletterSignup({
         </div>
       )}
 
+      {/* Hidden form for Netlify detection */}
+      <form name="newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+        <input type="text" name="bot-field" />
+        <input type="email" name="email" />
+        <input type="text" name="firstName" />
+        <input type="text" name="interests" />
+        <input type="text" name="source" />
+        <input type="checkbox" name="gdprConsent" />
+      </form>
 
       <form onSubmit={handleSubmit(onSubmit)} className={getFormClasses()}>
         {/* Name Field */}
