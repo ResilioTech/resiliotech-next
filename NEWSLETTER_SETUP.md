@@ -10,16 +10,17 @@ All form submissions are handled directly by Netlify - no API keys or external s
 ## How It Works
 
 1. **User submits** newsletter or contact form on the website
-2. **Netlify Forms** automatically processes the submission
+2. **Netlify Forms** automatically processes the submission via static form detection
 3. **Form data** appears in your Netlify dashboard under "Forms"
 4. **Email notifications** can be configured in Netlify settings
 
 ## Form Submissions
 
-Forms are submitted directly to Netlify using standard HTML form submission:
+Forms are submitted using the @netlify/plugin-nextjs@5 migration approach:
 
-**Method**: POST to `/` (root)
+**Method**: POST to `/__forms.html` (static detection file)
 **Content-Type**: application/x-www-form-urlencoded
+**Detection**: Static HTML file in `public/__forms.html` for form discovery
 
 ### Forms Available
 - **newsletter** - Main newsletter signup
@@ -31,6 +32,7 @@ Forms are submitted directly to Netlify using standard HTML form submission:
 1. **`/src/components/newsletter/NewsletterSignup.tsx`** - Main newsletter component
 2. **`/src/components/blog/NewsletterSignup.tsx`** - Blog newsletter component
 3. **`/src/components/contact/ContactForm.tsx`** - Contact form component
+4. **`/public/__forms.html`** - Static form detection file for @netlify/plugin-nextjs@5
 
 ## Features
 

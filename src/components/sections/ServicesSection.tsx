@@ -190,10 +190,10 @@ export function ServicesSection() {
                 Schedule Consultation
               </Link>
               <Link
-                href="/tools/infrastructure-audit"
+                href="/projects"
                 className="border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
               >
-                Free Infrastructure Assessment
+                View Our Work
               </Link>
             </div>
           </div>

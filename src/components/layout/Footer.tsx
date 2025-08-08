@@ -13,12 +13,6 @@ const footerLinks = {
     { name: 'Security & Compliance', href: '/services/security' },
     { name: 'Consulting & Strategy', href: '/consulting' },
   ],
-  tools: [
-    { name: 'ROI Calculator', href: '/tools/roi-calculator' },
-    { name: 'Infrastructure Audit', href: '/tools/infrastructure-audit' },
-    { name: 'DevOps Maturity Assessment', href: '/tools/maturity-assessment' },
-    { name: 'Cost Optimization Calculator', href: '/tools/cost-calculator' },
-  ],
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Blog', href: '/blog' },
@@ -131,23 +125,6 @@ export function Footer() {
                 </h3>
                 <ul role="list" className="mt-4 space-y-4">
                   {footerLinks.services.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-base text-text-secondary hover:text-text-primary transition-colors"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase">
-                  Tools
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {footerLinks.tools.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
