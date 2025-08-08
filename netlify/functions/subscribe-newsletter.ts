@@ -78,6 +78,12 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext): P
     // Get Kit API key from environment variables
     const kitApiKey = process.env.NETLIFY_TOKEN;
     
+    console.log('Environment check:', {
+      hasApiKey: !!kitApiKey,
+      keyLength: kitApiKey ? kitApiKey.length : 0,
+      keyPrefix: kitApiKey ? kitApiKey.substring(0, 10) + '...' : 'none'
+    });
+    
     if (!kitApiKey) {
       console.error('Kit API key not found in environment variables');
       return {
@@ -85,7 +91,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext): P
         headers: corsHeaders,
         body: JSON.stringify({ 
           success: false, 
-          error: 'Server configuration error' 
+          error: 'Server configuration error - missing API key' 
         })
       };
     }
@@ -130,7 +136,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext): P
     }
 
     // Prepare Kit API request
-    const kitFormId = process.env.KIT_FORM_ID || '8411580'; // Default form ID, can be configured
+    const kitFormId = process.env.KIT_FORM_ID || '6c7f10c1fa'; // Default form ID from ConvertKit embed
     
     const kitRequestData = {
       email_address: requestData.email,
@@ -144,15 +150,31 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext): P
       tags: requestData.interests || ['devops-newsletter']
     };
 
-    // Make request to Kit API
-    const kitResponse = await fetch(`https://api.kit.com/v4/forms/${kitFormId}/subscriptions`, {
+    // Try Kit API v3 with embed form format
+    const apiUrl = `https://api.kit.com/v3/forms/${kitFormId}/subscribe`;
+    console.log('Making Kit API request to:', apiUrl);
+    console.log('Form ID from embed:', kitFormId);
+    
+    // Kit API v3 format for embed forms
+    const kitRequestV3 = {
+      api_secret: kitApiKey,
+      email: requestData.email,
+      first_name: requestData.firstName || '',
+      // For embed forms, custom fields might need to be in the root
+      source: requestData.source || 'website',
+      interests: requestData.interests ? requestData.interests.join(',') : 'devops',
+      consent_date: new Date().toISOString(),
+      gdpr_consent: requestData.gdprConsent ? 'yes' : 'no'
+    };
+    
+    console.log('Request data:', { ...kitRequestV3, email: 'MASKED', api_secret: 'MASKED' });
+    
+    const kitResponse = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${kitApiKey}`,
-        'User-Agent': 'Resiliotech-Newsletter/1.0'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(kitRequestData)
+      body: JSON.stringify(kitRequestV3)
     });
 
     if (!kitResponse.ok) {

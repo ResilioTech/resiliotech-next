@@ -8,17 +8,18 @@ The newsletter system has been updated to integrate with Kit (formerly ConvertKi
 In your Netlify dashboard, add the following environment variables:
 
 ### NETLIFY_TOKEN
-- **Description**: Your Kit API secret key
+- **Description**: Your Kit API Secret (NOT the API Key)
 - **How to get it**: 
   1. Log into your Kit account
-  2. Go to Settings → Advanced → API & Webhooks
-  3. Generate a new API Secret
-  4. Copy the secret key
+  2. Go to Settings → Advanced → API & Webhooks  
+  3. Look for "API Secret" section (NOT "API Key")
+  4. Copy the API Secret value (should be a long string starting with your account ID)
+  5. **Important**: Use the API Secret, not the API Key - they are different!
 
 ### KIT_FORM_ID (Optional)
 - **Description**: The form ID in Kit you want to subscribe users to
-- **Default**: Uses form ID "8411580" if not specified
-- **How to get it**: Check your Kit forms section for the form ID
+- **Default**: Uses form ID "6c7f10c1fa" (from your ConvertKit embed script)
+- **How to get it**: Found in your ConvertKit form embed script `data-uid` attribute
 
 ## How It Works
 
@@ -65,11 +66,13 @@ In your Netlify dashboard, add the following environment variables:
 
 ## Features
 
-- ✅ Direct Kit API integration (no Netlify Forms dependency)
+- ✅ **Dual Integration**: Kit API + Netlify Forms fallback
+- ✅ **Primary**: Kit API via serverless function (adds to Kit account)
+- ✅ **Fallback**: Netlify Forms (backup submission method)
 - ✅ GDPR compliant with consent tracking
 - ✅ Duplicate subscription handling
 - ✅ Error handling with user-friendly messages
-- ✅ Analytics tracking with subscription IDs
+- ✅ Analytics tracking with subscription IDs and method
 - ✅ LocalStorage integration to prevent modal reappearance
 - ✅ CORS support for cross-origin requests
 - ✅ Validation for email format and required fields
