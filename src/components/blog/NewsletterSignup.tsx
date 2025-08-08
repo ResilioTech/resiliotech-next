@@ -56,25 +56,23 @@ export function NewsletterSignup({
         }
       }
 
-      // Submit to Kit API via Netlify function
-      const response = await fetch('/.netlify/functions/subscribe-newsletter', {
+      // Submit to Netlify Forms
+      const formData = new FormData();
+      formData.append('form-name', 'blog-newsletter');
+      formData.append('email', email.trim());
+      formData.append('firstName', name.trim());
+      formData.append('source', source);
+      formData.append('interests', 'devops, tutorials');
+      formData.append('gdprConsent', 'true');
+
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          firstName: name.trim() || '',
-          source: source,
-          interests: ['devops', 'tutorials'],
-          gdprConsent: true
-        })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
       });
 
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error(result.error || 'Subscription failed');
+      if (!response.ok) {
+        throw new Error('Subscription failed');
       }
 
       setState('success')
@@ -87,8 +85,7 @@ export function NewsletterSignup({
           event_category: 'engagement',
           event_label: source,
           custom_parameters: {
-            subscription_id: result.data?.subscriptionId,
-            already_subscribed: result.alreadySubscribed || false
+            method: 'netlify_forms'
           }
         })
       }
@@ -136,6 +133,16 @@ export function NewsletterSignup({
       compact && 'p-4',
       className
     )}>
+      {/* Hidden form for Netlify detection */}
+      <form name="blog-newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+        <input type="text" name="bot-field" />
+        <input type="email" name="email" />
+        <input type="text" name="firstName" />
+        <input type="text" name="interests" />
+        <input type="text" name="source" />
+        <input type="checkbox" name="gdprConsent" />
+      </form>
+
       <div className="text-center mb-6">
         <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <Mail className="w-6 h-6 text-primary" />

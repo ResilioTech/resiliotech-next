@@ -1,13 +1,8 @@
 [build]
   command = "npm run build"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
-
-# Functions configuration
-[functions]
-  external_node_modules = ["@netlify/functions"]
 
 # Next.js Runtime Configuration
 [[plugins]]
@@ -39,4 +34,6 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000"
 
-# No Netlify Forms used - ConvertKit integration only
+# Netlify Forms configuration
+[forms]
+  spam-protection = true
