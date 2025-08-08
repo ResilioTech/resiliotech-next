@@ -28,6 +28,17 @@ export default function ProductsPage() {
     return statusStyles[status as keyof typeof statusStyles] || statusStyles.planning;
   };
 
+  const getProductSlug = (productName: string) => {
+    const slugMap: { [key: string]: string } = {
+      'DeployFlow': 'deployflow',
+      'CloudWatch Pro': 'cloudwatch-pro', 
+      'SecureOps': 'secureops',
+      'InfraScale': 'infrascale'
+    };
+    
+    return slugMap[productName] || productName.toLowerCase().replace(/\s+/g, '-');
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -103,7 +114,12 @@ export default function ProductsPage() {
                 </div>
 
                 <h2 className="text-2xl font-bold text-text-primary mb-2">
-                  {product.name}
+                  <a 
+                    href={`/products/${getProductSlug(product.name)}`}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {product.name}
+                  </a>
                 </h2>
                 
                 <p className="text-accent font-medium mb-4">
@@ -168,19 +184,14 @@ export default function ProductsPage() {
 
                 {/* CTA Button */}
                 <div className="mt-6">
-                  {product.status === 'beta' ? (
-                    <button className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors">
-                      Join Beta
-                    </button>
-                  ) : product.status === 'development' ? (
-                    <button className="w-full bg-secondary hover:bg-secondary-hover text-white font-semibold py-3 rounded-lg transition-colors">
-                      Get Notified
-                    </button>
-                  ) : (
-                    <button className="w-full bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary font-medium py-3 rounded-lg transition-all">
-                      Learn More
-                    </button>
-                  )}
+                  <a
+                    href={`/products/${getProductSlug(product.name)}`}
+                    className="block w-full text-center bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors"
+                  >
+                    {product.status === 'beta' ? 'Join Beta' : 
+                     product.status === 'development' ? 'Get Notified' : 
+                     'Learn More'}
+                  </a>
                 </div>
               </div>
             ))}
