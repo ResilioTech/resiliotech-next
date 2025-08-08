@@ -6,13 +6,13 @@ import { cn } from '@/lib/utils'
 
 const ctaOptions = [
   {
-    title: 'Free Infrastructure Audit',
-    description: 'Get a comprehensive assessment of your current setup with actionable recommendations.',
+    title: 'Project Consultation',
+    description: 'Get a comprehensive assessment of your project needs with actionable recommendations.',
     icon: '🔍',
-    href: '/tools/infrastructure-audit',
-    buttonText: 'Start Free Audit',
+    href: '/contact',
+    buttonText: 'Start Consultation',
     highlight: 'Most Popular',
-    features: ['Security Assessment', 'Performance Review', 'Cost Analysis', 'Priority Roadmap'],
+    features: ['Needs Assessment', 'Technical Review', 'Cost Analysis', 'Priority Roadmap'],
   },
   {
     title: 'Strategy Consultation',
@@ -24,19 +24,19 @@ const ctaOptions = [
     features: ['Expert Guidance', 'Custom Strategy', 'Implementation Plan', 'Q&A Session'],
   },
   {
-    title: 'ROI Calculator',
-    description: 'Calculate potential savings and improvements from DevOps automation.',
-    icon: '💰',
-    href: '/tools/roi-calculator',
-    buttonText: 'Calculate ROI',
+    title: 'View Case Studies',
+    description: 'See real examples of how we have helped companies optimize their DevOps practices.',
+    icon: '📊',
+    href: '/projects',
+    buttonText: 'View Projects',
     highlight: 'Quick Start',
-    features: ['Cost Savings', 'Time Analysis', 'Resource Optimization', 'Custom Scenarios'],
+    features: ['Success Stories', 'Implementation Details', 'Results Achieved', 'Client Testimonials'],
   },
 ]
 
 const urgencyIndicators = [
   '🚨 Limited spots available this month',
-  '⏰ Free audit offer ends soon',
+  '⏰ Free consultation offer available',
   '🎯 Start optimizing today',
   '💡 Get ahead of the competition',
 ]

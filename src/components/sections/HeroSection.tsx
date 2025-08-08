@@ -106,17 +106,17 @@ export function HeroSection() {
               </Link>
               
               <Link
-                href="/tools/infrastructure-audit"
+                href="/contact"
                 className="group px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
-                Free Infrastructure Audit
+                Get Started Today
                 <svg
                   className="ml-2 -mr-1 w-5 h-5 inline transition-transform group-hover:scale-110"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
             </div>
