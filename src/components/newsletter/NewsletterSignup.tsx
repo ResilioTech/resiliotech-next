@@ -114,46 +114,8 @@ export function NewsletterSignup({
         return;
       }
 
-      // Kit API failed, fallback to Netlify Forms
-      console.log('Kit API failed, falling back to Netlify Forms:', result.error);
-      
-      // Create form data for Netlify submission
-      const formData = new FormData();
-      formData.append('form-name', 'newsletter');
-      formData.append('email', data.email);
-      formData.append('firstName', data.firstName || '');
-      formData.append('source', data.source || source || 'website');
-      formData.append('interests', data.interests ? data.interests.join(',') : 'devops');
-      formData.append('gdprConsent', data.gdprConsent.toString());
-
-      // Submit to Netlify Forms as fallback
-      const netlifyResponse = await fetch('/forms/newsletter', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (netlifyResponse.ok) {
-        setIsSubmitted(true);
-        reset();
-        
-        // Track successful signup via Netlify fallback
-        if (typeof window !== 'undefined' && 'gtag' in window) {
-          (window as any).gtag('event', 'newsletter_signup', {
-            event_category: 'engagement',
-            event_label: data.source || source,
-            custom_parameters: {
-              method: 'netlify_fallback'
-            }
-          });
-        }
-
-        // Store successful signup in localStorage
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('resiliotech_newsletter_subscribed', 'true');
-        }
-      } else {
-        throw new Error('Both Kit API and Netlify Forms failed');
-      }
+      // Kit API failed
+      throw new Error(result.error || 'Failed to subscribe to newsletter');
 
     } catch (err) {
       console.error('Newsletter subscription error:', err);
