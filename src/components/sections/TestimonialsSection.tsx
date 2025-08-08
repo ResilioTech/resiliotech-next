@@ -97,7 +97,7 @@ export function TestimonialsSection() {
           <div className="relative bg-surface border border-border rounded-3xl p-8 md:p-12">
             {/* Quote Icon */}
             <div className="absolute top-8 left-8 w-8 h-8 text-primary opacity-20">
-              <svg fill="currentColor" viewBox="0 0 24 24">
+              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M14.017 21v-7.391c0-1.704.629-3.289 1.758-4.467C16.991 7.997 18.763 7 20.728 7c.329 0 .631.053.896.158v-2.921C20.852 4.075 20.131 4 19.35 4c-3.833 0-7.037 2.415-8.59 5.931C10.175 11.278 10 12.647 10 14v7h4.017zm-8.017 0v-7.391c0-1.704.629-3.289 1.758-4.467C8.847 7.997 10.619 7 12.583 7c.329 0 .631.053.896.158v-2.921C12.708 4.075 11.986 4 11.206 4c-3.833 0-7.037 2.415-8.59 5.931C2.031 11.278 1.856 12.647 1.856 14v7h4.144z"/>
               </svg>
             </div>

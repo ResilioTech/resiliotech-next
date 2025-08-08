@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="8" fill="#232F3E"/>
+  <path d="M20.5 25c0-1.1-.9-2-2-2s-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2 2v-14zm8 0c0-1.1-.9-2-2-2s-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2-2V25zm8 4c0-1.1-.9-2-2-2s-2 .9-2 2v10c0 1.1.9 2 2 2s2-.9 2-2V29zm8-2c0-1.1-.9-2-2-2s-2 .9-2 2v12c0 1.1.9 2 2 2s2-.9 2-2V27z" fill="#FF9900"/>
+  <path d="M16 44h32c1.1 0 2-.9 2-2s-.9-2-2-2H16c-1.1 0-2 .9-2 2s.9 2 2 2z" fill="#FF9900"/>
+  <text x="32" y="54" font-family="Arial, sans-serif" font-size="8" fill="#FF9900" text-anchor="middle">AWS</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="8" fill="#009639"/>
+  <g transform="translate(12, 16)">
+    <!-- NGINX logo -->
+    <polygon points="0,0 20,0 40,16 40,32 20,32 0,16" fill="white"/>
+    <polygon points="4,4 16,4 32,16 32,28 20,28 8,16" fill="#009639"/>
+    
+    <!-- N pattern -->
+    <rect x="8" y="8" width="3" height="16" fill="white"/>
+    <rect x="25" y="8" width="3" height="16" fill="white"/>
+    <polygon points="11,8 25,20 25,24 14,12 14,24 11,24" fill="white"/>
+  </g>
+</svg>
