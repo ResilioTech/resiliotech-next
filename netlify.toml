@@ -1,9 +1,14 @@
 [build]
   publish = "out"
   command = "npm run build"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Functions configuration
+[functions]
+  external_node_modules = ["@netlify/functions"]
 
 # Form processing
 [[plugins]]

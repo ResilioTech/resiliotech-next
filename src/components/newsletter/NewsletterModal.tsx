@@ -149,7 +149,6 @@ export function NewsletterModal({ isOpen, onClose, trigger = 'manual' }: Newslet
               source={`modal_${trigger}`}
               placeholder="Enter your email"
               showInterests={true}
-              onSubscribed={handleSubscribed}
             />
           </motion.div>
 

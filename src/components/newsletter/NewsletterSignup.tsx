@@ -72,39 +72,51 @@ export function NewsletterSignup({
     setError(null);
 
     try {
-      // Create form data for Netlify
-      const formData = new FormData();
-      
-      // Add the form name for Netlify
-      formData.append('form-name', 'newsletter');
-      
-      // Add all form fields
-      Object.entries(data).forEach(([key, value]) => {
-        if (value !== undefined) {
-          if (key === 'interests' && Array.isArray(value)) {
-            formData.append(key, value.join(', '));
-          } else {
-            formData.append(key, value.toString());
-          }
-        }
-      });
-
-      // Submit to Netlify
-      const response = await fetch('/', {
+      // Submit to Kit API via Netlify function
+      const response = await fetch('/.netlify/functions/subscribe-newsletter', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString()
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          firstName: data.firstName || '',
+          source: data.source || source || 'website',
+          interests: data.interests || ['devops'],
+          gdprConsent: data.gdprConsent
+        })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to subscribe');
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to subscribe');
       }
 
       setIsSubmitted(true);
       reset();
+      
+      // Track successful signup
+      if (typeof window !== 'undefined' && 'gtag' in window) {
+        (window as any).gtag('event', 'newsletter_signup', {
+          event_category: 'engagement',
+          event_label: data.source || source,
+          custom_parameters: {
+            subscription_id: result.data?.subscriptionId,
+            already_subscribed: result.alreadySubscribed || false
+          }
+        });
+      }
+
+      // Store successful signup in localStorage to prevent modal reappearance
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('resiliotech_newsletter_subscribed', 'true');
+      }
+
     } catch (err) {
       console.error('Newsletter subscription error:', err);
-      setError('Something went wrong. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
