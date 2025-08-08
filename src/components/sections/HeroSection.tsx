@@ -155,15 +155,15 @@ export function HeroSection() {
               <p className="text-sm text-text-muted">
                 Trusted by fast-growing startups and scale-ups
               </p>
-              <div className="flex items-center space-x-8 opacity-60">
+              <div className="flex items-center space-x-8">
                 <div className="w-24 h-8 bg-surface-elevated rounded border border-border flex items-center justify-center">
-                  <span className="text-xs font-semibold text-text-secondary">YC</span>
+                  <span className="text-xs font-semibold text-text-primary">YC</span>
                 </div>
                 <div className="w-24 h-8 bg-surface-elevated rounded border border-border flex items-center justify-center">
-                  <span className="text-xs font-semibold text-text-secondary">Series A</span>
+                  <span className="text-xs font-semibold text-text-primary">Series A</span>
                 </div>
                 <div className="w-24 h-8 bg-surface-elevated rounded border border-border flex items-center justify-center">
-                  <span className="text-xs font-semibold text-text-secondary">Unicorn</span>
+                  <span className="text-xs font-semibold text-text-primary">Unicorn</span>
                 </div>
               </div>
             </div>

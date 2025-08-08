@@ -6,12 +6,12 @@ import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup'
 
 const footerLinks = {
   services: [
-    { name: 'DevOps Automation', href: '/services/devops-automation' },
-    { name: 'Cloud Infrastructure', href: '/services/cloud-infrastructure' },
-    { name: 'MLOps & Data Pipeline', href: '/services/mlops' },
-    { name: 'Observability & Monitoring', href: '/services/observability' },
-    { name: 'Security & Compliance', href: '/services/security' },
-    { name: 'Consulting & Strategy', href: '/consulting' },
+    { name: 'DevOps Automation', href: '/contact?service=devops-automation' },
+    { name: 'Cloud Infrastructure', href: '/contact?service=cloud-infrastructure' },
+    { name: 'MLOps & Data Pipeline', href: '/contact?service=mlops' },
+    { name: 'Observability & Monitoring', href: '/contact?service=observability' },
+    { name: 'Security & Compliance', href: '/contact?service=security' },
+    { name: 'Consulting & Strategy', href: '/contact?service=consulting' },
   ],
   company: [
     { name: 'About Us', href: '/about' },

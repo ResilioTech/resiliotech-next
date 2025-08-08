@@ -10,7 +10,7 @@ const services = [
     description: 'End-to-end CI/CD pipelines, automated testing, and deployment strategies that reduce deployment time from hours to minutes.',
     features: ['CI/CD Pipeline Setup', 'Automated Testing', 'Blue-Green Deployments', 'Rollback Strategies'],
     icon: '🔄',
-    href: '/services/devops-automation',
+    href: '/contact?service=devops-automation',
     color: 'from-primary to-blue-400',
   },
   {
@@ -18,7 +18,7 @@ const services = [
     description: 'Scalable, secure, and cost-optimized cloud architecture using Infrastructure-as-Code principles.',
     features: ['AWS/GCP/Azure Setup', 'Terraform/Pulumi IaC', 'Auto-scaling Configuration', 'Cost Optimization'],
     icon: '☁️',
-    href: '/services/cloud-infrastructure',
+    href: '/contact?service=cloud-infrastructure',
     color: 'from-secondary to-purple-400',
   },
   {
@@ -26,7 +26,7 @@ const services = [
     description: 'Machine learning operations and automated data workflows for AI-powered applications.',
     features: ['ML Model Deployment', 'Data Pipeline Automation', 'Model Monitoring', 'A/B Testing'],
     icon: '🤖',
-    href: '/services/mlops',
+    href: '/contact?service=mlops',
     color: 'from-accent to-green-400',
   },
   {
@@ -34,7 +34,7 @@ const services = [
     description: 'Comprehensive monitoring, logging, and alerting solutions for proactive issue detection.',
     features: ['Metrics & Dashboards', 'Log Aggregation', 'Alert Management', 'Performance Monitoring'],
     icon: '📊',
-    href: '/services/observability',
+    href: '/contact?service=observability',
     color: 'from-yellow-400 to-orange-400',
   },
   {
@@ -42,7 +42,7 @@ const services = [
     description: 'DevSecOps integration with automated security scanning and compliance monitoring.',
     features: ['Security Scanning', 'Compliance Automation', 'Access Control', 'Vulnerability Management'],
     icon: '🔒',
-    href: '/services/security',
+    href: '/contact?service=security',
     color: 'from-red-400 to-pink-400',
   },
   {
@@ -154,7 +154,7 @@ export function ServicesSection() {
                     href={service.href}
                     className="group/link inline-flex items-center text-primary hover:text-primary-hover font-semibold transition-colors"
                   >
-                    Learn More
+                    Explore {service.title} Services
                     <svg
                       className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1"
                       fill="none"

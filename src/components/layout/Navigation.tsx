@@ -15,37 +15,37 @@ interface ServiceItem {
 const services: ServiceItem[] = [
   {
     name: 'DevOps Automation',
-    href: '/services/devops-automation',
+    href: '/contact?service=devops-automation',
     description: 'End-to-end CI/CD pipelines and infrastructure automation',
     icon: '🔄'
   },
   {
-    name: 'Cloud Infrastructure',
-    href: '/services/cloud-infrastructure',
+    name: 'Cloud Infrastructure', 
+    href: '/contact?service=cloud-infrastructure',
     description: 'Scalable, secure cloud architecture design and implementation',
     icon: '☁️'
   },
   {
     name: 'MLOps & Data Pipeline',
-    href: '/services/mlops',
+    href: '/contact?service=mlops',
     description: 'Machine learning operations and automated data workflows',
     icon: '🤖'
   },
   {
     name: 'Observability & Monitoring',
-    href: '/services/observability',
+    href: '/contact?service=observability',
     description: 'Comprehensive monitoring, logging, and alerting solutions',
     icon: '📊'
   },
   {
     name: 'Security & Compliance',
-    href: '/services/security',
+    href: '/contact?service=security',
     description: 'DevSecOps integration and compliance automation',
     icon: '🔒'
   },
   {
     name: 'Consulting & Strategy',
-    href: '/consulting',
+    href: '/contact?service=consulting',
     description: 'Expert guidance on DevOps transformation and strategy',
     icon: '💡'
   }
@@ -53,7 +53,7 @@ const services: ServiceItem[] = [
 
 const navigationItems = [
   { name: 'Home', href: '/', hasDropdown: false },
-  { name: 'Services', href: '/services', hasDropdown: true },
+  { name: 'Services', href: '/contact', hasDropdown: true },
   { name: 'Products', href: '/products', hasDropdown: false },
   { name: 'Projects', href: '/projects', hasDropdown: false },
   { name: 'Blog', href: '/blog', hasDropdown: false },
@@ -130,6 +130,8 @@ export function Navigation() {
                             ? 'text-primary bg-surface-elevated'
                             : 'text-text-secondary hover:text-text-primary hover:bg-surface'
                         )}
+                        aria-label="Services menu"
+                        aria-expanded={isServicesDropdownOpen}
                       >
                         {item.name}
                         <svg
@@ -256,6 +258,7 @@ export function Navigation() {
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-surface"
+              aria-label="Close menu"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

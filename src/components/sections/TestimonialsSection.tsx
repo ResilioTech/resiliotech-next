@@ -169,6 +169,7 @@ export function TestimonialsSection() {
                   ? 'bg-primary scale-125'
                   : 'bg-border hover:bg-primary/50'
               )}
+              aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
         </div>
