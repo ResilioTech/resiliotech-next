@@ -65,7 +65,7 @@ export function NewsletterSignup({
       formData.append('interests', 'devops, tutorials');
       formData.append('gdprConsent', 'true');
 
-      const response = await fetch('/', {
+      const response = await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData as any).toString()
@@ -133,15 +133,6 @@ export function NewsletterSignup({
       compact && 'p-4',
       className
     )}>
-      {/* Hidden form for Netlify detection */}
-      <form name="blog-newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-        <input type="text" name="bot-field" />
-        <input type="email" name="email" />
-        <input type="text" name="firstName" />
-        <input type="text" name="interests" />
-        <input type="text" name="source" />
-        <input type="checkbox" name="gdprConsent" />
-      </form>
 
       <div className="text-center mb-6">
         <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
