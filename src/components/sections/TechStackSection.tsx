@@ -78,7 +78,7 @@ export function TechStackSection() {
               >
                 <div className="aspect-square bg-surface-elevated border border-border rounded-xl p-4 hover:border-primary hover:scale-110 transition-all duration-300 hover:bg-surface group-hover:glow-effect">
                   <div className="flex flex-col items-center justify-center h-full space-y-2">
-                    <span className="text-2xl group-hover:scale-125 transition-transform duration-300">
+                    <span className="text-2xl group-hover:scale-125 transition-transform duration-300" aria-hidden="true">
                       {tech.icon}
                     </span>
                     <span className="text-xs font-medium text-text-secondary group-hover:text-text-primary transition-colors text-center">

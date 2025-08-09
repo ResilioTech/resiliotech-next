@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { analytics } from '@/lib/analytics'
 
 const stats = [
   { label: 'Deployment Frequency', value: '10x', highlight: 'Faster' },
@@ -92,6 +93,7 @@ export function HeroSection() {
             )}>
               <Link
                 href="/contact"
+                onClick={() => analytics.trackCTAClick('hero', 'Get Started', '/contact')}
                 className="group bg-primary hover:bg-primary-hover text-background px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 glow-effect hover:scale-105"
               >
                 Get Started
@@ -100,6 +102,7 @@ export function HeroSection() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -107,6 +110,7 @@ export function HeroSection() {
               
               <Link
                 href="/projects"
+                onClick={() => analytics.trackCTAClick('hero', 'See Case Studies', '/projects')}
                 className="group px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
                 See Case Studies
@@ -115,6 +119,7 @@ export function HeroSection() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>

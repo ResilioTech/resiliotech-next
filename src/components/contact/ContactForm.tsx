@@ -15,6 +15,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { ContactFormData } from '@/types/company';
+import { analytics } from '@/lib/analytics';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -68,6 +69,9 @@ export function ContactForm() {
   ];
 
   const onSubmit = async (data: FormData) => {
+    // Track form submission start
+    analytics.trackFormStart('contact', 'contact-page');
+    
     setIsSubmitting(true);
     setError(null);
 
@@ -96,10 +100,17 @@ export function ContactForm() {
         throw new Error('Failed to submit form');
       }
 
+      // Track successful form submission
+      analytics.trackFormSubmit('contact', 'contact-page', true);
+      
       setIsSubmitted(true);
       reset();
     } catch (err) {
       console.error('Form submission error:', err);
+      
+      // Track failed form submission
+      analytics.trackFormSubmit('contact', 'contact-page', false);
+      
       setError('Something went wrong. Please try again or email us directly at hello@resiliotech.com');
     } finally {
       setIsSubmitting(false);

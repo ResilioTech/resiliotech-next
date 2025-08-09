@@ -78,10 +78,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           {project.images.thumbnail ? (
             <Image
               src={project.images.thumbnail}
-              alt={project.title}
+              alt={`Screenshot of ${project.title} - ${project.industry} project`}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              loading="lazy"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
