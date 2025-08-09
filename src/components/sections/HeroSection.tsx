@@ -94,7 +94,7 @@ export function HeroSection() {
                 href="/contact"
                 className="group bg-primary hover:bg-primary-hover text-background px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 glow-effect hover:scale-105"
               >
-                Start Your DevOps Journey
+                Get Started
                 <svg
                   className="ml-2 -mr-1 w-5 h-5 inline transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -106,10 +106,10 @@ export function HeroSection() {
               </Link>
               
               <Link
-                href="/contact"
+                href="/projects"
                 className="group px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
-                Get Started Today
+                See Case Studies
                 <svg
                   className="ml-2 -mr-1 w-5 h-5 inline transition-transform group-hover:scale-110"
                   fill="none"
@@ -126,46 +126,41 @@ export function HeroSection() {
               'mt-16 grid grid-cols-2 gap-8 lg:grid-cols-4 transition-all duration-1000 delay-1100',
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             )}>
-              {stats.map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className={cn(
-                    'text-center group transition-all duration-300 hover:scale-105',
-                    'delay-' + (index * 100)
-                  )}
-                >
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    {stat.value}
+              {stats.map((stat, index) => {
+                // Map stats to relevant project cases
+                const projectLinks = {
+                  'Deployment Frequency': '/projects/devops-pipeline-automation',
+                  'Infrastructure Cost': '/projects/ecommerce-platform-modernization', 
+                  'Time to Market': '/projects/devops-pipeline-automation',
+                  'System Reliability': '/projects/ecommerce-platform-modernization'
+                }
+                
+                return (
+                  <div
+                    key={stat.label}
+                    className={cn(
+                      'text-center group transition-all duration-300 hover:scale-105',
+                      'delay-' + (index * 100)
+                    )}
+                  >
+                    <div className="text-3xl font-bold text-primary mb-2">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm font-semibold text-accent mb-1">
+                      {stat.highlight}
+                    </div>
+                    <div className="text-sm text-text-muted mb-2">
+                      {stat.label}
+                    </div>
+                    <Link
+                      href={projectLinks[stat.label as keyof typeof projectLinks]}
+                      className="text-xs text-primary hover:text-primary-hover transition-colors underline"
+                    >
+                      See how →
+                    </Link>
                   </div>
-                  <div className="text-sm font-semibold text-accent mb-1">
-                    {stat.highlight}
-                  </div>
-                  <div className="text-sm text-text-muted">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Trust Indicators */}
-            <div className={cn(
-              'mt-16 flex flex-col items-center space-y-4 transition-all duration-1000 delay-1300',
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            )}>
-              <p className="text-sm text-text-muted">
-                Trusted by fast-growing startups and scale-ups
-              </p>
-              <div className="flex items-center space-x-8">
-                <div className="w-24 h-8 bg-surface-elevated rounded border border-border flex items-center justify-center">
-                  <span className="text-xs font-semibold text-text-primary">YC</span>
-                </div>
-                <div className="w-24 h-8 bg-surface-elevated rounded border border-border flex items-center justify-center">
-                  <span className="text-xs font-semibold text-text-primary">Series A</span>
-                </div>
-                <div className="w-24 h-8 bg-surface-elevated rounded border border-border flex items-center justify-center">
-                  <span className="text-xs font-semibold text-text-primary">Unicorn</span>
-                </div>
-              </div>
+                )
+              })}
             </div>
           </div>
         </div>

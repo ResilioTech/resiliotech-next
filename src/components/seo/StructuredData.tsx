@@ -40,18 +40,63 @@ interface BreadcrumbItem {
   url: string;
 }
 
+interface ProductData {
+  name: string;
+  description: string;
+  url?: string;
+  image?: string;
+  releaseStatus?: 'launched' | 'beta' | 'waitlist' | 'development';
+  offers?: {
+    price: string;
+    priceCurrency: string;
+    priceValidUntil?: string;
+    availability: string;
+  };
+  brand?: string;
+}
+
+interface BlogPostData {
+  headline: string;
+  description: string;
+  image?: string;
+  author: {
+    name: string;
+    url?: string;
+  };
+  publisher: {
+    name: string;
+    logo: string;
+  };
+  datePublished: string;
+  dateModified?: string;
+  url: string;
+  wordCount?: number;
+  keywords?: string[];
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 interface StructuredDataProps {
   organization?: OrganizationData;
   services?: ServiceData[];
   website?: WebsiteData;
   breadcrumbs?: BreadcrumbItem[];
+  product?: ProductData;
+  blogPost?: BlogPostData;
+  faq?: FAQItem[];
 }
 
 export function StructuredData({ 
   organization, 
   services, 
   website, 
-  breadcrumbs 
+  breadcrumbs,
+  product,
+  blogPost,
+  faq
 }: StructuredDataProps) {
   const generateOrganizationSchema = (org: OrganizationData) => ({
     "@context": "https://schema.org",
@@ -134,6 +179,87 @@ export function StructuredData({
     }))
   });
 
+  const generateProductSchema = (productData: ProductData) => ({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": productData.name,
+    "description": productData.description,
+    ...(productData.url && { "url": productData.url }),
+    ...(productData.image && { 
+      "image": {
+        "@type": "ImageObject",
+        "url": productData.image
+      }
+    }),
+    ...(productData.brand && {
+      "brand": {
+        "@type": "Organization",
+        "name": productData.brand
+      }
+    }),
+    ...(productData.offers && {
+      "offers": {
+        "@type": "Offer",
+        "price": productData.offers.price,
+        "priceCurrency": productData.offers.priceCurrency,
+        "availability": `https://schema.org/${productData.offers.availability}`,
+        ...(productData.offers.priceValidUntil && {
+          "priceValidUntil": productData.offers.priceValidUntil
+        })
+      }
+    }),
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web"
+  });
+
+  const generateBlogPostSchema = (postData: BlogPostData) => ({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": postData.headline,
+    "description": postData.description,
+    "url": postData.url,
+    "datePublished": postData.datePublished,
+    ...(postData.dateModified && { "dateModified": postData.dateModified }),
+    "author": {
+      "@type": "Person",
+      "name": postData.author.name,
+      ...(postData.author.url && { "url": postData.author.url })
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": postData.publisher.name,
+      "logo": {
+        "@type": "ImageObject",
+        "url": postData.publisher.logo
+      }
+    },
+    ...(postData.image && {
+      "image": {
+        "@type": "ImageObject",
+        "url": postData.image
+      }
+    }),
+    ...(postData.wordCount && { "wordCount": postData.wordCount }),
+    ...(postData.keywords && { "keywords": postData.keywords }),
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": postData.url
+    }
+  });
+
+  const generateFAQSchema = (faqItems: FAQItem[]) => ({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqItems.map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  });
+
   const schemas = [];
   
   if (organization) {
@@ -150,6 +276,18 @@ export function StructuredData({
   
   if (breadcrumbs && breadcrumbs.length > 0) {
     schemas.push(generateBreadcrumbSchema(breadcrumbs));
+  }
+
+  if (product) {
+    schemas.push(generateProductSchema(product));
+  }
+
+  if (blogPost) {
+    schemas.push(generateBlogPostSchema(blogPost));
+  }
+
+  if (faq && faq.length > 0) {
+    schemas.push(generateFAQSchema(faq));
   }
 
   return (

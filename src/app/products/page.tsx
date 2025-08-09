@@ -22,7 +22,8 @@ export default function ProductsPage() {
       'beta': 'bg-blue-100 text-blue-700 border-blue-200',
       'development': 'bg-yellow-100 text-yellow-700 border-yellow-200', 
       'planning': 'bg-gray-100 text-gray-700 border-gray-200',
-      'launched': 'bg-green-100 text-green-700 border-green-200'
+      'launched': 'bg-green-100 text-green-700 border-green-200',
+      'waitlist': 'bg-purple-100 text-purple-700 border-purple-200'
     };
     
     return statusStyles[status as keyof typeof statusStyles] || statusStyles.planning;
@@ -155,10 +156,10 @@ export default function ProductsPage() {
                   ))}
                 </div>
 
-                {/* Pricing & Launch */}
+                {/* Pricing & Status */}
                 <div className="flex items-center justify-between pt-6 border-t border-border">
                   <div>
-                    {product.pricing.isRevealed ? (
+                    {product.pricing.isRevealed && product.status === 'launched' ? (
                       <div>
                         <div className="text-lg font-bold text-text-primary">
                           ${product.pricing.startingPrice}
@@ -168,17 +169,18 @@ export default function ProductsPage() {
                         </div>
                       </div>
                     ) : (
-                      <div className="text-text-muted">Pricing TBA</div>
+                      <div className="text-text-muted">
+                        {product.status === 'waitlist' ? 'Coming Soon' : 'Pricing TBA'}
+                      </div>
                     )}
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-medium text-text-primary">
-                      {product.launchDate && new Date(product.launchDate).toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        year: 'numeric' 
-                      })}
+                      {product.status === 'launched' ? 'Available Now' : 
+                       product.status === 'waitlist' ? 'Join Waitlist' : 
+                       product.status === 'beta' ? 'Beta Access' : 'In Development'}
                     </div>
-                    <div className="text-xs text-text-muted">Launch Date</div>
+                    <div className="text-xs text-text-muted">Status</div>
                   </div>
                 </div>
 
@@ -188,8 +190,9 @@ export default function ProductsPage() {
                     href={`/products/${getProductSlug(product.name)}`}
                     className="block w-full text-center bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors"
                   >
-                    {product.status === 'beta' ? 'Join Beta' : 
-                     product.status === 'development' ? 'Get Notified' : 
+                    {product.status === 'launched' ? `Get ${product.name}` : 
+                     product.status === 'waitlist' ? 'Join Waitlist' : 
+                     product.status === 'beta' ? 'Join Beta' : 
                      `Learn About ${product.name}`}
                   </a>
                 </div>

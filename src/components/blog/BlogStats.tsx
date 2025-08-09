@@ -69,10 +69,10 @@ export function BlogStats({ stats }: BlogStatsProps) {
       description: 'Industry professionals'
     },
     {
-      label: 'Weekly Updates',
+      label: 'Occasional Updates',
       value: '3+',
       icon: '🚀',
-      description: 'Fresh content regularly'
+      description: 'Quality content on DevOps, Cloud & MLOps'
     }
   ]
 

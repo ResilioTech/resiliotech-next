@@ -206,7 +206,7 @@ export function CTASection() {
               </div>
               <div className="flex items-center gap-2">
                 <span>⏰</span>
-                <span>Response within 2 hours</span>
+                <span>We respond within 24 hours</span>
               </div>
               <div className="flex items-center gap-2">
                 <span>🔒</span>
