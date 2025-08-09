@@ -55,7 +55,7 @@ const navigationItems = [
   { name: 'Home', href: '/', hasDropdown: false },
   { name: 'Services', href: '/services', hasDropdown: true },
   { name: 'Products', href: '/products', hasDropdown: false },
-  { name: 'Projects', href: '/projects', hasDropdown: false },
+  { name: 'Case Studies', href: '/projects', hasDropdown: false },
   { name: 'Blog', href: '/blog', hasDropdown: false },
   { name: 'About', href: '/about', hasDropdown: false }
 ]

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block non-public pages
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Reference to sitemap
+Sitemap: https://resiliotech.com/sitemap.xml
