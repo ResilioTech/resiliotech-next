@@ -12,7 +12,7 @@ export interface ProductInfo {
   tagline: string;
   description: string;
   launchDate?: string;
-  status?: 'planning' | 'development' | 'beta' | 'launched';
+  status?: 'planning' | 'development' | 'beta' | 'launched' | 'waitlist';
   category?: 'deployment' | 'monitoring' | 'security' | 'infrastructure' | 'analytics';
   features: ProductFeature[];
   benefits: string[];

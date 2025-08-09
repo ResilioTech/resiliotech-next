@@ -5,7 +5,7 @@ export const microSaasProducts: ProductInfo[] = [
     name: 'DeployFlow',
     tagline: 'Simplified CI/CD for Startups',
     description: 'Zero-config CI/CD pipelines that automatically detect your stack and deploy to production in minutes. Perfect for teams who want to focus on building, not managing infrastructure.',
-    launchDate: null,
+    launchDate: undefined,
     status: 'launched',
     category: 'deployment',
     features: [
@@ -47,7 +47,7 @@ export const microSaasProducts: ProductInfo[] = [
     name: 'CloudWatch Pro',
     tagline: 'AI-Powered Infrastructure Monitoring',
     description: 'Intelligent monitoring that predicts and prevents downtime before it happens. Get insights into your infrastructure health with automated alerts and resolution suggestions.',
-    launchDate: null,
+    launchDate: undefined,
     status: 'waitlist',
     category: 'monitoring',
     features: [
@@ -89,7 +89,7 @@ export const microSaasProducts: ProductInfo[] = [
     name: 'SecureOps',
     tagline: 'DevSecOps Made Simple',
     description: 'Integrate security scanning and compliance checks directly into your CI/CD pipeline. Catch vulnerabilities early and maintain compliance automatically.',
-    launchDate: null,
+    launchDate: undefined,
     status: 'waitlist',
     category: 'security',
     features: [
@@ -131,7 +131,7 @@ export const microSaasProducts: ProductInfo[] = [
     name: 'InfraScale',
     tagline: 'Smart Infrastructure Scaling',
     description: 'Automatically scale your infrastructure based on real usage patterns and predictions. Never overpay for unused resources or experience performance bottlenecks.',
-    launchDate: null,
+    launchDate: undefined,
     status: 'waitlist',
     category: 'infrastructure',
     features: [
