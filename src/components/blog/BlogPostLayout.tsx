@@ -137,11 +137,12 @@ export function BlogPostLayout({ post, children }: BlogPostLayoutProps) {
         <div className="relative h-64 md:h-80 lg:h-96 bg-surface-elevated">
           <Image
             src={post.coverImage}
-            alt={post.title}
+            alt={`Cover image for ${post.title}`}
             fill
             className="object-cover"
             onError={() => setImageError(true)}
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
         </div>

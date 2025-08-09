@@ -14,6 +14,7 @@ import {
   Star
 } from 'lucide-react';
 import Link from 'next/link';
+import { analytics } from '@/lib/analytics';
 
 const iconMap = {
   CheckCircle,
@@ -138,6 +139,7 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href={`/contact?service=${category}`}
+                  onClick={() => analytics.trackCTAClick(`service-${category}`, 'Get Started Today', `/contact?service=${category}`)}
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
                 >
                   Get Started Today
@@ -145,6 +147,7 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
                 </Link>
                 <Link
                   href={`/projects?category=${category}`}
+                  onClick={() => analytics.trackCTAClick(`service-${category}`, 'View Case Studies', `/projects?category=${category}`)}
                   className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
                 >
                   View Case Studies

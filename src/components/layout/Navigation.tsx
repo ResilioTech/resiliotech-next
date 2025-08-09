@@ -150,7 +150,7 @@ export function Navigation() {
                       <Link
                         href={item.href}
                         className={cn(
-                          'px-3 py-2 text-sm font-medium transition-colors rounded-md',
+                          'px-3 py-2 text-sm font-medium transition-colors rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
                           isActiveLink(item.href)
                             ? 'text-primary bg-surface-elevated'
                             : 'text-text-secondary hover:text-text-primary hover:bg-surface'
@@ -204,7 +204,7 @@ export function Navigation() {
             <div className="hidden md:block">
               <Link
                 href="/contact"
-                className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105"
+                className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 Get Started
               </Link>
