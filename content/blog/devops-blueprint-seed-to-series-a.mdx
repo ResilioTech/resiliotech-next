@@ -1,0 +1,192 @@
+---
+title: "DevOps Blueprint: From Seed to Series A Without Breaking"
+description: "A practical roadmap for building production-grade infrastructure as you scale from seed funding to Series A, without enterprise overhead."
+date: "2025-01-06"
+author: "Resiliotech Team"
+tags: ["devops", "startups", "infrastructure", "cicd"]
+image: "/blog-images/devops-blueprint.jpg"
+---
+
+You've raised seed funding. Your MVP is live. Users are signing up. Now what?
+
+Most startups hit the "DevOps wall" between seed and Series A: manual deploys become bottlenecks, incidents wake you up at 3 AM, and AWS bills spiral out of control. Sound familiar?
+
+Here's the blueprint we use with our [Founding Pilot clients](/founding-pilot) to build production-grade infrastructure without hiring a full DevOps team.
+
+## The DevOps Maturity Ladder
+
+Most seed-stage startups are at Level 1 or 2. By Series A, you need to be at Level 3.
+
+### Level 1: Manual Everything (Pre-Seed)
+- SSH into servers
+- Copy-paste deployment commands
+- No monitoring (you find out about issues when users complain)
+- Secrets in `.env` files or Slack
+
+**Why it works:** Fast iteration, zero DevOps overhead
+**Why it breaks:** Can't scale past 2-3 engineers
+
+### Level 2: Basic Automation (Seed)
+- Git-based deploys (Heroku, Vercel, Railway)
+- Some monitoring (Sentry for errors)
+- Secrets in platform dashboard
+- Manual backups
+
+**Why it works:** Gets you to product-market fit
+**Why it breaks:** Vendor lock-in, limited control, $$$
+
+### Level 3: Production-Grade (Series A Ready)
+This is where most companies need to be by Series A:
+
+- **CI/CD:** Every merge to `main` deploys automatically
+- **Infrastructure as Code:** Terraform/Pulumi for all resources
+- **Observability:** Logs, metrics, traces, and SLOs
+- **Security:** Secrets management, RBAC, audit logs
+- **Cost Control:** Budgets, policies, showback dashboards
+
+**Estimated effort:** 2-4 weeks with focus (or [hire us for 30 days](/founding-pilot))
+
+## The 30-Day Implementation Plan
+
+Here's how we take startups from Level 2 to Level 3 in our Founding Pilot program:
+
+### Week 1: Audit + Plan
+**Goal:** Understand current state and define success
+
+- Map existing infrastructure (AWS/GCP/Azure resources)
+- Document deploy process and pain points
+- Define 3 success criteria (e.g., "Deploy API to prod via pipeline")
+- Choose toolchain (GitHub Actions, FluxCD, Terraform, Grafana stack)
+
+**Deliverable:** Architecture diagram + implementation plan
+
+### Week 2: CI/CD Foundation
+**Goal:** Automated, repeatable deploys
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t myapp:${{ github.sha }} .
+
+      - name: Push to ECR
+        run: |
+          aws ecr get-login-password | docker login --username AWS --password-stdin
+          docker push myapp:${{ github.sha }}
+
+      - name: Update Kubernetes deployment
+        run: |
+          kubectl set image deployment/myapp myapp=myapp:${{ github.sha }}
+```
+
+**Deliverable:** Working pipeline from `git push` to production
+
+### Week 3: Infrastructure as Code
+**Goal:** All infrastructure in version control
+
+```hcl
+# terraform/main.tf
+module "vpc" {
+  source = "./modules/vpc"
+
+  cidr_block = "10.0.0.0/16"
+  azs        = ["us-east-1a", "us-east-1b", "us-east-1c"]
+
+  tags = {
+    Environment = "production"
+    ManagedBy   = "terraform"
+  }
+}
+
+module "eks" {
+  source = "./modules/eks"
+
+  cluster_name    = "production-cluster"
+  cluster_version = "1.28"
+  vpc_id          = module.vpc.vpc_id
+  subnet_ids      = module.vpc.private_subnet_ids
+}
+```
+
+**Deliverable:** Terraform repo with state backend
+
+### Week 4: Observability + Handoff
+**Goal:** Know what's happening in production
+
+- Deploy Grafana stack (Loki for logs, Mimir for metrics)
+- Create dashboards (request rate, error rate, latency)
+- Set up alerts (PagerDuty/OpsGenie)
+- Write runbooks (how to respond to alerts)
+- Team training session
+
+**Deliverable:** Production incident response capability
+
+## Common Pitfalls (and How to Avoid Them)
+
+### 1. Over-Engineering Too Early
+**Mistake:** Implementing Kubernetes on day 1
+**Fix:** Start with managed services (ECS Fargate, Cloud Run), graduate to K8s when you have 10+ microservices
+
+### 2. Ignoring Cost Guardrails
+**Mistake:** No budget alerts until the $10K bill arrives
+**Fix:** Set up AWS Budgets + CloudWatch alarms on day 1
+
+```hcl
+resource "aws_budgets_budget" "monthly" {
+  name              = "monthly-budget"
+  budget_type       = "COST"
+  limit_amount      = "1000"
+  limit_unit        = "USD"
+  time_period_start = "2025-01-01_00:00"
+  time_unit         = "MONTHLY"
+
+  notification {
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 80
+    threshold_type             = "PERCENTAGE"
+    notification_type          = "FORECASTED"
+    subscriber_email_addresses = ["founders@yourstart.com"]
+  }
+}
+```
+
+### 3. Skipping Documentation
+**Mistake:** Only one person knows how to deploy
+**Fix:** Write runbooks *during* implementation, not after
+
+## What This Gets You
+
+By Series A, you should have:
+
+✅ **Zero-touch deploys:** Merge PR → deployed in 5 minutes
+✅ **Sleep at night:** Alerts catch issues before users notice
+✅ **Predictable costs:** Budgets + policies prevent surprises
+✅ **Audit trail:** Know who changed what, when
+✅ **Team independence:** Any engineer can deploy + debug
+
+## Next Steps
+
+You have two options:
+
+1. **DIY:** Follow this blueprint over 4-8 weeks (depending on team availability)
+2. **Done-for-you:** [Apply for our Founding Pilot](/founding-pilot) (3 slots/month, fixed fee, risk-free guarantee)
+
+We've taken 12+ startups through this exact process. If you're between seed and Series A, [book a free 30-min audit](https://calendly.com/resiliotech/30min-audit) to see where you are on the maturity ladder.
+
+---
+
+**Related:**
+- [FluxCD + Kustomize for Production Deploys](/blog/fluxcd-kustomize-prod-ready)
+- [AWS Cost Guardrails with Terraform](/blog/aws-cost-guardrails-terraform)
+- [Founding Pilot Program](/founding-pilot)
