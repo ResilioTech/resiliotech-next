@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup'
@@ -65,7 +66,7 @@ const socialLinks = [
   },
 ]
 
-export function Footer() {
+export const Footer = memo(function Footer() {
   return (
     <footer className="bg-surface border-t border-border">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
@@ -195,4 +196,4 @@ export function Footer() {
       </div>
     </footer>
   )
-}
+})

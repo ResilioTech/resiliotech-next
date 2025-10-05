@@ -3,55 +3,80 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import {
+  RefreshCw,
+  Cloud,
+  Bot,
+  Activity,
+  Shield,
+  Lightbulb,
+  type LucideIcon
+} from 'lucide-react'
 
-const services = [
+interface Service {
+  title: string
+  description: string
+  features: string[]
+  icon: LucideIcon
+  href: string
+  color: string
+  iconColor: string
+}
+
+const services: Service[] = [
   {
     title: 'DevOps Automation',
     description: 'End-to-end CI/CD pipelines, automated testing, and deployment strategies that reduce deployment time from hours to minutes.',
     features: ['CI/CD Pipeline Setup', 'Automated Testing', 'Blue-Green Deployments', 'Rollback Strategies'],
-    icon: '🔄',
+    icon: RefreshCw,
     href: '/services/devops-automation',
     color: 'from-primary to-blue-400',
+    iconColor: 'text-blue-400',
   },
   {
     title: 'Cloud Infrastructure',
     description: 'Scalable, secure, and cost-optimized cloud architecture using Infrastructure-as-Code principles.',
     features: ['AWS/GCP/Azure Setup', 'Terraform/Pulumi IaC', 'Auto-scaling Configuration', 'Cost Optimization'],
-    icon: '☁️',
+    icon: Cloud,
     href: '/services/cloud-infrastructure',
     color: 'from-secondary to-purple-400',
+    iconColor: 'text-purple-400',
   },
   {
     title: 'MLOps & Data Pipeline',
     description: 'Machine learning operations and automated data workflows for AI-powered applications.',
     features: ['ML Model Deployment', 'Data Pipeline Automation', 'Model Monitoring', 'A/B Testing'],
-    icon: '🤖',
+    icon: Bot,
     href: '/services/mlops',
     color: 'from-accent to-green-400',
+    iconColor: 'text-green-400',
   },
   {
     title: 'Observability & Monitoring',
     description: 'Comprehensive monitoring, logging, and alerting solutions for proactive issue detection.',
     features: ['Metrics & Dashboards', 'Log Aggregation', 'Alert Management', 'Performance Monitoring'],
-    icon: '📊',
+    icon: Activity,
     href: '/services/observability',
     color: 'from-yellow-400 to-orange-400',
+    iconColor: 'text-orange-400',
   },
   {
     title: 'Security & Compliance',
     description: 'DevSecOps integration with automated security scanning and compliance monitoring.',
     features: ['Security Scanning', 'Compliance Automation', 'Access Control', 'Vulnerability Management'],
-    icon: '🔒',
+    icon: Shield,
     href: '/services/security',
     color: 'from-red-400 to-pink-400',
+    iconColor: 'text-red-400',
   },
   {
     title: 'Consulting & Strategy',
     description: 'Expert guidance on DevOps transformation, toolchain selection, and organizational change.',
     features: ['DevOps Assessment', 'Strategy Planning', 'Team Training', 'Process Optimization'],
-    icon: '💡',
+    icon: Lightbulb,
     href: '/consulting',
     color: 'from-indigo-400 to-cyan-400',
+    iconColor: 'text-cyan-400',
   },
 ]
 
@@ -96,78 +121,87 @@ export function ServicesSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className={cn(
-                'group relative transition-all duration-1000',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              )}
-              style={{ transitionDelay: `${index * 150}ms` }}
-              onMouseEnter={() => setHoveredService(index)}
-              onMouseLeave={() => setHoveredService(null)}
-            >
-              <div className="relative h-full bg-surface border border-border rounded-2xl p-8 hover:border-primary hover:scale-105 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-primary/20">
-                {/* Background Gradient */}
-                <div className={cn(
-                  'absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500',
-                  service.color
-                )} />
-                
-                {/* Service Icon */}
-                <div className="relative z-10">
+          {services.map((service, index) => {
+            const ServiceIcon = service.icon
+            return (
+              <div
+                key={service.title}
+                className={cn(
+                  'group relative transition-all duration-1000',
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                )}
+                style={{ transitionDelay: `${index * 150}ms` }}
+                onMouseEnter={() => setHoveredService(index)}
+                onMouseLeave={() => setHoveredService(null)}
+              >
+                <div className="relative h-full bg-surface border border-border rounded-2xl p-8 hover:border-primary hover:scale-105 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-primary/20">
+                  {/* Background Gradient */}
                   <div className={cn(
-                    'w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 bg-gradient-to-br',
-                    service.color,
-                    hoveredService === index ? 'scale-110 glow-effect' : ''
-                  )}>
-                    <span className="text-2xl">{service.icon}</span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-text-primary mb-4 group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-text-secondary mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-                  
-                  {/* Features List */}
-                  <ul className="space-y-2 mb-8">
-                    {service.features.map((feature, featureIndex) => (
-                      <li
-                        key={feature}
-                        className={cn(
-                          'flex items-center text-sm text-text-muted transition-all duration-300',
-                          hoveredService === index ? 'text-text-secondary' : ''
-                        )}
-                        style={{ transitionDelay: `${featureIndex * 100}ms` }}
-                      >
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3 opacity-60"></div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  {/* CTA Link */}
-                  <Link
-                    href={service.href}
-                    className="group/link inline-flex items-center text-primary hover:text-primary-hover font-semibold transition-colors"
-                  >
-                    Explore {service.title} Services
-                    <svg
-                      className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                    'absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500',
+                    service.color
+                  )} />
+
+                  {/* Service Icon */}
+                  <div className="relative z-10">
+                    <div className="relative w-16 h-16 mb-6">
+                      <div className={cn(
+                        'absolute inset-0 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300 bg-gradient-to-br',
+                        service.color
+                      )}></div>
+                      <div className={cn(
+                        'relative w-full h-full rounded-xl flex items-center justify-center transition-all duration-300 bg-gradient-to-br',
+                        service.color,
+                        hoveredService === index ? 'scale-110' : ''
+                      )}>
+                        <ServiceIcon className="w-8 h-8 text-white" strokeWidth={2} />
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-text-primary mb-4 group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-text-secondary mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    {/* Features List */}
+                    <ul className="space-y-2 mb-8">
+                      {service.features.map((feature, featureIndex) => (
+                        <li
+                          key={feature}
+                          className={cn(
+                            'flex items-center text-sm text-text-muted transition-all duration-300',
+                            hoveredService === index ? 'text-text-secondary' : ''
+                          )}
+                          style={{ transitionDelay: `${featureIndex * 100}ms` }}
+                        >
+                          <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3 opacity-60"></div>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA Link */}
+                    <Link
+                      href={service.href}
+                      className="group/link inline-flex items-center text-primary hover:text-primary-hover font-semibold transition-colors"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link>
+                      Explore {service.title} Services
+                      <svg
+                        className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Bottom CTA */}

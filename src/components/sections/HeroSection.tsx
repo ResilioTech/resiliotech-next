@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { analytics } from '@/lib/analytics'
+import { Rocket, Zap, Shield, BarChart3, Bot } from 'lucide-react'
+import '@/styles/animations.css'
 
 const stats = [
   { label: 'Deployment Frequency', value: '10x', highlight: 'Faster' },
@@ -13,18 +15,18 @@ const stats = [
 ]
 
 const floatingElements = [
-  { icon: '🚀', delay: 0, duration: 6 },
-  { icon: '⚡', delay: 1, duration: 8 },
-  { icon: '🔒', delay: 2, duration: 7 },
-  { icon: '📊', delay: 3, duration: 9 },
-  { icon: '🤖', delay: 4, duration: 6.5 },
+  { icon: Rocket, delay: 0, duration: 6 },
+  { icon: Zap, delay: 1, duration: 8 },
+  { icon: Shield, delay: 2, duration: 7 },
+  { icon: BarChart3, delay: 3, duration: 9 },
+  { icon: Bot, delay: 4, duration: 6.5 },
 ]
 
 export function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setIsVisible(true)
+    setMounted(true)
   }, [])
 
   return (
@@ -34,23 +36,26 @@ export function HeroSection() {
       
       {/* Floating Elements */}
       <div className="absolute inset-0">
-        {floatingElements.map((element, index) => (
-          <div
-            key={index}
-            className={cn(
-              'absolute text-2xl opacity-20 animate-bounce',
-              isVisible ? 'animate-pulse' : ''
-            )}
-            style={{
-              left: `${20 + (index * 15)}%`,
-              top: `${30 + (index * 10)}%`,
-              animationDelay: `${element.delay}s`,
-              animationDuration: `${element.duration}s`,
-            }}
-          >
-            {element.icon}
-          </div>
-        ))}
+        {floatingElements.map((element, index) => {
+          const IconComponent = element.icon;
+          return (
+            <div
+              key={index}
+              className="absolute opacity-20 animate-bounce animate-pulse"
+              style={{
+                left: `${20 + (index * 15)}%`,
+                top: `${30 + (index * 10)}%`,
+                animationDelay: `${element.delay}s`,
+                animationDuration: `${element.duration}s`,
+              }}
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary blur-xl opacity-50"></div>
+                <IconComponent className="w-8 h-8 text-primary relative z-10" strokeWidth={1.5} />
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -58,39 +63,31 @@ export function HeroSection() {
           {/* Main Heading */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <div className={cn(
-                'transition-all duration-1000 delay-300',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              )}>
-                <span className="inline-block px-4 py-2 bg-surface-elevated border border-border rounded-full text-sm font-medium text-primary mb-6">
-                  🚀 Enterprise-grade DevOps without enterprise overhead
+              <div className="animate-on-scroll animate-fade-in-up stagger-3">
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-surface-elevated border border-border rounded-full text-sm font-medium text-primary mb-6">
+                  <span className="relative flex h-6 w-6 items-center justify-center">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-20"></span>
+                    <Rocket className="relative h-4 w-4" strokeWidth={2} />
+                  </span>
+                  Enterprise-grade DevOps without enterprise overhead
                 </span>
               </div>
-              
-              <h1 className={cn(
-                'text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl transition-all duration-1000 delay-500',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              )}>
+
+              <h1 className="animate-on-scroll animate-fade-in-up stagger-5 text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl">
                 Scale Your Startup with{' '}
                 <span className="gradient-text">
                   Automated DevOps
                 </span>
               </h1>
-              
-              <p className={cn(
-                'mx-auto mt-6 max-w-3xl text-xl text-text-secondary transition-all duration-1000 delay-700',
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              )}>
-                We transform fast-moving startups into scalable tech companies through 
+
+              <p className="animate-on-scroll animate-fade-in-up stagger-7 mx-auto mt-6 max-w-3xl text-xl text-text-secondary">
+                We transform fast-moving startups into scalable tech companies through
                 automated CI/CD, infrastructure-as-code, and comprehensive observability solutions.
               </p>
             </div>
 
             {/* CTA Buttons */}
-            <div className={cn(
-              'flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 delay-900',
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            )}>
+            <div className="animate-on-scroll animate-fade-in-up stagger-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 href="/contact"
                 onClick={() => analytics.trackCTAClick('hero', 'Get Started', '/contact')}
@@ -127,25 +124,25 @@ export function HeroSection() {
             </div>
 
             {/* Stats */}
-            <div className={cn(
-              'mt-16 grid grid-cols-2 gap-8 lg:grid-cols-4 transition-all duration-1000 delay-1100',
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            )}>
+            <div className="mt-16 grid grid-cols-2 gap-8 lg:grid-cols-4">
               {stats.map((stat, index) => {
                 // Map stats to relevant project cases
                 const projectLinks = {
                   'Deployment Frequency': '/projects/devops-pipeline-automation',
-                  'Infrastructure Cost': '/projects/ecommerce-platform-modernization', 
+                  'Infrastructure Cost': '/projects/ecommerce-platform-modernization',
                   'Time to Market': '/projects/devops-pipeline-automation',
                   'System Reliability': '/projects/ecommerce-platform-modernization'
                 }
-                
+
                 return (
                   <div
                     key={stat.label}
                     className={cn(
-                      'text-center group transition-all duration-300 hover:scale-105',
-                      'delay-' + (index * 100)
+                      'animate-on-scroll animate-fade-in-up text-center group hover-scale',
+                      index === 0 && 'stagger-1',
+                      index === 1 && 'stagger-2',
+                      index === 2 && 'stagger-3',
+                      index === 3 && 'stagger-4'
                     )}
                   >
                     <div className="text-3xl font-bold text-primary mb-2">

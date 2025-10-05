@@ -1,13 +1,14 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-  ExternalLink, 
-  Github, 
-  Calendar, 
-  Users, 
+import {
+  ExternalLink,
+  Github,
+  Calendar,
+  Users,
   TrendingUp,
   Star,
   ArrowRight
@@ -19,7 +20,7 @@ interface ProjectCardProps {
   index: number;
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
+export const ProjectCard = memo(function ProjectCard({ project, index }: ProjectCardProps) {
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -209,4 +210,4 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl"></div>
     </motion.div>
   );
-}
+})
