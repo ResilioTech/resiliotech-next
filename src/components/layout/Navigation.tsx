@@ -1,15 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import {
+  RefreshCw,
+  Cloud,
+  Bot,
+  Activity,
+  Shield,
+  Lightbulb,
+  type LucideIcon
+} from 'lucide-react'
 
 interface ServiceItem {
   name: string
   href: string
   description: string
-  icon: string
+  icon: LucideIcon
+  color: string
 }
 
 const services: ServiceItem[] = [
@@ -17,37 +27,43 @@ const services: ServiceItem[] = [
     name: 'DevOps Automation',
     href: '/services/devops-automation',
     description: 'End-to-end CI/CD pipelines and infrastructure automation',
-    icon: '🔄'
+    icon: RefreshCw,
+    color: 'text-blue-400'
   },
   {
-    name: 'Cloud Infrastructure', 
+    name: 'Cloud Infrastructure',
     href: '/services/cloud-infrastructure',
     description: 'Scalable, secure cloud architecture design and implementation',
-    icon: '☁️'
+    icon: Cloud,
+    color: 'text-cyan-400'
   },
   {
     name: 'MLOps & Data Pipeline',
     href: '/services/mlops',
     description: 'Machine learning operations and automated data workflows',
-    icon: '🤖'
+    icon: Bot,
+    color: 'text-purple-400'
   },
   {
     name: 'Observability & Monitoring',
     href: '/services/observability',
     description: 'Comprehensive monitoring, logging, and alerting solutions',
-    icon: '📊'
+    icon: Activity,
+    color: 'text-green-400'
   },
   {
     name: 'Security & Compliance',
     href: '/services/security',
     description: 'DevSecOps integration and compliance automation',
-    icon: '🔒'
+    icon: Shield,
+    color: 'text-orange-400'
   },
   {
     name: 'Consulting & Strategy',
     href: '/contact?service=consulting',
     description: 'Expert guidance on DevOps transformation and strategy',
-    icon: '💡'
+    icon: Lightbulb,
+    color: 'text-yellow-400'
   }
 ]
 
@@ -60,7 +76,7 @@ const navigationItems = [
   { name: 'About', href: '/about', hasDropdown: false }
 ]
 
-export function Navigation() {
+export const Navigation = memo(function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false)
@@ -174,23 +190,37 @@ export function Navigation() {
                       >
                         <div className="glassmorphism rounded-xl p-6 shadow-xl">
                           <div className="grid gap-4">
-                            {services.map((service) => (
-                              <Link
-                                key={service.href}
-                                href={service.href}
-                                className="flex items-start p-3 rounded-lg hover:bg-surface-elevated transition-colors group"
-                              >
-                                <div className="text-2xl mr-3 mt-1">{service.icon}</div>
-                                <div>
-                                  <h3 className="text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">
-                                    {service.name}
-                                  </h3>
-                                  <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                                    {service.description}
-                                  </p>
-                                </div>
-                              </Link>
-                            ))}
+                            {services.map((service) => {
+                              const IconComponent = service.icon;
+                              return (
+                                <Link
+                                  key={service.href}
+                                  href={service.href}
+                                  className="flex items-start p-3 rounded-lg hover:bg-surface-elevated transition-all duration-300 group"
+                                >
+                                  <div className="relative mr-3 mt-1">
+                                    <div className={cn(
+                                      "absolute inset-0 blur-md opacity-0 group-hover:opacity-50 transition-opacity",
+                                      service.color
+                                    )}></div>
+                                    <div className={cn(
+                                      "relative w-8 h-8 rounded-lg bg-gradient-to-br from-surface-elevated to-surface border border-border group-hover:border-primary/30 flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+                                      service.color
+                                    )}>
+                                      <IconComponent className="w-4 h-4" strokeWidth={2} />
+                                    </div>
+                                  </div>
+                                  <div className="flex-1">
+                                    <h3 className="text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">
+                                      {service.name}
+                                    </h3>
+                                    <p className="text-xs text-text-muted mt-1 leading-relaxed">
+                                      {service.description}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            })}
                           </div>
                         </div>
                       </div>
@@ -283,16 +313,19 @@ export function Navigation() {
                 
                 {item.hasDropdown && (
                   <div className="ml-4 mt-2 space-y-2">
-                    {services.map((service) => (
-                      <Link
-                        key={service.href}
-                        href={service.href}
-                        className="flex items-center py-2 text-sm text-text-muted hover:text-text-primary transition-colors"
-                      >
-                        <span className="mr-2">{service.icon}</span>
-                        {service.name}
-                      </Link>
-                    ))}
+                    {services.map((service) => {
+                      const IconComponent = service.icon;
+                      return (
+                        <Link
+                          key={service.href}
+                          href={service.href}
+                          className="flex items-center py-2 text-sm text-text-muted hover:text-text-primary transition-colors group"
+                        >
+                          <IconComponent className={cn("mr-2 w-4 h-4", service.color)} strokeWidth={2} />
+                          {service.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -311,4 +344,4 @@ export function Navigation() {
       </div>
     </>
   )
-}
+})

@@ -1,25 +1,26 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 const technologies = [
-  { name: 'AWS', icon: '☁️', category: 'Cloud' },
-  { name: 'Docker', icon: '🐳', category: 'Containerization' },
-  { name: 'Kubernetes', icon: '⚙️', category: 'Orchestration' },
-  { name: 'Terraform', icon: '🏗️', category: 'IaC' },
-  { name: 'Jenkins', icon: '🔧', category: 'CI/CD' },
-  { name: 'Prometheus', icon: '📊', category: 'Monitoring' },
-  { name: 'Ansible', icon: '📋', category: 'Configuration' },
-  { name: 'GitLab', icon: '🦊', category: 'DevOps' },
-  { name: 'Grafana', icon: '📈', category: 'Visualization' },
-  { name: 'ELK Stack', icon: '🔍', category: 'Logging' },
-  { name: 'HashiCorp', icon: '🔐', category: 'Security' },
-  { name: 'GitHub Actions', icon: '⚡', category: 'Automation' },
-  { name: 'ArgoCD', icon: '🎯', category: 'GitOps' },
-  { name: 'Istio', icon: '🕸️', category: 'Service Mesh' },
-  { name: 'Helm', icon: '⛵', category: 'Package Manager' },
-  { name: 'Datadog', icon: '🐕', category: 'APM' },
+  { name: 'Kubernetes', logo: '/tech-logos/1-kubernetes.svg', category: 'Orchestration' },
+  { name: 'Docker', logo: '/tech-logos/2-docker.svg', category: 'Containerization' },
+  { name: 'AWS', logo: '/tech-logos/3-aws.svg', category: 'Cloud' },
+  { name: 'Azure', logo: '/tech-logos/4-azure.svg', category: 'Cloud' },
+  { name: 'Google Cloud', logo: '/tech-logos/5-google-cloud.svg', category: 'Cloud' },
+  { name: 'Terraform', logo: '/tech-logos/6-terraform.svg', category: 'IaC' },
+  { name: 'Ansible', logo: '/tech-logos/7-ansible.svg', category: 'Configuration' },
+  { name: 'Jenkins', logo: '/tech-logos/8-jenkins.svg', category: 'CI/CD' },
+  { name: 'GitHub Actions', logo: '/tech-logos/9-gitHub-actions.svg', category: 'Automation' },
+  { name: 'Prometheus', logo: '/tech-logos/10-prometheus.svg', category: 'Monitoring' },
+  { name: 'Grafana', logo: '/tech-logos/11-grafana.svg', category: 'Visualization' },
+  { name: 'Helm', logo: '/tech-logos/12-helm.svg', category: 'Package Manager' },
+  { name: 'ArgoCD', logo: '/tech-logos/13-argocd.svg', category: 'GitOps' },
+  { name: 'Elasticsearch', logo: '/tech-logos/14-elasticsearch.svg', category: 'Logging' },
+  { name: 'Vault', logo: '/tech-logos/15-vault.svg', category: 'Security' },
+  { name: 'Bitcoin', logo: '/tech-logos/16-bitcoin.svg', category: 'Blockchain' },
 ]
 
 export function TechStackSection() {
@@ -74,21 +75,25 @@ export function TechStackSection() {
                   'group relative transition-all duration-1000',
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 )}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
-                <div className="aspect-square bg-surface-elevated border border-border rounded-xl p-4 hover:border-primary hover:scale-110 transition-all duration-300 hover:bg-surface group-hover:glow-effect">
+                <div className="aspect-square bg-surface-elevated border border-border rounded-xl p-3 hover:border-primary hover:scale-110 transition-all duration-300 hover:bg-surface group-hover:shadow-xl group-hover:shadow-primary/10">
                   <div className="flex flex-col items-center justify-center h-full space-y-2">
-                    <span className="text-2xl group-hover:scale-125 transition-transform duration-300" aria-hidden="true">
-                      {tech.icon}
-                    </span>
-                    <span className="text-xs font-medium text-text-secondary group-hover:text-text-primary transition-colors text-center">
-                      {tech.name}
-                    </span>
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <Image
+                        src={tech.logo}
+                        alt={`${tech.name} logo`}
+                        width={64}
+                        height={64}
+                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                        priority={index < 8}
+                      />
+                    </div>
                   </div>
-                  
+
                   {/* Tooltip */}
-                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    <div className="bg-background border border-border rounded-lg px-3 py-2 shadow-xl">
+                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+                    <div className="bg-background border border-primary/30 rounded-lg px-3 py-2 shadow-xl">
                       <p className="text-sm font-medium text-text-primary whitespace-nowrap">
                         {tech.name}
                       </p>

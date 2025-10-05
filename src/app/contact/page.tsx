@@ -1,7 +1,14 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { ContactHero } from '@/components/contact/ContactHero';
-import { ContactForm } from '@/components/contact/ContactForm';
-import { FAQSection } from '@/components/contact/FAQSection';
+
+const ContactForm = dynamic(() => import('@/components/contact/ContactForm').then(mod => ({ default: mod.ContactForm })), {
+  loading: () => <div className="max-w-2xl mx-auto p-8 bg-surface-elevated rounded-xl animate-pulse"><div className="h-96 bg-surface rounded-lg"></div></div>
+});
+
+const FAQSection = dynamic(() => import('@/components/contact/FAQSection').then(mod => ({ default: mod.FAQSection })), {
+  loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-4xl mx-auto px-6"><div className="h-64 bg-background rounded-xl"></div></div></div>
+});
 
 export const metadata: Metadata = {
   title: 'Contact Us - Get Your DevOps Project Started',

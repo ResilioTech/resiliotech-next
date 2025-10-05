@@ -123,17 +123,17 @@ export function ProjectsTeaser() {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 border border-secondary/20 rounded-full text-sm font-medium text-secondary mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
               <Sparkles className="w-4 h-4" />
               Our Work
             </div>
-            
+
             <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-              Transforming Ideas into <span className="text-secondary">Digital Solutions</span>
+              Transforming Ideas into <span className="gradient-text">Digital Solutions</span>
             </h2>
-            
+
             <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-              From concept to deployment, we build scalable applications that drive business growth. 
+              From concept to deployment, we build scalable applications that drive business growth.
               Explore our portfolio of successful projects across various industries.
             </p>
           </motion.div>
@@ -146,8 +146,8 @@ export function ProjectsTeaser() {
                 whileHover={{ scale: 1.05 }}
                 className="text-center p-6 bg-surface-elevated border border-border rounded-xl"
               >
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 border border-secondary/20 rounded-lg mb-4">
-                  <stat.icon className="w-6 h-6 text-secondary" />
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 border border-primary/20 rounded-lg mb-4">
+                  <stat.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-text-primary mb-1">{stat.value}</div>
                 <div className="text-sm text-text-muted">{stat.label}</div>
@@ -166,7 +166,7 @@ export function ProjectsTeaser() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -8 }}
-                  className="group bg-surface-elevated border border-border rounded-xl overflow-hidden transition-all duration-300 hover:border-secondary/30 hover:shadow-lg hover:shadow-secondary/10 h-full flex flex-col"
+                  className="group bg-surface-elevated border border-border rounded-xl overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 h-full flex flex-col"
                 >
                   {/* Project Image */}
                   <div className="relative h-48 bg-gradient-to-br from-surface to-surface-elevated overflow-hidden">
@@ -180,10 +180,10 @@ export function ProjectsTeaser() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <TrendingUp className="w-12 h-12 text-secondary" />
+                        <TrendingUp className="w-12 h-12 text-primary" />
                       </div>
                     )}
-                    
+
                     {/* Overlay on Hover */}
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <Link
@@ -196,7 +196,7 @@ export function ProjectsTeaser() {
 
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-2 py-1 bg-secondary/90 backdrop-blur-sm text-white text-xs font-medium rounded-full">
+                      <span className="px-2 py-1 bg-primary/90 backdrop-blur-sm text-white text-xs font-medium rounded-full">
                         {project.category}
                       </span>
                     </div>
@@ -205,7 +205,7 @@ export function ProjectsTeaser() {
                   {/* Content */}
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold text-text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">
+                      <h3 className="text-lg font-bold text-text-primary mb-3 group-hover:text-primary transition-colors line-clamp-2">
                         {project.title}
                       </h3>
 
@@ -233,7 +233,7 @@ export function ProjectsTeaser() {
                     {/* View Details */}
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="inline-flex items-center gap-2 text-secondary font-medium text-sm hover:gap-3 transition-all"
+                      className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:gap-3 transition-all"
                     >
                       View Case Study
                       <ArrowRight className="w-4 h-4" />
@@ -246,30 +246,35 @@ export function ProjectsTeaser() {
 
           {/* Call to Action */}
           <motion.div variants={itemVariants} className="text-center">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
               <Link
                 href="/projects"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-secondary hover:bg-secondary/90 text-white font-semibold rounded-lg transition-all duration-300 group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
               >
                 View All Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              
+
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-surface-elevated hover:bg-surface border border-border hover:border-secondary/30 text-text-primary font-medium rounded-lg transition-all duration-300"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary font-medium rounded-lg transition-all duration-300"
               >
                 Start Your Project
               </Link>
             </div>
 
             {/* Bottom Message */}
-            <div className="mt-8 p-4 bg-surface-elevated/50 border border-border/50 rounded-lg inline-flex items-center gap-3">
-              <Calendar className="w-5 h-5 text-secondary" />
-              <div className="text-sm text-text-secondary">
-                <span className="font-medium text-text-primary">Ready to build something amazing?</span>
-                {' '}Book a free consultation to discuss your project.
-              </div>
+            <div className="max-w-2xl mx-auto">
+              <Link
+                href="/contact"
+                className="p-4 bg-surface-elevated/50 border border-border/50 hover:border-primary/50 rounded-lg flex flex-col sm:flex-row items-center justify-center gap-3 transition-all duration-300 hover:bg-surface-elevated group cursor-pointer"
+              >
+                <Calendar className="w-5 h-5 text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
+                <div className="text-sm text-text-secondary text-center sm:text-left">
+                  <span className="font-medium text-text-primary group-hover:text-primary transition-colors">Ready to build something amazing?</span>
+                  {' '}Book a free consultation to discuss your project.
+                </div>
+              </Link>
             </div>
           </motion.div>
         </motion.div>
