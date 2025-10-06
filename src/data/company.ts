@@ -3,60 +3,18 @@ import { TeamMember, CompanyValue, CompanyMilestone } from '@/types/company';
 export const teamMembers: TeamMember[] = [
   {
     id: '1',
-    name: 'Alex Chen',
-    role: 'Founder & CEO',
-    bio: 'Former Principal Engineer at Google Cloud with 10+ years of experience building scalable infrastructure. Passionate about helping startups achieve enterprise-grade reliability without the complexity.',
-    expertise: ['Cloud Architecture', 'DevOps Strategy', 'Team Leadership', 'System Design'],
+    name: 'Shivam Shah',
+    role: 'Founder',
+    bio: 'Building DevOps tools for startups to move fast without breaking things. Currently working on DeployFlow (Private Alpha) while running Founding Pilot engagements.',
+    expertise: ['DevOps', 'Cloud Infrastructure', 'CI/CD', 'Kubernetes'],
     social: {
-      linkedin: 'https://www.linkedin.com/company/resilio-tech',
+      linkedin: 'https://www.linkedin.com/in/shivam-neer-shah/',
       github: 'https://github.com/resiliotech',
       twitter: 'https://x.com/resiliotech',
-      email: 'alex@resiliotech.com'
+      email: 'shivam@resiliotech.com'
     },
-    experience: '10+ years',
-    avatar: '/team/alex-chen.jpg'
-  },
-  {
-    id: '2',
-    name: 'Sarah Rodriguez',
-    role: 'CTO & Co-Founder',
-    bio: 'Senior SRE with deep expertise in observability and incident management. Champions reliability engineering practices that keep systems running at high availability.',
-    expertise: ['Site Reliability Engineering', 'Observability', 'Incident Management', 'Platform Engineering'],
-    social: {
-      linkedin: 'https://www.linkedin.com/company/resilio-tech',
-      github: 'https://github.com/resiliotech',
-      email: 'sarah@resiliotech.com'
-    },
-    experience: '8+ years',
-    avatar: '/team/sarah-rodriguez.jpg'
-  },
-  {
-    id: '3',
-    name: 'Michael Park',
-    role: 'Lead DevOps Engineer',
-    bio: 'Kubernetes specialist and CI/CD automation expert. Previously built deployment pipelines at Stripe that processed millions of deployments per month.',
-    expertise: ['Kubernetes', 'CI/CD Automation', 'Infrastructure as Code', 'Security'],
-    social: {
-      linkedin: 'https://www.linkedin.com/company/resilio-tech',
-      github: 'https://github.com/resiliotech',
-      email: 'michael@resiliotech.com'
-    },
-    experience: '6+ years',
-    avatar: '/team/michael-park.jpg'
-  },
-  {
-    id: '4',
-    name: 'Emily Watson',
-    role: 'Senior Cloud Architect',
-    bio: 'AWS Solutions Architect with expertise in cost optimization and security. Helped Fortune 500 companies reduce cloud spending by an average of 40% while improving performance.',
-    expertise: ['AWS Architecture', 'Cost Optimization', 'Security', 'Migration Strategy'],
-    social: {
-      linkedin: 'https://www.linkedin.com/company/resilio-tech',
-      github: 'https://github.com/resiliotech',
-      email: 'emily@resiliotech.com'
-    },
-    experience: '7+ years',
-    avatar: '/team/emily-watson.jpg'
+    experience: 'Building in public',
+    avatar: '/team/shivam-shah.jpg'
   }
 ];
 
@@ -115,10 +73,10 @@ export const companyMilestones: CompanyMilestone[] = [
 ];
 
 export const companyStats = {
-  yearsInBusiness: 4,
-  projectsCompleted: 120,
+  yearsInBusiness: 1,
+  projectsCompleted: 0, // Building in public - see roadmap
   clientsServed: 0, // Building in public - see roadmap
-  uptimeAchieved: '99.9%',
-  costReduction: '40%',
-  teamSize: 15
+  uptimeAchieved: 'Building',
+  costReduction: 'TBD',
+  teamSize: 1 // Solo founder + Founding Pilot partners
 };

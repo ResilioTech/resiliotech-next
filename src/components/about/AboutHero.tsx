@@ -162,9 +162,9 @@ export function AboutHero({ stats }: AboutHeroProps) {
           <motion.div variants={itemVariants} className="mt-16 text-center">
             <div className="max-w-3xl mx-auto">
               <p className="text-lg text-text-secondary leading-relaxed">
-                Founded in 2020 by former engineers from Google, Netflix, and Stripe, Resiliotech was born 
-                from the frustration of seeing talented development teams held back by infrastructure challenges. 
-                We're building in public, starting with our Founding Pilot Program and working towards making enterprise-grade DevOps accessible to all growing companies.
+                Resiliotech is a solo founder building DevOps tools for startups.
+                Currently in Private Alpha with DeployFlow while running Founding Pilot engagements (3 slots/month).
+                No fake testimonials, no fabricated case studies - just building in public and sharing the journey.
               </p>
             </div>
           </motion.div>
