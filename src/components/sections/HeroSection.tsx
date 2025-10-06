@@ -74,26 +74,26 @@ export function HeroSection() {
               </div>
 
               <h1 className="animate-on-scroll animate-fade-in-up stagger-5 text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl">
-                Scale Your Startup with{' '}
+                Platform-grade{' '}
                 <span className="gradient-text">
-                  Automated DevOps
-                </span>
+                  DevOps
+                </span>{' '}
+                for Startups
               </h1>
 
               <p className="animate-on-scroll animate-fade-in-up stagger-7 mx-auto mt-6 max-w-3xl text-xl text-text-secondary">
-                We transform fast-moving startups into scalable tech companies through
-                automated CI/CD, infrastructure-as-code, and comprehensive observability solutions.
+                From repo to reliable infra in 30 days - without enterprise overhead.
               </p>
             </div>
 
             {/* CTA Buttons */}
             <div className="animate-on-scroll animate-fade-in-up stagger-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="/contact"
-                onClick={() => analytics.trackCTAClick('hero', 'Get Started', '/contact')}
+                href="/founding-pilot"
+                onClick={() => analytics.trackCTAClick('hero', 'Join Founding Pilot', '/founding-pilot')}
                 className="group bg-primary hover:bg-primary-hover text-background px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 glow-effect hover:scale-105"
               >
-                Get Started
+                Join Founding Pilot
                 <svg
                   className="ml-2 -mr-1 w-5 h-5 inline transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -104,13 +104,15 @@ export function HeroSection() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
-              
+
               <Link
-                href="/projects"
-                onClick={() => analytics.trackCTAClick('hero', 'See Case Studies', '/projects')}
+                href="https://calendly.com/resiliotech/30min-audit"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => analytics.trackCTAClick('hero', 'Book Free Audit', 'https://calendly.com/resiliotech/30min-audit')}
                 className="group px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
-                See Case Studies
+                Book Free Audit
                 <svg
                   className="ml-2 -mr-1 w-5 h-5 inline transition-transform group-hover:scale-110"
                   fill="none"
@@ -125,44 +127,28 @@ export function HeroSection() {
 
             {/* Stats */}
             <div className="mt-16 grid grid-cols-2 gap-8 lg:grid-cols-4">
-              {stats.map((stat, index) => {
-                // Map stats to relevant project cases
-                const projectLinks = {
-                  'Deployment Frequency': '/projects/devops-pipeline-automation',
-                  'Infrastructure Cost': '/projects/ecommerce-platform-modernization',
-                  'Time to Market': '/projects/devops-pipeline-automation',
-                  'System Reliability': '/projects/ecommerce-platform-modernization'
-                }
-
-                return (
-                  <div
-                    key={stat.label}
-                    className={cn(
-                      'animate-on-scroll animate-fade-in-up text-center group hover-scale',
-                      index === 0 && 'stagger-1',
-                      index === 1 && 'stagger-2',
-                      index === 2 && 'stagger-3',
-                      index === 3 && 'stagger-4'
-                    )}
-                  >
-                    <div className="text-3xl font-bold text-primary mb-2">
-                      {stat.value}
-                    </div>
-                    <div className="text-sm font-semibold text-accent mb-1">
-                      {stat.highlight}
-                    </div>
-                    <div className="text-sm text-text-muted mb-2">
-                      {stat.label}
-                    </div>
-                    <Link
-                      href={projectLinks[stat.label as keyof typeof projectLinks]}
-                      className="text-xs text-primary hover:text-primary-hover transition-colors underline"
-                    >
-                      See how →
-                    </Link>
+              {stats.map((stat, index) => (
+                <div
+                  key={stat.label}
+                  className={cn(
+                    'animate-on-scroll animate-fade-in-up text-center',
+                    index === 0 && 'stagger-1',
+                    index === 1 && 'stagger-2',
+                    index === 2 && 'stagger-3',
+                    index === 3 && 'stagger-4'
+                  )}
+                >
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    {stat.value}
                   </div>
-                )
-              })}
+                  <div className="text-sm font-semibold text-accent mb-1">
+                    {stat.highlight}
+                  </div>
+                  <div className="text-sm text-text-muted">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

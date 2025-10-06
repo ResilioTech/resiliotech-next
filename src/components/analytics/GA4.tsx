@@ -10,8 +10,8 @@ import { siteConfig } from '@/lib/config'
 export function GA4() {
   const ga4Id = siteConfig.analytics.ga4
 
-  // Don't load in development or if ID is not configured
-  if (process.env.NODE_ENV === 'development' || !ga4Id || ga4Id === 'G-XXXXXXXXXX') {
+  // Don't load in development
+  if (process.env.NODE_ENV === 'development') {
     return null
   }
 

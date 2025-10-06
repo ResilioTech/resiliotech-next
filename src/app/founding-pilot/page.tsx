@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
 import {
@@ -16,11 +16,11 @@ import {
 
 export const metadata: Metadata = {
   title: 'Founding Pilot Program | Fixed-Fee DevOps Implementation',
-  description: `Join ${siteConfig.founding.slots} teams per month. Fixed-scope DevOps implementation: CI/CD, IaC, observability, cost guardrails. Risk-free: pay ₹0 if we don't deliver.`,
+  description: 'Join 3 teams per month. Fixed-scope DevOps implementation: CI/CD, IaC, observability, cost guardrails. Risk-free: pay nothing if we do not deliver.',
   openGraph: {
     title: 'Founding Pilot Program - Resiliotech',
     description: 'Fixed-fee DevOps implementation for seed to Series A startups',
-    url: \`\${siteConfig.url}/founding-pilot\`,
+    url: 'https://resiliotech.com/founding-pilot',
   }
 }
 
@@ -34,7 +34,7 @@ export default function FoundingPilotPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
-            name: "Founding Pilot — DevOps Acceleration",
+            name: "Founding Pilot - DevOps Acceleration",
             description: "Fixed-scope DevOps implementation: CI/CD baseline, IaC, observability, and cost guardrails for startups.",
             provider: {
               "@type": "Organization",
@@ -43,7 +43,7 @@ export default function FoundingPilotPage() {
             areaServed: "Global",
             availableChannel: {
               "@type": "ServiceChannel",
-              serviceUrl: \`\${siteConfig.url}/founding-pilot\`
+              serviceUrl: `${siteConfig.url}/founding-pilot`
             },
             offers: {
               "@type": "Offer",
@@ -94,7 +94,7 @@ export default function FoundingPilotPage() {
           {/* Trust Badge */}
           <p className="text-sm text-text-muted">
             <Shield className="w-4 h-4 inline mr-2 text-green-500" />
-            Risk-free: Pay ₹0 if we don't hit success criteria
+            Risk-free: Pay nothing if we don't hit success criteria
           </p>
         </div>
       </section>
@@ -128,7 +128,7 @@ export default function FoundingPilotPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span>Environment promotions (dev → staging → prod)</span>
+                  <span>Environment promotions (dev - staging - prod)</span>
                 </li>
               </ul>
             </div>
@@ -237,7 +237,7 @@ export default function FoundingPilotPage() {
             Success Criteria
           </h2>
           <p className="text-lg text-text-secondary text-center mb-12">
-            Clear, measurable outcomes—not hand-wavy consulting
+            Clear, measurable outcomes - not hand-wavy consulting
           </p>
 
           <div className="bg-background border-2 border-primary/20 rounded-xl p-8">
@@ -282,7 +282,7 @@ export default function FoundingPilotPage() {
             <div className="mt-8 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
               <p className="text-green-600 dark:text-green-400 font-semibold flex items-center gap-2">
                 <Shield className="w-5 h-5" />
-                If we don't hit all 3 criteria, you pay ₹0
+                If we don't hit all 3 criteria, you pay nothing
               </p>
             </div>
           </div>
@@ -300,11 +300,19 @@ export default function FoundingPilotPage() {
           </p>
 
           <form
-            action={siteConfig.forms.pilot}
+            name="founding-pilot"
             method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
             className="space-y-6 bg-surface border border-border rounded-xl p-8"
           >
+            <input type="hidden" name="form-name" value="founding-pilot" />
             <input type="hidden" name="source_page" value="founding-pilot" />
+
+            {/* Honeypot for spam protection */}
+            <div style={{ display: "none" }}>
+              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </div>
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-2">
@@ -401,15 +409,6 @@ export default function FoundingPilotPage() {
                 placeholder="E.g., Ship MVP faster, reduce AWS costs, improve reliability..."
               />
             </div>
-
-            {/* Honeypot */}
-            <input
-              type="text"
-              name="_gotcha"
-              style={{ display: "none" }}
-              tabIndex={-1}
-              autoComplete="off"
-            />
 
             <button
               type="submit"

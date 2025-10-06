@@ -6,7 +6,7 @@ export const microSaasProducts: ProductInfo[] = [
     tagline: 'Simplified CI/CD for Startups',
     description: 'Zero-config CI/CD pipelines that automatically detect your stack and deploy to production in minutes. Perfect for teams who want to focus on building, not managing infrastructure.',
     launchDate: undefined,
-    status: 'launched',
+    status: 'alpha',
     category: 'deployment',
     features: [
       {
@@ -38,7 +38,7 @@ export const microSaasProducts: ProductInfo[] = [
     ],
     targetAudience: ['Startups', 'Solo developers', 'Small teams'],
     pricing: {
-      isRevealed: true,
+      isRevealed: false,
       startingPrice: 29,
       pricingModel: 'per project/month'
     }

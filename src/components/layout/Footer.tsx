@@ -17,7 +17,9 @@ const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Case Studies', href: '/projects' },
+    { name: 'Founding Pilot', href: '/founding-pilot' },
+    { name: 'Roadmap', href: '/roadmap' },
+    { name: 'Changelog', href: '/changelog' },
     { name: 'Contact', href: '/contact' },
   ],
   legal: [
@@ -182,15 +184,20 @@ export const Footer = memo(function Footer() {
           <div className="md:flex md:items-center md:justify-between">
             <div className="flex space-x-6 md:order-2">
               <Link
-                href="/contact"
+                href="/founding-pilot"
                 className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-colors"
               >
-                Start Your Project
+                Join Founding Pilot
               </Link>
             </div>
-            <p className="mt-8 text-base text-text-muted md:order-1 md:mt-0">
-              &copy; 2024 Resiliotech. All rights reserved.
-            </p>
+            <div className="mt-8 md:order-1 md:mt-0">
+              <p className="text-base text-text-muted">
+                &copy; 2025 Resiliotech. Built in India.
+              </p>
+              <p className="text-sm text-text-muted mt-1">
+                Support: Mon-Fri 10:00-19:00 IST
+              </p>
+            </div>
           </div>
         </div>
       </div>

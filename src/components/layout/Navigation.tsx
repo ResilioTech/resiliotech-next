@@ -71,7 +71,9 @@ const navigationItems = [
   { name: 'Home', href: '/', hasDropdown: false },
   { name: 'Services', href: '/services', hasDropdown: true },
   { name: 'Products', href: '/products', hasDropdown: false },
-  { name: 'Case Studies', href: '/projects', hasDropdown: false },
+  { name: 'Founding Pilot', href: '/founding-pilot', hasDropdown: false },
+  { name: 'Roadmap', href: '/roadmap', hasDropdown: false },
+  { name: 'Changelog', href: '/changelog', hasDropdown: false },
   { name: 'Blog', href: '/blog', hasDropdown: false },
   { name: 'About', href: '/about', hasDropdown: false }
 ]
@@ -233,10 +235,10 @@ export const Navigation = memo(function Navigation() {
             {/* CTA Button */}
             <div className="hidden md:block">
               <Link
-                href="/contact"
+                href="/founding-pilot"
                 className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
-                Get Started
+                Join Pilot
               </Link>
             </div>
 
@@ -333,10 +335,10 @@ export const Navigation = memo(function Navigation() {
             
             <div className="pt-6 border-t border-border">
               <Link
-                href="/contact"
+                href="/founding-pilot"
                 className="block w-full bg-primary hover:bg-primary-hover text-background px-6 py-3 rounded-lg font-semibold text-center transition-colors"
               >
-                Get Started
+                Join Pilot
               </Link>
             </div>
           </div>

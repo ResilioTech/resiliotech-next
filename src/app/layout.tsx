@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Navigation } from '@/components/layout/Navigation'
 import { Footer } from '@/components/layout/Footer'
+import { GA4 } from '@/components/analytics/GA4'
+import { Clarity } from '@/components/analytics/Clarity'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -89,6 +91,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className={`${inter.className} antialiased`}>
+        <GA4 />
+        <Clarity />
+
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"
