@@ -52,24 +52,24 @@ const devopsAutomationService: ServiceData = {
 
   benefits: [
     {
-      title: '10x faster deployments',
-      description: 'Reduce deployment time from hours to minutes',
-      metric: '90% time saved'
+      title: 'Faster deployments',
+      description: 'Pilot target: reduce deployment time from hours to minutes',
+      metric: '(target)'
     },
     {
-      title: '99.9% deployment success rate',
-      description: 'Automated testing and validation prevents failed deployments',
-      metric: '75% fewer incidents'
+      title: 'Higher deployment success',
+      description: 'Automated testing and validation to prevent failed deployments',
+      metric: '(target)'
     },
     {
-      title: 'Instant rollbacks',
-      description: 'Recover from issues in under 5 minutes',
-      metric: '<5min recovery'
+      title: 'Quick rollbacks',
+      description: 'Pilot target: recover from issues rapidly',
+      metric: '(target)'
     },
     {
-      title: 'Developer productivity boost',
+      title: 'Developer productivity',
       description: 'Focus on features, not deployment complexity',
-      metric: '40% more features'
+      metric: '(target)'
     }
   ],
 

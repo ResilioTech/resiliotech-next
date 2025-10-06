@@ -19,24 +19,24 @@ export function ProjectsTeaser() {
   const featuredProjects = [
     {
       title: 'E-Commerce Platform Modernization',
-      category: 'Web Application',
-      result: '99.9% uptime achieved',
+      category: 'Sample Architecture',
+      result: 'High availability target',
       tech: ['React', 'Node.js', 'Kubernetes'],
       image: '/project-images/ecommerce-thumb.jpg',
       slug: 'ecommerce-platform-modernization'
     },
     {
       title: 'AI-Powered Analytics Dashboard',
-      category: 'Data Analytics',
-      result: '95% reduction in analysis time',
+      category: 'Sample Architecture',
+      result: 'Performance optimization',
       tech: ['Python', 'React', 'TensorFlow'],
       image: '/project-images/analytics-thumb.jpg',
       slug: 'ai-analytics-dashboard'
     },
     {
       title: 'Mobile Banking Application',
-      category: 'Mobile App',
-      result: '250K+ active users',
+      category: 'Sample Architecture',
+      result: 'Scalability demonstration',
       tech: ['React Native', 'Node.js', 'AWS'],
       image: '/project-images/banking-thumb.jpg',
       slug: 'mobile-banking-app'
@@ -44,10 +44,10 @@ export function ProjectsTeaser() {
   ];
 
   const stats = [
-    { icon: Code, value: '50+', label: 'Projects Delivered' },
+    { icon: Code, value: 'Sample', label: 'Architectures' },
     { icon: Users, value: '3', label: 'Pilot Slots/Month' },
-    { icon: TrendingUp, value: '99%', label: 'Success Rate' },
-    { icon: Award, value: '5+', label: 'Years Experience' }
+    { icon: TrendingUp, value: 'Public', label: 'Roadmap' },
+    { icon: Award, value: '1+', label: 'Years Building' }
   ];
 
   const containerVariants = {

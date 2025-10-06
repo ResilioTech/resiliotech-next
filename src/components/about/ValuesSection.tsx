@@ -132,8 +132,8 @@ export function ValuesSection({ values }: ValuesSectionProps) {
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="text-center p-4">
-                  <div className="text-2xl font-bold text-accent mb-2">24/7</div>
-                  <div className="text-sm text-text-secondary">Support Response Time</div>
+                                    <div className="text-2xl font-bold text-accent mb-2">IST</div>
+                  <div className="text-sm text-text-muted">Support Hours</div>
                 </div>
                 <div className="text-center p-4">
                   <div className="text-2xl font-bold text-accent mb-2">100%</div>
@@ -144,8 +144,8 @@ export function ValuesSection({ values }: ValuesSectionProps) {
                   <div className="text-sm text-text-secondary">Data Breaches</div>
                 </div>
                 <div className="text-center p-4">
-                  <div className="text-2xl font-bold text-accent mb-2">4.9/5</div>
-                  <div className="text-sm text-text-secondary">Average Client Rating</div>
+                                    <div className="text-2xl font-bold text-accent mb-2">Public</div>
+                  <div className="text-sm text-text-muted">Roadmap</div>
                 </div>
               </div>
             </div>

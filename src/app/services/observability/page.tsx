@@ -53,23 +53,23 @@ const observabilityService: ServiceData = {
   benefits: [
     {
       title: 'Faster issue resolution',
-      description: 'Identify and resolve issues before users notice',
-      metric: '75% faster MTTR'
+      description: 'Pilot target: identify and resolve issues before users notice',
+      metric: '(target)'
     },
     {
       title: 'Improved system reliability',
-      description: 'Proactive monitoring prevents outages',
-      metric: '99.9% uptime'
+      description: 'Proactive monitoring to prevent outages',
+      metric: '(target)'
     },
     {
       title: 'Better user experience',
       description: 'Monitor and optimize application performance',
-      metric: '40% better performance'
+      metric: '(target)'
     },
     {
       title: 'Reduced operational costs',
       description: 'Optimize resource usage and prevent waste',
-      metric: '30% cost reduction'
+      metric: '(target)'
     }
   ],
 

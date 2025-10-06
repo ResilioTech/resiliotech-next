@@ -176,11 +176,11 @@ export function ContactHero() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-sm">4.9/5 client satisfaction</span>
+                <span className="text-sm">IST support hours</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-sm">24/7 support available</span>
+                <span className="text-sm">Mon–Fri 10:00–19:00 IST</span>
               </div>
             </div>
           </motion.div>

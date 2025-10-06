@@ -1,6 +1,6 @@
 # Product Roadmap
 
-Last updated: January 2025
+Last updated: October 6, 2025
 
 This is our public roadmap. We build in the open and ship weekly.
 

@@ -26,7 +26,7 @@ const services = [
     icon: '🔄',
     href: '/services/devops-automation',
     color: 'from-primary to-blue-400',
-    startingPrice: '$2,500',
+    startingPrice: 'Pilot',
   },
   {
     title: 'Cloud Infrastructure',
@@ -35,7 +35,7 @@ const services = [
     icon: '☁️',
     href: '/services/cloud-infrastructure',
     color: 'from-secondary to-purple-400',
-    startingPrice: '$3,500',
+    startingPrice: 'Pilot',
   },
   {
     title: 'MLOps & Data Pipeline',
@@ -44,7 +44,7 @@ const services = [
     icon: '🤖',
     href: '/services/mlops',
     color: 'from-accent to-green-400',
-    startingPrice: '$4,500',
+    startingPrice: 'Pilot',
   },
   {
     title: 'Observability & Monitoring',
@@ -53,7 +53,7 @@ const services = [
     icon: '📊',
     href: '/services/observability',
     color: 'from-yellow-400 to-orange-400',
-    startingPrice: '$2,000',
+    startingPrice: 'Pilot',
   },
   {
     title: 'Security & Compliance',
@@ -62,15 +62,15 @@ const services = [
     icon: '🔒',
     href: '/services/security',
     color: 'from-red-400 to-pink-400',
-    startingPrice: '$3,000',
+    startingPrice: 'Pilot',
   },
 ];
 
 const stats = [
-  { number: '500+', label: 'Projects Delivered', description: 'Successful implementations' },
-  { number: '98%', label: 'Client Satisfaction', description: 'Consistently high ratings' },
-  { number: '60%', label: 'Cost Reduction', description: 'Average infrastructure savings' },
-  { number: '10x', label: 'Deployment Speed', description: 'Faster time to market' },
+  { number: 'Pilot', label: 'Targets', description: 'Measured outcomes' },
+  { number: '3', label: 'Slots/Month', description: 'Founding Pilot Program' },
+  { number: 'Public', label: 'Roadmap', description: 'Building in public' },
+  { number: 'IST', label: 'Support Hours', description: 'Mon–Fri 10:00–19:00' },
 ];
 
 export default function ServicesPage() {

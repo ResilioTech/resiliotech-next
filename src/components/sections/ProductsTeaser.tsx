@@ -206,7 +206,7 @@ export function ProductsTeaser() {
               Ready to Streamline Your DevOps?
             </h3>
             <p className="text-text-secondary mb-8">
-              Join thousands of developers already using our focused tools to ship faster and more reliably.
+              Join the early waitlist to shape our tools as we build them in public.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
