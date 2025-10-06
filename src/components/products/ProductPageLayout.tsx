@@ -37,6 +37,11 @@ interface ProductPageLayoutProps {
 }
 
 const statusConfig = {
+  alpha: {
+    label: 'Private Alpha',
+    color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+    icon: '⚡'
+  },
   beta: {
     label: 'Beta',
     color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
@@ -125,6 +130,14 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
                     className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
                   >
                     Get Started Today
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                ) : product.status === 'alpha' ? (
+                  <a
+                    href="/contact"
+                    className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
+                  >
+                    Request Access
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </a>
                 ) : (

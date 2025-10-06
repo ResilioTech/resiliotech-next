@@ -48,5 +48,28 @@
       <input type="hidden" name="form-name" value="blog-newsletter" />
       <input name="email" type="email" />
     </form>
+
+    <!-- Founding Pilot form -->
+    <form name="founding-pilot" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="founding-pilot" />
+      <input type="hidden" name="source_page" value="founding-pilot" />
+      <input name="bot-field" type="text" />
+      <input name="email" type="email" />
+      <input name="team_size" type="radio" value="1-5" />
+      <input name="team_size" type="radio" value="6-15" />
+      <input name="team_size" type="radio" value="16-50" />
+      <input name="team_size" type="radio" value="50+" />
+      <input name="cloud" type="radio" value="AWS" />
+      <input name="cloud" type="radio" value="Azure" />
+      <input name="cloud" type="radio" value="GCP" />
+      <input name="cloud" type="radio" value="other" />
+      <select name="urgency">
+        <option value="asap">ASAP (within 2 weeks)</option>
+        <option value="month">Within 1 month</option>
+        <option value="quarter">Within 3 months</option>
+        <option value="exploring">Just exploring</option>
+      </select>
+      <textarea name="goal"></textarea>
+    </form>
   </body>
 </html>

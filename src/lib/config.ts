@@ -26,14 +26,11 @@ export const siteConfig = {
   },
 
   // External Links
-  calendly: "https://calendly.com/resiliotech/30min-audit",
+  calendly: "https://calendly.com/resiliotech",
 
-  // Form Endpoints (Replace with your actual endpoints)
+  // Form Endpoints (Netlify Forms - no action needed, forms handled by Netlify)
   forms: {
-    waitlist: "https://formspree.io/f/YOUR_FORM_ID",
-    leadMagnet: "https://formspree.io/f/YOUR_FORM_ID",
-    contact: "https://formspree.io/f/YOUR_FORM_ID",
-    pilot: "https://formspree.io/f/YOUR_FORM_ID"
+    netlify: true, // Using Netlify Forms
   },
 
   // Social Links
@@ -46,7 +43,14 @@ export const siteConfig = {
 
   // Analytics
   analytics: {
-    ga4: "G-XXXXXXXXXX", // Replace with your GA4 measurement ID
+    ga4: "G-GBTY565EQ7",
+    clarity: "sr1y78mww9",
+  },
+
+  // reCAPTCHA
+  recaptcha: {
+    siteKey: "6Ld9bp0rAAAAACdIYemp9LvEyC6NGghMjeyUkR0u",
+    // Secret key should be in environment variables, not in client code
   },
 
   // Business Model
