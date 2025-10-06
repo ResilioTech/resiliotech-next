@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   keywords: ['contact resiliotech', 'devops consulting', 'free consultation', 'cloud migration', 'infrastructure help'],
   openGraph: {
     title: 'Contact Us - Get Your DevOps Project Started | Resiliotech',
-    description: 'Ready to transform your infrastructure? Contact our team of experts from Google, Netflix, and Stripe for your DevOps transformation.',
+    description: 'Ready to transform your infrastructure? Contact Resiliotech for DevOps automation and cloud infrastructure services.',
     images: ['/og-images/contact-us.png'],
   },
   twitter: {
     title: 'Contact Us - Get Your DevOps Project Started | Resiliotech',
-    description: 'Ready to transform your infrastructure? Contact our team of experts from Google, Netflix, and Stripe for your DevOps transformation.',
+    description: 'Ready to transform your infrastructure? Contact Resiliotech for DevOps automation and cloud infrastructure services.',
   },
 };
 
@@ -74,9 +74,12 @@ export default function ContactPage() {
               </div>
               
               <div className="p-6 bg-surface-elevated border border-border rounded-lg">
-                <h3 className="font-semibold text-text-primary mb-2">Emergency Support</h3>
-                <p className="text-text-secondary text-sm">
-                  For existing clients with urgent issues
+                <h3 className="font-semibold text-text-primary mb-2">Support Hours</h3>
+                <p className="text-text-secondary text-sm mb-2">
+                  Mon–Fri 10:00–19:00 IST
+                </p>
+                <p className="text-text-muted text-xs">
+                  For Founding Pilot clients
                 </p>
               </div>
             </div>
