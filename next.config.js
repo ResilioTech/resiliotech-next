@@ -51,64 +51,7 @@ const nextConfig = {
       exclude: ['error', 'warn'],
     },
   },
-  // Webpack optimizations
-  webpack: (config, { dev, isServer }) => {
-    // Split chunks for better caching and performance
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        maxInitialRequests: 25,
-        maxAsyncRequests: 30,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          // Separate chunk for React and core libraries
-          react: {
-            name: 'react',
-            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
-            chunks: 'all',
-            priority: 40,
-            enforce: true,
-          },
-          // Separate chunk for animation libraries (framer-motion is heavy)
-          animations: {
-            name: 'animations',
-            test: /[\\/]node_modules[\\/](framer-motion)[\\/]/,
-            chunks: 'async', // Load async to not block initial render
-            priority: 30,
-            enforce: true,
-          },
-          // Icons in separate chunk
-          icons: {
-            name: 'icons',
-            test: /[\\/]node_modules[\\/](lucide-react)[\\/]/,
-            chunks: 'all',
-            priority: 25,
-            enforce: true,
-          },
-          // Form libraries
-          forms: {
-            name: 'forms',
-            test: /[\\/]node_modules[\\/](react-hook-form|@hookform)[\\/]/,
-            chunks: 'async', // Forms typically below fold
-            priority: 20,
-            enforce: true,
-          },
-          // Other vendors
-          vendor: {
-            name: 'vendors',
-            chunks: 'all',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 10,
-            minChunks: 1,
-            reuseExistingChunk: true,
-          },
-        },
-      };
-    }
-
-    return config;
-  },
+  // Use Next.js default webpack optimization (already optimized)
   // Performance optimization
   swcMinify: true,
   reactStrictMode: true,

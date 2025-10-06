@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { analytics } from '@/lib/analytics'
-import { Rocket, Zap, Shield, BarChart3, Bot } from 'lucide-react'
+import { Rocket } from 'lucide-react'
 import '@/styles/animations.css'
 
 const stats = [
