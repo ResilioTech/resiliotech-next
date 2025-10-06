@@ -74,7 +74,7 @@ export function BlogStats({ stats }: BlogStatsProps) {
       icon: '🚀',
       description: 'Quality content on DevOps, Cloud & MLOps'
     }
-  ]
+  ].filter(item => typeof item.value === 'string' || item.value > 0)
 
   return (
     <div className={cn(

@@ -32,11 +32,12 @@ export default function ProductsPage() {
   const getProductSlug = (productName: string) => {
     const slugMap: { [key: string]: string } = {
       'DeployFlow': 'deployflow',
-      'CloudWatch Pro': 'cloudwatch-pro', 
+      'SignalWatch': 'cloudwatch-pro',
+      'CloudWatch Pro': 'cloudwatch-pro', // Legacy compatibility
       'SecureOps': 'secureops',
       'InfraScale': 'infrascale'
     };
-    
+
     return slugMap[productName] || productName.toLowerCase().replace(/\s+/g, '-');
   };
 
@@ -209,7 +210,7 @@ export default function ProductsPage() {
               },
               {
                 question: 'Can these products work together?',
-                answer: 'Absolutely! While each product is standalone, they\'re designed to integrate seamlessly. For example, DeployFlow can trigger CloudWatch Pro monitoring and SecureOps scanning automatically.'
+                answer: 'Absolutely! While each product is standalone, they\'re designed to integrate seamlessly. For example, DeployFlow can trigger SignalWatch monitoring and SecureOps scanning automatically.'
               },
               {
                 question: 'What about pricing and billing?',

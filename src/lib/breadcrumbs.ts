@@ -55,13 +55,13 @@ function getBreadcrumbName(segment: string, segments: string[], index: number): 
     case 'deployflow':
       return 'DeployFlow';
     case 'cloudwatch-pro':
-      return 'CloudWatch Pro';
+      return 'SignalWatch';
     case 'secureops':
       return 'SecureOps';
     case 'infrascale':
       return 'InfraScale';
     case 'projects':
-      return 'Case Studies';
+      return 'Sample Architectures';
     default:
       // For dynamic routes like blog slugs or project slugs, use title case
       if (index === segments.length - 1) {
