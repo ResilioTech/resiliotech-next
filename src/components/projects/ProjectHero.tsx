@@ -157,14 +157,14 @@ export function ProjectHero({
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <div className="flex items-center gap-2 text-text-muted">
-              <MapPin className="w-4 h-4" />
-              <span>Serving clients globally</span>
+            <div className="flex items-center gap-2 text-text-secondary">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <span>Building in public</span>
             </div>
             <div className="hidden sm:block w-px h-4 bg-border"></div>
-            <div className="flex items-center gap-2 text-text-muted">
-              <Users className="w-4 h-4" />
-              <span>Trusted by {Math.floor(totalProjects * 1.2)} companies</span>
+            <div className="flex items-center gap-2 text-text-secondary">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <span>See our Roadmap & Changelog</span>
             </div>
           </motion.div>
         </motion.div>

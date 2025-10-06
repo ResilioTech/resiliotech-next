@@ -68,6 +68,15 @@ This is our public roadmap. We build in the open and ship weekly.
 
 ## 📊 Completed
 
+### October 2025
+- [x] Website honesty pass completed
+- [x] Removed all inflated claims and fake client counts
+- [x] Fixed primary CTA (Calendly) site-wide
+- [x] Aligned product pages to "Private Alpha" status
+- [x] Removed Bitcoin logo from tech stack
+- [x] Updated all social links and credibility statements
+- [x] Replaced "Trusted by X" with "Building in public"
+
 ### January 2025
 - [x] Founding pilot offer launched
 - [x] Website day-0 revamp

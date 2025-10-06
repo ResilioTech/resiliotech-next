@@ -172,7 +172,7 @@ export function ContactHero() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-text-muted">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-sm">Trusted by 85+ companies</span>
+                <span className="text-sm">We're building in public — see our Roadmap and Changelog</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full"></div>

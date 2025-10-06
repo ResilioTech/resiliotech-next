@@ -280,7 +280,7 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
               Ready to Transform Your {service.title}?
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Join hundreds of companies that have successfully modernized their infrastructure with our expert guidance.
+              We're building in public — see our <a href="/roadmap" className="text-primary hover:underline">Roadmap</a> and <a href="/changelog" className="text-primary hover:underline">Changelog</a> for our latest progress.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

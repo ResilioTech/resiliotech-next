@@ -106,13 +106,13 @@ export function HeroSection() {
               </Link>
 
               <Link
-                href="https://calendly.com/resiliotech/30min-audit"
+                href="https://calendly.com/resiliotech"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => analytics.trackCTAClick('hero', 'Book Free Audit', 'https://calendly.com/resiliotech/30min-audit')}
+                onClick={() => analytics.trackCTAClick('hero', 'Book a Free 30-min Audit', 'https://calendly.com/resiliotech')}
                 className="group px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
               >
-                Book Free Audit
+                Book a Free 30-min Audit
                 <svg
                   className="ml-2 -mr-1 w-5 h-5 inline transition-transform group-hover:scale-110"
                   fill="none"
