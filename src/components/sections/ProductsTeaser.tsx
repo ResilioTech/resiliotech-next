@@ -229,7 +229,7 @@ export function ProductsTeaser() {
           {/* Social Proof */}
           <div className="flex items-center justify-center gap-2 text-text-muted mt-8">
             <Users className="w-4 h-4" />
-            <span className="text-sm">Trusted by 50+ development teams</span>
+            <span className="text-sm">Building in public — Private Alpha</span>
           </div>
         </motion.div>
       </div>

@@ -20,7 +20,7 @@ const technologies = [
   { name: 'ArgoCD', logo: '/tech-logos/13-argocd.svg', category: 'GitOps' },
   { name: 'Elasticsearch', logo: '/tech-logos/14-elasticsearch.svg', category: 'Logging' },
   { name: 'Vault', logo: '/tech-logos/15-vault.svg', category: 'Security' },
-  { name: 'Bitcoin', logo: '/tech-logos/16-bitcoin.svg', category: 'Blockchain' },
+  { name: 'Gitlab CI/CD', logo: '/tech-logos/16-gitlab.svg', category: 'CI/CD' },
 ]
 
 export function TechStackSection() {

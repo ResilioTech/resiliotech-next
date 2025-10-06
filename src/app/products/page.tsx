@@ -69,24 +69,14 @@ export default function ProductsPage() {
             </h1>
             
             <p className="text-xl text-text-secondary leading-relaxed mb-12 max-w-4xl mx-auto">
-              We're building focused micro SaaS products that solve specific DevOps challenges. 
-              Each tool excels at one thing and integrates seamlessly with your existing workflow.
+              In development — join the waitlist to get early updates. We're building focused micro SaaS products that solve specific DevOps challenges.
             </p>
 
-            {/* Quick Stats */}
+            {/* Build in Public Message */}
             <div className="flex flex-wrap justify-center gap-8 mb-12">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{microSaasProducts.length}</div>
-                <div className="text-sm text-text-muted">Products</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">$29+</div>
-                <div className="text-sm text-text-muted">Starting Price</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">500+</div>
-                <div className="text-sm text-text-muted">Beta Users</div>
-              </div>
+              <p className="text-text-secondary">
+                We're building in public — see our <a href="/roadmap" className="text-primary hover:underline">Roadmap</a> and <a href="/changelog" className="text-primary hover:underline">Changelog</a>.
+              </p>
             </div>
           </div>
         </div>

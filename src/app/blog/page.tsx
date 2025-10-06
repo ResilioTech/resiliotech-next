@@ -172,12 +172,15 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
               DevOps Blog
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-text-primary mb-6 leading-tight">
-              DevOps <span className="gradient-text">Insights</span>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight">
+              DevOps Insights & Best Practices
             </h1>
-            <p className="text-xl text-text-secondary mb-10 max-w-3xl mx-auto leading-relaxed">
-              Expert insights, best practices, and real-world experiences from our team 
+            <p className="text-lg md:text-xl text-text-secondary leading-relaxed mb-4 max-w-3xl mx-auto">
+              Practical guides, tutorials, and strategies for modern DevOps teams — 
               helping startups scale their infrastructure and development processes.
+            </p>
+            <p className="text-sm text-accent font-medium mb-6">
+              📝 New posts coming shortly
             </p>
             
             {/* Blog Stats */}
@@ -306,7 +309,7 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
 
               {/* Newsletter Signup */}
               <NewsletterSignup 
-                title="Join 5,000+ DevOps Pros"
+                title="Join Our DevOps Newsletter"
                 description="Get weekly insights, tutorials, and industry updates. No spam, just actionable content."
                 source="blog-sidebar"
                 compact={true}

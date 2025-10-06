@@ -79,13 +79,13 @@ export function TestimonialsSection() {
             'text-3xl font-bold text-text-primary sm:text-4xl transition-all duration-1000',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}>
-            Trusted by <span className="gradient-text">Growing Startups</span>
+            Building in <span className="gradient-text">Public</span>
           </h2>
           <p className={cn(
             'mt-4 text-xl text-text-secondary max-w-3xl mx-auto transition-all duration-1000 delay-200',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}>
-            See how we've helped startups scale from idea to IPO
+            See our <a href="/roadmap" className="text-primary hover:underline">Roadmap</a> and <a href="/changelog" className="text-primary hover:underline">Changelog</a> for our journey
           </p>
         </div>
 
@@ -180,7 +180,7 @@ export function TestimonialsSection() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         )}>
           <p className="text-text-muted text-sm mb-8">
-            Trusted by startups at every stage
+            Join our Founding Pilot Program
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
             {logos.map((logo, index) => (

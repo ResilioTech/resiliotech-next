@@ -45,7 +45,7 @@ export function ProjectsTeaser() {
 
   const stats = [
     { icon: Code, value: '50+', label: 'Projects Delivered' },
-    { icon: Users, value: '100+', label: 'Happy Clients' },
+    { icon: Users, value: '3', label: 'Pilot Slots/Month' },
     { icon: TrendingUp, value: '99%', label: 'Success Rate' },
     { icon: Award, value: '5+', label: 'Years Experience' }
   ];

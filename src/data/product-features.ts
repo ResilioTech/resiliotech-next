@@ -32,7 +32,7 @@ export const microSaasProducts: ProductInfo[] = [
       }
     ],
     benefits: [
-      'Deploy in under 5 minutes',
+      'Target: deploy in under 5 minutes (Private Alpha)',
       'Zero configuration required',
       'Automatic rollbacks on failure'
     ],

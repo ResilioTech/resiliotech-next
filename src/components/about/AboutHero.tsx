@@ -43,10 +43,10 @@ export function AboutHero({ stats }: AboutHeroProps) {
   };
 
   const statsData = [
-    { icon: TrendingUp, value: `${stats.yearsInBusiness}+`, label: 'Years in Business' },
-    { icon: Award, value: `${stats.projectsCompleted}+`, label: 'Projects Completed' },
-    { icon: Users, value: `${stats.clientsServed}+`, label: 'Clients Served' },
-    { icon: Target, value: stats.uptimeAchieved, label: 'Average Uptime' }
+    { icon: TrendingUp, value: '1+', label: 'Years Building' },
+    { icon: Award, value: '3', label: 'Pilot Slots/Month' },
+    { icon: Users, value: 'Public', label: 'Roadmap' },
+    { icon: Target, value: '99.9%', label: 'Target Uptime' }
   ];
 
   return (
@@ -110,6 +110,9 @@ export function AboutHero({ stats }: AboutHeroProps) {
               We're on a mission to democratize enterprise-grade DevOps, making it accessible 
               and affordable for growing companies to build reliable, scalable infrastructure.
             </p>
+            <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mx-auto">
+              We're building in public — see our <a href="/roadmap" className="text-primary hover:underline">Roadmap</a> and <a href="/changelog" className="text-primary hover:underline">Changelog</a> for our latest progress.
+            </p>
           </motion.div>
 
           {/* Mission Statement */}
@@ -161,7 +164,7 @@ export function AboutHero({ stats }: AboutHeroProps) {
               <p className="text-lg text-text-secondary leading-relaxed">
                 Founded in 2020 by former engineers from Google, Netflix, and Stripe, Resiliotech was born 
                 from the frustration of seeing talented development teams held back by infrastructure challenges. 
-                We've since helped over 85 companies transform their DevOps practices and achieve unprecedented reliability.
+                We're building in public, starting with our Founding Pilot Program and working towards making enterprise-grade DevOps accessible to all growing companies.
               </p>
             </div>
           </motion.div>

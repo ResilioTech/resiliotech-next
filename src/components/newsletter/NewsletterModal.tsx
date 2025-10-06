@@ -104,7 +104,7 @@ export function NewsletterModal({ isOpen, onClose, trigger = 'manual' }: Newslet
               transition={{ delay: 0.4 }}
               className="text-text-secondary leading-relaxed"
             >
-              Join 5,000+ developers receiving weekly insights, tips, and updates 
+              Get weekly insights, tips, and updates on DevOps best practices 
               on the latest DevOps practices and tools.
             </motion.p>
           </div>

@@ -16,7 +16,7 @@ interface NewsletterSignupProps {
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
 export function NewsletterSignup({
-  title = "Join 5,000+ DevOps Professionals",
+  title = "Join Our DevOps Newsletter",
   description = "Get weekly insights, tutorials, and industry updates delivered straight to your inbox. No spam, just actionable content.",
   source = "newsletter",
   compact = false,

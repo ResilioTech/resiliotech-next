@@ -89,33 +89,27 @@ export const companyValues: CompanyValue[] = [
 
 export const companyMilestones: CompanyMilestone[] = [
   {
-    year: '2020',
+    year: '2024',
     title: 'Company Founded',
     description: 'Started Resiliotech with a vision to democratize enterprise-grade DevOps for growing companies.',
-    metric: 'Day 1'
+    metric: 'Founded'
   },
   {
-    year: '2021',
-    title: 'First Enterprise Client',
-    description: 'Successfully transformed our first major client\'s infrastructure, achieving 99.9% uptime and 50% cost reduction.',
-    metric: '10 clients'
+    year: '2025',
+    title: 'Building in Public',
+    description: 'Launched Founding Pilot Program and started building DeployFlow in public. See our Roadmap and Changelog.',
+    metric: 'Private Alpha'
   },
   {
-    year: '2022',
-    title: 'Team Expansion',
-    description: 'Grew to a team of 15 engineers and achieved $1M ARR helping 50+ companies scale their infrastructure.',
-    metric: '50+ clients'
+    year: 'Q2 2025',
+    title: 'DeployFlow Beta',
+    description: 'Launching DeployFlow public beta with multi-cloud support and policy library.',
+    metric: 'Public Beta'
   },
   {
-    year: '2023',
-    title: 'Product Innovation',
-    description: 'Started developing focused micro SaaS products to solve specific DevOps challenges with purpose-built tools.',
-    metric: '100+ projects'
-  },
-  {
-    year: '2024',
-    title: 'Product Portfolio Launch',
-    description: 'Launching our first micro SaaS products: DeployFlow and CloudWatch Pro, with more tools in development.',
+    year: 'Q3+ 2025',
+    title: 'Product Portfolio',
+    description: 'Expanding with InfraScale, CloudWatch Pro, and SecureOps to cover the full DevOps lifecycle.',
     metric: '4 Products'
   }
 ];
@@ -123,7 +117,7 @@ export const companyMilestones: CompanyMilestone[] = [
 export const companyStats = {
   yearsInBusiness: 4,
   projectsCompleted: 120,
-  clientsServed: 85,
+  clientsServed: 0, // Building in public - see roadmap
   uptimeAchieved: '99.9%',
   costReduction: '40%',
   teamSize: 15
