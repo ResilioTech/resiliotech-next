@@ -114,7 +114,7 @@ const cloudInfrastructureService: ServiceData = {
   pricing: {
     startingPrice: 'Founding Pilot',
     model: '3 slots/month at pilot rates',
-    description: 'We're running Founding Pilot engagements (3 slots/month) to refine our services. Join the waitlist to get pilot rates and shape how we build cloud infrastructure solutions.'
+    description: 'We\'re running Founding Pilot engagements (3 slots/month) to refine our services. Join the waitlist to get pilot rates and shape how we build cloud infrastructure solutions.'
   },
 
   faq: [
