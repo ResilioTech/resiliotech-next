@@ -62,75 +62,38 @@ export function TechStackSection() {
           </p>
         </div>
 
-        {/* Floating Tech Grid */}
-        <div className="relative">
-          {/* Background Glow */}
-          <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent opacity-50"></div>
-          
-          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 relative z-10">
-            {technologies.map((tech, index) => (
-              <div
-                key={tech.name}
-                className={cn(
-                  'group relative transition-all duration-1000',
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                )}
-                style={{ transitionDelay: `${index * 50}ms` }}
-              >
-                <div className="aspect-square bg-surface-elevated border border-border rounded-xl p-3 hover:border-primary hover:scale-110 transition-all duration-300 hover:bg-surface group-hover:shadow-xl group-hover:shadow-primary/10">
-                  <div className="flex flex-col items-center justify-center h-full space-y-2">
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      <Image
-                        src={tech.logo}
-                        alt={`${tech.name} logo`}
-                        width={64}
-                        height={64}
-                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-110"
-                        priority={index < 8}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Tooltip */}
-                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                    <div className="bg-background border border-primary/30 rounded-lg px-3 py-2 shadow-xl">
-                      <p className="text-sm font-medium text-text-primary whitespace-nowrap">
-                        {tech.name}
-                      </p>
-                      <p className="text-xs text-text-muted">
-                        {tech.category}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Simplified Tech Grid - removed tooltips and extra wrappers */}
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6">
+          {technologies.map((tech, index) => (
+            <div
+              key={tech.name}
+              className={cn(
+                'aspect-square bg-surface-elevated border border-border rounded-xl p-3 hover:border-primary hover:scale-110 transition-all',
+                isVisible ? 'opacity-100' : 'opacity-0'
+              )}
+              style={{ transitionDelay: `${index * 50}ms` }}
+              title={`${tech.name} - ${tech.category}`}
+            >
+              <Image
+                src={tech.logo}
+                alt={`${tech.name} logo`}
+                width={64}
+                height={64}
+                className="w-full h-full object-contain"
+                priority={index < 8}
+              />
+            </div>
+          ))}
         </div>
 
-        {/* Certification Badges */}
+        {/* Simplified Certification Badges - removed extra wrapper divs */}
         <div className={cn(
-          'mt-16 flex flex-wrap justify-center items-center gap-8 transition-all duration-1000 delay-1000',
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          'mt-16 flex flex-wrap justify-center gap-6 text-sm text-text-secondary transition-all',
+          isVisible ? 'opacity-100' : 'opacity-0'
         )}>
-          <div className="flex items-center space-x-2 text-text-secondary">
-            <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-              <span className="text-primary font-bold text-sm">AWS</span>
-            </div>
-            <span className="text-sm">Certified Solutions Architect</span>
-          </div>
-          <div className="flex items-center space-x-2 text-text-secondary">
-            <div className="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center">
-              <span className="text-secondary font-bold text-sm">K8s</span>
-            </div>
-            <span className="text-sm">Certified Kubernetes Administrator</span>
-          </div>
-          <div className="flex items-center space-x-2 text-text-secondary">
-            <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
-              <span className="text-accent font-bold text-sm">TF</span>
-            </div>
-            <span className="text-sm">HashiCorp Certified</span>
-          </div>
+          <span>🏆 AWS Certified Solutions Architect</span>
+          <span>🏆 Certified Kubernetes Administrator</span>
+          <span>🏆 HashiCorp Certified</span>
         </div>
       </div>
     </section>
