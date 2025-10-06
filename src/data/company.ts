@@ -20,7 +20,7 @@ export const teamMembers: TeamMember[] = [
     id: '2',
     name: 'Sarah Rodriguez',
     role: 'CTO & Co-Founder',
-    bio: 'Ex-Netflix Senior SRE with deep expertise in observability and incident management. Champions reliability engineering practices that keep systems running at 99.9% uptime.',
+    bio: 'Senior SRE with deep expertise in observability and incident management. Champions reliability engineering practices that keep systems running at high availability.',
     expertise: ['Site Reliability Engineering', 'Observability', 'Incident Management', 'Platform Engineering'],
     social: {
       linkedin: 'https://www.linkedin.com/company/resilio-tech',

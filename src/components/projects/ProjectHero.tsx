@@ -135,7 +135,7 @@ export function ProjectHero({
           <motion.div variants={itemVariants}>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
               <TrendingUp className="w-4 h-4" />
-              Portfolio Showcase
+              Sample Architectures
             </div>
           </motion.div>
 
@@ -143,14 +143,21 @@ export function ProjectHero({
             variants={itemVariants}
             className="text-5xl md:text-7xl font-bold text-text-primary mb-6 leading-tight"
           >
-            Our <span className="text-primary">Projects</span>
+            Sample <span className="text-primary">Architectures</span>
           </motion.h1>
 
           <motion.p 
             variants={itemVariants}
-            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 leading-relaxed"
+            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-4 leading-relaxed"
           >
-            Discover our journey of transforming ideas into powerful digital solutions that drive business growth and innovation
+            Internal reference architectures and technical demonstrations
+          </motion.p>
+
+          <motion.p
+            variants={itemVariants}
+            className="text-sm text-accent font-medium max-w-2xl mx-auto mb-8"
+          >
+            📋 We'll publish named case studies after our Founding Pilot engagements conclude.
           </motion.p>
 
           <motion.div 

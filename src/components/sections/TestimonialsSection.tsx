@@ -10,7 +10,7 @@ const testimonials = [
     title: "CTO",
     company: "TechFlow (YC S23)",
     avatar: "SC",
-    metrics: { deployments: "10x faster", downtime: "99.9% uptime", costs: "40% cost reduction" },
+    metrics: { deployments: "Faster (target)", downtime: "High uptime (target)", costs: "Cost reduction (target)" },
   },
   {
     content: "The infrastructure audit revealed critical security vulnerabilities we didn't know existed. Their automated monitoring solution now catches issues before they impact customers.",

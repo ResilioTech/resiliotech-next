@@ -8,10 +8,10 @@ import { Rocket, Zap, Shield, BarChart3, Bot } from 'lucide-react'
 import '@/styles/animations.css'
 
 const stats = [
-  { label: 'Deployment Frequency', value: '10x', highlight: 'Faster' },
-  { label: 'Infrastructure Cost', value: '60%', highlight: 'Reduction' },
-  { label: 'Time to Market', value: '75%', highlight: 'Faster' },
-  { label: 'System Reliability', value: '99.9%', highlight: 'Uptime' },
+  { label: 'Deployment Frequency', value: 'Faster', highlight: '(target)' },
+  { label: 'Infrastructure Cost', value: 'Lower', highlight: '(target)' },
+  { label: 'Time to Market', value: 'Faster', highlight: '(target)' },
+  { label: 'System Reliability', value: 'High', highlight: '(target)' },
 ]
 
 const floatingElements = [

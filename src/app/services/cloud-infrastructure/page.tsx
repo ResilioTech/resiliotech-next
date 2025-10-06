@@ -52,24 +52,24 @@ const cloudInfrastructureService: ServiceData = {
 
   benefits: [
     {
-      title: 'Reduced infrastructure costs',
-      description: 'Optimize resource usage and eliminate waste',
-      metric: '30-60% savings'
+      title: 'Cost optimization',
+      description: 'Pilot target: right-size resources and eliminate waste',
+      metric: '(target)'
     },
     {
-      title: 'Improved scalability',
-      description: 'Handle traffic spikes automatically',
-      metric: '10x capacity growth'
+      title: 'High availability',
+      description: 'Design for reliability and fault tolerance',
+      metric: '(target)'
     },
     {
       title: 'Enhanced security',
-      description: 'Enterprise-grade security from day one',
-      metric: '99.9% uptime SLA'
+      description: 'Implement security best practices and compliance',
+      metric: '(target)'
     },
     {
-      title: 'Faster time to market',
-      description: 'Deploy new environments in minutes',
-      metric: '80% faster deployment'
+      title: 'Faster scaling',
+      description: 'Auto-scaling to handle traffic spikes',
+      metric: '(target)'
     }
   ],
 

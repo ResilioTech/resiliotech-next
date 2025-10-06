@@ -34,7 +34,7 @@ const faqs: FAQ[] = [
   {
     id: '5',
     question: 'What kind of ongoing support do you provide?',
-    answer: 'We offer various support levels from on-demand consulting to fully managed services. Most clients start with our implementation services and then choose between quarterly check-ins, monthly optimization reviews, or 24/7 managed support.'
+    answer: 'We offer various support levels from on-demand consulting to fully managed services. Most clients start with our implementation services and then choose between quarterly check-ins, monthly optimization reviews, or ongoing managed support during IST business hours.'
   },
   {
     id: '6',

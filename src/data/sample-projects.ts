@@ -5,23 +5,23 @@ export const sampleProjects: Project[] = [
     id: '1',
     title: 'E-Commerce Platform Modernization',
     slug: 'ecommerce-platform-modernization',
-    description: 'Transformed legacy monolith into microservices architecture with 99.9% uptime and 50% faster response times.',
-    fullDescription: 'Complete platform overhaul for a rapidly growing e-commerce company, migrating from a legacy PHP monolith to a modern microservices architecture using Node.js, React, and Kubernetes.',
+    description: 'Sample architecture demonstrating microservices migration with high availability and performance optimization.',
+    fullDescription: 'Reference architecture for migrating from a legacy PHP monolith to a modern microservices architecture using Node.js, React, and Kubernetes.',
     category: 'web',
     industry: 'E-commerce',
     client: {
-      name: 'TechMart Solutions',
-      type: 'startup',
-      size: '50-100 employees'
+      name: 'Sample Project',
+      type: 'personal',
+      size: 'Reference Architecture'
     },
-    challenge: 'Legacy monolithic architecture causing frequent downtime, slow performance, and difficulty scaling during peak traffic periods like Black Friday.',
+    challenge: 'Demonstrating modern approaches to handling legacy monolithic architecture challenges: downtime prevention, performance optimization, and scaling patterns.',
     solution: 'Implemented microservices architecture with containerized deployment, auto-scaling capabilities, and comprehensive monitoring using modern DevOps practices.',
     results: [
-      '99.9% uptime achieved (up from 95.2%)',
-      '50% faster page load times',
-      'Zero downtime deployments implemented',
-      '10x faster development velocity',
-      'Reduced infrastructure costs by 30%'
+      'High availability targets demonstrated',
+      'Performance optimization patterns',
+      'Zero downtime deployment strategies',
+      'Faster development velocity patterns',
+      'Infrastructure cost optimization approaches'
     ],
     technologies: [
       { name: 'React', category: 'frontend', proficiency: 'expert' },

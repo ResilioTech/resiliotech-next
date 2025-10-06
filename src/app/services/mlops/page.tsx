@@ -53,23 +53,23 @@ const mlopsService: ServiceData = {
   benefits: [
     {
       title: 'Faster model deployment',
-      description: 'Deploy models to production in minutes, not months',
-      metric: '10x faster deployment'
+      description: 'Pilot target: streamline from development to production',
+      metric: '(target)'
     },
     {
-      title: 'Improved model accuracy',
+      title: 'Better model performance',
       description: 'Continuous monitoring and retraining',
-      metric: '25% accuracy improvement'
+      metric: '(target)'
     },
     {
-      title: 'Reduced operational overhead',
-      description: 'Automated pipelines and monitoring',
-      metric: '60% less manual work'
+      title: 'Reproducible experiments',
+      description: 'Version control for models, data, and configs',
+      metric: '(target)'
     },
     {
-      title: 'Better data quality',
-      description: 'Automated data validation and quality checks',
-      metric: '90% fewer data issues'
+      title: 'Team collaboration',
+      description: 'Unified platform for data scientists and engineers',
+      metric: '(target)'
     }
   ],
 

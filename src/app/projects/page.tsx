@@ -4,17 +4,17 @@ import { ProjectGrid } from '@/components/projects/ProjectGrid';
 import { sampleProjects } from '@/data/sample-projects';
 
 export const metadata: Metadata = {
-  title: 'Projects - Portfolio Showcase',
-  description: 'Explore our portfolio of successful projects spanning web applications, mobile apps, APIs, and DevOps solutions. See how we transform ideas into powerful digital solutions.',
-  keywords: ['portfolio', 'projects', 'web development', 'mobile apps', 'DevOps', 'case studies'],
+  title: 'Sample Architectures (Internal Builds)',
+  description: 'Internal reference architectures and technical demonstrations. We\'ll publish named case studies after our Founding Pilot engagements conclude.',
+  keywords: ['sample architectures', 'reference designs', 'DevOps patterns', 'infrastructure templates'],
   openGraph: {
-    title: 'Projects - Our Portfolio Showcase | Resiliotech',
-    description: 'Discover our journey of transforming ideas into powerful digital solutions that drive business growth and innovation.',
+    title: 'Sample Architectures (Internal Builds) | Resiliotech',
+    description: 'Internal reference architectures and technical demonstrations built to showcase our capabilities.',
     images: ['/og-images/projects-portfolio.png'],
   },
   twitter: {
-    title: 'Projects - Our Portfolio Showcase | Resiliotech',
-    description: 'Discover our journey of transforming ideas into powerful digital solutions that drive business growth and innovation.',
+    title: 'Sample Architectures (Internal Builds) | Resiliotech',
+    description: 'Internal reference architectures and technical demonstrations built to showcase our capabilities.',
   },
 };
 

@@ -35,7 +35,7 @@ const securityService: ServiceData = {
     },
     {
       title: 'Security Monitoring & Response',
-      description: '24/7 security monitoring with automated threat detection, incident response, and forensic capabilities.',
+      description: 'Security monitoring with automated threat detection, incident response, and forensic capabilities.',
       icon: 'Award'
     },
     {
@@ -54,22 +54,22 @@ const securityService: ServiceData = {
     {
       title: 'Faster compliance certification',
       description: 'Automated compliance monitoring and evidence collection',
-      metric: '60% faster SOC2'
+      metric: '(target)'
     },
     {
       title: 'Reduced security vulnerabilities',
       description: 'Early detection and prevention of security issues',
-      metric: '85% fewer vulnerabilities'
+      metric: '(target)'
     },
     {
       title: 'Improved security posture',
       description: 'Continuous security monitoring and improvement',
-      metric: '99.9% threat detection'
+      metric: '(target)'
     },
     {
       title: 'Enhanced developer productivity',
       description: 'Security integrated into workflow without friction',
-      metric: '40% faster development'
+      metric: '(target)'
     }
   ],
 
