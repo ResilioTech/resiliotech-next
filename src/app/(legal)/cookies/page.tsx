@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function CookiesPage() {
-  const lastUpdated = 'January 6, 2025'
+  const lastUpdated = 'October 6, 2025'
 
   return (
     <div className="min-h-screen bg-background py-24 px-4 sm:px-6 lg:px-8">

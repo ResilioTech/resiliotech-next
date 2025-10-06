@@ -100,32 +100,7 @@ const observabilityService: ServiceData = {
     }
   ],
 
-  caseStudies: [
-    {
-      company: 'SaaS Platform (Series A)',
-      industry: 'Software as a Service',
-      challenge: 'Frequent production issues with no visibility into root causes, leading to extended downtimes and frustrated customers.',
-      solution: 'Implemented comprehensive observability stack with metrics, logs, traces, and intelligent alerting across all services.',
-      results: [
-        'Reduced mean time to resolution (MTTR) from 4 hours to 20 minutes',
-        'Prevented 12 potential outages through proactive monitoring',
-        'Improved application performance by 50% through insights',
-        'Achieved 99.9% uptime SLA for 6 months running'
-      ]
-    },
-    {
-      company: 'E-commerce Marketplace',
-      industry: 'Online Retail',
-      challenge: 'Complex microservices architecture with performance issues during peak traffic, no way to trace problems across services.',
-      solution: 'Deployed distributed tracing, custom business metrics dashboards, and automated performance monitoring.',
-      results: [
-        'Identified and fixed 8 major performance bottlenecks',
-        'Reduced checkout process time by 35%',
-        'Implemented automated scaling based on business metrics',
-        'Prevented revenue loss during Black Friday with proactive monitoring'
-      ]
-    }
-  ],
+  caseStudies: [],
 
   technologies: [
     'Prometheus', 'Grafana', 'Datadog', 'New Relic', 'Dynatrace',
@@ -138,9 +113,9 @@ const observabilityService: ServiceData = {
   ],
 
   pricing: {
-    startingPrice: '$2,000',
-    model: 'Implementation + monthly monitoring',
-    description: 'Initial setup cost plus optional ongoing monitoring and optimization services. Pricing scales with infrastructure size and monitoring requirements.'
+    startingPrice: 'Founding Pilot',
+    model: '3 slots/month at pilot rates',
+    description: 'We\'re running Founding Pilot engagements (3 slots/month) to refine our observability services. Join the waitlist to get pilot rates and shape how we build monitoring solutions.'
   },
 
   faq: [
@@ -150,7 +125,7 @@ const observabilityService: ServiceData = {
     },
     {
       question: 'How do you prevent alert fatigue?',
-      answer: 'We implement intelligent alerting with ML-based anomaly detection, alert correlation, and escalation policies. We focus on actionable alerts that require immediate attention and provide clear context for faster resolution.'
+      answer: 'We implement intelligent alerting with ML-based anomaly detection, alert correlation, and escalation policies. We focus on actionable alerts that require immediate attention and provide clear context for faster resolution. Join our Founding Pilot program to help us refine these approaches and get early access to pilot rates.'
     },
     {
       question: 'Can you work with our existing monitoring tools?',
@@ -158,7 +133,7 @@ const observabilityService: ServiceData = {
     },
     {
       question: 'What about monitoring costs? Won\'t this be expensive?',
-      answer: 'We design cost-effective monitoring strategies using open-source tools where appropriate and optimizing data retention policies. Most clients find that the cost savings from prevented outages and improved efficiency far outweigh the monitoring costs.'
+      answer: 'We design cost-effective monitoring strategies using open-source tools where appropriate and optimizing data retention policies. Our goal is to ensure that the cost savings from prevented outages and improved efficiency outweigh the monitoring costs. Join our Founding Pilot program to help us prove this value proposition and get early access to pilot rates.'
     },
     {
       question: 'How do you handle sensitive data in logs and metrics?',

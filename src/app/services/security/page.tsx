@@ -100,32 +100,7 @@ const securityService: ServiceData = {
     }
   ],
 
-  caseStudies: [
-    {
-      company: 'HealthTech Startup (Series A)',
-      industry: 'Healthcare Technology',
-      challenge: 'Needed to achieve HIPAA compliance for their patient data platform while maintaining rapid development cycles.',
-      solution: 'Implemented comprehensive DevSecOps pipeline with automated security scanning, HIPAA compliance monitoring, and secure development practices.',
-      results: [
-        'Achieved HIPAA compliance certification in 4 months',
-        'Integrated security scanning that catches 95% of vulnerabilities pre-production',
-        'Reduced compliance audit preparation time by 75%',
-        'Zero security incidents since implementation'
-      ]
-    },
-    {
-      company: 'FinTech Platform (Series B)',
-      industry: 'Financial Services',
-      challenge: 'Complex regulatory requirements (SOC2, PCI-DSS) with multiple third-party integrations and sensitive financial data processing.',
-      solution: 'Built comprehensive security framework with automated compliance monitoring, secure API gateway, and continuous security testing.',
-      results: [
-        'Achieved SOC2 Type II and PCI-DSS Level 1 certification',
-        'Implemented zero-trust architecture with 99.9% uptime',
-        'Automated 80% of compliance evidence collection',
-        'Reduced security assessment time from 6 months to 2 months'
-      ]
-    }
-  ],
+  caseStudies: [],
 
   technologies: [
     'OWASP ZAP', 'SonarQube', 'Checkmarx', 'Veracode', 'Snyk',
@@ -138,31 +113,31 @@ const securityService: ServiceData = {
   ],
 
   pricing: {
-    startingPrice: '$3,000',
-    model: 'Compliance-focused pricing',
-    description: 'Pricing varies based on compliance requirements, system complexity, and ongoing monitoring needs. Includes initial assessment and 6 months of support.'
+    startingPrice: 'Founding Pilot',
+    model: '3 slots/month at pilot rates',
+    description: 'We\'re running Founding Pilot engagements (3 slots/month) to refine our security services. Join the waitlist to get pilot rates and shape how we build DevSecOps solutions.'
   },
 
   faq: [
     {
       question: 'How long does it take to achieve SOC2 compliance?',
-      answer: 'With our automated compliance approach, most companies can achieve SOC2 Type I in 2-3 months and Type II in 6-9 months. The timeline depends on your current security posture and the scope of systems being certified.'
+      answer: 'With our automated compliance approach, companies typically achieve SOC2 Type I in a few months and Type II within the first year. The timeline depends on your current security posture and the scope of systems being certified. Join our Founding Pilot program to get hands-on support through your compliance journey at exclusive rates.'
     },
     {
       question: 'Will security scanning slow down our development process?',
-      answer: 'Our approach integrates security scanning seamlessly into your existing CI/CD pipelines with minimal impact on development velocity. We focus on providing actionable feedback and automating remediation where possible.'
+      answer: 'Our approach integrates security scanning seamlessly into your existing CI/CD pipelines with minimal impact on development velocity. We focus on providing actionable feedback and automating remediation where possible. Our Founding Pilot program includes hands-on optimization to ensure security doesn\'t become a bottleneck.'
     },
     {
       question: 'Do you provide ongoing security monitoring?',
-      answer: 'Yes, we offer 24/7 security monitoring services with automated threat detection, incident response, and regular security assessments. We can also train your internal team to manage security operations.'
+      answer: 'Yes, we offer security monitoring services with automated threat detection, incident response, and regular security assessments. We can also train your internal team to manage security operations. Join our Founding Pilot program to help us refine our monitoring approach at exclusive pilot rates.'
     },
     {
       question: 'What compliance frameworks do you support?',
-      answer: 'We support major compliance frameworks including SOC2, HIPAA, PCI-DSS, GDPR, ISO 27001, FedRAMP, and industry-specific regulations. We can also help with custom compliance requirements.'
+      answer: 'We support major compliance frameworks including SOC2, HIPAA, PCI-DSS, GDPR, ISO 27001, FedRAMP, and industry-specific regulations. We can also help with custom compliance requirements. Join our Founding Pilot program to get dedicated support for your specific compliance needs at pilot rates.'
     },
     {
       question: 'How do you handle security in cloud environments?',
-      answer: 'We implement cloud-native security controls including identity and access management, network security, encryption, and compliance monitoring specifically designed for AWS, GCP, and Azure environments.'
+      answer: 'We implement cloud-native security controls including identity and access management, network security, encryption, and compliance monitoring specifically designed for AWS, GCP, and Azure environments. Our Founding Pilot program offers hands-on implementation support to help secure your cloud infrastructure at exclusive rates.'
     }
   ]
 };

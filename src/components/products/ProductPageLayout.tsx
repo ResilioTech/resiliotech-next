@@ -339,9 +339,9 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
               Ready to Get Started?
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              {isAvailable 
-                ? `Join thousands of teams already using ${product.name} to streamline their operations.`
-                : `Be among the first to experience ${product.name} when it launches.`
+              {isAvailable
+                ? `Get early access to ${product.name} and help shape how we build DevOps tools for startups.`
+                : `Join the waitlist to be among the first to experience ${product.name} when it launches.`
               }
             </p>
             

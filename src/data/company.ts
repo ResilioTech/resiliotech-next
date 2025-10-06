@@ -67,7 +67,7 @@ export const companyMilestones: CompanyMilestone[] = [
   {
     year: 'Q3+ 2025',
     title: 'Product Portfolio',
-    description: 'Expanding with InfraScale, CloudWatch Pro, and SecureOps to cover the full DevOps lifecycle.',
+    description: 'Expanding with InfraScale, SignalWatch, and SecureOps to cover the full DevOps lifecycle.',
     metric: '4 Products'
   }
 ];

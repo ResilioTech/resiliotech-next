@@ -80,6 +80,15 @@ export const siteConfig = {
     }
   },
 
+  // Product Label Overrides (Day-0 cleanup)
+  productLabels: {
+    observability: "SignalWatch" // Renamed from "CloudWatch Pro" to avoid AWS confusion
+  },
+
+  // Day-0 Constants
+  today: "2025-10-06",
+  foundingPilotUrl: "/founding-pilot",
+
   // Feature Flags
   features: {
     blog: true,
@@ -92,3 +101,12 @@ export const siteConfig = {
 } as const
 
 export type SiteConfig = typeof siteConfig
+
+/**
+ * Helper to check if a social URL is real (not just a domain homepage)
+ */
+export const hasRealSocialUrl = (url?: string): boolean => {
+  if (!url) return false
+  // Check if it's just a domain homepage without a handle
+  return !/^(https?:\/\/)?(www\.)?(linkedin\.com|x\.com|twitter\.com|github\.com|youtube\.com)\/?$/.test(url)
+}

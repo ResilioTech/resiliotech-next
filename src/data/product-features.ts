@@ -44,7 +44,7 @@ export const microSaasProducts: ProductInfo[] = [
     }
   },
   {
-    name: 'CloudWatch Pro',
+    name: 'SignalWatch',
     tagline: 'AI-Powered Infrastructure Monitoring',
     description: 'Intelligent monitoring that predicts and prevents downtime before it happens. Get insights into your infrastructure health with automated alerts and resolution suggestions.',
     launchDate: undefined,
@@ -54,7 +54,7 @@ export const microSaasProducts: ProductInfo[] = [
       {
         id: '1',
         title: 'Predictive Alerts',
-        description: 'AI predicts issues 30 minutes before they occur',
+        description: 'Early warning system for infrastructure issues',
         icon: 'Activity',
         priority: 'high'
       },
@@ -74,13 +74,13 @@ export const microSaasProducts: ProductInfo[] = [
       }
     ],
     benefits: [
-      'Prevent 95% of downtime',
-      'Reduce monitoring overhead',
-      'Save 40% on cloud costs'
+      'Reduce downtime (target)',
+      'Lower monitoring overhead',
+      'Optimize cloud costs (target)'
     ],
     targetAudience: ['DevOps teams', 'SRE engineers', 'CTOs'],
     pricing: {
-      isRevealed: true,
+      isRevealed: false,
       startingPrice: 49,
       pricingModel: 'per server/month'
     }
@@ -158,7 +158,7 @@ export const microSaasProducts: ProductInfo[] = [
       }
     ],
     benefits: [
-      'Reduce infrastructure costs by 50%',
+      'Reduce infrastructure costs (target)',
       'Handle traffic spikes automatically',
       'Unified multi-cloud management'
     ],

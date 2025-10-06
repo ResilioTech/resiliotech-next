@@ -100,32 +100,7 @@ const devopsAutomationService: ServiceData = {
     }
   ],
 
-  caseStudies: [
-    {
-      company: 'TechFlow (YC S23)',
-      industry: 'SaaS Platform',
-      challenge: 'Manual deployments taking 4+ hours with frequent rollbacks due to bugs reaching production.',
-      solution: 'Implemented comprehensive CI/CD pipeline with automated testing, staging environments, and blue-green deployments.',
-      results: [
-        'Deployment time reduced from 4 hours to 8 minutes',
-        'Zero failed deployments in production since implementation',
-        'Developer productivity increased by 45%',
-        'Time to market improved by 60%'
-      ]
-    },
-    {
-      company: 'DataVault (Series A)',
-      industry: 'Data Analytics',
-      challenge: 'Complex microservices architecture with inconsistent deployment processes across teams.',
-      solution: 'Standardized CI/CD across all services with automated testing, dependency management, and coordinated deployments.',
-      results: [
-        'Unified deployment process across 15+ microservices',
-        'Reduced deployment complexity by 80%',
-        'Eliminated inter-service deployment conflicts',
-        'Improved team collaboration and knowledge sharing'
-      ]
-    }
-  ],
+  caseStudies: [],
 
   technologies: [
     'Jenkins', 'GitHub Actions', 'GitLab CI', 'CircleCI', 'Azure DevOps',
@@ -136,9 +111,9 @@ const devopsAutomationService: ServiceData = {
   ],
 
   pricing: {
-    startingPrice: '$2,500',
-    model: 'Fixed project pricing',
-    description: 'Pricing varies based on complexity, number of services, and requirements. Includes 3 months of support and optimization.'
+    startingPrice: 'Founding Pilot',
+    model: '3 slots/month at pilot rates',
+    description: 'We're running Founding Pilot engagements (3 slots/month) to refine our CI/CD services. Join the waitlist to get pilot rates and shape how we build DevOps automation solutions.'
   },
 
   faq: [
@@ -152,7 +127,7 @@ const devopsAutomationService: ServiceData = {
     },
     {
       question: 'What if our deployment fails after implementation?',
-      answer: 'All our CI/CD implementations include automated rollback mechanisms and comprehensive monitoring. We also provide 3 months of support to address any issues. Our track record shows 99.9% successful deployments after implementation.'
+      answer: 'All our CI/CD implementations include automated rollback mechanisms and comprehensive monitoring. We provide ongoing support to address any issues quickly. Join our Founding Pilot to explore CI/CD automation with pilot rates and support.'
     },
     {
       question: 'Can you help with both cloud and on-premises deployments?',
