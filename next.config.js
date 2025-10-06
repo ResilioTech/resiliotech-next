@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+  runtimeCaching: [],
+})
+
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
@@ -31,10 +43,13 @@ const nextConfig = {
   compress: true,
   experimental: {
     mdxRs: true,
+    optimizePackageImports: ['lucide-react', 'date-fns'],
   },
   // Bundle optimization
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: {
+      exclude: ['error', 'warn'],
+    },
   },
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
@@ -59,7 +74,7 @@ const nextConfig = {
           animations: {
             name: 'animations',
             test: /[\\/]node_modules[\\/](framer-motion)[\\/]/,
-            chunks: 'all',
+            chunks: 'async', // Load async to not block initial render
             priority: 30,
             enforce: true,
           },
@@ -67,7 +82,7 @@ const nextConfig = {
           icons: {
             name: 'icons',
             test: /[\\/]node_modules[\\/](lucide-react)[\\/]/,
-            chunks: 'all', 
+            chunks: 'all',
             priority: 25,
             enforce: true,
           },
@@ -75,7 +90,7 @@ const nextConfig = {
           forms: {
             name: 'forms',
             test: /[\\/]node_modules[\\/](react-hook-form|@hookform)[\\/]/,
-            chunks: 'all',
+            chunks: 'async', // Forms typically below fold
             priority: 20,
             enforce: true,
           },
@@ -91,7 +106,7 @@ const nextConfig = {
         },
       };
     }
-    
+
     return config;
   },
   // Performance optimization
@@ -100,4 +115,4 @@ const nextConfig = {
   poweredByHeader: false,
 }
 
-module.exports = withMDX(nextConfig)
+module.exports = withBundleAnalyzer(withPWA(withMDX(nextConfig)))

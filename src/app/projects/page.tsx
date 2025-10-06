@@ -1,7 +1,18 @@
 import type { Metadata } from 'next';
-import { ProjectHero } from '@/components/projects/ProjectHero';
-import { ProjectGrid } from '@/components/projects/ProjectGrid';
+import dynamic from 'next/dynamic';
 import { sampleProjects } from '@/data/sample-projects';
+
+// Above-the-fold with SSR
+const ProjectHero = dynamic(() => import('@/components/projects/ProjectHero').then(mod => ({ default: mod.ProjectHero })), {
+  ssr: true,
+  loading: () => <div className="h-screen bg-gradient-to-br from-background via-surface to-surface-elevated"></div>
+});
+
+// Below-the-fold: Lazy load project grid
+const ProjectGrid = dynamic(() => import('@/components/projects/ProjectGrid').then(mod => ({ default: mod.ProjectGrid })), {
+  ssr: false,
+  loading: () => <div className="py-16 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-96 bg-surface rounded-xl"></div></div></div>
+});
 
 export const metadata: Metadata = {
   title: 'Sample Architectures (Internal Builds)',

@@ -1,12 +1,20 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { ContactHero } from '@/components/contact/ContactHero';
 
+// Above-the-fold with SSR
+const ContactHero = dynamic(() => import('@/components/contact/ContactHero').then(mod => ({ default: mod.ContactHero })), {
+  ssr: true,
+  loading: () => <div className="h-screen bg-gradient-to-br from-background via-surface to-surface-elevated"></div>
+});
+
+// Below-the-fold: Lazy load to reduce initial JS bundle
 const ContactForm = dynamic(() => import('@/components/contact/ContactForm').then(mod => ({ default: mod.ContactForm })), {
+  ssr: false,
   loading: () => <div className="max-w-2xl mx-auto p-8 bg-surface-elevated rounded-xl animate-pulse"><div className="h-96 bg-surface rounded-lg"></div></div>
 });
 
 const FAQSection = dynamic(() => import('@/components/contact/FAQSection').then(mod => ({ default: mod.FAQSection })), {
+  ssr: false,
   loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-4xl mx-auto px-6"><div className="h-64 bg-background rounded-xl"></div></div></div>
 });
 
