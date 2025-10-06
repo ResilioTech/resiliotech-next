@@ -1,9 +1,28 @@
 import type { Metadata } from 'next';
-import { AboutHero } from '@/components/about/AboutHero';
-import { TeamSection } from '@/components/about/TeamSection';
-import { ValuesSection } from '@/components/about/ValuesSection';
-import { TimelineSection } from '@/components/about/TimelineSection';
+import dynamic from 'next/dynamic';
 import { teamMembers, companyValues, companyMilestones, companyStats } from '@/data/company';
+
+// Above-the-fold with SSR
+const AboutHero = dynamic(() => import('@/components/about/AboutHero').then(mod => ({ default: mod.AboutHero })), {
+  ssr: true,
+  loading: () => <div className="h-screen bg-gradient-to-br from-background via-surface to-surface-elevated"></div>
+});
+
+// Below-the-fold: Lazy load to reduce initial JS bundle
+const TeamSection = dynamic(() => import('@/components/about/TeamSection').then(mod => ({ default: mod.TeamSection })), {
+  ssr: false,
+  loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-96 bg-background rounded-xl"></div></div></div>
+});
+
+const ValuesSection = dynamic(() => import('@/components/about/ValuesSection').then(mod => ({ default: mod.ValuesSection })), {
+  ssr: false,
+  loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-80 bg-surface rounded-xl"></div></div></div>
+});
+
+const TimelineSection = dynamic(() => import('@/components/about/TimelineSection').then(mod => ({ default: mod.TimelineSection })), {
+  ssr: false,
+  loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-6xl mx-auto px-6"><div className="h-96 bg-background rounded-xl"></div></div></div>
+});
 
 export const metadata: Metadata = {
   title: 'About Us - Building DevOps Tools for Startups',

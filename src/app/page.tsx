@@ -1,18 +1,30 @@
 import dynamic from 'next/dynamic'
-import { HeroSection } from '@/components/sections/HeroSection'
-import { TechStackSection } from '@/components/sections/TechStackSection'
 import { StructuredData } from '@/components/seo/StructuredData'
 
-// Lazy load below-the-fold components
+// Above-the-fold: SSR with priority loading
+const HeroSection = dynamic(() => import('@/components/sections/HeroSection').then(mod => ({ default: mod.HeroSection })), {
+  ssr: true,
+  loading: () => <div className="h-screen bg-gradient-to-br from-background via-surface to-surface-elevated"></div>
+})
+
+// Below-the-fold: Lazy load to reduce initial JS bundle
+const TechStackSection = dynamic(() => import('@/components/sections/TechStackSection').then(mod => ({ default: mod.TechStackSection })), {
+  ssr: false,
+  loading: () => <div className="py-16 bg-surface-elevated animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
+})
+
 const ServicesSection = dynamic(() => import('@/components/sections/ServicesSection').then(mod => ({ default: mod.ServicesSection })), {
+  ssr: false,
   loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-64 bg-surface rounded-xl"></div></div></div>
 })
 
 const ProductsTeaser = dynamic(() => import('@/components/sections/ProductsTeaser').then(mod => ({ default: mod.ProductsTeaser })), {
+  ssr: false,
   loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-64 bg-background rounded-xl"></div></div></div>
 })
 
 const CTASection = dynamic(() => import('@/components/sections/CTASection').then(mod => ({ default: mod.CTASection })), {
+  ssr: false,
   loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-32 bg-surface rounded-xl"></div></div></div>
 })
 
