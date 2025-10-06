@@ -40,7 +40,7 @@ const cloudInfrastructureService: ServiceData = {
     },
     {
       title: 'Cost Optimization',
-      description: 'Continuous monitoring and optimization to reduce cloud costs by 30-60% without sacrificing performance.',
+      description: 'Continuous monitoring and optimization to reduce cloud costs without sacrificing performance.',
       icon: 'Award'
     },
     {
@@ -100,32 +100,7 @@ const cloudInfrastructureService: ServiceData = {
     }
   ],
 
-  caseStudies: [
-    {
-      company: 'FinTech Startup (Seed)',
-      industry: 'Financial Services',
-      challenge: 'Needed SOC2 compliant infrastructure for their financial platform with strict security and compliance requirements.',
-      solution: 'Designed and implemented SOC2-compliant AWS infrastructure with automated compliance monitoring and security controls.',
-      results: [
-        'Achieved SOC2 Type II certification in 3 months',
-        'Reduced infrastructure costs by 45% through optimization',
-        'Implemented automated backup and disaster recovery',
-        'Zero security incidents since implementation'
-      ]
-    },
-    {
-      company: 'E-commerce Platform (Series B)',
-      industry: 'Retail Technology',
-      challenge: 'Struggling with traffic spikes during sales events, leading to downtime and lost revenue.',
-      solution: 'Implemented auto-scaling architecture with CDN, load balancing, and database optimization across multiple regions.',
-      results: [
-        'Handled 10x traffic increase during Black Friday with zero downtime',
-        'Reduced page load times by 60% globally',
-        'Decreased infrastructure costs by 35% through right-sizing',
-        'Improved customer satisfaction scores by 40%'
-      ]
-    }
-  ],
+  caseStudies: [],
 
   technologies: [
     'AWS', 'Google Cloud Platform', 'Microsoft Azure', 'DigitalOcean',
@@ -137,9 +112,9 @@ const cloudInfrastructureService: ServiceData = {
   ],
 
   pricing: {
-    startingPrice: '$3,500',
-    model: 'Project-based pricing',
-    description: 'Pricing depends on infrastructure complexity and cloud provider. Includes architecture design, implementation, and 3 months of optimization support.'
+    startingPrice: 'Founding Pilot',
+    model: '3 slots/month at pilot rates',
+    description: 'We're running Founding Pilot engagements (3 slots/month) to refine our services. Join the waitlist to get pilot rates and shape how we build cloud infrastructure solutions.'
   },
 
   faq: [
@@ -149,7 +124,7 @@ const cloudInfrastructureService: ServiceData = {
     },
     {
       question: 'How much can I save by optimizing my cloud infrastructure?',
-      answer: 'Most companies can save 30-60% on their cloud costs through proper resource sizing, reserved instances, spot instances, and automated scaling. We provide detailed cost analysis and ongoing optimization recommendations.'
+      answer: 'Savings vary by workload and current setup. Common optimization strategies include proper resource sizing, reserved instances, spot instances, and automated scaling. We provide detailed cost analysis and ongoing optimization recommendations. Join our Founding Pilot to explore cost optimization for your infrastructure.'
     },
     {
       question: 'Do you help with cloud migration from on-premises?',

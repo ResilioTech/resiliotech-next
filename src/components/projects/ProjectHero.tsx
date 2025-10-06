@@ -28,8 +28,8 @@ export function ProjectHero({
     {
       icon: Code,
       value: totalProjects,
-      label: 'Projects Delivered',
-      suffix: '+'
+      label: 'Internal Samples',
+      suffix: ''
     },
     {
       icon: Rocket,
@@ -40,14 +40,14 @@ export function ProjectHero({
     {
       icon: Calendar,
       value: yearsExperience,
-      label: 'Years Experience',
+      label: 'Years Building',
       suffix: '+'
     },
     {
-      icon: Trophy,
-      value: Math.round((completedProjects / totalProjects) * 100),
-      label: 'Success Rate',
-      suffix: '%'
+      icon: TrendingUp,
+      value: completedProjects,
+      label: 'Completed Demos',
+      suffix: ''
     }
   ];
 
@@ -153,12 +153,17 @@ export function ProjectHero({
             Internal reference architectures and technical demonstrations
           </motion.p>
 
-          <motion.p
+          <motion.div
             variants={itemVariants}
-            className="text-sm text-accent font-medium max-w-2xl mx-auto mb-8"
+            className="max-w-2xl mx-auto mb-8"
           >
-            📋 We'll publish named case studies after our Founding Pilot engagements conclude.
-          </motion.p>
+            <div className="inline-flex items-start gap-2 px-4 py-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-sm">
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">⚠️ Note:</span>
+              <p className="text-amber-700 dark:text-amber-300 text-left">
+                These are internal reference architectures, not publicly verified case studies. We'll publish named client case studies after our Founding Pilot engagements conclude.
+              </p>
+            </div>
+          </motion.div>
 
           <motion.div 
             variants={itemVariants}

@@ -100,32 +100,7 @@ const mlopsService: ServiceData = {
     }
   ],
 
-  caseStudies: [
-    {
-      company: 'AI-Powered Analytics Platform',
-      industry: 'Data Analytics',
-      challenge: 'Manual model deployment process taking weeks, inconsistent model performance in production, and no systematic approach to model monitoring.',
-      solution: 'Implemented comprehensive MLOps platform with automated pipelines, feature store, and real-time monitoring for 20+ ML models.',
-      results: [
-        'Reduced model deployment time from 3 weeks to 2 hours',
-        'Improved model accuracy by 30% through automated retraining',
-        'Detected and resolved 15+ data drift issues automatically',
-        'Enabled data scientists to focus on model development vs. deployment'
-      ]
-    },
-    {
-      company: 'Recommendation Engine Startup',
-      industry: 'E-commerce Technology',
-      challenge: 'Scaling recommendation models across millions of users with real-time inference requirements and complex feature engineering needs.',
-      solution: 'Built high-throughput feature store and real-time model serving infrastructure with automated A/B testing framework.',
-      results: [
-        'Serving 1M+ recommendations per second with <50ms latency',
-        'Increased recommendation click-through rate by 45%',
-        'Reduced feature engineering time by 70%',
-        'Automated A/B testing for 10+ model variants simultaneously'
-      ]
-    }
-  ],
+  caseStudies: [],
 
   technologies: [
     'MLflow', 'Kubeflow', 'Apache Airflow', 'Prefect', 'Dagster',
@@ -138,9 +113,9 @@ const mlopsService: ServiceData = {
   ],
 
   pricing: {
-    startingPrice: '$4,500',
-    model: 'Project-based with ongoing support',
-    description: 'Pricing varies based on data volume, model complexity, and infrastructure requirements. Includes initial setup and 6 months of monitoring and optimization.'
+    startingPrice: 'Founding Pilot',
+    model: '3 slots/month at pilot rates',
+    description: 'We\'re running Founding Pilot engagements (3 slots/month) to refine our MLOps services. Join the waitlist to get pilot rates and shape how we build ML infrastructure solutions.'
   },
 
   faq: [
@@ -162,7 +137,7 @@ const mlopsService: ServiceData = {
     },
     {
       question: 'Can you help with real-time ML inference at scale?',
-      answer: 'Yes, we specialize in high-throughput, low-latency ML serving infrastructure. Our solutions can handle millions of predictions per second with sub-100ms latency using optimized serving frameworks and caching strategies.'
+      answer: 'Yes, we specialize in high-throughput, low-latency ML serving infrastructure. Our solutions are designed to handle high-volume predictions with optimized serving frameworks and caching strategies. Join our Founding Pilot program to work directly with us on scaling your ML inference systems.'
     }
   ]
 };
