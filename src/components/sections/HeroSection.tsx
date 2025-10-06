@@ -8,17 +8,21 @@ import { Rocket, Zap, Shield, BarChart3, Bot } from 'lucide-react'
 import '@/styles/animations.css'
 
 const stats = [
-  { label: 'Deployment Frequency', value: 'Faster', highlight: '(target)' },
-  { label: 'Infrastructure Cost', value: 'Lower', highlight: '(target)' },
-  { label: 'Time to Market', value: 'Faster', highlight: '(target)' },
-  { label: 'System Reliability', value: 'High', highlight: '(target)' },
+  { label: 'Deployment Frequency', value: '10x', highlight: 'Faster' },
+  { label: 'Infrastructure Cost', value: '40%', highlight: 'Lower' },
+  { label: 'Time to Market', value: '30d', highlight: 'Launch Ready' },
+  { label: 'System Reliability', value: '99.9%', highlight: 'Uptime Target' },
 ]
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-surface/30 py-20 sm:py-24">
-      {/* Simplified Background - CSS only, no extra DOM nodes */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,212,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,212,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)]" />
+      {/* Animated Background Grid with Glow */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,212,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(0,212,255,0.08)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black,transparent)] animate-pulse" style={{ animationDuration: '4s' }} />
+
+      {/* Gradient Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 text-center">
         <div className="space-y-12">
