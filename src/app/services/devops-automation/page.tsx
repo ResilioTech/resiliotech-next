@@ -113,7 +113,7 @@ const devopsAutomationService: ServiceData = {
   pricing: {
     startingPrice: 'Founding Pilot',
     model: '3 slots/month at pilot rates',
-    description: 'We're running Founding Pilot engagements (3 slots/month) to refine our CI/CD services. Join the waitlist to get pilot rates and shape how we build DevOps automation solutions.'
+    description: 'We\'re running Founding Pilot engagements (3 slots/month) to refine our CI/CD services. Join the waitlist to get pilot rates and shape how we build DevOps automation solutions.'
   },
 
   faq: [
