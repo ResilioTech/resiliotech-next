@@ -74,7 +74,7 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
               className="inline-flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Projects
+              Back to Sample Architectures
             </Link>
             
             <div className="flex items-center gap-3">
@@ -115,6 +115,16 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={itemVariants}>
+              {/* Reference Architecture Notice */}
+              <div className="mb-6 p-4 bg-orange-500/10 border-2 border-orange-500/30 rounded-lg">
+                <p className="text-sm font-semibold text-orange-400">
+                  📐 Reference Architecture / Internal Demo
+                </p>
+                <p className="text-xs text-text-muted mt-1">
+                  Not a real client project. This showcases architectural patterns and implementation approaches.
+                </p>
+              </div>
+
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 <span className={`px-3 py-1 text-sm font-medium border rounded-full capitalize ${getCategoryColor(project.category)}`}>

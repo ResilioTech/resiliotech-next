@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: 'Sample Architectures (Internal Builds)',
   description: 'Internal reference architectures and technical demonstrations. We\'ll publish named case studies after our Founding Pilot engagements conclude.',
   keywords: ['sample architectures', 'reference designs', 'DevOps patterns', 'infrastructure templates'],
+  alternates: {
+    canonical: 'https://resiliotech.com/projects',
+  },
   openGraph: {
     title: 'Sample Architectures (Internal Builds) | Resiliotech',
     description: 'Internal reference architectures and technical demonstrations built to showcase our capabilities.',

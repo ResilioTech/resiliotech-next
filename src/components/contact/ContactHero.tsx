@@ -161,8 +161,8 @@ export function ContactHero() {
             <div className="inline-flex items-center gap-4 p-6 bg-surface-elevated border border-border rounded-xl">
               <MapPin className="w-6 h-6 text-secondary" />
               <div className="text-left">
-                <p className="font-semibold text-text-primary">Remote First, Global Team</p>
-                <p className="text-sm text-text-muted">Working across PST, EST, and GMT timezones</p>
+                <p className="font-semibold text-text-primary">Remote-first, India-based</p>
+                <p className="text-sm text-text-muted">Flexible collaboration across timezones • IST (GMT+5:30)</p>
               </div>
             </div>
           </motion.div>

@@ -93,10 +93,10 @@ export default function CookiesPage() {
               <li>Use privacy-focused browsers or extensions (e.g., Brave, uBlock Origin)</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">Cookie Preference Center (Coming Soon)</h3>
+            <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">Current Implementation</h3>
             <p>
-              We are building a cookie consent banner that will allow you to manage preferences directly on our site.
-              This will be available in a future update.
+              We currently use only strictly necessary cookies for site functionality and Google Analytics for understanding site usage.
+              You can opt out anytime using the methods above. A full cookie consent banner will be added as we scale.
             </p>
           </section>
 

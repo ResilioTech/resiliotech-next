@@ -1,12 +1,12 @@
 # Product Roadmap
 
-Last updated: October 6, 2025
+Last updated: October 8, 2025
 
 This is our public roadmap. We build in the open and ship weekly.
 
 ---
 
-## 🚀 Now (Q1 2025)
+## 🚀 Now (Q4 2025)
 
 ### DeployFlow - Private Alpha
 **Status:** In Development
@@ -17,19 +17,19 @@ This is our public roadmap. We build in the open and ship weekly.
 - [ ] Cost guardrail policies (OPA)
 - [ ] Terraform AWS starter modules
 
-**Target:** Private alpha with 10 founding users by Feb 2025
+**Goal:** Private alpha with 3 founding users for feedback
 
 ### Founding Pilot Program
 **Status:** Live (3 slots/month)
 
 - [x] Fixed-scope offer defined
 - [x] Success criteria documented
-- [ ] First 3 pilots onboarded
-- [ ] Case study from pilot #1
+- [ ] Goal: Onboard first 3 pilots
+- [ ] Goal: Publish first case study (with permission)
 
 ---
 
-## 🔮 Next (Q2 2025)
+## 🔮 Next (Q1 2026)
 
 ### DeployFlow - Public Beta
 - [ ] Multi-cloud support (AWS + GCP + Azure)
@@ -48,9 +48,9 @@ This is our public roadmap. We build in the open and ship weekly.
 
 ---
 
-## 🌟 Later (Q3+ 2025)
+## 🌟 Later (2026+)
 
-### CloudWatch Pro (Planned)
+### SignalWatch (Planned)
 **Unified observability**
 
 - [ ] Multi-cloud log aggregation

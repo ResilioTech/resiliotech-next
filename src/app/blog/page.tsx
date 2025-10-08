@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     'infrastructure automation',
     'monitoring and observability'
   ],
+  alternates: {
+    canonical: 'https://resiliotech.com/blog',
+  },
   openGraph: {
     title: 'DevOps Blog | Resiliotech',
     description: 'Expert insights on DevOps, cloud infrastructure, and scaling strategies for startups',
@@ -176,12 +179,17 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
               DevOps Insights & Best Practices
             </h1>
             <p className="text-lg md:text-xl text-text-secondary leading-relaxed mb-4 max-w-3xl mx-auto">
-              Practical guides, tutorials, and strategies for modern DevOps teams — 
+              Practical guides, tutorials, and strategies for modern DevOps teams —
               helping startups scale their infrastructure and development processes.
             </p>
-            <p className="text-sm text-accent font-medium mb-6">
-              📝 New posts coming shortly
-            </p>
+            <div className="max-w-2xl mx-auto mb-6 p-4 bg-surface-elevated border border-border rounded-lg">
+              <p className="text-sm text-accent font-medium">
+                📝 We're rebuilding our blog
+              </p>
+              <p className="text-xs text-text-muted mt-2">
+                These are seed posts demonstrating our content approach. More in-depth tutorials and case studies coming soon as we complete Founding Pilot engagements.
+              </p>
+            </div>
             
             {/* Blog Stats */}
             <div className="mb-8">

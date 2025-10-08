@@ -56,6 +56,8 @@ function getBreadcrumbName(segment: string, segments: string[], index: number): 
       return 'DeployFlow';
     case 'cloudwatch-pro':
       return 'SignalWatch';
+    case 'signalwatch':
+      return 'SignalWatch';
     case 'secureops':
       return 'SecureOps';
     case 'infrascale':

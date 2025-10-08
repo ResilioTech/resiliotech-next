@@ -8,10 +8,10 @@ import { Rocket } from 'lucide-react'
 import '@/styles/animations.css'
 
 const stats = [
-  { label: 'Deployment Frequency', value: '10x', highlight: 'Faster' },
-  { label: 'Infrastructure Cost', value: '40%', highlight: 'Lower' },
-  { label: 'Time to Market', value: '30d', highlight: 'Launch Ready' },
-  { label: 'System Reliability', value: '99.9%', highlight: 'Uptime Target' },
+  { label: 'Deployment Frequency', value: '10x', highlight: 'Faster', isTarget: true },
+  { label: 'Infrastructure Cost', value: '40%', highlight: 'Lower', isTarget: true },
+  { label: 'Time to Market', value: '~30d', highlight: 'Launch Ready', isTarget: true },
+  { label: 'System Reliability', value: '99.9%', highlight: 'Uptime Goal', isTarget: true },
 ]
 
 export function HeroSection() {
@@ -70,10 +70,17 @@ export function HeroSection() {
           <div className="pt-12 sm:pt-16">
             <div className="grid grid-cols-2 gap-8 sm:gap-10 lg:grid-cols-4">
               {stats.map((stat, index) => (
-                <div key={stat.label} className={`animate-fade-in-up text-center stagger-${index + 1}`}>
+                <div key={stat.label} className={`animate-fade-in-up text-center stagger-${index + 1} group`} title={stat.isTarget ? "Aspirational target while in Private Alpha" : undefined}>
                   <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">{stat.value}</div>
                   <div className="text-xs sm:text-sm font-semibold text-accent mb-1">{stat.highlight}</div>
                   <div className="text-xs sm:text-sm text-text-muted">{stat.label}</div>
+                  {stat.isTarget && (
+                    <div className="mt-2">
+                      <span className="inline-block px-2 py-0.5 bg-accent/10 border border-accent/20 rounded-full text-[10px] font-medium text-accent">
+                        Target
+                      </span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

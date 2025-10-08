@@ -149,9 +149,14 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </a>
                 )}
-                <button className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300">
-                  View Demo
-                </button>
+                <a
+                  href="https://calendly.com/resiliotech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
+                >
+                  Request Live Walkthrough
+                </a>
               </div>
             </motion.div>
 

@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'DevOps Services - Complete Solutions for Growing Companies | Resiliotech',
   description: 'Comprehensive DevOps services including automation, cloud infrastructure, MLOps, observability, and security. Transform your development workflow with expert guidance.',
   keywords: ['DevOps services', 'cloud infrastructure', 'automation', 'MLOps', 'observability', 'DevSecOps', 'consulting'],
+  alternates: {
+    canonical: 'https://resiliotech.com/services',
+  },
   openGraph: {
     title: 'DevOps Services - Complete Solutions for Growing Companies',
     description: 'Transform your development workflow with our comprehensive DevOps services. From automation to security, we handle every aspect of your DevOps journey.',
@@ -172,17 +175,19 @@ export default function ServicesPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact"
+                href="https://calendly.com/resiliotech"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
               >
-                Get Free Consultation
+                Book Free 30-min Audit
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/projects"
                 className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
               >
-                View Case Studies
+                See Sample Architectures
               </Link>
             </div>
           </div>
