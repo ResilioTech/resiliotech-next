@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -122,10 +121,8 @@ export function NewsletterSignup({
 
   if (isSubmitted) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className={`${className} ${variant === 'compact' ? 'text-center' : ''}`}
+      <div
+        className={`animate-fade-in-up ${className} ${variant === 'compact' ? 'text-center' : ''}`}
       >
         <div className={`${
           variant === 'compact' 
@@ -161,7 +158,7 @@ export function NewsletterSignup({
             </button>
           )}
         </div>
-      </motion.div>
+      </div>
     );
   }
 
@@ -179,11 +176,8 @@ export function NewsletterSignup({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={className}
+    <div
+      className={`animate-fade-in-up ${className}`}
     >
       {(title || description) && (
         <div className="mb-6">
@@ -313,16 +307,14 @@ export function NewsletterSignup({
 
         {/* Error Message */}
         {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-3 bg-red-900/20 border border-red-500/30 rounded-lg"
+          <div
+            className="p-3 bg-red-900/20 border border-red-500/30 rounded-lg animate-fade-in-up"
           >
             <p className="text-sm text-red-400 flex items-center gap-2">
               <AlertCircle className="w-4 h-4" />
               {error}
             </p>
-          </motion.div>
+          </div>
         )}
 
         {/* Privacy Notice */}
@@ -332,6 +324,6 @@ export function NewsletterSignup({
           </p>
         )}
       </form>
-    </motion.div>
+    </div>
   );
 }
