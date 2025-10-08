@@ -26,11 +26,11 @@
     # Comprehensive CSP for better security
     Content-Security-Policy = """
       default-src 'self';
-      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://static.cloudflareinsights.com;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       img-src 'self' data: https: blob:;
       font-src 'self' data: https://fonts.gstatic.com;
-      connect-src 'self' https: wss: https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net;
+      connect-src 'self' https: wss: https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.clarity.ms;
       media-src 'self' data: https:;
       object-src 'none';
       child-src 'none';
