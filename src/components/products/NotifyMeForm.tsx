@@ -75,7 +75,7 @@ export function NotifyMeForm({ onSignup, features = [] }: NotifyMeFormProps) {
             You&apos;re on the list!
           </h3>
           <p className="text-text-secondary mb-4">
-            We&apos;ll notify you as soon as ResilioPlatform is ready for early access.
+            We&apos;ll notify you as soon as our micro-SaaS products is ready for early access.
           </p>
           <div className="p-4 bg-accent/10 border border-accent/20 rounded-lg">
             <p className="text-sm text-accent font-medium">
@@ -174,7 +174,7 @@ export function NotifyMeForm({ onSignup, features = [] }: NotifyMeFormProps) {
                 className="w-4 h-4 mt-0.5 text-primary bg-surface border-border rounded focus:ring-primary focus:ring-2"
               />
               <span className="text-sm text-text-secondary leading-relaxed">
-                I agree to receive updates about ResilioPlatform launch, features, and exclusive early access offers. You can unsubscribe anytime.
+                I agree to receive updates about our micro-SaaS products launch, features, and exclusive early access offers. You can unsubscribe anytime.
               </span>
             </label>
             {errors.marketingConsent && (

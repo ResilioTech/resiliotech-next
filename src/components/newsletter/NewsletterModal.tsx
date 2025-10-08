@@ -121,7 +121,7 @@ export function NewsletterModal({ isOpen, onClose, trigger = 'manual' }: Newslet
                 { icon: '🚀', text: 'Weekly DevOps best practices and tutorials' },
                 { icon: '🛠️', text: 'Early access to new tools and resources' },
                 { icon: '📈', text: 'Exclusive case studies and success stories' },
-                { icon: '🎯', text: 'ResilioPlatform updates and beta access' }
+                { icon: '🎯', text: 'our micro-SaaS products updates and beta access' }
               ].map((benefit, index) => (
                 <motion.div
                   key={index}

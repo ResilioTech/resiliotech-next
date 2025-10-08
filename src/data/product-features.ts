@@ -191,7 +191,7 @@ export const productTimeline: ProductTimeline[] = [
   {
     phase: 'launch',
     title: 'Public Launch',
-    description: 'Full platform release with enterprise features and 24/7 support',
+    description: 'Full platform release with enterprise features',
     date: '2024-12-15',
     status: 'upcoming'
   },
