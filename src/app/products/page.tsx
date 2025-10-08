@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'DevOps Micro SaaS Products - Resiliotech',
   description: 'Purpose-built DevOps tools that solve specific challenges. From CI/CD automation to intelligent monitoring - focused products that integrate seamlessly.',
   keywords: ['DevOps tools', 'micro SaaS', 'CI/CD automation', 'infrastructure monitoring', 'DevSecOps', 'cloud scaling'],
+  alternates: {
+    canonical: 'https://resiliotech.com/products',
+  },
   openGraph: {
     title: 'DevOps Micro SaaS Products - Resiliotech',
     description: 'Purpose-built DevOps tools for modern development teams. Focused solutions that excel at one thing.',
@@ -32,8 +35,8 @@ export default function ProductsPage() {
   const getProductSlug = (productName: string) => {
     const slugMap: { [key: string]: string } = {
       'DeployFlow': 'deployflow',
-      'SignalWatch': 'cloudwatch-pro',
-      'CloudWatch Pro': 'cloudwatch-pro', // Legacy compatibility
+      'SignalWatch': 'signalwatch',
+      'CloudWatch Pro': 'cloudwatch-pro', // Legacy - redirects to signalwatch
       'SecureOps': 'secureops',
       'InfraScale': 'infrascale'
     };
