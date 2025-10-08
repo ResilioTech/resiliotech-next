@@ -195,7 +195,7 @@ export const Footer = memo(function Footer() {
             </div>
             <div className="mt-8 md:order-1 md:mt-0">
               <p className="text-base text-text-muted">
-                &copy; 2025 Resiliotech. Built in India.
+                &copy; {new Date().getFullYear()} Resiliotech. Built in India.
               </p>
               <p className="text-sm text-text-muted mt-1">
                 Support: Mon-Fri 10:00-19:00 IST

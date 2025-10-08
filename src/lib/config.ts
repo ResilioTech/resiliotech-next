@@ -86,7 +86,7 @@ export const siteConfig = {
   },
 
   // Day-0 Constants
-  today: "2025-10-06",
+  today: "2025-10-08",
   foundingPilotUrl: "/founding-pilot",
 
   // Feature Flags

@@ -3,37 +3,13 @@ import type { BlogPost, Author, Category, Tag, BlogStats } from '@/types/blog'
 
 export const AUTHORS: Author[] = [
   {
-    id: "john-doe",
-    name: "John Doe",
-    bio: "Senior DevOps Engineer with 8+ years of experience in cloud infrastructure and automation. Passionate about helping startups scale efficiently.",
-    avatar: "/team/john-doe.jpg",
+    id: "resiliotech-team",
+    name: "Resiliotech Team",
+    bio: "Building DevOps tools and sharing knowledge to help startups scale their infrastructure efficiently.",
+    avatar: "/team/placeholder-1.jpg",
     social: {
-      twitter: "johndoe_devops",
-      linkedin: "john-doe-devops",
-      github: "johndoe",
-      website: "https://johndoe.dev"
-    }
-  },
-  {
-    id: "sarah-chen",
-    name: "Sarah Chen",
-    bio: "Cloud Solutions Architect specializing in AWS and Kubernetes. Former engineering lead at two successful Y Combinator startups.",
-    avatar: "/team/sarah-chen.jpg",
-    social: {
-      twitter: "sarahchen_cloud",
-      linkedin: "sarah-chen-architect",
-      github: "sarahchen"
-    }
-  },
-  {
-    id: "mike-johnson",
-    name: "Mike Johnson",
-    bio: "Site Reliability Engineer and DevSecOps expert. Helps companies build secure, scalable infrastructure from day one.",
-    avatar: "/team/mike-johnson.jpg",
-    social: {
-      twitter: "mike_sre",
-      linkedin: "mike-johnson-sre",
-      github: "mikejohnson"
+      linkedin: "resilio-tech",
+      github: "resiliotech"
     }
   }
 ]
@@ -76,7 +52,7 @@ export const BLOG_POSTS: BlogPost[] = [
     description: "Learn Kubernetes from scratch with this comprehensive guide covering containers, pods, deployments, and services with practical examples.",
     publishedAt: "2024-01-15",
     updatedAt: "2024-01-20",
-    author: "sarah-chen",
+    author: "resiliotech-team",
     category: "kubernetes",
     tags: ["kubernetes", "containers", "docker", "devops", "beginner", "tutorial"],
     coverImage: "/blog-images/kubernetes-beginners-guide.jpg",
@@ -165,7 +141,7 @@ Kubernetes might seem complex at first, but understanding these core concepts gi
       { id: "whats-next", title: "What's Next?", level: 2 },
       { id: "conclusion", title: "Conclusion", level: 2 }
     ],
-    authorData: AUTHORS.find(a => a.id === "sarah-chen")!,
+    authorData: AUTHORS.find(a => a.id === "resiliotech-team")!,
     categoryData: CATEGORIES.find(c => c.slug === "kubernetes")!,
     tagData: [
       { id: "kubernetes", name: "Kubernetes", slug: "kubernetes" },
@@ -182,7 +158,7 @@ Kubernetes might seem complex at first, but understanding these core concepts gi
     title: "Building Robust CI/CD Pipelines with GitHub Actions",
     description: "Learn how to create efficient CI/CD pipelines using GitHub Actions with testing, building, and deployment automation for modern applications.",
     publishedAt: "2024-01-10",
-    author: "john-doe",
+    author: "resiliotech-team",
     category: "cicd",
     tags: ["github-actions", "cicd", "automation", "testing", "deployment", "workflow"],
     coverImage: "/blog-images/github-actions-cicd.jpg",
@@ -251,7 +227,7 @@ GitHub Actions provides a powerful platform for implementing robust CI/CD pipeli
       { id: "best-practices", title: "Best Practices", level: 2 },
       { id: "conclusion", title: "Conclusion", level: 2 }
     ],
-    authorData: AUTHORS.find(a => a.id === "john-doe")!,
+    authorData: AUTHORS.find(a => a.id === "resiliotech-team")!,
     categoryData: CATEGORIES.find(c => c.slug === "cicd")!,
     tagData: [
       { id: "github-actions", name: "GitHub Actions", slug: "github-actions" },
@@ -268,7 +244,7 @@ GitHub Actions provides a powerful platform for implementing robust CI/CD pipeli
     title: "AWS Cost Optimization: 15 Proven Strategies to Cut Your Cloud Bill",
     description: "Discover practical AWS cost optimization strategies that can reduce your cloud spending by 30-60% without compromising performance or reliability.",
     publishedAt: "2024-01-05",
-    author: "mike-johnson",
+    author: "resiliotech-team",
     category: "aws",
     tags: ["aws", "cost-optimization", "cloud-costs", "finops", "savings", "efficiency"],
     coverImage: "/blog-images/aws-cost-optimization.jpg",
@@ -377,7 +353,7 @@ AWS cost optimization is an ongoing practice that requires continuous monitoring
       { id: "measuring-success", title: "Measuring Success and ROI", level: 2 },
       { id: "conclusion", title: "Conclusion", level: 2 }
     ],
-    authorData: AUTHORS.find(a => a.id === "mike-johnson")!,
+    authorData: AUTHORS.find(a => a.id === "resiliotech-team")!,
     categoryData: CATEGORIES.find(c => c.slug === "aws")!,
     tagData: [
       { id: "aws", name: "AWS", slug: "aws" },
