@@ -1,6 +1,6 @@
 # Product Roadmap
 
-Last updated: October 8, 2025
+_Last updated: 2025-10-08_
 
 This is our public roadmap. We build in the open and ship weekly.
 
@@ -66,6 +66,16 @@ This is our public roadmap. We build in the open and ship weekly.
 
 ---
 
+## 🎯 Goals
+
+### Near-term
+- [ ] Core team assembled
+- [ ] First customer interviews completed
+- [ ] Founding pilot offer fully launched
+- [ ] First 3 case studies published
+
+---
+
 ## 📊 Completed
 
 ### October 2025
@@ -78,15 +88,11 @@ This is our public roadmap. We build in the open and ship weekly.
 - [x] Replaced "Trusted by X" with "Building in public"
 
 ### January 2025
-- [x] Founding pilot offer launched
-- [x] Website day-0 revamp
 - [x] Public roadmap published
-- [x] First 3 blog posts
+- [x] Website launched
 
 ### December 2024
 - [x] Company founded
-- [x] Core team assembled
-- [x] First customer interviews
 
 ---
 

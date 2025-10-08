@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { 
-  CheckCircle, 
-  Clock, 
-  Users, 
+import {
+  CheckCircle,
+  Clock,
+  Users,
   ArrowRight,
   Star,
   Shield,
@@ -18,6 +18,7 @@ import {
   BarChart
 } from 'lucide-react';
 import { ProductInfo } from '@/types/products';
+import { siteConfig } from '@/lib/config';
 
 const iconMap = {
   CheckCircle,
@@ -122,40 +123,16 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
                 ))}
               </div>
 
-              {/* CTA Buttons */}
+              {/* CTA Button */}
               <div className="flex flex-col sm:flex-row gap-4">
-                {isAvailable ? (
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
-                  >
-                    Get Started Today
-                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                ) : product.status === 'alpha' ? (
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
-                  >
-                    Request Access
-                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                ) : (
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
-                  >
-                    Join Waitlist
-                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                )}
                 <a
-                  href="https://calendly.com/resiliotech"
+                  href={siteConfig.calendly || siteConfig.foundingPilotUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
                 >
-                  Request Live Walkthrough
+                  {isAvailable ? 'Request Live Walkthrough' : product.status === 'alpha' ? 'Request Access' : 'Join Waitlist'}
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
             </motion.div>
@@ -313,16 +290,12 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="/contact"
+                  href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300"
                 >
-                  {isAvailable ? 'Start Free Trial' : 'Join Waitlist'}
-                </a>
-                <a
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-surface hover:bg-surface-elevated border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
-                >
-                  Contact Sales
+                  {isAvailable ? 'Book Free 30-min Audit' : 'Join Waitlist'}
                 </a>
               </div>
             </motion.div>
@@ -352,10 +325,12 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/contact"
+                href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group"
               >
-                {isAvailable ? 'Start Your Trial' : 'Join Waitlist'}
+                {isAvailable ? 'Book Free 30-min Audit' : 'Join Waitlist'}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
