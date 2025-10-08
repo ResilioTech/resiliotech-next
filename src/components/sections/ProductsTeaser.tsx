@@ -1,12 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { 
-  ArrowRight, 
-  Rocket, 
-  Sparkles, 
-  Clock,
+import {
+  ArrowRight,
   GitBranch,
   Cloud,
   Activity,
@@ -40,28 +36,6 @@ export function ProductsTeaser() {
     return statusStyles[status as keyof typeof statusStyles] || statusStyles.planning;
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <section className="py-24 bg-surface relative overflow-hidden">
       {/* Background Pattern */}
@@ -76,73 +50,51 @@ export function ProductsTeaser() {
         </svg>
       </div>
 
-      {/* Floating Elements */}
+      {/* Floating Elements - Pure CSS */}
       <div className="absolute inset-0">
         {[...Array(6)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
-            animate={{
-              x: [0, 50, 0],
-              y: [0, -50, 0],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 8 + i * 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5,
-            }}
+            className="absolute w-2 h-2 bg-primary/20 rounded-full animate-pulse"
             style={{
               left: `${15 + i * 15}%`,
               top: `${20 + (i % 3) * 25}%`,
+              animationDuration: `${8 + i * 1.5}s`,
+              animationDelay: `${i * 0.5}s`,
             }}
           />
         ))}
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <motion.div variants={itemVariants}>
+        <div className="text-center mb-16 animate-fade-in-up">
+          <div className="stagger-1">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
               <Package className="w-4 h-4" />
               Micro SaaS Products
             </div>
-            
+
             <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 leading-tight">
               Purpose-Built <span className="text-primary">DevOps Tools</span>
             </h2>
-            
+
             <p className="text-lg text-text-secondary leading-relaxed mb-12 max-w-3xl mx-auto">
-              Instead of one monolithic platform, we're building focused micro SaaS products that solve specific DevOps challenges. 
+              Instead of one monolithic platform, we're building focused micro SaaS products that solve specific DevOps challenges.
               Each tool excels at one thing and integrates seamlessly with your existing workflow.
             </p>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Products Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {microSaasProducts.map((product, index) => {
             const topFeature = product.features[0];
             const IconComponent = iconMap[topFeature.icon as keyof typeof iconMap] || Package;
-            
+
             return (
-              <motion.div
+              <div
                 key={product.name}
-                variants={itemVariants}
-                className="group p-8 bg-surface-elevated border border-border rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300 h-full flex flex-col"
+                className={`group p-8 bg-surface-elevated border border-border rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300 h-full flex flex-col animate-fade-in-up stagger-${index + 2}`}
               >
                 <div className="flex items-start justify-between mb-6">
                   <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -194,13 +146,13 @@ export function ProductsTeaser() {
                     })}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* CTA Section */}
-        <motion.div variants={itemVariants} className="text-center">
+        <div className="text-center animate-fade-in-up stagger-6">
           <div className="max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-text-primary mb-4">
               Ready to Streamline Your DevOps?
@@ -231,7 +183,7 @@ export function ProductsTeaser() {
             <Users className="w-4 h-4" />
             <span className="text-sm">Building in public — Private Alpha</span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
