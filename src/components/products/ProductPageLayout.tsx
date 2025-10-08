@@ -323,23 +323,15 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
               }
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href={siteConfig.calendly || siteConfig.foundingPilotUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group"
-              >
-                {isAvailable ? 'Book Free 30-min Audit' : 'Join Waitlist'}
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <a
-                href="/products"
-                className="inline-flex items-center justify-center px-8 py-4 bg-transparent hover:bg-white/10 text-white border border-white/30 hover:border-white/50 rounded-lg transition-all duration-300"
-              >
-                View All Products
-              </a>
-            </div>
+            <a
+              href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group mx-auto"
+            >
+              {isAvailable ? 'Book Free 30-min Audit' : 'Join Waitlist'}
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </a>
           </motion.div>
         </div>
       </section>

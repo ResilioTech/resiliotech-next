@@ -1,6 +1,6 @@
 # Product Roadmap
 
-_Last updated: 2025-10-08_
+_Last updated: 2025-10-09_
 
 This is our public roadmap. We build in the open and ship weekly.
 
@@ -22,8 +22,6 @@ This is our public roadmap. We build in the open and ship weekly.
 ### Founding Pilot Program
 **Status:** Live (3 slots/month)
 
-- [x] Fixed-scope offer defined
-- [x] Success criteria documented
 - [ ] Goal: Onboard first 3 pilots
 - [ ] Goal: Publish first case study (with permission)
 
@@ -71,7 +69,6 @@ This is our public roadmap. We build in the open and ship weekly.
 ### Near-term
 - [ ] Core team assembled
 - [ ] First customer interviews completed
-- [ ] Founding pilot offer fully launched
 - [ ] First 3 case studies published
 
 ---
@@ -79,6 +76,13 @@ This is our public roadmap. We build in the open and ship weekly.
 ## 📊 Completed
 
 ### October 2025
+- [x] Cookie consent banner with GA4 and Clarity gating
+- [x] Cookie policy updated with Microsoft Clarity details
+- [x] CTA naming standardized to "Join Founding Pilot" site-wide
+- [x] SignalWatch page CTA cleanup (single clear primary action)
+- [x] Founding Pilot offer fully launched (3 slots/month)
+- [x] Founding Pilot fixed-scope offer defined
+- [x] Founding Pilot success criteria documented
 - [x] Website honesty pass completed
 - [x] Removed all inflated claims and fake client counts
 - [x] Fixed primary CTA (Calendly) site-wide

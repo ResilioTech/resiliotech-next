@@ -7,7 +7,6 @@ import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { TableOfContents } from '@/components/blog/TableOfContents'
 import { SocialShare } from '@/components/blog/SocialShare'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
-import { NewsletterSignup } from '@/components/blog/NewsletterSignup'
 // import { BlogPostComponents } from '@/components/blog/BlogPostComponents'
 
 interface BlogPostPageProps {
@@ -174,14 +173,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Right Sidebar */}
             <div className="lg:col-span-3 space-y-8">
               <div className="sticky top-24 space-y-8">
-                {/* Newsletter Signup */}
-                <NewsletterSignup 
-                  title="More Like This?"
-                  description="Get similar content delivered to your inbox weekly."
-                  source={`blog-post-${post.slug}`}
-                  compact
-                />
-
                 {/* Quick Info */}
                 <div className="bg-surface border border-border rounded-xl p-6">
                   <h3 className="text-lg font-semibold text-text-primary mb-4">

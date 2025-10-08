@@ -238,7 +238,7 @@ export const Navigation = memo(function Navigation() {
                 href="/founding-pilot"
                 className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
-                Join Pilot
+                Join Founding Pilot
               </Link>
             </div>
 
@@ -338,7 +338,7 @@ export const Navigation = memo(function Navigation() {
                 href="/founding-pilot"
                 className="block w-full bg-primary hover:bg-primary-hover text-background px-6 py-3 rounded-lg font-semibold text-center transition-colors"
               >
-                Join Pilot
+                Join Founding Pilot
               </Link>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { siteConfig } from "@/lib/config";
 
 // Extend Window interface for analytics
 declare global {
@@ -13,8 +14,8 @@ declare global {
 // Declare gtag function type
 type GtagFunction = (...args: any[]) => void;
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-GBTY565EQ7";
-const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || ""; // Empty to disable
+const GA_ID = siteConfig.analytics.ga4;
+const CLARITY_ID = siteConfig.analytics.clarity;
 const CONSENT_BANNER_ENABLED = process.env.NEXT_PUBLIC_ENABLE_CONSENT_BANNER !== "false";
 
 function loadScript(src: string) {
@@ -114,7 +115,7 @@ export default function ConsentGate() {
     >
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="opacity-90 text-center sm:text-left">
-          We use minimal analytics (Google Analytics) to improve the site. Load analytics now?
+          We use minimal analytics (Google Analytics & Microsoft Clarity) to improve the site. Load analytics now?
         </p>
         <div className="flex gap-2 flex-shrink-0">
           <button

@@ -2,13 +2,12 @@ import { Metadata } from 'next'
 import { BlogListing } from '@/components/blog/BlogListing'
 import { SearchAndFilters } from '@/components/blog/SearchAndFilters'
 import { BlogStats } from '@/components/blog/BlogStats'
-import { NewsletterSignup } from '@/components/blog/NewsletterSignup'
-import { 
-  getAllPosts, 
-  getAllTags, 
-  getCategories, 
-  getAuthors, 
-  getBlogStats 
+import {
+  getAllPosts,
+  getAllTags,
+  getCategories,
+  getAuthors,
+  getBlogStats
 } from '@/lib/blog-data'
 import type { SearchFilters } from '@/types/blog'
 
@@ -314,14 +313,6 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
                   )}
                 </div>
               </div>
-
-              {/* Newsletter Signup */}
-              <NewsletterSignup 
-                title="Join Our DevOps Newsletter"
-                description="Get weekly insights, tutorials, and industry updates. No spam, just actionable content."
-                source="blog-sidebar"
-                compact={true}
-              />
 
               {/* Popular Tags */}
               <div className="bg-surface border border-border rounded-xl p-5">

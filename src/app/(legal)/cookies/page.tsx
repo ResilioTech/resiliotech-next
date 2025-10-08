@@ -41,12 +41,13 @@ export default function CookiesPage() {
               </ul>
             </div>
 
-            <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">2. Analytics Cookies</h3>
+            <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">2. Analytics Cookies (Consent Required)</h3>
             <p>
-              We use <strong>Google Analytics 4</strong> to understand how visitors use our site.
-              This helps us improve the user experience.
+              We use <strong>Google Analytics 4</strong> and <strong>Microsoft Clarity</strong> to understand how visitors use our site.
+              These tools are only loaded after you accept our cookie consent banner. This helps us improve the user experience.
             </p>
             <div className="bg-surface border border-border rounded-lg p-4 mt-3">
+              <p className="font-semibold mb-2">Google Analytics 4:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>_ga:</strong> Distinguishes users (expires in 2 years)</li>
                 <li><strong>_ga_*:</strong> Maintains session state (expires in 2 years)</li>
@@ -57,6 +58,21 @@ export default function CookiesPage() {
               </p>
               <p className="mt-2 text-sm">
                 <strong>Third-party:</strong> Google LLC (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</a>)
+              </p>
+            </div>
+
+            <div className="bg-surface border border-border rounded-lg p-4 mt-3">
+              <p className="font-semibold mb-2">Microsoft Clarity:</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li><strong>_clck:</strong> Persists Clarity user ID (expires in 1 year)</li>
+                <li><strong>_clsk:</strong> Connects multiple page views in a session (expires in 1 day)</li>
+                <li><strong>CLID:</strong> Identifies first-time visitors</li>
+              </ul>
+              <p className="mt-3 text-sm">
+                <strong>Data collected:</strong> Session recordings, heatmaps, scroll depth, clicks, device information
+              </p>
+              <p className="mt-2 text-sm">
+                <strong>Third-party:</strong> Microsoft Corporation (<a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</a>)
               </p>
             </div>
 
@@ -86,8 +102,9 @@ export default function CookiesPage() {
             </ul>
 
             <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">Opt-Out of Analytics</h3>
-            <p>To opt out of Google Analytics tracking:</p>
+            <p>To opt out of analytics tracking:</p>
             <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Easiest:</strong> Decline our consent banner when it appears (or clear localStorage key "rtx-consent" to reset your choice)</li>
               <li>Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Google Analytics Opt-out Browser Add-on</a></li>
               <li>Enable "Do Not Track" in your browser settings</li>
               <li>Use privacy-focused browsers or extensions (e.g., Brave, uBlock Origin)</li>
@@ -95,8 +112,8 @@ export default function CookiesPage() {
 
             <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">Current Implementation</h3>
             <p>
-              We currently use only strictly necessary cookies for site functionality and Google Analytics for understanding site usage.
-              You can opt out anytime using the methods above. A full cookie consent banner will be added as we scale.
+              We use strictly necessary cookies for site functionality. Analytics tools (Google Analytics 4 and Microsoft Clarity) are only loaded after you accept our consent banner.
+              You can decline the banner or opt out anytime using the methods above.
             </p>
           </section>
 
