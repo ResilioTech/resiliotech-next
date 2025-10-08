@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
 import {
   Search,
   Lightbulb,
@@ -31,8 +32,8 @@ const ctaOptions: CTAOption[] = [
     title: 'Project Consultation',
     description: 'Get a comprehensive assessment of your project needs with actionable recommendations.',
     icon: Search,
-    href: '/contact',
-    buttonText: 'Start Consultation',
+    href: siteConfig.calendly || siteConfig.foundingPilotUrl,
+    buttonText: 'Book Free 30-min Audit',
     highlight: 'Most Popular',
     features: ['Needs Assessment', 'Technical Review', 'Cost Analysis', 'Priority Roadmap'],
     color: 'text-blue-400'
@@ -41,14 +42,14 @@ const ctaOptions: CTAOption[] = [
     title: 'Strategy Consultation',
     description: 'One-on-one session with our DevOps experts to discuss your specific challenges.',
     icon: Lightbulb,
-    href: '/contact',
-    buttonText: 'Book Consultation',
+    href: siteConfig.calendly || siteConfig.foundingPilotUrl,
+    buttonText: 'Book Free 30-min Audit',
     highlight: '30-min Free',
     features: ['Expert Guidance', 'Custom Strategy', 'Implementation Plan', 'Q&A Session'],
     color: 'text-yellow-400'
   },
   {
-    title: 'View Case Studies',
+    title: 'See Sample Architectures',
     description: 'See real examples of how we have helped companies optimize their DevOps practices.',
     icon: FileText,
     href: '/projects',
@@ -237,10 +238,12 @@ export function CTASection() {
             
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center mb-8">
               <Link
-                href="/contact"
+                href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-surface-elevated hover:bg-surface border border-border hover:border-primary text-text-primary px-8 py-3 rounded-lg font-semibold text-center transition-all duration-300 hover:scale-105"
               >
-                Schedule a Call
+                Book Free 30-min Audit
               </Link>
               <Link
                 href="/about"

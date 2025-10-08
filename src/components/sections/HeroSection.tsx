@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { analytics } from '@/lib/analytics'
+import { siteConfig } from '@/lib/config'
 import { Rocket } from 'lucide-react'
 import '@/styles/animations.css'
 
@@ -56,10 +57,10 @@ export function HeroSection() {
             </Link>
 
             <Link
-              href="https://calendly.com/resiliotech"
+              href={siteConfig.calendly || siteConfig.foundingPilotUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => analytics.trackCTAClick('hero', 'Book a Free 30-min Audit', 'https://calendly.com/resiliotech')}
+              onClick={() => analytics.trackCTAClick('hero', 'Book a Free 30-min Audit', siteConfig.calendly || siteConfig.foundingPilotUrl)}
               className="inline-flex items-center justify-center px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all hover:scale-105"
             >
               Book Free 30-min Audit →

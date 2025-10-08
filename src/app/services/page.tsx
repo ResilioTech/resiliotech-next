@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { StructuredData } from '@/components/seo/StructuredData';
+import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'DevOps Services - Complete Solutions for Growing Companies | Resiliotech',
@@ -175,7 +176,7 @@ export default function ServicesPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="https://calendly.com/resiliotech"
+                href={siteConfig.calendly || siteConfig.foundingPilotUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
@@ -327,10 +328,12 @@ export default function ServicesPage() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
+              href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group"
             >
-              Schedule Free Consultation
+              Book Free 30-min Audit
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link

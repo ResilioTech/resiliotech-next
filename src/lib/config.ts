@@ -36,7 +36,7 @@ export const siteConfig = {
   // Social Links
   social: {
     github: "https://github.com/resiliotech",
-    linkedin: "https://www.linkedin.com/company/resilio-tech",
+    linkedin: "https://www.linkedin.com/company/resiliotech",
     twitter: "https://x.com/resiliotech",
     youtube: "https://www.youtube.com/@ResilioTech"
   },

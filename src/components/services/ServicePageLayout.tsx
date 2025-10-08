@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { 
-  CheckCircle, 
+import {
+  CheckCircle,
   ArrowRight,
   Clock,
   Users,
@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { analytics } from '@/lib/analytics';
+import { siteConfig } from '@/lib/config';
 
 const iconMap = {
   CheckCircle,
@@ -138,11 +139,13 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href={`/contact?service=${category}`}
-                  onClick={() => analytics.trackCTAClick(`service-${category}`, 'Get Started Today', `/contact?service=${category}`)}
+                  href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => analytics.trackCTAClick(`service-${category}`, 'Book Free 30-min Audit', siteConfig.calendly || siteConfig.foundingPilotUrl)}
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
                 >
-                  Get Started Today
+                  Book Free 30-min Audit
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
@@ -285,14 +288,18 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href={`/contact?service=${category}`}
+                href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => analytics.trackCTAClick(`service-${category}-bottom`, 'Book Free 30-min Audit', siteConfig.calendly || siteConfig.foundingPilotUrl)}
                 className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group"
               >
-                Start Your Project
+                Book Free 30-min Audit
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href={`/projects?category=${category}`}
+                onClick={() => analytics.trackCTAClick(`service-${category}-bottom`, 'See Sample Architectures', `/projects?category=${category}`)}
                 className="inline-flex items-center justify-center px-8 py-4 bg-transparent hover:bg-white/10 text-white border border-white/30 hover:border-white/50 rounded-lg transition-all duration-300"
               >
                 See Sample Architectures

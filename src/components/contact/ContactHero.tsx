@@ -162,7 +162,7 @@ export function ContactHero() {
               <MapPin className="w-6 h-6 text-secondary" />
               <div className="text-left">
                 <p className="font-semibold text-text-primary">Remote-first, India-based</p>
-                <p className="text-sm text-text-muted">Flexible collaboration across timezones • IST (GMT+5:30)</p>
+                <p className="text-sm text-text-muted">We collaborate across time zones when needed</p>
               </div>
             </div>
           </motion.div>
