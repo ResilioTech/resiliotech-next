@@ -123,7 +123,7 @@ export function TimelineSection({ milestones }: TimelineSectionProps) {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <div className="flex items-center gap-2 text-text-muted">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  <span>Next milestone: ResilioPlatform public launch</span>
+                  <span>Next milestone: our micro-SaaS products public launch</span>
                 </div>
               </div>
             </div>

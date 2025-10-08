@@ -49,7 +49,7 @@ const faqs: FAQ[] = [
   {
     id: '8',
     question: 'What makes Resiliotech different from other DevOps consultants?',
-    answer: 'We combine deep technical expertise from companies like Google and Netflix with a startup mindset. We focus on practical solutions that work for growing companies, not over-engineered enterprise solutions. Plus, we\'re building ResilioPlatform to democratize our best practices.'
+    answer: 'Solo founder building in public with transparent pricing and roadmap. We focus on practical solutions that work for growing companies, not over-engineered enterprise solutions. Our micro-SaaS products (DeployFlow, SignalWatch, etc.) will eventually democratize these best practices for all startups.'
   }
 ];
 

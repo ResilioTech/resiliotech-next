@@ -17,11 +17,11 @@ export const sampleProjects: Project[] = [
     challenge: 'Demonstrating modern approaches to handling legacy monolithic architecture challenges: downtime prevention, performance optimization, and scaling patterns.',
     solution: 'Implemented microservices architecture with containerized deployment, auto-scaling capabilities, and comprehensive monitoring using modern DevOps practices.',
     results: [
-      'High availability targets demonstrated',
-      'Performance optimization patterns',
-      'Zero downtime deployment strategies',
-      'Faster development velocity patterns',
-      'Infrastructure cost optimization approaches'
+      'What this demo shows: Microservices migration patterns from monolith',
+      'Zero-downtime deployment strategies',
+      'Auto-scaling configuration and load balancing',
+      'Container orchestration with Kubernetes',
+      'Performance monitoring and optimization approaches'
     ],
     technologies: [
       { name: 'React', category: 'frontend', proficiency: 'expert' },
@@ -54,20 +54,11 @@ export const sampleProjects: Project[] = [
       duration: '6 months',
       teamSize: 4,
       linesOfCode: 125000,
-      performanceImprovement: '50% faster load times',
-      userGrowth: '200% increase in concurrent users',
-      costSavings: '30% reduction in infrastructure costs'
+      performanceImprovement: 'Demo architecture',
+      userGrowth: 'Scalable design patterns',
+      costSavings: 'Cost optimization strategies shown'
     },
-    testimonial: {
-      author: {
-        name: 'Sarah Johnson',
-        role: 'CTO',
-        company: 'TechMart Solutions',
-        avatar: '/testimonials/sarah-johnson.jpg'
-      },
-      content: 'The Resiliotech team delivered exceptional results. Our platform is now faster, more reliable, and can handle 10x the traffic. The migration was seamless with zero business disruption.',
-      rating: 5
-    },
+    testimonial: undefined,
     status: 'completed',
     featured: true,
     publishedAt: '2024-08-15',
@@ -77,23 +68,23 @@ export const sampleProjects: Project[] = [
     id: '2',
     title: 'AI-Powered Analytics Dashboard',
     slug: 'ai-analytics-dashboard',
-    description: 'Built comprehensive analytics platform with real-time data processing and machine learning insights for enterprise client.',
-    fullDescription: 'Developed a sophisticated analytics dashboard that processes millions of data points in real-time, providing actionable insights through machine learning algorithms and intuitive visualizations.',
+    description: 'Reference architecture for analytics platform with real-time data processing and machine learning insights.',
+    fullDescription: 'Sample analytics dashboard demonstrating how to process large data volumes in real-time, providing actionable insights through machine learning algorithms and intuitive visualizations.',
     category: 'web',
     industry: 'Data Analytics',
     client: {
-      name: 'DataFlow Enterprises',
-      type: 'enterprise',
-      size: '500+ employees'
+      name: 'Internal Demo',
+      type: 'personal',
+      size: 'Reference Architecture'
     },
-    challenge: 'Manual data analysis taking weeks, no real-time insights, and disparate data sources making it difficult to get a unified view of business metrics.',
+    challenge: 'Demonstrating solutions for data analysis challenges: real-time processing, ML integration, and unified dashboards from disparate data sources.',
     solution: 'Created a unified analytics platform with real-time data ingestion, automated ML pipelines, and interactive dashboards using modern data engineering practices.',
     results: [
-      '95% reduction in analysis time',
-      'Real-time insights across all business units',
-      'Automated anomaly detection',
-      '$2M annual savings through optimized operations',
-      '40% improvement in decision-making speed'
+      'What this demo shows: Real-time data pipeline architecture',
+      'ML model integration patterns',
+      'Interactive data visualization techniques',
+      'Automated anomaly detection implementation',
+      'Multi-source data aggregation strategies'
     ],
     technologies: [
       { name: 'React', category: 'frontend', proficiency: 'expert' },
@@ -125,19 +116,10 @@ export const sampleProjects: Project[] = [
       duration: '8 months',
       teamSize: 6,
       linesOfCode: 180000,
-      performanceImprovement: '95% faster analysis',
-      costSavings: '$2M annual operational savings'
+      performanceImprovement: 'Real-time processing patterns',
+      costSavings: 'Cloud cost optimization approaches'
     },
-    testimonial: {
-      author: {
-        name: 'Michael Chen',
-        role: 'VP of Engineering',
-        company: 'DataFlow Enterprises',
-        avatar: '/testimonials/michael-chen.jpg'
-      },
-      content: 'This platform has transformed how we make data-driven decisions. What used to take our analysts weeks now happens in real-time. The ROI has been incredible.',
-      rating: 5
-    },
+    testimonial: undefined,
     status: 'completed',
     featured: true,
     publishedAt: '2024-06-20',
@@ -147,23 +129,23 @@ export const sampleProjects: Project[] = [
     id: '3',
     title: 'Mobile Banking Application',
     slug: 'mobile-banking-app',
-    description: 'Secure, user-friendly banking app with biometric authentication and real-time transaction processing for fintech startup.',
-    fullDescription: 'Developed a comprehensive mobile banking application with advanced security features, seamless UX, and integration with multiple financial institutions.',
+    description: 'Reference architecture for secure mobile banking with biometric authentication and real-time transaction processing.',
+    fullDescription: 'Sample mobile banking application demonstrating advanced security features, seamless UX, and integration patterns with financial systems.',
     category: 'mobile',
     industry: 'Fintech',
     client: {
-      name: 'SecureBank Pro',
-      type: 'startup',
-      size: '20-50 employees'
+      name: 'Internal Demo',
+      type: 'personal',
+      size: 'Reference Architecture'
     },
-    challenge: 'Creating a secure, compliant banking app that provides excellent user experience while meeting strict financial regulations and security requirements.',
-    solution: 'Built native iOS and Android apps with end-to-end encryption, biometric authentication, and seamless integration with banking APIs using React Native and robust security practices.',
+    challenge: 'Demonstrating secure, compliant banking app patterns that provide excellent user experience while meeting strict security requirements.',
+    solution: 'Built reference React Native app with end-to-end encryption, biometric authentication, and secure API integration patterns.',
     results: [
-      '250K+ active users within 6 months',
-      'Bank-grade security certification',
-      '4.8/5 app store rating',
-      '99.99% transaction success rate',
-      'PCI DSS compliance achieved'
+      'What this demo shows: Mobile banking security patterns',
+      'Biometric authentication implementation',
+      'End-to-end encryption strategies',
+      'Real-time transaction processing',
+      'Compliance-ready architecture (PCI DSS patterns)'
     ],
     technologies: [
       { name: 'React Native', category: 'mobile', proficiency: 'expert' },
@@ -194,18 +176,9 @@ export const sampleProjects: Project[] = [
       duration: '10 months',
       teamSize: 5,
       linesOfCode: 95000,
-      userGrowth: '250K users in 6 months'
+      userGrowth: 'Scalable architecture patterns'
     },
-    testimonial: {
-      author: {
-        name: 'Emily Rodriguez',
-        role: 'Founder & CEO',
-        company: 'SecureBank Pro',
-        avatar: '/testimonials/emily-rodriguez.jpg'
-      },
-      content: 'The team delivered a world-class banking app that our customers love. The security implementation gave us confidence to launch, and the user experience has driven incredible adoption.',
-      rating: 5
-    },
+    testimonial: undefined,
     status: 'completed',
     featured: true,
     publishedAt: '2024-04-10',
@@ -215,23 +188,23 @@ export const sampleProjects: Project[] = [
     id: '4',
     title: 'DevOps Pipeline Automation',
     slug: 'devops-pipeline-automation',
-    description: 'Complete CI/CD overhaul reducing deployment time from 4 hours to 15 minutes with zero-downtime deployments.',
-    fullDescription: 'Comprehensive DevOps transformation including automated testing, deployment pipelines, infrastructure as code, and monitoring setup for a growing SaaS company.',
+    description: 'Reference CI/CD implementation demonstrating automated testing, deployment pipelines, and zero-downtime strategies.',
+    fullDescription: 'Comprehensive DevOps reference architecture including automated testing, deployment pipelines, infrastructure as code, and monitoring setup.',
     category: 'devops',
     industry: 'SaaS',
     client: {
-      name: 'CloudSync Technologies',
-      type: 'startup',
-      size: '30-50 employees'
+      name: 'Internal Demo',
+      type: 'personal',
+      size: 'Reference Architecture'
     },
-    challenge: 'Manual deployments taking hours, frequent production issues, no automated testing, and difficulty scaling development processes as team grew.',
+    challenge: 'Demonstrating solutions to common DevOps challenges: slow deployments, manual processes, lack of testing, and scaling development workflows.',
     solution: 'Implemented comprehensive DevOps practices with automated CI/CD pipelines, infrastructure as code, comprehensive monitoring, and automated testing frameworks.',
     results: [
-      '94% reduction in deployment time (4 hours to 15 minutes)',
-      'Zero-downtime deployments achieved',
-      '80% reduction in production incidents',
-      'Automated testing coverage increased to 85%',
-      '300% faster development velocity'
+      'What this demo shows: Complete CI/CD automation patterns',
+      'Infrastructure as Code (Terraform) implementation',
+      'Zero-downtime deployment strategies',
+      'Automated testing and security scanning',
+      'Comprehensive monitoring with Prometheus/Grafana'
     ],
     technologies: [
       { name: 'Jenkins', category: 'devops', proficiency: 'expert' },
@@ -262,19 +235,10 @@ export const sampleProjects: Project[] = [
     metrics: {
       duration: '4 months',
       teamSize: 3,
-      performanceImprovement: '94% faster deployments',
-      costSavings: '60% reduction in operational overhead'
+      performanceImprovement: 'Automated deployment patterns',
+      costSavings: 'Infrastructure optimization strategies'
     },
-    testimonial: {
-      author: {
-        name: 'David Park',
-        role: 'Engineering Manager',
-        company: 'CloudSync Technologies',
-        avatar: '/testimonials/david-park.jpg'
-      },
-      content: 'The DevOps transformation was game-changing. Our team can now deploy multiple times per day with confidence. The automated monitoring has prevented numerous potential outages.',
-      rating: 5
-    },
+    testimonial: undefined,
     status: 'completed',
     featured: false,
     publishedAt: '2024-02-15',

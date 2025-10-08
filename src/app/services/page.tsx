@@ -268,10 +268,10 @@ export default function ServicesPage() {
               
               <div className="space-y-4">
                 {[
-                  'Expert team with experience from Google, Netflix, and leading startups',
+                  'Solo founder building in public with transparent roadmap and pricing',
                   'Proven methodologies that reduce risk and accelerate delivery',
                   'End-to-end support from strategy to implementation and ongoing maintenance',
-                  '24/7 monitoring and support for critical systems',
+                  'Support hours: Mon–Fri 10:00–19:00 IST • Typical response: < 24 hours',
                   'Transparent pricing with no hidden costs or vendor lock-in'
                 ].map((benefit, index) => (
                   <div key={index} className="flex items-start gap-3">
