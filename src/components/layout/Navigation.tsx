@@ -135,7 +135,7 @@ export const Navigation = memo(function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4 lg:space-x-6 xl:space-x-8">
+              <div className="ml-10 flex items-baseline space-x-8">
                 {navigationItems.map((item) => (
                   <div key={item.name} className="relative group">
                     {item.hasDropdown ? (
@@ -236,10 +236,9 @@ export const Navigation = memo(function Navigation() {
             <div className="hidden md:block">
               <Link
                 href="/founding-pilot"
-                className="bg-primary hover:bg-primary-hover text-background px-4 lg:px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 whitespace-nowrap"
+                className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
-                <span className="md:inline lg:hidden">Join Pilot</span>
-                <span className="hidden lg:inline">Join Founding Pilot</span>
+                Join Pilot
               </Link>
             </div>
 
@@ -339,7 +338,7 @@ export const Navigation = memo(function Navigation() {
                 href="/founding-pilot"
                 className="block w-full bg-primary hover:bg-primary-hover text-background px-6 py-3 rounded-lg font-semibold text-center transition-colors"
               >
-                Join Founding Pilot
+                Join Pilot
               </Link>
             </div>
           </div>
