@@ -254,7 +254,7 @@ export default function ProductsPage() {
               Get Custom Solutions
             </a>
             <a
-              href="mailto:products@resiliotech.com"
+              href="mailto:contact@resiliotech.com"
               className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary font-medium rounded-lg transition-all duration-300"
             >
               Contact Product Team

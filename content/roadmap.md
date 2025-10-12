@@ -100,6 +100,6 @@ This is our public roadmap. We build in the open and ship weekly.
 
 ---
 
-**Vote on features:** Email [founders@resiliotech.com](mailto:founders@resiliotech.com)
+**Vote on features:** Email [contact@resiliotech.com](mailto:contact@resiliotech.com)
 
 **Follow progress:** [Changelog](/changelog) | [GitHub](https://github.com/resiliotech)

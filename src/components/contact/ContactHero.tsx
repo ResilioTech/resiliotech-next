@@ -16,8 +16,8 @@ export function ContactHero() {
       icon: Mail,
       title: 'Email Us',
       description: 'Get in touch via email',
-      value: 'hello@resiliotech.com',
-      action: 'mailto:hello@resiliotech.com'
+      value: 'contact@resiliotech.com',
+      action: 'mailto:contact@resiliotech.com'
     },
     {
       icon: Phone,

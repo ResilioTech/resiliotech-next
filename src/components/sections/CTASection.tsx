@@ -257,7 +257,7 @@ export function CTASection() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-text-muted">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary" strokeWidth={2} />
-                <span>hello@resiliotech.com</span>
+                <span>contact@resiliotech.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-primary" strokeWidth={2} />

@@ -37,7 +37,7 @@ export default function HomePage() {
     contactPoint: {
       telephone: "+1-555-0123",
       contactType: "customer service",
-      email: "hello@resiliotech.com"
+      email: "contact@resiliotech.com"
     },
     sameAs: [
       "https://www.linkedin.com/company/resilio-tech",

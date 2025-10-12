@@ -11,7 +11,7 @@ export const teamMembers: TeamMember[] = [
       linkedin: 'https://www.linkedin.com/in/shivam-neer-shah/',
       github: 'https://github.com/resiliotech',
       twitter: 'https://x.com/resiliotech',
-      email: 'shivam@resiliotech.com'
+      email: 'contact@resiliotech.com'
     },
     experience: 'Building in public',
     avatar: '/team/shivam-shah.jpg'
