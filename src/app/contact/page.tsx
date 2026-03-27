@@ -56,10 +56,10 @@ export default function ContactPage() {
             <div className="p-6 bg-surface-elevated border border-border rounded-lg">
               <h3 className="font-semibold text-text-primary mb-2">Email</h3>
               <a 
-                href="mailto:hello@resiliotech.com"
+                href="mailto:contact@resiliotech.com"
                 className="text-primary hover:text-primary-hover transition-colors"
               >
-                hello@resiliotech.com
+                contact@resiliotech.com
               </a>
             </div>
             

@@ -182,7 +182,7 @@ export const Footer = memo(function Footer() {
                 Based in India 🇮🇳 | Serving clients globally 🌍
               </p>
               <p className="text-sm text-text-muted mt-1">
-                hello@resiliotech.com
+                contact@resiliotech.com
               </p>
             </div>
           </div>

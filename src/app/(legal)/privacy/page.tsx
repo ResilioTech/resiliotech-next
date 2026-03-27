@@ -67,7 +67,7 @@ export default function PrivacyPage() {
               <li><strong>Opt-Out:</strong> Unsubscribe from marketing emails at any time</li>
               <li><strong>Object:</strong> Object to processing based on legitimate interests</li>
             </ul>
-            <p>To exercise these rights, email <a href={`mailto:${siteConfig.email.hello}`} className="text-primary hover:underline">{siteConfig.email.hello}</a></p>
+            <p>To exercise these rights, email <a href={`mailto:${siteConfig.email.contact}`} className="text-primary hover:underline">{siteConfig.email.contact}</a></p>
           </section>
 
           <section>
@@ -121,7 +121,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">10. Contact Us</h2>
             <p>For privacy questions or concerns, contact us at:</p>
             <div className="bg-surface border border-border rounded-lg p-6 mt-4">
-              <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${siteConfig.email.hello}`} className="text-primary hover:underline">{siteConfig.email.hello}</a></p>
+              <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${siteConfig.email.contact}`} className="text-primary hover:underline">{siteConfig.email.contact}</a></p>
               <p className="mb-2"><strong>Company:</strong> {siteConfig.name}</p>
               <p><strong>Location:</strong> {siteConfig.hq}</p>
             </div>

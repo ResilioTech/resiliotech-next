@@ -34,7 +34,7 @@ Weekly updates on what we shipped. — Resilio Tech Team
 #### Technical
 - ✅ Updated SEO keywords for AI infrastructure consulting
 - ✅ All CTAs point to Calendly for free AI infra audit
-- ✅ Email updated to hello@resiliotech.com
+- ✅ Email updated to contact@resiliotech.com
 - ✅ Dark theme preserved with developer-friendly aesthetic
 
 ---

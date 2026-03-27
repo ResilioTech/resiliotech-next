@@ -1,74 +1,22 @@
 'use client'
 
-import { useState, useEffect, memo, useCallback, useMemo } from 'react'
+import { useState, useEffect, memo, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import {
-  Server,
-  Activity,
-  Bot,
-  type LucideIcon
-} from 'lucide-react'
-
-interface ServiceItem {
-  name: string
-  href: string
-  description: string
-  icon: LucideIcon
-  color: string
-}
-
-const services: ServiceItem[] = [
-  {
-    name: 'AI/ML Deployment & Infrastructure',
-    href: '/services#deployment',
-    description: 'Model serving, GPU optimization, CI/CD for ML, Kubernetes orchestration',
-    icon: Server,
-    color: 'text-cyan-400'
-  },
-  {
-    name: 'MLOps & AI Reliability',
-    href: '/services#mlops',
-    description: 'Model monitoring, drift detection, automated retraining, SLA-driven reliability',
-    icon: Activity,
-    color: 'text-green-400'
-  },
-  {
-    name: 'Custom AI Agents & Tooling',
-    href: '/services#agents',
-    description: 'AI-powered SRE agents, RAG systems, LLM integrations, cost optimization',
-    icon: Bot,
-    color: 'text-purple-400'
-  }
-]
 
 const navigationItems = [
-  { name: 'Home', href: '/', hasDropdown: false },
-  { name: 'Services', href: '/services', hasDropdown: true },
-  { name: 'About', href: '/about', hasDropdown: false },
-  { name: 'Blog', href: '/blog', hasDropdown: false },
-  { name: 'Contact', href: '/contact', hasDropdown: false }
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'About', href: '/about' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/contact' }
 ]
 
-// Constants for repeated class strings
 const NAV_LINK_BASE = 'px-3 py-2 text-sm font-medium transition-colors rounded-md'
 const NAV_LINK_ACTIVE = 'text-primary bg-surface-elevated'
 const NAV_LINK_INACTIVE = 'text-text-secondary hover:text-text-primary hover:bg-surface'
 const CTA_CLASSES = 'bg-primary hover:bg-primary-hover text-background rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
-
-// SVG Icons as components to avoid duplication
-const ChevronIcon = memo(({ isOpen }: { isOpen: boolean }) => (
-  <svg
-    className={cn('ml-1 h-4 w-4 transition-transform', isOpen && 'rotate-180')}
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-  </svg>
-))
-ChevronIcon.displayName = 'ChevronIcon'
 
 const MenuIcon = memo(({ isOpen }: { isOpen: boolean }) => (
   <svg
@@ -93,62 +41,16 @@ const CloseIcon = memo(() => (
 ))
 CloseIcon.displayName = 'CloseIcon'
 
-// Service menu item component
-const ServiceMenuItem = memo(({ service, isMobile = false }: { service: ServiceItem; isMobile?: boolean }) => {
-  const IconComponent = service.icon
-
-  if (isMobile) {
-    return (
-      <Link
-        href={service.href}
-        className="flex items-center py-2 text-sm text-text-muted hover:text-text-primary transition-colors group"
-      >
-        <IconComponent className={cn("mr-2 w-4 h-4", service.color)} strokeWidth={2} />
-        {service.name}
-      </Link>
-    )
-  }
-
-  return (
-    <Link
-      href={service.href}
-      className="flex items-start p-3 rounded-lg hover:bg-surface-elevated transition-all duration-300 group"
-    >
-      <div className="relative mr-3 mt-1">
-        <div className={cn("absolute inset-0 blur-md opacity-0 group-hover:opacity-50 transition-opacity", service.color)} />
-        <div className={cn(
-          "relative w-8 h-8 rounded-lg bg-gradient-to-br from-surface-elevated to-surface border border-border group-hover:border-primary/30 flex items-center justify-center transition-all duration-300 group-hover:scale-110",
-          service.color
-        )}>
-          <IconComponent className="w-4 h-4" strokeWidth={2} />
-        </div>
-      </div>
-      <div className="flex-1">
-        <h3 className="text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">
-          {service.name}
-        </h3>
-        <p className="text-xs text-text-muted mt-1 leading-relaxed">
-          {service.description}
-        </p>
-      </div>
-    </Link>
-  )
-})
-ServiceMenuItem.displayName = 'ServiceMenuItem'
-
 export const Navigation = memo(function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false)
   const pathname = usePathname()
 
-  // Memoized active link checker
   const isActiveLink = useCallback((href: string) => {
     if (href === '/') return pathname === '/'
     return pathname.startsWith(href)
   }, [pathname])
 
-  // Scroll handler with throttling
   useEffect(() => {
     let ticking = false
     const handleScroll = () => {
@@ -165,17 +67,12 @@ export const Navigation = memo(function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close menus on route change
   useEffect(() => {
     setIsMobileMenuOpen(false)
-    setIsServicesDropdownOpen(false)
   }, [pathname])
 
-  // Callbacks
   const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen(prev => !prev), [])
   const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
-  const openServicesDropdown = useCallback(() => setIsServicesDropdownOpen(true), [])
-  const closeServicesDropdown = useCallback(() => setIsServicesDropdownOpen(false), [])
 
   return (
     <>
@@ -201,55 +98,17 @@ export const Navigation = memo(function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-baseline ml-10 space-x-4 lg:space-x-6 xl:space-x-8">
               {navigationItems.map((item) => (
-                <div key={item.name} className="relative group">
-                  {item.hasDropdown ? (
-                    <div
-                      onMouseEnter={openServicesDropdown}
-                      onMouseLeave={closeServicesDropdown}
-                    >
-                      <Link
-                        href={item.href}
-                        className={cn(
-                          'flex items-center',
-                          NAV_LINK_BASE,
-                          isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
-                        )}
-                      >
-                        {item.name}
-                        <ChevronIcon isOpen={isServicesDropdownOpen} />
-                      </Link>
-
-                      {/* Services Mega Menu */}
-                      <div
-                        className={cn(
-                          'absolute left-1/2 transform -translate-x-1/2 top-full w-96 pt-2 transition-all duration-200',
-                          isServicesDropdownOpen
-                            ? 'opacity-100 translate-y-0 pointer-events-auto'
-                            : 'opacity-0 translate-y-2 pointer-events-none'
-                        )}
-                      >
-                        <div className="glassmorphism rounded-xl p-6 shadow-xl">
-                          <div className="grid gap-4">
-                            {services.map((service) => (
-                              <ServiceMenuItem key={service.href} service={service} />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        NAV_LINK_BASE,
-                        'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
-                        isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
-                      )}
-                    >
-                      {item.name}
-                    </Link>
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    NAV_LINK_BASE,
+                    'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+                    isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
                   )}
-                </div>
+                >
+                  {item.name}
+                </Link>
               ))}
             </div>
 
@@ -307,25 +166,16 @@ export const Navigation = memo(function Navigation() {
 
           <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-5rem)]">
             {navigationItems.map((item) => (
-              <div key={item.name}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    'block py-2 text-base font-medium transition-colors',
-                    isActiveLink(item.href) ? 'text-primary' : NAV_LINK_INACTIVE
-                  )}
-                >
-                  {item.name}
-                </Link>
-
-                {item.hasDropdown && (
-                  <div className="ml-4 mt-2 space-y-2">
-                    {services.map((service) => (
-                      <ServiceMenuItem key={service.href} service={service} isMobile />
-                    ))}
-                  </div>
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  'block py-2 text-base font-medium transition-colors',
+                  isActiveLink(item.href) ? 'text-primary' : NAV_LINK_INACTIVE
                 )}
-              </div>
+              >
+                {item.name}
+              </Link>
             ))}
 
             <div className="pt-6 border-t border-border">

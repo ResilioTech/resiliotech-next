@@ -160,7 +160,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">13. Contact</h2>
             <p>For questions about these Terms, contact us at:</p>
             <div className="bg-surface border border-border rounded-lg p-6 mt-4">
-              <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${siteConfig.email.hello}`} className="text-primary hover:underline">{siteConfig.email.hello}</a></p>
+              <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${siteConfig.email.contact}`} className="text-primary hover:underline">{siteConfig.email.contact}</a></p>
               <p className="mb-2"><strong>Company:</strong> {siteConfig.name}</p>
               <p><strong>Location:</strong> {siteConfig.hq}</p>
             </div>

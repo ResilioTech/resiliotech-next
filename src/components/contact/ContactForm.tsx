@@ -111,7 +111,7 @@ export function ContactForm() {
       // Track failed form submission
       analytics.trackFormSubmit('contact', 'contact-page', false);
       
-      setError('Something went wrong. Please try again or email us directly at hello@resiliotech.com');
+      setError('Something went wrong. Please try again or email us directly at contact@resiliotech.com');
     } finally {
       setIsSubmitting(false);
     }

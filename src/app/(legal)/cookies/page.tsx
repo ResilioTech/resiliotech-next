@@ -146,7 +146,7 @@ export default function CookiesPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">Contact Us</h2>
             <p>For questions about cookies, contact us at:</p>
             <div className="bg-surface border border-border rounded-lg p-6 mt-4">
-              <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${siteConfig.email.hello}`} className="text-primary hover:underline">{siteConfig.email.hello}</a></p>
+              <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${siteConfig.email.contact}`} className="text-primary hover:underline">{siteConfig.email.contact}</a></p>
               <p><strong>See also:</strong> <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link></p>
             </div>
           </section>

@@ -90,7 +90,7 @@ export default function Error({ error, reset }: ErrorProps) {
               Contact Support
             </Link>
             <Link
-              href="mailto:hello@resiliotech.com"
+              href="mailto:contact@resiliotech.com"
               className="bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary px-4 py-2 rounded-lg font-medium transition-colors text-center"
             >
               Email Us

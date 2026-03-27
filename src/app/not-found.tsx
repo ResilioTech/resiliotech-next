@@ -43,10 +43,10 @@ export default function NotFound() {
             </Link>
             <span className="text-text-muted">•</span>
             <Link
-              href="/products"
+              href="/about"
               className="text-primary hover:text-primary-hover transition-colors"
             >
-              Products
+              About Us
             </Link>
             <span className="text-text-muted">•</span>
             <Link

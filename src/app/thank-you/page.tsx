@@ -53,7 +53,7 @@ export default function ThankYouPage() {
               <div>
                 <h3 className="font-semibold text-text-primary mb-1">You'll Hear From Us</h3>
                 <p className="text-text-secondary">
-                  Expect an email from <a href={`mailto:${siteConfig.email.hello}`} className="text-primary hover:underline">{siteConfig.email.hello}</a> within 24 hours.
+                  Expect an email from <a href={`mailto:${siteConfig.email.contact}`} className="text-primary hover:underline">{siteConfig.email.contact}</a> within 24 hours.
                 </p>
               </div>
             </div>

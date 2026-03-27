@@ -21,8 +21,8 @@ export const siteConfig = {
 
   // Contact
   email: {
-    hello: "hello@resiliotech.com",
-    support: "hello@resiliotech.com",
+    contact: "contact@resiliotech.com",
+    support: "contact@resiliotech.com",
   },
 
   // External Links

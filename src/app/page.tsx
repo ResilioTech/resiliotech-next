@@ -47,7 +47,7 @@ export default function HomePage() {
     contactPoint: {
       telephone: "",
       contactType: "customer service",
-      email: "hello@resiliotech.com"
+      email: "contact@resiliotech.com"
     },
     sameAs: [
       "https://www.linkedin.com/company/resiliotech",

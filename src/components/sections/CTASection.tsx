@@ -61,11 +61,11 @@ export function CTASection() {
                 <ArrowRight className="w-5 h-5" />
               </a>
               <a
-                href="mailto:hello@resiliotech.com"
+                href="mailto:contact@resiliotech.com"
                 className="w-full sm:w-auto text-center text-primary hover:text-primary-hover font-semibold px-8 py-4 transition-colors inline-flex items-center justify-center gap-2"
               >
                 <Mail className="w-5 h-5" />
-                hello@resiliotech.com
+                contact@resiliotech.com
               </a>
             </div>
             

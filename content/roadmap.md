@@ -58,6 +58,6 @@ Production-ready RAG systems
 
 ---
 
-**Have a feature request?** Email [hello@resiliotech.com](mailto:hello@resiliotech.com)
+**Have a feature request?** Email [contact@resiliotech.com](mailto:contact@resiliotech.com)
 
 **Follow us:** [GitHub](https://github.com/resiliotech) · [LinkedIn](https://www.linkedin.com/company/resiliotech)

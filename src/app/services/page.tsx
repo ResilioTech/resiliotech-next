@@ -306,7 +306,7 @@ export default function ServicesPage() {
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="mailto:hello@resiliotech.com"
+              href="mailto:contact@resiliotech.com"
               className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
             >
               Email Us Directly
