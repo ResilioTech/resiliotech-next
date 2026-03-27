@@ -174,7 +174,9 @@ export function FAQSection() {
                   Ask Your Question
                 </button>
                 <a
-                  href="mailto:contact@resiliotech.com"
+                  href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="px-6 py-3 bg-surface hover:bg-surface-elevated border border-border hover:border-secondary/30 text-text-primary rounded-lg transition-all"
                 >
                   Email Us Directly

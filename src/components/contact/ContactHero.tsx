@@ -17,7 +17,7 @@ export function ContactHero() {
       title: 'Email Us',
       description: 'Get in touch via email',
       value: 'contact@resiliotech.com',
-      action: 'mailto:contact@resiliotech.com'
+      action: 'https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com'
     },
     {
       icon: Phone,
@@ -132,10 +132,8 @@ export function ContactHero() {
                 onClick={() => {
                   if (method.action && method.action.startsWith('#')) {
                     document.querySelector(method.action)?.scrollIntoView({ behavior: 'smooth' });
-                  } else if (method.action && method.action.startsWith('mailto:')) {
-                    window.open(method.action, '_self');
                   } else if (method.action) {
-                    window.location.href = method.action;
+                    window.open(method.action, '_blank', 'noopener,noreferrer');
                   }
                 }}
               >

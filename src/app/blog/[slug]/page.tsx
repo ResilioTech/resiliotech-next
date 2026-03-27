@@ -1,13 +1,12 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-// For now, we'll render content as plain text until MDX is properly configured
 import { getAllPosts, getPostBySlug } from '@/lib/blog-data'
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { TableOfContents } from '@/components/blog/TableOfContents'
 import { SocialShare } from '@/components/blog/SocialShare'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
-// import { BlogPostComponents } from '@/components/blog/BlogPostComponents'
+import { MarkdownContent } from '@/components/blog/MarkdownContent'
 
 interface BlogPostPageProps {
   params: {
@@ -93,7 +92,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Main Content */}
             <article className="lg:col-span-6">
               <div className="prose prose-lg max-w-none text-text-secondary leading-relaxed">
-                <div className="whitespace-pre-wrap">{post.content}</div>
+                <MarkdownContent content={post.content} />
               </div>
 
               {/* Social Share */}
