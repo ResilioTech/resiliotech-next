@@ -16,8 +16,8 @@ export function ContactHero() {
       icon: Mail,
       title: 'Email Us',
       description: 'Get in touch via email',
-      value: 'contact@resiliotech.com',
-      action: 'mailto:contact@resiliotech.com'
+      value: 'hello@resiliotech.com',
+      action: 'mailto:hello@resiliotech.com'
     },
     {
       icon: Phone,
@@ -111,12 +111,12 @@ export function ContactHero() {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold text-text-primary mb-6 leading-tight">
-              Let's Build Something <span className="text-primary">Amazing</span>
+              Book a Free <span className="text-primary">AI Infra Audit</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto leading-relaxed">
-              Ready to transform your infrastructure? Have questions about our services? 
-              We're here to help you succeed.
+              We&apos;ll assess your current AI infrastructure, identify reliability gaps, 
+              and give you a concrete action plan. No commitment required.
             </p>
           </motion.div>
 
@@ -172,15 +172,11 @@ export function ContactHero() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-text-muted">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-sm">We're building in public — see our Roadmap and Changelog</span>
+                <span className="text-sm">Building in public — see our Roadmap and Changelog</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-sm">IST support hours</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span className="text-sm">Mon–Fri 10:00–19:00 IST</span>
+                <span className="text-sm">Based in India 🇮🇳 | Serving globally 🌍</span>
               </div>
             </div>
           </motion.div>

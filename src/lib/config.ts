@@ -1,39 +1,39 @@
 /**
- * Resiliotech Site Configuration
- * Day-0 honest setup with no fake clients or testimonials
+ * Resilio Tech Site Configuration
+ * AI Infrastructure & Reliability Company
  */
 
 export const siteConfig = {
   // Company Info
-  name: "Resiliotech",
+  name: "Resilio Tech",
   domain: "resiliotech.com",
   url: "https://resiliotech.com",
-  description: "Platform-grade DevOps for startups. From repo to reliable infra in 30 days—without enterprise overhead.",
+  description: "AI Infrastructure That Doesn't Break in Production. We help companies deploy, scale, and operate AI systems reliably.",
+  tagline: "AI Infrastructure That Doesn't Break in Production",
 
   // Location & Support
   hq: "India",
-  supportHours: "Mon–Fri 10:00–19:00 IST",
+  servingGlobally: true,
   timezone: "Asia/Kolkata",
 
   // Tech Stack
-  primaryClouds: ["AWS", "Azure", "GCP"],
+  primaryClouds: ["AWS", "GCP", "Azure"],
 
   // Contact
   email: {
-    hello: "contact@resiliotech.com",
-    support: "contact@resiliotech.com",
-    founders: "contact@resiliotech.com"
+    hello: "hello@resiliotech.com",
+    support: "hello@resiliotech.com",
   },
 
   // External Links
   calendly: "https://calendly.com/resiliotech",
 
-  // Form Endpoints (Netlify Forms - no action needed, forms handled by Netlify)
+  // Form Endpoints (Netlify Forms)
   forms: {
-    netlify: true, // Using Netlify Forms
+    netlify: true,
   },
 
-  // Social Links
+  // Social Links (Company pages only — NO personal profiles)
   social: {
     github: "https://github.com/resiliotech",
     linkedin: "https://www.linkedin.com/company/resiliotech",
@@ -50,51 +50,13 @@ export const siteConfig = {
   // reCAPTCHA
   recaptcha: {
     siteKey: "6Ld9bp0rAAAAACdIYemp9LvEyC6NGghMjeyUkR0u",
-    // Secret key should be in environment variables, not in client code
   },
-
-  // Business Model
-  founding: {
-    slots: 3,
-    currency: "INR",
-    fixedFee: true
-  },
-
-  // Product Status
-  products: {
-    deployflow: {
-      status: "Private Alpha",
-      waitlistOpen: true
-    },
-    infrascale: {
-      status: "Planned",
-      waitlistOpen: true
-    },
-    cloudwatchPro: {
-      status: "Planned",
-      waitlistOpen: true
-    },
-    secureops: {
-      status: "Planned",
-      waitlistOpen: true
-    }
-  },
-
-  // Product Label Overrides (Day-0 cleanup)
-  productLabels: {
-    observability: "SignalWatch" // Renamed from "CloudWatch Pro" to avoid AWS confusion
-  },
-
-  // Day-0 Constants
-  today: "2025-10-08",
-  foundingPilotUrl: "/founding-pilot",
 
   // Feature Flags
   features: {
     blog: true,
-    products: true,
-    testimonials: false, // Day-0: no fake testimonials
-    caseStudies: false,  // Day-0: no fake case studies
+    testimonials: false,
+    caseStudies: false,
     roadmap: true,
     changelog: true
   }

@@ -2,19 +2,21 @@
 
 import { motion } from 'framer-motion';
 import { 
-  Zap, 
   Shield, 
-  Users, 
-  TrendingUp,
-  Sparkles
+  Activity, 
+  Eye, 
+  Terminal,
+  Sparkles,
+  Target,
+  Lightbulb
 } from 'lucide-react';
 import { CompanyValue } from '@/types/company';
 
-const iconMap = {
-  Zap,
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Shield,
-  Users,
-  TrendingUp,
+  Activity,
+  Eye,
+  Terminal,
 };
 
 interface ValuesSectionProps {
@@ -67,26 +69,39 @@ export function ValuesSection({ values }: ValuesSectionProps) {
           viewport={{ once: true }}
         >
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
+          <motion.div variants={itemVariants} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm font-medium text-accent mb-6">
               <Sparkles className="w-4 h-4" />
               Our Values
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-              What Drives Us <span className="text-accent">Forward</span>
+              What Drives <span className="text-accent">Us</span>
             </h2>
-            
-            <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-              These core values guide every decision we make, from how we architect solutions 
-              to how we interact with clients and each other.
-            </p>
+          </motion.div>
+
+          {/* Mission & Vision */}
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="p-8 bg-surface-elevated/50 backdrop-blur-sm border border-primary/20 rounded-2xl">
+              <Target className="w-8 h-8 text-primary mb-4" />
+              <h3 className="text-xl font-bold text-text-primary mb-3">Mission</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Make AI systems as reliable as the infrastructure they run on.
+              </p>
+            </div>
+            <div className="p-8 bg-surface-elevated/50 backdrop-blur-sm border border-secondary/20 rounded-2xl">
+              <Lightbulb className="w-8 h-8 text-secondary mb-4" />
+              <h3 className="text-xl font-bold text-text-primary mb-3">Vision</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Every company deploying AI should have production-grade reliability — not just the tech giants.
+              </p>
+            </div>
           </motion.div>
 
           {/* Values Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {values.map((value, index) => {
-              const IconComponent = iconMap[value.icon as keyof typeof iconMap] || Zap;
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {values.map((value) => {
+              const IconComponent = iconMap[value.icon] || Shield;
               
               return (
                 <motion.div
@@ -122,34 +137,6 @@ export function ValuesSection({ values }: ValuesSectionProps) {
               );
             })}
           </div>
-
-          {/* Values in Action */}
-          <motion.div variants={itemVariants}>
-            <div className="bg-surface-elevated border border-border rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-text-primary mb-6 text-center">
-                Values in Action
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="text-center p-4">
-                                    <div className="text-2xl font-bold text-accent mb-2">IST</div>
-                  <div className="text-sm text-text-muted">Support Hours</div>
-                </div>
-                <div className="text-center p-4">
-                  <div className="text-2xl font-bold text-accent mb-2">100%</div>
-                  <div className="text-sm text-text-secondary">Client Satisfaction Rate</div>
-                </div>
-                <div className="text-center p-4">
-                  <div className="text-2xl font-bold text-accent mb-2">Zero</div>
-                  <div className="text-sm text-text-secondary">Data Breaches</div>
-                </div>
-                <div className="text-center p-4">
-                                    <div className="text-2xl font-bold text-accent mb-2">Public</div>
-                  <div className="text-sm text-text-muted">Roadmap</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
     </section>

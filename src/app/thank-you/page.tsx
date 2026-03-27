@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/config'
 
 export const metadata: Metadata = {
   title: 'Thank You | Message Received',
-  description: 'Thank you for contacting Resiliotech. We\'ll respond within 24 hours.',
+  description: 'Thank you for contacting Resilio Tech. We\'ll respond within 24 hours.',
 }
 
 export default function ThankYouPage() {

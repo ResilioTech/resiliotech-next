@@ -126,7 +126,7 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
               {/* CTA Button */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                  href={siteConfig.calendly}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
@@ -290,7 +290,7 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                  href={siteConfig.calendly}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300"
@@ -324,7 +324,7 @@ export function ProductPageLayout({ product }: ProductPageLayoutProps) {
             </p>
             
             <a
-              href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+              href={siteConfig.calendly}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group mx-auto"

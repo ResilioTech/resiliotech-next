@@ -139,10 +139,10 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                  href={siteConfig.calendly}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => analytics.trackCTAClick(`service-${category}`, 'Book Free 30-min Audit', siteConfig.calendly || siteConfig.foundingPilotUrl)}
+                  onClick={() => analytics.trackCTAClick(`service-${category}`, 'Book Free 30-min Audit', siteConfig.calendly)}
                   className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-all duration-300 group"
                 >
                   Book Free 30-min Audit
@@ -288,10 +288,10 @@ export function ServicePageLayout({ service, category }: ServicePageLayoutProps)
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href={siteConfig.calendly || siteConfig.foundingPilotUrl}
+                href={siteConfig.calendly}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => analytics.trackCTAClick(`service-${category}-bottom`, 'Book Free 30-min Audit', siteConfig.calendly || siteConfig.foundingPilotUrl)}
+                onClick={() => analytics.trackCTAClick(`service-${category}-bottom`, 'Book Free 30-min Audit', siteConfig.calendly)}
                 className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-lg transition-all duration-300 group"
               >
                 Book Free 30-min Audit

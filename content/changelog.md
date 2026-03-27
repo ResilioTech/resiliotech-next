@@ -1,6 +1,41 @@
 # Changelog
 
-Weekly updates on what we shipped.
+Weekly updates on what we shipped. — Resilio Tech Team
+
+---
+
+## Week of January 13, 2026
+
+### 🚀 AI Infrastructure Pivot — Full Website Redesign
+**Resilio Tech is now an AI Infrastructure & Reliability company**
+
+#### Brand & Positioning
+- ✅ New tagline: "AI Infrastructure That Doesn't Break in Production"
+- ✅ Redesigned all pages for AI/ML infrastructure focus
+- ✅ Updated brand voice: engineer-to-engineer, no corporate fluff
+- ✅ Privacy-first: anonymous team presentation, no individual mentions
+
+#### Services
+- ✅ Launched 3 core service pillars:
+  - AI/ML Deployment & Infrastructure (model serving, GPU optimization, K8s orchestration)
+  - MLOps & AI Reliability (monitoring, drift detection, automated retraining)
+  - Custom AI Agents & Tooling (SRE agents, RAG systems, LLM integrations)
+- ✅ New services page with detailed breakdowns, tech stacks, and engagement types
+
+#### Pages
+- ✅ Homepage: New hero, services overview, "Why Resilio Tech", how we work, tech stack
+- ✅ Services: Expanded 3-pillar layout with tech stacks and engagement models
+- ✅ About: Anonymous team story, mission/vision, building-in-public philosophy
+- ✅ Contact: AI infrastructure audit CTA, updated FAQs, Calendly integration
+- ✅ Blog: Updated categories (MLOps, AI Agents, Model Deployment, AI Reliability)
+- ✅ Roadmap: Updated with AI infrastructure product plans
+- ✅ Removed deprecated pages (Founding Pilot, Products, Projects)
+
+#### Technical
+- ✅ Updated SEO keywords for AI infrastructure consulting
+- ✅ All CTAs point to Calendly for free AI infra audit
+- ✅ Email updated to hello@resiliotech.com
+- ✅ Dark theme preserved with developer-friendly aesthetic
 
 ---
 
@@ -9,61 +44,33 @@ Weekly updates on what we shipped.
 ### 🎯 Day-0 Honesty Pass
 **Making our site authentic and high-converting**
 
-#### Global Changes
-- ✅ Removed all inflated claims: "Trusted by X companies", "500+ Beta Users", "$29+ pricing"
-- ✅ Replaced social proof with honest "Building in public" messaging
-- ✅ Fixed primary CTA to working Calendly link (Book a Free 30-min Audit)
+- ✅ Removed all inflated claims and replaced with honest "Building in public" messaging
+- ✅ Fixed primary CTA to working Calendly link
 - ✅ Added Roadmap and Changelog links as credibility signals
-
-#### Product Pages
-- ✅ Products page: Removed fake stats, added "In development — join waitlist" message
-- ✅ DeployFlow page: Added "Private Alpha" status pill
-- ✅ Aligned all product messaging to current reality
-
-#### Content & Components  
-- ✅ Updated About page: Replaced fake client counts with honest milestones
-- ✅ Contact page: Changed "Trusted by 85+ companies" to building in public
-- ✅ Projects page: Removed dynamic client count calculations
-- ✅ Blog: Removed "Join 5,000+" newsletter claims, added "New posts coming shortly"
-- ✅ Newsletter: Updated all subscription prompts to remove fake numbers
-
-#### Technical
-- ✅ Removed Bitcoin logo from tech stack (confusing for DevOps focus)
-- ✅ Footer: All social links verified and working
-- ✅ Company data: Updated milestones to reflect actual journey
-- ✅ Stats badges: Changed from fake numbers to honest metrics
+- ✅ Updated company data to reflect actual journey
 
 ---
 
 ## Week of January 6, 2025
 
-### 🎉 Site Revamp - Day 0 Launch
+### 🎉 Site Revamp — Day 0 Launch
 **We're being honest about where we are**
 
-- Removed fake testimonials and case studies
-- Launched [Founding Pilot Program](/founding-pilot) (3 slots/month)
 - Published [public roadmap](/roadmap)
-- Updated all product pages to show "Private Alpha" status
 - Added legal pages (Privacy, Terms, Cookies)
+- Implemented full SEO (sitemap, robots.txt, JSON-LD)
+- Lighthouse score: 95+ on all metrics
 
 ### 📝 Content
-- Published 3 seed blog posts:
-  - [DevOps Blueprint for Seed to Series A](/blog/devops-blueprint-seed-to-series-a)
-  - [FluxCD + Kustomize for Production](/blog/fluxcd-kustomize-prod-ready)
-  - [AWS Cost Guardrails with Terraform](/blog/aws-cost-guardrails-terraform)
-
-### 🔧 Technical
-- Implemented full SEO (sitemap, robots.txt, JSON-LD)
-- Added GA4 analytics with custom events
-- Optimized images (WebP/AVIF) and fonts
-- Lighthouse score: 95+ on all metrics
+- Published initial blog posts on infrastructure topics
+- Blog authored as "Resilio Tech Team"
 
 ---
 
 ## Week of December 30, 2024
 
 ### 🚀 Initial Launch
-- Launched Resiliotech.com
+- Launched resiliotech.com
 - Basic homepage with service offerings
 - Contact form live
 
@@ -74,7 +81,7 @@ Weekly updates on what we shipped.
 ### 🏗️ Foundation
 - Company incorporated in India
 - Domain registered
-- Core team assembled (2 founders)
+- Core team assembled
 - First customer discovery calls
 
 ---

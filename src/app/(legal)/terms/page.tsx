@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function TermsPage() {
-  const lastUpdated = new Date(siteConfig.today).toLocaleDateString('en-US', {
+  const lastUpdated = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
@@ -80,7 +80,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li>Pilot program: Payment upon meeting success criteria</li>
               <li>Ongoing services: Invoiced monthly (if applicable)</li>
-              <li>Currency: {siteConfig.founding.currency} (Indian Rupees)</li>
+              <li>Currency: INR (Indian Rupees)</li>
               <li>Refunds: As specified in individual service agreements</li>
             </ul>
           </section>

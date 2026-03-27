@@ -12,24 +12,24 @@ import {
 import type { SearchFilters } from '@/types/blog'
 
 export const metadata: Metadata = {
-  title: 'DevOps Blog | Latest Insights & Best Practices',
-  description: 'Discover the latest DevOps trends, cloud infrastructure guides, CI/CD best practices, and startup scaling strategies from our expert team.',
+  title: 'Blog | AI Infrastructure & MLOps Insights',
+  description: 'Real production lessons on AI infrastructure, MLOps, model deployment, and AI reliability. Technical deep-dives from the Resilio Tech team.',
   keywords: [
-    'DevOps blog',
-    'cloud infrastructure',
-    'CI/CD tutorials',
-    'Kubernetes guides',
-    'AWS best practices',
-    'startup DevOps',
-    'infrastructure automation',
-    'monitoring and observability'
+    'MLOps blog',
+    'AI infrastructure',
+    'model deployment',
+    'AI reliability',
+    'ML monitoring',
+    'AI agents',
+    'production ML',
+    'Kubernetes ML workloads'
   ],
   alternates: {
     canonical: 'https://resiliotech.com/blog',
   },
   openGraph: {
-    title: 'DevOps Blog | Resiliotech',
-    description: 'Expert insights on DevOps, cloud infrastructure, and scaling strategies for startups',
+    title: 'Blog | Resilio Tech',
+    description: 'Real production lessons on AI infrastructure, MLOps, and AI reliability engineering',
     type: 'website',
     url: 'https://resiliotech.com/blog',
     images: [
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
         url: '/og-images/blog-main.jpg',
         width: 1200,
         height: 630,
-        alt: 'Resiliotech DevOps Blog',
+        alt: 'Resilio Tech Blog',
       }
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DevOps Blog | Resiliotech',
-    description: 'Expert insights on DevOps, cloud infrastructure, and scaling strategies for startups',
+    title: 'Blog | Resilio Tech',
+    description: 'Real production lessons on AI infrastructure, MLOps, and AI reliability engineering',
     images: ['/og-images/blog-main.jpg'],
   },
 }
@@ -171,22 +171,22 @@ export default function BlogPage({ searchParams }: BlogPageProps) {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
               </svg>
-              DevOps Blog
+              AI & MLOps Blog
             </div>
             
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight">
-              DevOps Insights & Best Practices
+              AI Infrastructure Insights & Production Lessons
             </h1>
             <p className="text-lg md:text-xl text-text-secondary leading-relaxed mb-4 max-w-3xl mx-auto">
-              Practical guides, tutorials, and strategies for modern DevOps teams —
-              helping startups scale their infrastructure and development processes.
+              We share everything we learn — real use cases, real production lessons.
+              Technical deep-dives on MLOps, model deployment, AI reliability, and more.
             </p>
             <div className="max-w-2xl mx-auto mb-6 p-4 bg-surface-elevated border border-border rounded-lg">
               <p className="text-sm text-accent font-medium">
-                📝 We're rebuilding our blog
+                📝 Building in public
               </p>
               <p className="text-xs text-text-muted mt-2">
-                These are seed posts demonstrating our content approach. More in-depth tutorials and case studies coming soon as we complete Founding Pilot engagements.
+                Posts authored by the Resilio Tech Team. More in-depth tutorials and case studies coming soon.
               </p>
             </div>
             

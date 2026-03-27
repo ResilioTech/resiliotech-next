@@ -1,105 +1,112 @@
 # Product Roadmap
 
-_Last updated: 2025-10-09_
+_Last updated: 2026-01-13_
 
-This is our public roadmap. We build in the open and ship weekly.
-
----
-
-## 🚀 Now (Q4 2025)
-
-### DeployFlow - Private Alpha
-**Status:** In Development
-
-- [ ] GitHub Actions baseline templates
-- [ ] FluxCD + Kustomize starter kit
-- [ ] Basic drift detection
-- [ ] Cost guardrail policies (OPA)
-- [ ] Terraform AWS starter modules
-
-**Goal:** Private alpha with 3 founding users for feedback
-
-### Founding Pilot Program
-**Status:** Live (3 slots/month)
-
-- [ ] Goal: Onboard first 3 pilots
-- [ ] Goal: Publish first case study (with permission)
+This is our public roadmap. We build in the open and ship weekly. — Resilio Tech Team
 
 ---
 
-## 🔮 Next (Q1 2026)
+## 🚀 Now (Q1 2026)
 
-### DeployFlow - Public Beta
-- [ ] Multi-cloud support (AWS + GCP + Azure)
-- [ ] Advanced environment promotions
-- [ ] Policy library (100+ cost/security rules)
-- [ ] Slack/Discord integrations
-- [ ] Public launch
+### AI Infrastructure Consulting — Live
+**Status:** Accepting Clients
 
-### InfraScale (Planned)
-**Terraform module marketplace**
+- [x] AI/ML Deployment & Infrastructure service live
+- [x] MLOps & AI Reliability service live
+- [x] Custom AI Agents & Tooling service live
+- [ ] Publish first AI infrastructure case study (with client permission)
+- [ ] Launch AI Infra Audit framework (standardized assessment)
 
-- [ ] Pre-built modules for common patterns
-- [ ] Automated testing framework
-- [ ] Cost estimation integration
-- [ ] Community contributions
+### AI-SRE Agent — In Development
+**Status:** Early Development
+
+- [ ] Incident detection from monitoring data (Prometheus, Datadog)
+- [ ] Auto-remediation playbooks for common ML pipeline failures
+- [ ] Slack/PagerDuty integration for AI system alerts
+- [ ] GPU utilization monitoring and auto-scaling triggers
+
+**Goal:** Internal dogfooding, then early client pilots
 
 ---
 
-## 🌟 Later (2026+)
+## 🔮 Next (Q2 2026)
 
-### SignalWatch (Planned)
-**Unified observability**
+### ML Model Monitoring Dashboard
+**Open-source tool for production ML observability**
 
-- [ ] Multi-cloud log aggregation
-- [ ] Custom SLO/SLA tracking
-- [ ] Anomaly detection (ML-powered)
+- [ ] Data drift detection (statistical tests + visualization)
+- [ ] Model performance degradation alerts
+- [ ] Feature importance tracking over time
+- [ ] Integration with popular model serving frameworks (TorchServe, Triton, vLLM)
+- [ ] Grafana dashboard templates
 
-### SecureOps (Planned)
-**DevSecOps automation**
+### RAG Reliability Toolkit
+**Tools for making RAG systems production-ready**
 
-- [ ] Automated vulnerability scanning
-- [ ] Compliance-as-code framework
-- [ ] Secret rotation automation
+- [ ] Retrieval quality monitoring
+- [ ] Hallucination detection pipelines
+- [ ] Context window optimization
+- [ ] Automated evaluation benchmarks
+
+---
+
+## 🌟 Later (H2 2026+)
+
+### AI Cost Optimizer
+**Reduce AI infrastructure spend without sacrificing performance**
+
+- [ ] GPU utilization analysis and right-sizing recommendations
+- [ ] Spot instance orchestration for training workloads
+- [ ] Model serving cost-per-inference tracking
+- [ ] Multi-cloud AI cost comparison
+
+### LLM Gateway
+**Unified API gateway for LLM providers**
+
+- [ ] Rate limiting, caching, and fallback routing
+- [ ] Cost tracking per team/project
+- [ ] Prompt versioning and A/B testing
+- [ ] Compliance and audit logging
 
 ---
 
 ## 🎯 Goals
 
 ### Near-term
-- [ ] Core team assembled
-- [ ] First customer interviews completed
-- [ ] First 3 case studies published
+- [ ] Complete first 3 AI infrastructure engagements
+- [ ] Publish first AI infrastructure case study
+- [ ] Release AI-SRE Agent alpha to early adopters
+- [ ] Grow YouTube channel with production AI lessons
+
+### Long-term
+- [ ] Become the go-to AI infrastructure partner for Series A-C startups
+- [ ] Open-source ML monitoring and reliability tools
+- [ ] Build a community around production AI best practices
 
 ---
 
 ## 📊 Completed
 
+### January 2026
+- [x] Full website redesign for AI Infrastructure pivot
+- [x] 3 service pillars defined and launched
+- [x] AI Infra Audit offering live (free 30-min call)
+- [x] Updated all branding and messaging
+
 ### October 2025
-- [x] Cookie consent banner with GA4 and Clarity gating
-- [x] Cookie policy updated with Microsoft Clarity details
-- [x] CTA naming standardized to "Join Founding Pilot" site-wide
-- [x] SignalWatch page CTA cleanup (single clear primary action)
-- [x] Founding Pilot offer fully launched (3 slots/month)
-- [x] Founding Pilot fixed-scope offer defined
-- [x] Founding Pilot success criteria documented
 - [x] Website honesty pass completed
-- [x] Removed all inflated claims and fake client counts
-- [x] Fixed primary CTA (Calendly) site-wide
-- [x] Aligned product pages to "Private Alpha" status
-- [x] Removed Bitcoin logo from tech stack
-- [x] Updated all social links and credibility statements
-- [x] Replaced "Trusted by X" with "Building in public"
+- [x] Building-in-public philosophy established
+- [x] Public roadmap and changelog launched
 
 ### January 2025
 - [x] Public roadmap published
 - [x] Website launched
 
 ### December 2024
-- [x] Company founded
+- [x] Company founded in India
 
 ---
 
-**Vote on features:** Email [contact@resiliotech.com](mailto:contact@resiliotech.com)
+**Vote on features:** Email [hello@resiliotech.com](mailto:hello@resiliotech.com)
 
 **Follow progress:** [Changelog](/changelog) | [GitHub](https://github.com/resiliotech)

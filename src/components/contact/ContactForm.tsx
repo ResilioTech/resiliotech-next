@@ -40,13 +40,13 @@ export function ContactForm() {
   });
 
   const projectTypes = [
-    { value: 'devops-transformation', label: 'DevOps Transformation' },
-    { value: 'cloud-migration', label: 'Cloud Migration' },
-    { value: 'ci-cd-setup', label: 'CI/CD Pipeline Setup' },
-    { value: 'monitoring-observability', label: 'Monitoring & Observability' },
-    { value: 'security-compliance', label: 'Security & Compliance' },
-    { value: 'platform-engineering', label: 'Platform Engineering' },
-    { value: 'consulting-strategy', label: 'Consulting & Strategy' },
+    { value: 'ai-ml-deployment', label: 'AI/ML Deployment & Infrastructure' },
+    { value: 'mlops-reliability', label: 'MLOps & AI Reliability' },
+    { value: 'ai-agents', label: 'Custom AI Agents & Tooling' },
+    { value: 'model-serving', label: 'Model Serving & GPU Optimization' },
+    { value: 'ml-monitoring', label: 'ML Monitoring & Observability' },
+    { value: 'ai-cost-optimization', label: 'AI Cost Optimization' },
+    { value: 'consulting-audit', label: 'AI Infrastructure Audit' },
     { value: 'other', label: 'Other' }
   ];
 
@@ -111,7 +111,7 @@ export function ContactForm() {
       // Track failed form submission
       analytics.trackFormSubmit('contact', 'contact-page', false);
       
-      setError('Something went wrong. Please try again or email us directly at contact@resiliotech.com');
+      setError('Something went wrong. Please try again or email us directly at hello@resiliotech.com');
     } finally {
       setIsSubmitting(false);
     }
@@ -162,10 +162,10 @@ export function ContactForm() {
               Send Another Message
             </button>
             <a
-              href="/projects"
+              href="/services"
               className="px-6 py-3 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all"
             >
-              View Our Work
+              View Our Services
             </a>
           </div>
         </div>
@@ -185,10 +185,10 @@ export function ContactForm() {
       <div className="bg-surface-elevated border border-border rounded-2xl p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-text-primary mb-4">
-            Start Your Project
+            Tell Us About Your AI Infrastructure Needs
           </h2>
           <p className="text-text-secondary">
-            Tell us about your project and we'll get back to you with a customized solution.
+            Share your project details and we&apos;ll get back within 24 hours with a tailored approach.
           </p>
         </div>
 
@@ -363,7 +363,7 @@ export function ContactForm() {
               className="w-4 h-4 mt-0.5 text-primary bg-surface border-border rounded focus:ring-primary focus:ring-2"
             />
             <label htmlFor="newsletter" className="text-sm text-text-secondary leading-relaxed">
-              I'd like to receive updates about Resiliotech services, industry insights, and our product launches. 
+              I&apos;d like to receive updates about Resilio Tech services, AI infrastructure insights, and industry best practices. 
               You can unsubscribe anytime.
             </label>
           </div>

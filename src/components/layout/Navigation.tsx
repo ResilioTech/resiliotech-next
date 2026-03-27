@@ -5,12 +5,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import {
-  RefreshCw,
-  Cloud,
-  Bot,
+  Server,
   Activity,
-  Shield,
-  Lightbulb,
+  Bot,
   type LucideIcon
 } from 'lucide-react'
 
@@ -24,58 +21,36 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    name: 'DevOps Automation',
-    href: '/services/devops-automation',
-    description: 'End-to-end CI/CD pipelines and infrastructure automation',
-    icon: RefreshCw,
-    color: 'text-blue-400'
-  },
-  {
-    name: 'Cloud Infrastructure',
-    href: '/services/cloud-infrastructure',
-    description: 'Scalable, secure cloud architecture design and implementation',
-    icon: Cloud,
+    name: 'AI/ML Deployment & Infrastructure',
+    href: '/services#deployment',
+    description: 'Model serving, GPU optimization, CI/CD for ML, Kubernetes orchestration',
+    icon: Server,
     color: 'text-cyan-400'
   },
   {
-    name: 'MLOps & Data Pipeline',
-    href: '/services/mlops',
-    description: 'Machine learning operations and automated data workflows',
-    icon: Bot,
-    color: 'text-purple-400'
-  },
-  {
-    name: 'Observability & Monitoring',
-    href: '/services/observability',
-    description: 'Comprehensive monitoring, logging, and alerting solutions',
+    name: 'MLOps & AI Reliability',
+    href: '/services#mlops',
+    description: 'Model monitoring, drift detection, automated retraining, SLA-driven reliability',
     icon: Activity,
     color: 'text-green-400'
   },
   {
-    name: 'Security & Compliance',
-    href: '/services/security',
-    description: 'DevSecOps integration and compliance automation',
-    icon: Shield,
-    color: 'text-orange-400'
-  },
-  {
-    name: 'Consulting & Strategy',
-    href: '/contact?service=consulting',
-    description: 'Expert guidance on DevOps transformation and strategy',
-    icon: Lightbulb,
-    color: 'text-yellow-400'
+    name: 'Custom AI Agents & Tooling',
+    href: '/services#agents',
+    description: 'AI-powered SRE agents, RAG systems, LLM integrations, cost optimization',
+    icon: Bot,
+    color: 'text-purple-400'
   }
 ]
 
 const navigationItems = [
   { name: 'Home', href: '/', hasDropdown: false },
   { name: 'Services', href: '/services', hasDropdown: true },
-  { name: 'Products', href: '/products', hasDropdown: false },
-  { name: 'Founding Pilot', href: '/founding-pilot', hasDropdown: false },
-  { name: 'Roadmap', href: '/roadmap', hasDropdown: false },
-  { name: 'Changelog', href: '/changelog', hasDropdown: false },
+  { name: 'About', href: '/about', hasDropdown: false },
   { name: 'Blog', href: '/blog', hasDropdown: false },
-  { name: 'About', href: '/about', hasDropdown: false }
+  { name: 'Changelog', href: '/changelog', hasDropdown: false },
+  { name: 'Roadmap', href: '/roadmap', hasDropdown: false },
+  { name: 'Contact', href: '/contact', hasDropdown: false }
 ]
 
 // Constants for repeated class strings
@@ -222,7 +197,7 @@ export const Navigation = memo(function Navigation() {
                 </div>
                 <div className="absolute inset-0 bg-primary rounded-lg blur-md opacity-30 group-hover:opacity-50 transition-opacity" />
               </div>
-              <span className="text-xl font-bold text-text-primary">Resiliotech</span>
+              <span className="text-xl font-bold text-text-primary">Resilio Tech</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -283,13 +258,14 @@ export const Navigation = memo(function Navigation() {
             </div>
 
             {/* CTA Button */}
-            <Link
-              href="/founding-pilot"
+            <a
+              href="https://calendly.com/resiliotech"
+              target="_blank"
+              rel="noopener noreferrer"
               className={cn('hidden md:block px-4 lg:px-6 py-2', CTA_CLASSES)}
             >
-              <span className="md:inline lg:hidden">Join Pilot</span>
-              <span className="hidden lg:inline">Join Pilot</span>
-            </Link>
+              <span className="md:inline">Book AI Infra Audit</span>
+            </a>
 
             {/* Mobile menu button */}
             <button
@@ -357,12 +333,14 @@ export const Navigation = memo(function Navigation() {
             ))}
 
             <div className="pt-6 border-t border-border">
-              <Link
-                href="/founding-pilot"
+              <a
+                href="https://calendly.com/resiliotech"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={cn('block w-full px-6 py-3 text-center', CTA_CLASSES)}
               >
-                Join Pilot
-              </Link>
+                Book AI Infra Audit
+              </a>
             </div>
           </div>
         </div>

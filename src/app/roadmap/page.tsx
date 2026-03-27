@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Product Roadmap | Build in Public',
   description: 'Our public roadmap. We build in the open and ship weekly. See what we\'re working on and what\'s coming next.',
   openGraph: {
-    title: 'Product Roadmap - Resiliotech',
+    title: 'Product Roadmap - Resilio Tech',
     description: 'See what we\'re building next',
     url: `${siteConfig.url}/roadmap`,
   }
@@ -29,7 +29,7 @@ export default async function RoadmapPage() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Product Roadmap",
-            description: "Public product roadmap for Resiliotech DevOps platform",
+            description: "Public product roadmap for Resilio Tech AI infrastructure",
             url: `${siteConfig.url}/roadmap`,
             publisher: {
               "@type": "Organization",

@@ -1,7 +1,7 @@
 # Netlify redirects file
 
 # SPA fallback for client-side routing
-/*    /index.html   200
+/*    /   200
 
 # API routes and form submissions
 /api/*  /.netlify/functions/:splat  200
@@ -11,4 +11,4 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
+  Referrer-Policy: strict-origin-when-cross-originindex.html

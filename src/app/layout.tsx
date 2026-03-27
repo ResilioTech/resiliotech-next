@@ -13,14 +13,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Resiliotech - DevOps Automation for Fast-Moving Startups',
-    template: '%s | Resiliotech'
+    default: 'Resilio Tech — AI Infrastructure That Doesn\'t Break in Production',
+    template: '%s | Resilio Tech'
   },
-  description: 'Enterprise-grade DevOps infrastructure without enterprise overhead. We help startups scale their technology through automated CI/CD, infrastructure-as-code, and observability solutions.',
-  keywords: ['DevOps automation', 'startup infrastructure', 'CI/CD', 'cloud automation', 'SRE services', 'MLOps', 'observability'],
-  authors: [{ name: 'Resiliotech' }],
-  creator: 'Resiliotech',
-  publisher: 'Resiliotech',
+  description: 'We help companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure by engineers who\'ve run systems at enterprise scale.',
+  keywords: ['AI infrastructure consulting', 'MLOps services', 'ML model deployment', 'AI reliability engineering', 'production AI systems', 'AI SRE', 'deploy ML models to production', 'AI infrastructure for startups'],
+  authors: [{ name: 'Resilio Tech' }],
+  creator: 'Resilio Tech',
+  publisher: 'Resilio Tech',
   formatDetection: {
     email: false,
     address: false,
@@ -34,15 +34,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://resiliotech.com',
-    siteName: 'Resiliotech',
-    title: 'Resiliotech - DevOps Automation for Fast-Moving Startups',
-    description: 'Enterprise-grade DevOps infrastructure without enterprise overhead. We help startups scale their technology through automated solutions.',
+    siteName: 'Resilio Tech',
+    title: 'Resilio Tech — AI Infrastructure That Doesn\'t Break in Production',
+    description: 'We deploy ML models to production and make sure they stay up. Production-grade AI infrastructure & reliability.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Resiliotech - DevOps Automation for Startups',
+        alt: 'Resilio Tech — Production-Grade AI Infrastructure & Reliability',
       }
     ],
   },
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@resiliotech',
     creator: '@resiliotech',
-    title: 'Resiliotech - DevOps Automation for Fast-Moving Startups',
-    description: 'Enterprise-grade DevOps infrastructure without enterprise overhead. We help startups scale their technology through automated solutions.',
+    title: 'Resilio Tech — AI Infrastructure That Doesn\'t Break in Production',
+    description: 'We deploy ML models to production and make sure they stay up. Production-grade AI infrastructure & reliability.',
     images: ['/og-image.png'],
   },
   robots: {

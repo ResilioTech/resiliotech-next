@@ -8,9 +8,9 @@ import { Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Changelog | Weekly Updates',
-  description: 'Weekly updates on what we shipped. Follow our progress as we build DevOps tools for startups.',
+  description: 'Weekly updates on what we shipped. Follow our progress as we build AI infrastructure tools and services.',
   openGraph: {
-    title: 'Changelog - Resiliotech',
+    title: 'Changelog - Resilio Tech',
     description: 'Weekly updates on what we shipped',
     url: `${siteConfig.url}/changelog`,
   }
@@ -30,7 +30,7 @@ export default async function ChangelogPage() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Changelog",
-            description: "Weekly product updates and releases from Resiliotech",
+            description: "Weekly product updates and releases from Resilio Tech",
             url: `${siteConfig.url}/changelog`,
             publisher: {
               "@type": "Organization",

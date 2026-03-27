@@ -8,95 +8,89 @@ const HeroSection = dynamic(() => import('@/components/sections/HeroSection').th
 })
 
 // Below-the-fold: Lazy load to reduce initial JS bundle
-const TechStackSection = dynamic(() => import('@/components/sections/TechStackSection').then(mod => ({ default: mod.TechStackSection })), {
-  ssr: false,
-  loading: () => <div className="py-16 bg-surface-elevated animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
-})
-
 const ServicesSection = dynamic(() => import('@/components/sections/ServicesSection').then(mod => ({ default: mod.ServicesSection })), {
   ssr: false,
   loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-64 bg-surface rounded-xl"></div></div></div>
 })
 
-const ProductsTeaser = dynamic(() => import('@/components/sections/ProductsTeaser').then(mod => ({ default: mod.ProductsTeaser })), {
+const WhyResilioSection = dynamic(() => import('@/components/sections/WhyResilioSection').then(mod => ({ default: mod.WhyResilioSection })), {
   ssr: false,
-  loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-64 bg-background rounded-xl"></div></div></div>
+  loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface-elevated rounded-xl"></div></div></div>
+})
+
+const HowWeWorkSection = dynamic(() => import('@/components/sections/HowWeWorkSection').then(mod => ({ default: mod.HowWeWorkSection })), {
+  ssr: false,
+  loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
+})
+
+const TechStackSection = dynamic(() => import('@/components/sections/TechStackSection').then(mod => ({ default: mod.TechStackSection })), {
+  ssr: false,
+  loading: () => <div className="py-16 bg-surface-elevated animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
+})
+
+const LearnWithUsSection = dynamic(() => import('@/components/sections/LearnWithUsSection').then(mod => ({ default: mod.LearnWithUsSection })), {
+  ssr: false,
+  loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
 })
 
 const CTASection = dynamic(() => import('@/components/sections/CTASection').then(mod => ({ default: mod.CTASection })), {
   ssr: false,
-  loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-32 bg-surface rounded-xl"></div></div></div>
+  loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-32 bg-background rounded-xl"></div></div></div>
 })
 
 export default function HomePage() {
   const organizationData = {
-    name: "Resiliotech",
-    description: "Enterprise-grade DevOps infrastructure without enterprise overhead. We help fast-moving startups scale their technology through automated CI/CD, infrastructure-as-code, and observability solutions.",
+    name: "Resilio Tech",
+    description: "We help companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure by engineers who've run systems at enterprise scale.",
     url: "https://resiliotech.com",
     logo: "https://resiliotech.com/favicon-32x32.png",
     contactPoint: {
-      telephone: "+1-555-0123",
+      telephone: "",
       contactType: "customer service",
-      email: "contact@resiliotech.com"
+      email: "hello@resiliotech.com"
     },
     sameAs: [
-      "https://www.linkedin.com/company/resilio-tech",
+      "https://www.linkedin.com/company/resiliotech",
       "https://x.com/resiliotech",
       "https://github.com/resiliotech",
       "https://www.youtube.com/@ResilioTech"
     ],
-    foundingDate: "2023",
+    foundingDate: "2024",
     areaServed: "Global"
   };
 
   const servicesData = [
     {
-      name: "DevOps Automation",
-      description: "End-to-end CI/CD pipelines, automated testing, and deployment strategies",
-      provider: "Resiliotech",
-      serviceType: "DevOps Consulting",
+      name: "AI/ML Deployment & Infrastructure",
+      description: "Model serving infrastructure with GPU optimization, CI/CD pipelines for ML models, and Kubernetes-based ML workload orchestration",
+      provider: "Resilio Tech",
+      serviceType: "AI Infrastructure Consulting",
       areaServed: "Global",
-      url: "https://resiliotech.com/services/devops-automation"
+      url: "https://resiliotech.com/services#deployment"
     },
     {
-      name: "Cloud Infrastructure",
-      description: "Scalable, secure, and cost-optimized cloud architecture using Infrastructure-as-Code",
-      provider: "Resiliotech",
-      serviceType: "Cloud Consulting",
-      areaServed: "Global",
-      url: "https://resiliotech.com/services/cloud-infrastructure"
-    },
-    {
-      name: "MLOps & Data Pipeline",
-      description: "Machine learning operations and automated data workflows for AI-powered applications",
-      provider: "Resiliotech",
+      name: "MLOps & AI Reliability",
+      description: "ML model monitoring, data drift detection, automated retraining pipelines, and SLA-driven AI system reliability",
+      provider: "Resilio Tech",
       serviceType: "MLOps Consulting",
       areaServed: "Global",
-      url: "https://resiliotech.com/services/mlops"
+      url: "https://resiliotech.com/services#mlops"
     },
     {
-      name: "Observability & Monitoring",
-      description: "Comprehensive monitoring, logging, and alerting solutions for proactive issue detection",
-      provider: "Resiliotech",
-      serviceType: "Monitoring Solutions",
+      name: "Custom AI Agents & Tooling",
+      description: "AI-powered SRE agents, RAG-based knowledge systems, custom LLM integrations, and AI cost optimization tooling",
+      provider: "Resilio Tech",
+      serviceType: "AI Development",
       areaServed: "Global",
-      url: "https://resiliotech.com/services/observability"
-    },
-    {
-      name: "Security & Compliance",
-      description: "DevSecOps integration with automated security scanning and compliance monitoring",
-      provider: "Resiliotech",
-      serviceType: "Security Consulting",
-      areaServed: "Global",
-      url: "https://resiliotech.com/services/security"
+      url: "https://resiliotech.com/services#agents"
     }
   ];
 
   const websiteData = {
     url: "https://resiliotech.com",
-    name: "Resiliotech - DevOps Automation for Fast-Moving Startups",
-    description: "Enterprise-grade DevOps infrastructure without enterprise overhead. We help startups scale their technology through automated solutions.",
-    publisher: "Resiliotech",
+    name: "Resilio Tech — AI Infrastructure That Doesn't Break in Production",
+    description: "We deploy ML models to production and make sure they stay up. Production-grade AI infrastructure & reliability.",
+    publisher: "Resilio Tech",
     inLanguage: "en-US"
   };
 
@@ -108,9 +102,11 @@ export default function HomePage() {
         website={websiteData}
       />
       <HeroSection />
-      <TechStackSection />
       <ServicesSection />
-      <ProductsTeaser />
+      <WhyResilioSection />
+      <HowWeWorkSection />
+      <TechStackSection />
+      <LearnWithUsSection />
       <CTASection />
     </>
   )

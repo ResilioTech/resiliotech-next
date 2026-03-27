@@ -2,20 +2,20 @@
 
 import { motion } from 'framer-motion';
 import { 
-  Target, 
   Heart, 
   Sparkles, 
-  Users,
   TrendingUp,
-  Award
+  Award,
+  Cpu,
+  Globe
 } from 'lucide-react';
 
 interface AboutHeroProps {
   stats: {
-    yearsInBusiness: number;
-    projectsCompleted: number;
-    clientsServed: number;
-    uptimeAchieved: string;
+    yearsExperience: string;
+    systemsOperated: string;
+    focusArea: string;
+    availability: string;
   };
 }
 
@@ -43,10 +43,10 @@ export function AboutHero({ stats }: AboutHeroProps) {
   };
 
   const statsData = [
-    { icon: TrendingUp, value: '1+', label: 'Years Building' },
-    { icon: Award, value: '3', label: 'Pilot Slots/Month' },
-    { icon: Users, value: 'Public', label: 'Roadmap' },
-    { icon: Target, value: '99.9%', label: 'Target Uptime' }
+    { icon: TrendingUp, value: stats.yearsExperience, label: 'SRE Experience' },
+    { icon: Award, value: stats.systemsOperated, label: 'Systems Operated' },
+    { icon: Cpu, value: stats.focusArea, label: 'Focus Area' },
+    { icon: Globe, value: stats.availability, label: 'Serving Clients' }
   ];
 
   return (
@@ -64,6 +64,18 @@ export function AboutHero({ stats }: AboutHeroProps) {
             <rect width="100" height="100" fill="url(#about-grid)" />
           </svg>
         </div>
+
+        {/* Gradient Orbs */}
+        <motion.div
+          className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
+          animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
 
         {/* Floating Elements */}
         {[...Array(8)].map((_, i) => (
@@ -103,15 +115,13 @@ export function AboutHero({ stats }: AboutHeroProps) {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold text-text-primary mb-6 leading-tight">
-              About <span className="text-primary">Resiliotech</span>
+              AI Infrastructure &{' '}
+              <span className="text-primary">Reliability Engineers</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto leading-relaxed">
-              We're on a mission to democratize enterprise-grade DevOps, making it accessible 
-              and affordable for growing companies to build reliable, scalable infrastructure.
-            </p>
-            <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mx-auto">
-              We're building in public — see our <a href="/roadmap" className="text-primary hover:underline">Roadmap</a> and <a href="/changelog" className="text-primary hover:underline">Changelog</a> for our latest progress.
+              Resilio Tech was founded by experienced SREs who saw a gap — companies building AI
+              couldn&apos;t make it work reliably in production. We bridge that gap.
             </p>
           </motion.div>
 
@@ -122,9 +132,9 @@ export function AboutHero({ stats }: AboutHeroProps) {
                 <Sparkles className="w-8 h-8 text-accent mx-auto mb-4" />
                 <h2 className="text-2xl font-bold text-text-primary mb-4">Our Mission</h2>
                 <p className="text-lg text-text-secondary leading-relaxed">
-                  Every startup deserves enterprise-grade infrastructure without enterprise-level complexity. 
-                  We bridge the gap between ambitious growth plans and the technical infrastructure needed to 
-                  support them, ensuring your technology scales as fast as your business.
+                  Make AI systems as reliable as the infrastructure they run on. We bring
+                  production-grade SRE practices to the world of AI — so your models don&apos;t
+                  just work in notebooks, they work in production.
                 </p>
               </div>
             </div>
@@ -156,17 +166,6 @@ export function AboutHero({ stats }: AboutHeroProps) {
                 </motion.div>
               </motion.div>
             ))}
-          </motion.div>
-
-          {/* Story Preview */}
-          <motion.div variants={itemVariants} className="mt-16 text-center">
-            <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-text-secondary leading-relaxed">
-                Resiliotech is a solo founder building DevOps tools for startups.
-                Currently in Private Alpha with DeployFlow while running Founding Pilot engagements (3 slots/month).
-                No fake testimonials, no fabricated case studies - just building in public and sharing the journey.
-              </p>
-            </div>
           </motion.div>
         </motion.div>
       </div>

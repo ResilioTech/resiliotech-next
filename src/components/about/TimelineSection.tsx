@@ -48,12 +48,12 @@ export function TimelineSection({ milestones }: TimelineSectionProps) {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-              The <span className="text-primary">Resiliotech</span> Story
+              Our <span className="text-primary">Journey</span>
             </h2>
             
             <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-              From a small team with a big vision to a trusted partner for growing companies, 
-              here's how we've evolved to serve the DevOps community better.
+              From enterprise SRE roots to pioneering AI infrastructure reliability —
+              here&apos;s how we evolved to meet the industry&apos;s most pressing challenge.
             </p>
           </motion.div>
 
@@ -116,14 +116,13 @@ export function TimelineSection({ milestones }: TimelineSectionProps) {
               <Rocket className="w-10 h-10 text-primary mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-text-primary mb-4">Looking Ahead</h3>
               <p className="text-lg text-text-secondary leading-relaxed mb-6">
-                We're just getting started. Our vision is to help 10,000 development teams worldwide 
-                achieve enterprise-grade reliability through our platform and services. The future of 
-                DevOps is automated, accessible, and built for everyone.
+                We&apos;re building the future of AI infrastructure reliability — making production-grade
+                AI accessible to every company, not just the tech giants.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <div className="flex items-center gap-2 text-text-muted">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  <span>Next milestone: our micro-SaaS products public launch</span>
+                  <span>Next milestone: AI reliability platform launch</span>
                 </div>
               </div>
             </div>

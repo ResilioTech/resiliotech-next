@@ -2,23 +2,17 @@
 
 import { memo } from 'react'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
-import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup'
 import { siteConfig, hasRealSocialUrl } from '@/lib/config'
 
 const footerLinks = {
   services: [
-    { name: 'DevOps Automation', href: '/services/devops-automation' },
-    { name: 'Cloud Infrastructure', href: '/services/cloud-infrastructure' },
-    { name: 'MLOps & Data Pipeline', href: '/services/mlops' },
-    { name: 'Observability & Monitoring', href: '/services/observability' },
-    { name: 'Security & Compliance', href: '/services/security' },
-    { name: 'Consulting & Strategy', href: '/contact?service=consulting' },
+    { name: 'AI/ML Deployment & Infrastructure', href: '/services#deployment' },
+    { name: 'MLOps & AI Reliability', href: '/services#mlops' },
+    { name: 'Custom AI Agents & Tooling', href: '/services#agents' },
   ],
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Founding Pilot', href: '/founding-pilot' },
     { name: 'Roadmap', href: '/roadmap' },
     { name: 'Changelog', href: '/changelog' },
     { name: 'Contact', href: '/contact' },
@@ -83,27 +77,13 @@ export const Footer = memo(function Footer() {
                 </div>
                 <div className="absolute inset-0 bg-primary rounded-lg blur-md opacity-30"></div>
               </div>
-              <span className="text-xl font-bold text-text-primary">Resiliotech</span>
+              <span className="text-xl font-bold text-text-primary">Resilio Tech</span>
             </Link>
             <p className="text-text-secondary text-base max-w-md">
-              Enterprise-grade DevOps infrastructure without enterprise overhead. 
-              We help fast-moving startups scale their technology through automated solutions.
+              AI Infrastructure That Doesn&apos;t Break in Production. We deploy ML models 
+              and make sure they stay up.
             </p>
-            
-            {/* Newsletter Signup */}
-            <div className="max-w-sm">
-              <h3 className="text-sm font-semibold text-text-primary tracking-wider uppercase mb-4">
-                Stay Updated
-              </h3>
-              <NewsletterSignup 
-                variant="compact"
-                source="footer"
-                placeholder="Your email"
-                title=""
-                description="Get weekly DevOps tips and updates"
-              />
-            </div>
-            
+
             <div className="flex space-x-6">
               {socialLinks
                 .filter((item) => hasRealSocialUrl(item.href))
@@ -186,19 +166,24 @@ export const Footer = memo(function Footer() {
         <div className="mt-12 border-t border-border pt-8">
           <div className="md:flex md:items-center md:justify-between">
             <div className="flex space-x-6 md:order-2">
-              <Link
-                href="/founding-pilot"
+              <a
+                href="https://calendly.com/resiliotech"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-primary hover:bg-primary-hover text-background px-6 py-2 rounded-lg font-semibold text-sm transition-colors"
               >
-                Join Founding Pilot
-              </Link>
+                Book a Free AI Infra Audit
+              </a>
             </div>
             <div className="mt-8 md:order-1 md:mt-0">
               <p className="text-base text-text-muted">
-                &copy; {new Date().getFullYear()} Resiliotech. Built in India.
+                &copy; {new Date().getFullYear()} Resilio Tech. All rights reserved.
               </p>
               <p className="text-sm text-text-muted mt-1">
-                Support: Mon-Fri 10:00-19:00 IST
+                Based in India 🇮🇳 | Serving clients globally 🌍
+              </p>
+              <p className="text-sm text-text-muted mt-1">
+                hello@resiliotech.com
               </p>
             </div>
           </div>
