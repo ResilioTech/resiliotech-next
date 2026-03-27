@@ -58,7 +58,13 @@ const nextConfig = {
   poweredByHeader: false,
   // Redirects for renamed products and legacy routes
   async redirects() {
-    return []
+    return [
+      { source: '/services/:path*', destination: '/services', permanent: true },
+      { source: '/products/:path*', destination: '/services', permanent: true },
+      { source: '/projects/:path*', destination: '/services', permanent: true },
+      { source: '/founding-pilot', destination: '/services', permanent: true },
+      { source: '/changelog', destination: '/', permanent: true },
+    ]
   },
 }
 

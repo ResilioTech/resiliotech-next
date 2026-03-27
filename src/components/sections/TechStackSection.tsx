@@ -5,18 +5,18 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 
 const technologies = [
-  { name: 'Kubernetes', category: 'Orchestration', logo: '/tech-logos/1-kubernetes.svg' },
-  { name: 'PyTorch', category: 'ML Framework', logo: '/tech-logos/pytorch.svg' },
-  { name: 'NVIDIA CUDA', category: 'GPU Compute', logo: '/tech-logos/nvidia.svg' },
-  { name: 'vLLM', category: 'Model Serving', logo: '/tech-logos/vllm.svg' },
-  { name: 'LangChain', category: 'LLM Framework', logo: '/tech-logos/langchain.svg' },
-  { name: 'Hugging Face', category: 'ML Models', logo: '/tech-logos/huggingface.svg' },
-  { name: 'MLflow', category: 'MLOps', logo: '/tech-logos/mlflow.svg' },
-  { name: 'Ray', category: 'Distributed ML', logo: '/tech-logos/ray.svg' },
-  { name: 'Prometheus', category: 'Monitoring', logo: '/tech-logos/10-prometheus.svg' },
-  { name: 'Grafana', category: 'Observability', logo: '/tech-logos/11-grafana.svg' },
-  { name: 'OpenTelemetry', category: 'Telemetry', logo: '/tech-logos/opentelemetry.svg' },
-  { name: 'Terraform', category: 'IaC', logo: '/tech-logos/6-terraform.svg' },
+  { name: 'Kubernetes', category: 'Orchestration', logo: '/tech-logos/01-kubernetes.svg' },
+  { name: 'PyTorch', category: 'ML Framework', logo: '/tech-logos/02-pytorch.svg' },
+  { name: 'NVIDIA CUDA', category: 'GPU Compute', logo: '/tech-logos/03-nvidia.svg' },
+  { name: 'vLLM', category: 'Model Serving', logo: '/tech-logos/04-vllm.svg' },
+  { name: 'LangChain', category: 'LLM Framework', logo: '/tech-logos/05-langchain.svg' },
+  { name: 'Hugging Face', category: 'ML Models', logo: '/tech-logos/06-huggingface.svg' },
+  { name: 'MLflow', category: 'MLOps', logo: '/tech-logos/07-mlflow.svg' },
+  { name: 'Ray', category: 'Distributed ML', logo: '/tech-logos/08-ray.svg' },
+  { name: 'Prometheus', category: 'Monitoring', logo: '/tech-logos/09-prometheus.svg' },
+  { name: 'Grafana', category: 'Observability', logo: '/tech-logos/10-grafana.svg' },
+  { name: 'OpenTelemetry', category: 'Telemetry', logo: '/tech-logos/11-opentelemetry.svg' },
+  { name: 'Terraform', category: 'IaC', logo: '/tech-logos/12-terraform.svg' },
 ]
 
 export function TechStackSection() {
