@@ -203,19 +203,40 @@ export const Navigation = memo(function Navigation() {
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative group">
                   {item.hasDropdown ? (
-                    <Link
-                      href={item.href}
+                    <div
                       onMouseEnter={openServicesDropdown}
                       onMouseLeave={closeServicesDropdown}
-                      className={cn(
-                        'flex items-center',
-                        NAV_LINK_BASE,
-                        isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
-                      )}
                     >
-                      {item.name}
-                      <ChevronIcon isOpen={isServicesDropdownOpen} />
-                    </Link>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          'flex items-center',
+                          NAV_LINK_BASE,
+                          isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
+                        )}
+                      >
+                        {item.name}
+                        <ChevronIcon isOpen={isServicesDropdownOpen} />
+                      </Link>
+
+                      {/* Services Mega Menu */}
+                      <div
+                        className={cn(
+                          'absolute left-1/2 transform -translate-x-1/2 top-full w-96 pt-2 transition-all duration-200',
+                          isServicesDropdownOpen
+                            ? 'opacity-100 translate-y-0 pointer-events-auto'
+                            : 'opacity-0 translate-y-2 pointer-events-none'
+                        )}
+                      >
+                        <div className="glassmorphism rounded-xl p-6 shadow-xl">
+                          <div className="grid gap-4">
+                            {services.map((service) => (
+                              <ServiceMenuItem key={service.href} service={service} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   ) : (
                     <Link
                       href={item.href}
@@ -227,28 +248,6 @@ export const Navigation = memo(function Navigation() {
                     >
                       {item.name}
                     </Link>
-                  )}
-
-                  {/* Services Mega Menu */}
-                  {item.hasDropdown && (
-                    <div
-                      onMouseEnter={openServicesDropdown}
-                      onMouseLeave={closeServicesDropdown}
-                      className={cn(
-                        'absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-96 transition-all duration-200',
-                        isServicesDropdownOpen
-                          ? 'opacity-100 translate-y-0 pointer-events-auto'
-                          : 'opacity-0 translate-y-2 pointer-events-none'
-                      )}
-                    >
-                      <div className="glassmorphism rounded-xl p-6 shadow-xl">
-                        <div className="grid gap-4">
-                          {services.map((service) => (
-                            <ServiceMenuItem key={service.href} service={service} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
                   )}
                 </div>
               ))}

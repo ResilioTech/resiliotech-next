@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { analytics } from '@/lib/analytics'
-import { Zap } from 'lucide-react'
+import { Zap, Rocket, Shield, BarChart3, Cpu } from 'lucide-react'
 import '@/styles/animations.css'
 
 export function HeroSection() {
@@ -61,27 +61,50 @@ export function HeroSection() {
             </Link>
           </div>
 
-          {/* Trust Signals */}
+          {/* What We Actually Do */}
           <div className="pt-12 sm:pt-16">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
               {[
-                { value: '6+', label: 'Years SRE Experience', icon: '⚡' },
-                { value: 'F500', label: 'Enterprise Scale Systems', icon: '🏢' },
-                { value: 'E2E', label: 'Notebook to Production K8s', icon: '🔄' },
-                { value: '24h', label: 'Response Time Guarantee', icon: '⏱️' },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="relative group p-5 sm:p-6 bg-surface/60 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/30 transition-all duration-300"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="relative">
-                    <span className="text-lg mb-2 block">{stat.icon}</span>
-                    <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-text-muted leading-tight">{stat.label}</div>
+                {
+                  icon: Rocket,
+                  title: 'Deploy ML Models',
+                  description: 'From notebook to production Kubernetes with zero-downtime deployments',
+                  color: 'text-cyan-400',
+                },
+                {
+                  icon: Cpu,
+                  title: 'Optimize GPU Costs',
+                  description: 'Smart autoscaling & resource management to cut your GPU spend',
+                  color: 'text-green-400',
+                },
+                {
+                  icon: BarChart3,
+                  title: 'Monitor & Alert',
+                  description: 'Detect model drift, latency spikes, and failures before users do',
+                  color: 'text-purple-400',
+                },
+                {
+                  icon: Shield,
+                  title: 'Guarantee Uptime',
+                  description: 'SLA-backed infrastructure by SREs who\'ve run Fortune 500 systems',
+                  color: 'text-amber-400',
+                },
+              ].map((item) => {
+                const IconComp = item.icon
+                return (
+                  <div
+                    key={item.title}
+                    className="relative group p-5 sm:p-6 bg-surface/60 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/30 transition-all duration-300 text-left"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative">
+                      <IconComp className={cn('w-6 h-6 mb-3', item.color)} strokeWidth={1.5} />
+                      <div className="text-base font-semibold text-text-primary mb-1.5">{item.title}</div>
+                      <div className="text-sm text-text-muted leading-relaxed">{item.description}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
