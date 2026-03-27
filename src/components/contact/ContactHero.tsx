@@ -132,6 +132,8 @@ export function ContactHero() {
                 onClick={() => {
                   if (method.action && method.action.startsWith('#')) {
                     document.querySelector(method.action)?.scrollIntoView({ behavior: 'smooth' });
+                  } else if (method.action && method.action.startsWith('mailto:')) {
+                    window.open(method.action, '_self');
                   } else if (method.action) {
                     window.location.href = method.action;
                   }

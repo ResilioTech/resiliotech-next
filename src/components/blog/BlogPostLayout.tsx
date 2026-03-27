@@ -24,7 +24,7 @@ export function BlogPostLayout({ post, children }: BlogPostLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="py-8 bg-surface border-b border-border">
+      <header className="pt-24 pb-8 bg-surface border-b border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <nav className="mb-8">
