@@ -48,8 +48,6 @@ const navigationItems = [
   { name: 'Services', href: '/services', hasDropdown: true },
   { name: 'About', href: '/about', hasDropdown: false },
   { name: 'Blog', href: '/blog', hasDropdown: false },
-  { name: 'Changelog', href: '/changelog', hasDropdown: false },
-  { name: 'Roadmap', href: '/roadmap', hasDropdown: false },
   { name: 'Contact', href: '/contact', hasDropdown: false }
 ]
 

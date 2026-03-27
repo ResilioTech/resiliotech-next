@@ -1,10 +1,9 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Legal Agreement',
-  description: 'Terms and conditions for using Resiliotech services and website.',
+  description: 'Terms and conditions for using Resilio Tech services and website.',
 }
 
 export default function TermsPage() {
@@ -33,9 +32,9 @@ export default function TermsPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">2. Services Provided</h2>
             <p>{siteConfig.name} provides:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Founding Pilot Program:</strong> Fixed-scope DevOps implementation services</li>
-              <li><strong>DevOps Consulting:</strong> Infrastructure, CI/CD, and observability consulting</li>
-              <li><strong>Software Products:</strong> DevOps tools and platforms (currently in Private Alpha)</li>
+              <li><strong>AI/ML Deployment & Infrastructure:</strong> Model serving, GPU optimization, CI/CD for ML, Kubernetes orchestration</li>
+              <li><strong>MLOps & AI Reliability:</strong> Model monitoring, drift detection, automated retraining, SLA-driven reliability</li>
+              <li><strong>Custom AI Agents & Tooling:</strong> AI-powered SRE agents, RAG systems, LLM integrations</li>
               <li><strong>Educational Content:</strong> Blog posts, guides, and documentation</li>
             </ul>
           </section>
@@ -53,32 +52,25 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-text-primary mb-4">4. Founding Pilot Terms</h2>
+            <h2 className="text-2xl font-bold text-text-primary mb-4">4. Engagement Terms</h2>
             <h3 className="text-xl font-semibold text-text-primary mb-3">4.1 Scope</h3>
             <p>
-              The Founding Pilot is a fixed-scope engagement with deliverables defined on the{' '}
-              <Link href="/founding-pilot" className="text-primary hover:underline">Founding Pilot page</Link>.
+              Each engagement is scoped individually with deliverables, timelines, and success criteria defined in the project agreement.
             </p>
 
             <h3 className="text-xl font-semibold text-text-primary mb-3 mt-4">4.2 Success Criteria</h3>
-            <p>Payment is contingent on meeting documented success criteria:</p>
+            <p>Payment terms and success criteria are defined per engagement:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Successful production deployment via CI/CD pipeline</li>
+              <li>Successful deployment of agreed-upon infrastructure</li>
               <li>Passing health checks and monitoring setup</li>
               <li>Team handoff and knowledge transfer completed</li>
             </ul>
-
-            <h3 className="text-xl font-semibold text-text-primary mb-3 mt-4">4.3 Risk-Free Guarantee</h3>
-            <p>
-              If we do not meet all success criteria within the agreed timeline, you pay ₹0.
-              This guarantee requires good-faith cooperation and timely provision of access/information.
-            </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">5. Payment Terms</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Pilot program: Payment upon meeting success criteria</li>
+              <li>Consulting engagements: As specified in project agreement</li>
               <li>Ongoing services: Invoiced monthly (if applicable)</li>
               <li>Currency: INR (Indian Rupees)</li>
               <li>Refunds: As specified in individual service agreements</li>
@@ -89,7 +81,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">6. Intellectual Property</h2>
             <h3 className="text-xl font-semibold text-text-primary mb-3">6.1 Client Work Product</h3>
             <p>
-              For Founding Pilot and consulting engagements, you own all infrastructure code, configurations,
+              For consulting engagements, you own all infrastructure code, configurations,
               and deliverables created specifically for your project.
             </p>
 

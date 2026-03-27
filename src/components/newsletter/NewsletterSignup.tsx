@@ -39,7 +39,7 @@ interface NewsletterSignupProps {
 }
 
 const newsletterTopics = [
-  { id: 'devops-tips', name: 'DevOps Tips & Best Practices', icon: Code },
+  { id: 'devops-tips', name: 'AI infrastructure Tips & Best Practices', icon: Code },
   { id: 'cloud-news', name: 'Cloud Infrastructure Updates', icon: Cloud },
   { id: 'product-updates', name: 'Product Launch Updates', icon: Sparkles },
   { id: 'case-studies', name: 'Client Success Stories', icon: TrendingUp }
@@ -140,11 +140,11 @@ export function NewsletterSignup({
           <p className={`${
             variant === 'compact' ? 'text-sm' : 'text-base'
           } text-text-secondary mb-4`}>
-            You're now subscribed to receive DevOps insights, tips, and updates from Resiliotech.
+            You're now subscribed to receive AI infrastructure insights, tips, and updates from Resilio Tech.
           </p>
           
           <div className="text-xs text-text-muted">
-            <p>• Weekly DevOps tips and best practices</p>
+            <p>• Weekly AI infrastructure tips and best practices</p>
             <p>• Early access to new content and resources</p>
             <p>• Exclusive updates on our product launches</p>
           </div>
@@ -293,7 +293,7 @@ export function NewsletterSignup({
             <span className={`text-text-secondary leading-relaxed ${
               variant === 'compact' ? 'text-xs' : 'text-sm'
             }`}>
-              I agree to receive the Resiliotech newsletter with DevOps tips, insights, and product updates. 
+              I agree to receive the Resilio Tech newsletter with AI infrastructure tips, insights, and product updates. 
               You can unsubscribe anytime.
             </span>
           </label>
@@ -320,7 +320,7 @@ export function NewsletterSignup({
         {/* Privacy Notice */}
         {variant !== 'compact' && (
           <p className="text-xs text-text-muted leading-relaxed">
-            We respect your privacy. No spam, just valuable DevOps insights delivered weekly.
+            We respect your privacy. No spam, just valuable AI infrastructure insights delivered weekly.
           </p>
         )}
       </form>

@@ -40,11 +40,11 @@ export function TechStackSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 bg-surface-elevated">
+    <section ref={sectionRef} className="py-24 bg-surface-elevated">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className={cn(
-            'text-2xl font-bold text-text-primary sm:text-3xl transition-all duration-1000',
+            'text-3xl font-bold text-text-primary sm:text-4xl transition-all duration-1000',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}>
             Technologies We <span className="gradient-text">Work With</span>

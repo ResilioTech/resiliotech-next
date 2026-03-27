@@ -14,7 +14,6 @@ const footerLinks = {
     { name: 'About Us', href: '/about' },
     { name: 'Blog', href: '/blog' },
     { name: 'Roadmap', href: '/roadmap' },
-    { name: 'Changelog', href: '/changelog' },
     { name: 'Contact', href: '/contact' },
   ],
   legal: [

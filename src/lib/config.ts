@@ -58,7 +58,7 @@ export const siteConfig = {
     testimonials: false,
     caseStudies: false,
     roadmap: true,
-    changelog: true
+    changelog: false
   }
 } as const
 

@@ -4,7 +4,7 @@ import { siteConfig } from '@/lib/config'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | How We Protect Your Data',
-  description: 'Learn how Resiliotech collects, uses, and protects your personal information.',
+  description: 'Learn how Resilio Tech collects, uses, and protects your personal information.',
 }
 
 export default function PrivacyPage() {
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
             <p>We use collected data to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Respond to your inquiries and provide DevOps services</li>
-              <li>Process applications for our Founding Pilot program</li>
+              <li>Process service inquiries and consultation requests</li>
               <li>Improve our website, products, and services</li>
               <li>Send product updates and educational content (opt-in only)</li>
               <li>Analyze usage patterns to optimize user experience</li>

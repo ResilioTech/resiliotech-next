@@ -60,7 +60,7 @@ export const trackCTAClick = (location: string, ctaText: string, destination: st
 
 /**
  * Track form submissions
- * Usage: trackFormSubmit('pilot_application', 'founding-pilot')
+ * Usage: trackFormSubmit('contact', 'contact-page')
  */
 export const trackFormSubmit = (formName: string, formLocation: string) => {
   trackEvent('form_submit', {

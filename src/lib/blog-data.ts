@@ -4,7 +4,7 @@ import type { BlogPost, Author, Category, Tag, BlogStats } from '@/types/blog'
 export const AUTHORS: Author[] = [
   {
     id: "resiliotech-team",
-    name: "Resiliotech Team",
+    name: "Resilio Tech Team",
     bio: "Building DevOps tools and sharing knowledge to help startups scale their infrastructure efficiently.",
     avatar: "/team/placeholder-1.jpg",
     social: {

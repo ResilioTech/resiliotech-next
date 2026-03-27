@@ -58,13 +58,7 @@ const nextConfig = {
   poweredByHeader: false,
   // Redirects for renamed products and legacy routes
   async redirects() {
-    return [
-      {
-        source: '/products/cloudwatch-pro',
-        destination: '/products/signalwatch',
-        permanent: false, // 308 temporary redirect - product still evolving
-      },
-    ]
+    return []
   },
 }
 

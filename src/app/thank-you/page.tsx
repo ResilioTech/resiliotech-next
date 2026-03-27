@@ -103,22 +103,10 @@ export default function ThankYouPage() {
               Blog
             </Link>
             <Link
-              href="/roadmap"
+              href="/services"
               className="text-primary hover:underline text-sm"
             >
-              Roadmap
-            </Link>
-            <Link
-              href="/changelog"
-              className="text-primary hover:underline text-sm"
-            >
-              Changelog
-            </Link>
-            <Link
-              href="/founding-pilot"
-              className="text-primary hover:underline text-sm"
-            >
-              Founding Pilot Program
+              Our Services
             </Link>
           </div>
         </div>

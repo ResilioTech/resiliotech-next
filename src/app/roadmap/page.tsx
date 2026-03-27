@@ -6,11 +6,11 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 export const metadata: Metadata = {
-  title: 'Product Roadmap | Build in Public',
-  description: 'Our public roadmap. We build in the open and ship weekly. See what we\'re working on and what\'s coming next.',
+  title: 'Product Roadmap | AI Infrastructure Tools',
+  description: 'See what Resilio Tech is building — AI infrastructure tools, MLOps automation, and reliability solutions for production AI systems.',
   openGraph: {
     title: 'Product Roadmap - Resilio Tech',
-    description: 'See what we\'re building next',
+    description: 'AI infrastructure tools and services we\'re building',
     url: `${siteConfig.url}/roadmap`,
   }
 }
@@ -44,13 +44,13 @@ export default async function RoadmapPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
-              🗺️ Public Roadmap
+              🗺️ Product Roadmap
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
-              What We're Building
+              What We&apos;re Building
             </h1>
             <p className="text-xl text-text-secondary">
-              We build in the open. This roadmap updates weekly.
+              Our product roadmap for AI infrastructure tools and services.
             </p>
           </div>
 
