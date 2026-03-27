@@ -55,7 +55,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: "resiliotech-team",
     category: "kubernetes",
     tags: ["kubernetes", "containers", "docker", "devops", "beginner", "tutorial"],
-    coverImage: "/blog-images/kubernetes-beginners-guide.jpg",
+    coverImage: "/blog-images/kubernetes-guide.svg",
     featured: true,
     content: `# Getting Started with Kubernetes: A Complete Beginner's Guide
 
@@ -161,7 +161,7 @@ Kubernetes might seem complex at first, but understanding these core concepts gi
     author: "resiliotech-team",
     category: "cicd",
     tags: ["github-actions", "cicd", "automation", "testing", "deployment", "workflow"],
-    coverImage: "/blog-images/github-actions-cicd.jpg",
+    coverImage: "/blog-images/cicd-guide.svg",
     featured: false,
     content: `# Building Robust CI/CD Pipelines with GitHub Actions
 
@@ -247,7 +247,7 @@ GitHub Actions provides a powerful platform for implementing robust CI/CD pipeli
     author: "resiliotech-team",
     category: "aws",
     tags: ["aws", "cost-optimization", "cloud-costs", "finops", "savings", "efficiency"],
-    coverImage: "/blog-images/aws-cost-optimization.jpg",
+    coverImage: "/blog-images/aws-cost.svg",
     featured: true,
     content: `# AWS Cost Optimization: 15 Proven Strategies to Cut Your Cloud Bill
 

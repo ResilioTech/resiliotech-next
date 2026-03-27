@@ -122,38 +122,73 @@ export function ContactHero() {
 
           {/* Contact Methods */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {contactMethods.map((method, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ y: -5 }}
-                className={`text-center p-8 bg-surface-elevated/50 backdrop-blur-sm border border-border/50 rounded-xl transition-all duration-300 ${
-                  method.action ? 'hover:border-primary/30 cursor-pointer' : ''
-                }`}
-                onClick={() => {
-                  if (method.action && method.action.startsWith('#')) {
-                    document.querySelector(method.action)?.scrollIntoView({ behavior: 'smooth' });
-                  } else if (method.action) {
-                    window.open(method.action, '_blank', 'noopener,noreferrer');
-                  }
-                }}
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/20 rounded-xl mb-6">
-                  <method.icon className="w-8 h-8 text-primary" />
-                </div>
-                
-                <h3 className="text-xl font-bold text-text-primary mb-2">
-                  {method.title}
-                </h3>
-                
-                <p className="text-text-secondary mb-3">
-                  {method.description}
-                </p>
-                
-                <p className="text-primary font-semibold">
-                  {method.value}
-                </p>
-              </motion.div>
-            ))}
+            {contactMethods.map((method, index) => {
+              const isExternal = method.action && !method.action.startsWith('#');
+              const isAnchor = method.action && method.action.startsWith('#');
+              
+              const content = (
+                <>
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/20 rounded-xl mb-6">
+                    <method.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-text-primary mb-2">
+                    {method.title}
+                  </h3>
+                  <p className="text-text-secondary mb-3">
+                    {method.description}
+                  </p>
+                  <p className="text-primary font-semibold">
+                    {method.value}
+                  </p>
+                </>
+              );
+
+              const baseClass = `text-center p-8 bg-surface-elevated/50 backdrop-blur-sm border border-border/50 rounded-xl transition-all duration-300 block ${
+                method.action ? 'hover:border-primary/30 cursor-pointer' : ''
+              }`;
+
+              if (isExternal) {
+                return (
+                  <motion.a
+                    key={index}
+                    href={method.action!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -5 }}
+                    className={baseClass}
+                  >
+                    {content}
+                  </motion.a>
+                );
+              }
+
+              if (isAnchor) {
+                return (
+                  <motion.a
+                    key={index}
+                    href={method.action!}
+                    whileHover={{ y: -5 }}
+                    className={baseClass}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector(method.action!)?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    {content}
+                  </motion.a>
+                );
+              }
+
+              return (
+                <motion.div
+                  key={index}
+                  whileHover={{ y: -5 }}
+                  className={baseClass}
+                >
+                  {content}
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           {/* Quick Info */}
