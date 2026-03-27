@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Calendar, Clock, User, ArrowLeft, Share2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { formatDate } from '@/lib/blog-data'
+import { formatDate } from '@/lib/blog-utils'
 import type { BlogPost } from '@/types/blog'
 
 interface BlogPostLayoutProps {

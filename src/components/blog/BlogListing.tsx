@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, Clock, User, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { formatDate } from '@/lib/blog-data'
+import { formatDate } from '@/lib/blog-utils'
 import type { BlogPost, PaginationInfo, SearchFilters } from '@/types/blog'
 
 interface BlogListingProps {

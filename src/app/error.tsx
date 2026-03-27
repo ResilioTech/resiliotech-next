@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, Home, MessageCircle } from 'lucide-react';
+import { CopyEmailButton } from '@/components/ui/CopyEmailButton';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -89,14 +90,10 @@ export default function Error({ error, reset }: ErrorProps) {
             >
               Contact Support
             </Link>
-            <Link
-              href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <CopyEmailButton
+              label="Email Us"
               className="bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary px-4 py-2 rounded-lg font-medium transition-colors text-center"
-            >
-              Email Us
-            </Link>
+            />
           </div>
           
           {/* Error ID for user reference */}

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
+import { CopyEmailButton } from '@/components/ui/CopyEmailButton';
 
 interface FAQ {
   id: string;
@@ -173,14 +174,10 @@ export function FAQSection() {
                 >
                   Ask Your Question
                 </button>
-                <a
-                  href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <CopyEmailButton
+                  label="Email Us Directly"
                   className="px-6 py-3 bg-surface hover:bg-surface-elevated border border-border hover:border-secondary/30 text-text-primary rounded-lg transition-all"
-                >
-                  Email Us Directly
-                </a>
+                />
               </div>
             </div>
           </motion.div>

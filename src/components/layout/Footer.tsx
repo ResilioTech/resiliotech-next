@@ -3,6 +3,7 @@
 import { memo } from 'react'
 import Link from 'next/link'
 import { siteConfig, hasRealSocialUrl } from '@/lib/config'
+import { CopyEmailButton } from '@/components/ui/CopyEmailButton'
 
 const footerLinks = {
   services: [
@@ -181,9 +182,11 @@ export const Footer = memo(function Footer() {
               <p className="text-sm text-text-muted mt-1">
                 Based in India 🇮🇳 | Serving clients globally 🌍
               </p>
-              <p className="text-sm text-text-muted mt-1">
-                <a href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">contact@resiliotech.com</a>
-              </p>
+              <div className="mt-1">
+                <CopyEmailButton
+                  className="text-sm text-text-muted hover:text-primary transition-colors"
+                />
+              </div>
             </div>
           </div>
         </div>

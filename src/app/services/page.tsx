@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ArrowRight, Rocket, BarChart3, Bot, Zap, RefreshCw, Target, Server, GitBranch, Cloud, Layers, Eye, AlertTriangle, LineChart, Shield, Brain, Search, Wrench, Cpu, DollarSign, FileText, Bell } from 'lucide-react';
 import { StructuredData } from '@/components/seo/StructuredData';
+import { CopyEmailButton } from '@/components/ui/CopyEmailButton';
 
 export const metadata: Metadata = {
   title: 'AI Infrastructure Services — Deploy, Scale & Operate AI Systems',
@@ -430,14 +431,10 @@ export default function ServicesPage() {
               Book Free AI Infra Audit
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a
-              href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <CopyEmailButton
+              label="Email Us Directly"
               className="inline-flex items-center justify-center px-8 py-4 bg-surface-elevated hover:bg-surface border border-border hover:border-primary/30 text-text-primary rounded-lg transition-all duration-300"
-            >
-              Email Us Directly
-            </a>
+            />
           </div>
         </div>
       </section>

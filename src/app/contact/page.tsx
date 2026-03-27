@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
+import { CopyEmailButton } from '@/components/ui/CopyEmailButton';
 
 const ContactHero = dynamic(() => import('@/components/contact/ContactHero').then(mod => ({ default: mod.ContactHero })), {
   ssr: true,
@@ -55,14 +56,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-surface-elevated border border-border rounded-lg">
               <h3 className="font-semibold text-text-primary mb-2">Email</h3>
-              <a 
-                href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-primary-hover transition-colors"
-              >
-                contact@resiliotech.com
-              </a>
+              <CopyEmailButton className="text-primary hover:text-primary-hover" />
             </div>
             
             <div className="p-6 bg-surface-elevated border border-border rounded-lg">

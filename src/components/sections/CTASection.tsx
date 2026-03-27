@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
+import { CopyEmailButton } from '@/components/ui/CopyEmailButton'
 import {
   Mail,
   Clock,
@@ -60,15 +61,9 @@ export function CTASection() {
                 Book a Free AI Infra Audit
                 <ArrowRight className="w-5 h-5" />
               </a>
-              <a
-                href="https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com"
-                target="_blank"
-                rel="noopener noreferrer"
+              <CopyEmailButton
                 className="w-full sm:w-auto text-center text-primary hover:text-primary-hover font-semibold px-8 py-4 transition-colors inline-flex items-center justify-center gap-2"
-              >
-                <Mail className="w-5 h-5" />
-                contact@resiliotech.com
-              </a>
+              />
             </div>
             
             {/* Trust Signals */}

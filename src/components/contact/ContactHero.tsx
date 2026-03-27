@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { 
   MessageSquare, 
@@ -7,7 +8,8 @@ import {
   MapPin, 
   Phone,
   Mail,
-  Sparkles
+  Copy,
+  Check
 } from 'lucide-react';
 
 export function ContactHero() {
@@ -17,7 +19,7 @@ export function ContactHero() {
       title: 'Email Us',
       description: 'Get in touch via email',
       value: 'contact@resiliotech.com',
-      action: 'https://mail.google.com/mail/?view=cm&to=contact@resiliotech.com'
+      action: 'copy-email'
     },
     {
       icon: Phone,
@@ -123,42 +125,12 @@ export function ContactHero() {
           {/* Contact Methods */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {contactMethods.map((method, index) => {
-              const isExternal = method.action && !method.action.startsWith('#');
+              const isCopyEmail = method.action === 'copy-email';
               const isAnchor = method.action && method.action.startsWith('#');
-              
-              const content = (
-                <>
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/20 rounded-xl mb-6">
-                    <method.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-bold text-text-primary mb-2">
-                    {method.title}
-                  </h3>
-                  <p className="text-text-secondary mb-3">
-                    {method.description}
-                  </p>
-                  <p className="text-primary font-semibold">
-                    {method.value}
-                  </p>
-                </>
-              );
 
-              const baseClass = `text-center p-8 bg-surface-elevated/50 backdrop-blur-sm border border-border/50 rounded-xl transition-all duration-300 block ${
-                method.action ? 'hover:border-primary/30 cursor-pointer' : ''
-              }`;
-
-              if (isExternal) {
+              if (isCopyEmail) {
                 return (
-                  <motion.a
-                    key={index}
-                    href={method.action!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -5 }}
-                    className={baseClass}
-                  >
-                    {content}
-                  </motion.a>
+                  <EmailCard key={index} method={method} />
                 );
               }
 
@@ -168,13 +140,18 @@ export function ContactHero() {
                     key={index}
                     href={method.action!}
                     whileHover={{ y: -5 }}
-                    className={baseClass}
+                    className="text-center p-8 bg-surface-elevated/50 backdrop-blur-sm border border-border/50 rounded-xl transition-all duration-300 block hover:border-primary/30 cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
                       document.querySelector(method.action!)?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    {content}
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/20 rounded-xl mb-6">
+                      <method.icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-text-primary mb-2">{method.title}</h3>
+                    <p className="text-text-secondary mb-3">{method.description}</p>
+                    <p className="text-primary font-semibold">{method.value}</p>
                   </motion.a>
                 );
               }
@@ -183,9 +160,14 @@ export function ContactHero() {
                 <motion.div
                   key={index}
                   whileHover={{ y: -5 }}
-                  className={baseClass}
+                  className="text-center p-8 bg-surface-elevated/50 backdrop-blur-sm border border-border/50 rounded-xl transition-all duration-300 block"
                 >
-                  {content}
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/20 rounded-xl mb-6">
+                    <method.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-text-primary mb-2">{method.title}</h3>
+                  <p className="text-text-secondary mb-3">{method.description}</p>
+                  <p className="text-primary font-semibold">{method.value}</p>
                 </motion.div>
               );
             })}
@@ -218,5 +200,53 @@ export function ContactHero() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function EmailCard({ method }: { method: { icon: React.ElementType; title: string; description: string; value: string } }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText('contact@resiliotech.com');
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = 'contact@resiliotech.com';
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, []);
+
+  const Icon = method.icon;
+
+  return (
+    <motion.button
+      whileHover={{ y: -5 }}
+      onClick={handleCopy}
+      className="text-center p-8 bg-surface-elevated/50 backdrop-blur-sm border border-border/50 rounded-xl transition-all duration-300 hover:border-primary/30 cursor-pointer w-full"
+    >
+      <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/20 rounded-xl mb-6">
+        <Icon className="w-8 h-8 text-primary" />
+      </div>
+      <h3 className="text-xl font-bold text-text-primary mb-2">{method.title}</h3>
+      <p className="text-text-secondary mb-3">{method.description}</p>
+      <p className="text-primary font-semibold inline-flex items-center gap-2 justify-center">
+        {method.value}
+        {copied ? (
+          <Check className="w-4 h-4 text-accent" />
+        ) : (
+          <Copy className="w-4 h-4 opacity-60" />
+        )}
+      </p>
+      {copied && (
+        <p className="text-xs text-accent mt-2 font-medium">Copied to clipboard!</p>
+      )}
+    </motion.button>
   );
 }
