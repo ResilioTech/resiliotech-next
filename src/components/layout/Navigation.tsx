@@ -203,7 +203,8 @@ export const Navigation = memo(function Navigation() {
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative group">
                   {item.hasDropdown ? (
-                    <button
+                    <Link
+                      href={item.href}
                       onMouseEnter={openServicesDropdown}
                       onMouseLeave={closeServicesDropdown}
                       className={cn(
@@ -211,12 +212,10 @@ export const Navigation = memo(function Navigation() {
                         NAV_LINK_BASE,
                         isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
                       )}
-                      aria-label="Services menu"
-                      aria-expanded={isServicesDropdownOpen}
                     >
                       {item.name}
                       <ChevronIcon isOpen={isServicesDropdownOpen} />
-                    </button>
+                    </Link>
                   ) : (
                     <Link
                       href={item.href}

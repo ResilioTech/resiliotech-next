@@ -63,17 +63,23 @@ export function HeroSection() {
 
           {/* Trust Signals */}
           <div className="pt-12 sm:pt-16">
-            <div className="grid grid-cols-2 gap-8 sm:gap-10 lg:grid-cols-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
               {[
-                { value: '6+', highlight: 'Years', label: 'SRE Experience' },
-                { value: 'F500', highlight: 'Scale', label: 'Enterprise Systems' },
-                { value: 'E2E', highlight: 'Coverage', label: 'Notebook to K8s' },
-                { value: '24h', highlight: 'Response', label: 'We Move Fast' },
+                { value: '6+', label: 'Years SRE Experience', icon: '⚡' },
+                { value: 'F500', label: 'Enterprise Scale Systems', icon: '🏢' },
+                { value: 'E2E', label: 'Notebook to Production K8s', icon: '🔄' },
+                { value: '24h', label: 'Response Time Guarantee', icon: '⏱️' },
               ].map((stat) => (
-                <div key={stat.label} className="text-center group">
-                  <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">{stat.value}</div>
-                  <div className="text-xs sm:text-sm font-semibold text-accent mb-1">{stat.highlight}</div>
-                  <div className="text-xs sm:text-sm text-text-muted">{stat.label}</div>
+                <div
+                  key={stat.label}
+                  className="relative group p-5 sm:p-6 bg-surface/60 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/30 transition-all duration-300"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative">
+                    <span className="text-lg mb-2 block">{stat.icon}</span>
+                    <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-text-muted leading-tight">{stat.label}</div>
+                  </div>
                 </div>
               ))}
             </div>
