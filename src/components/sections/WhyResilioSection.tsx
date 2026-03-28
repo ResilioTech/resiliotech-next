@@ -74,7 +74,7 @@ export function WhyResilioSection() {
               >
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <Icon className="w-6 h-6 text-primary" strokeWidth={2} />
+                    <Icon className="w-6 h-6 text-primary" strokeWidth={2} aria-hidden="true" />
                   </div>
                 </div>
                 <div>

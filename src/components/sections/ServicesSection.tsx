@@ -105,14 +105,14 @@ export function ServicesSection() {
                 onMouseLeave={() => setHoveredService(null)}
               >
                 <div className="relative h-full bg-surface border border-border rounded-2xl p-8 hover:border-primary hover:scale-105 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-primary/20">
-                  <div className={cn(
+                  <div aria-hidden="true" className={cn(
                     'absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500',
                     service.color
                   )} />
 
                   <div className="relative z-10">
                     <div className="relative w-16 h-16 mb-6">
-                      <div className={cn(
+                      <div aria-hidden="true" className={cn(
                         'absolute inset-0 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300 bg-gradient-to-br',
                         service.color
                       )}></div>
@@ -121,7 +121,7 @@ export function ServicesSection() {
                         service.color,
                         hoveredService === index ? 'scale-110' : ''
                       )}>
-                        <ServiceIcon className="w-8 h-8 text-white" strokeWidth={2} />
+                        <ServiceIcon className="w-8 h-8 text-white" strokeWidth={2} aria-hidden="true" />
                       </div>
                     </div>
 
@@ -159,6 +159,7 @@ export function ServicesSection() {
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
+                        aria-hidden="true"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>

@@ -63,7 +63,7 @@ export function HowWeWorkSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           {/* Connecting line (desktop) */}
-          <div className="hidden md:block absolute top-24 left-[16.67%] right-[16.67%] h-px bg-gradient-to-r from-primary via-accent to-secondary opacity-30" />
+          <div aria-hidden="true" className="hidden md:block absolute top-24 left-[16.67%] right-[16.67%] h-px bg-gradient-to-r from-primary via-accent to-secondary opacity-30" />
 
           {steps.map((step, index) => {
             const Icon = step.icon
@@ -82,7 +82,7 @@ export function HowWeWorkSection() {
                     'w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br transition-transform duration-300 group-hover:scale-110',
                     step.color
                   )}>
-                    <Icon className="w-10 h-10 text-white" strokeWidth={1.5} />
+                    <Icon className="w-10 h-10 text-white" strokeWidth={1.5} aria-hidden="true" />
                   </div>
                   <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-surface-elevated border-2 border-primary flex items-center justify-center text-xs font-bold text-primary">
                     {step.number}

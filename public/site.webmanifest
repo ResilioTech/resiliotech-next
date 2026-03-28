@@ -1,7 +1,7 @@
 {
-  "name": "Resiliotech - DevOps Solutions",
-  "short_name": "Resiliotech",
-  "description": "Enterprise-grade DevOps solutions for growing companies. Streamline your infrastructure with our expert consulting and micro SaaS products.",
+  "name": "Resilio Tech — AI Infrastructure & Reliability",
+  "short_name": "Resilio Tech",
+  "description": "We help companies deploy, scale, and operate AI systems reliably. Production-grade AI infrastructure by engineers who've run systems at enterprise scale.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
@@ -15,7 +15,7 @@
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-512x512.png", 
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"

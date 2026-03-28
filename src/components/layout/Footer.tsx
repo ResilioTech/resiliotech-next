@@ -65,7 +65,7 @@ const socialLinks = [
 
 export const Footer = memo(function Footer() {
   return (
-    <footer className="bg-surface border-t border-border">
+    <footer aria-label="Site footer" className="bg-surface border-t border-border">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           {/* Brand Section */}

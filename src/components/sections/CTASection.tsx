@@ -33,8 +33,8 @@ export function CTASection() {
   return (
     <section ref={sectionRef} className="py-24 bg-surface relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent" />
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent" />
+      <div aria-hidden="true" className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
       
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className={cn(
@@ -69,7 +69,7 @@ export function CTASection() {
             {/* Trust Signals */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-text-muted">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" strokeWidth={2} />
+                <Clock className="w-4 h-4 text-primary" strokeWidth={2} aria-hidden="true" />
                 <span>We respond within 24 hours</span>
               </div>
               <div className="flex items-center gap-2">
