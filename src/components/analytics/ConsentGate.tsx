@@ -135,7 +135,7 @@ export default function ConsentGate() {
               setConsented(true);
               setShowBanner(false);
             }}
-            className="px-4 py-2 rounded bg-primary hover:bg-primary-hover transition-colors font-medium"
+            className="px-4 py-2 rounded bg-primary hover:bg-primary-hover transition-colors font-medium text-neutral-900"
             aria-label="Accept analytics"
           >
             Accept

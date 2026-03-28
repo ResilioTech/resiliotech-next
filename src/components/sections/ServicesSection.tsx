@@ -18,6 +18,7 @@ interface Service {
   href: string
   color: string
   iconColor: string
+  linkText: string
 }
 
 const services: Service[] = [
@@ -29,6 +30,7 @@ const services: Service[] = [
     href: '/services#deployment',
     color: 'from-primary to-blue-400',
     iconColor: 'text-cyan-400',
+    linkText: 'Explore AI/ML Deployment',
   },
   {
     title: 'MLOps & AI Reliability',
@@ -38,6 +40,7 @@ const services: Service[] = [
     href: '/services#mlops',
     color: 'from-accent to-green-400',
     iconColor: 'text-green-400',
+    linkText: 'Explore MLOps Services',
   },
   {
     title: 'Custom AI Agents & Tooling',
@@ -47,6 +50,7 @@ const services: Service[] = [
     href: '/services#agents',
     color: 'from-secondary to-purple-400',
     iconColor: 'text-purple-400',
+    linkText: 'Explore AI Agents & Tooling',
   },
 ]
 
@@ -153,7 +157,7 @@ export function ServicesSection() {
                       href={service.href}
                       className="group/link inline-flex items-center text-primary hover:text-primary-hover font-semibold transition-colors"
                     >
-                      Learn More
+                      {service.linkText}
                       <svg
                         className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1"
                         fill="none"
