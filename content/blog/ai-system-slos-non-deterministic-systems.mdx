@@ -1,0 +1,179 @@
+---
+title: "AI System SLOs: Defining Uptime for Non-Deterministic Systems"
+description: "How to define service level objectives for AI systems when correctness is probabilistic, outputs are variable, and traditional uptime metrics miss user-facing failures."
+date: "2026-03-13"
+author: "Resilio Tech Team"
+category: "ai-reliability"
+tags: ["slo", "ai-reliability", "observability", "llm-serving", "production-ai"]
+coverImage: "/blog-images/ai-system-slos.jpg"
+featured: false
+---
+
+# AI System SLOs: Defining Uptime for Non-Deterministic Systems
+
+Traditional uptime metrics work well for deterministic systems. A request either succeeds or fails. A database is either reachable or not. A page either loads or returns an error.
+
+AI systems are different.
+
+An LLM can return a response with HTTP 200 and still fail the user. A recommendation system can stay online while serving low-quality rankings. A RAG system can answer quickly with stale or irrelevant context.
+
+That is why "uptime" for AI needs a broader definition than service availability alone.
+
+## Availability Is Necessary but Not Sufficient
+
+You still need the traditional basics:
+
+- request success rate
+- latency
+- timeout rate
+- infrastructure health
+
+But those only tell you whether the system is reachable. They do not tell you whether it is useful.
+
+For AI systems, usefulness often depends on:
+
+- output quality
+- safety behavior
+- retrieval quality
+- freshness
+- structural correctness
+- cost staying within acceptable bounds
+
+If you ignore those dimensions, your SLO will say the system is healthy while users are having a bad experience.
+
+## Start with the User-Facing Contract
+
+Define what a successful interaction means for each route.
+
+Examples:
+
+- chat assistant returns a grounded answer within a latency budget
+- extraction endpoint returns valid structured JSON
+- recommendation API returns results with minimum coverage and freshness
+- classification system returns a decision with calibrated confidence
+
+An AI SLO should represent the product contract, not just the network contract.
+
+## Split SLOs into Reliability Layers
+
+A practical approach is to define multiple layers:
+
+### Platform SLOs
+
+- availability
+- latency
+- timeouts
+- infrastructure saturation
+
+### AI Runtime SLOs
+
+- valid response format rate
+- time to first token
+- tool-call success rate
+- retrieval success rate
+
+### Outcome SLOs
+
+- quality pass rate on sampled traffic
+- human review acceptance rate
+- groundedness or hallucination thresholds
+- freshness compliance
+
+Not every system needs all of these, but most production AI systems need more than one layer.
+
+## Use Proxy Metrics Where Direct Correctness Is Hard
+
+You usually cannot label every live response in real time.
+
+That is fine. Use practical proxies:
+
+- JSON schema adherence
+- citation presence for grounded routes
+- retrieval hit rate
+- fallback rate
+- user retry rate
+- escalation-to-human rate
+
+Proxy metrics are not perfect. They are still far better than pretending HTTP 200 means success.
+
+## Error Budgets Still Matter
+
+Once you define the SLO, you also need an error budget.
+
+Examples:
+
+- 99.9% request availability
+- 99% valid JSON responses for extraction
+- 95% of interactive responses under a p95 latency budget
+- 98% retrieval freshness compliance
+
+The error budget is what lets the team make tradeoffs rationally. If a new prompt or model consumes too much quality budget, that release should slow down or roll back.
+
+## Do Not Collapse Everything into One Number
+
+It is tempting to build one "AI health score." That usually hides the failure mode you need to act on.
+
+Better approach:
+
+- one small set of route-level SLOs
+- one owner per SLO
+- one alert path when the budget burns too fast
+
+That keeps the system understandable during incidents.
+
+## Sampled Evaluation Is Part of Reliability
+
+For non-deterministic systems, sampled evaluation is often part of production reliability, not just model research.
+
+Useful patterns:
+
+- score a slice of production outputs continuously
+- compare quality before and after prompt or model changes
+- monitor drift in evaluator pass rates
+- route ambiguous failures to human review
+
+This is how teams build quality signals that complement infrastructure metrics.
+
+## Tie SLOs to Release Decisions
+
+AI SLOs should affect operations directly:
+
+- canary promotion
+- prompt rollout speed
+- model rollback
+- feature enablement
+- rate limiting or load shedding
+
+If SLOs are only dashboard decorations, they will not change production behavior when things go wrong.
+
+## A Practical Starting Set
+
+If you need a first pass for an LLM-backed product, start with:
+
+1. availability
+2. p95 latency or time to first token
+3. valid output rate
+4. fallback or degraded-mode rate
+5. one route-specific quality proxy
+
+That is enough to build a useful operational picture without inventing a complex reliability framework on day one.
+
+## Common Mistakes
+
+These show up often:
+
+- **using HTTP success rate as the only SLO**
+- **no route-specific quality metric**
+- **no clear owner for sampled evaluation**
+- **combining unrelated failure modes into one score**
+- **no error budget policy tied to releases**
+
+AI reliability becomes tractable once teams define success in terms the product actually cares about.
+
+## Final Takeaway
+
+Uptime for AI systems is not just about whether the endpoint responds. It is about whether the system remains fast enough, safe enough, fresh enough, and useful enough for the product contract it supports.
+
+Good AI SLOs combine platform health with route-specific usefulness. That is what turns "the model is up" into "the system is actually working."
+
+*Need help defining SLOs for LLM and ML production systems? We help teams map user-facing success to measurable runtime and quality signals so incidents are easier to detect and release decisions are easier to defend. [Book a free infrastructure audit](/contact) and we’ll review your current observability model.*

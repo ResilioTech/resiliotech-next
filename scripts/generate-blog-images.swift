@@ -538,9 +538,9 @@ func drawPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
     let nodes: [(String, CGFloat, CGFloat, CGFloat)] = [
         ("Git", 666, 190, 108),
         ("CI", 782, 162, 108),
-        ("Registry", 854, 224, 128),
+        ("Registry", 832, 224, 128),
         ("Deploy", 756, 306, 130),
-        ("Monitor", 860, 354, 122)
+        ("Monitor", 836, 354, 124)
     ]
 
     let connector = NSBezierPath()
@@ -583,12 +583,12 @@ func drawPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
     }
 
     let cubeOuter = NSBezierPath()
-    cubeOuter.move(to: topPoint(946, 158))
-    cubeOuter.line(to: topPoint(978, 176))
-    cubeOuter.line(to: topPoint(978, 214))
-    cubeOuter.line(to: topPoint(946, 232))
-    cubeOuter.line(to: topPoint(914, 214))
-    cubeOuter.line(to: topPoint(914, 176))
+    cubeOuter.move(to: topPoint(928, 158))
+    cubeOuter.line(to: topPoint(960, 176))
+    cubeOuter.line(to: topPoint(960, 214))
+    cubeOuter.line(to: topPoint(928, 232))
+    cubeOuter.line(to: topPoint(896, 214))
+    cubeOuter.line(to: topPoint(896, 176))
     cubeOuter.close()
     secondaryAccent.withAlphaComponent(0.18).setFill()
     secondaryAccent.withAlphaComponent(0.42).setStroke()
@@ -597,11 +597,11 @@ func drawPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
     cubeOuter.stroke()
 
     let cubeMid = NSBezierPath()
-    cubeMid.move(to: topPoint(946, 158))
-    cubeMid.line(to: topPoint(946, 232))
-    cubeMid.move(to: topPoint(914, 176))
-    cubeMid.line(to: topPoint(946, 194))
-    cubeMid.line(to: topPoint(978, 176))
+    cubeMid.move(to: topPoint(928, 158))
+    cubeMid.line(to: topPoint(928, 232))
+    cubeMid.move(to: topPoint(896, 176))
+    cubeMid.line(to: topPoint(928, 194))
+    cubeMid.line(to: topPoint(960, 176))
     secondaryAccent.withAlphaComponent(0.50).setStroke()
     cubeMid.lineWidth = 2
     cubeMid.stroke()
@@ -1149,6 +1149,1314 @@ func drawGatewayArtwork(accent: NSColor, secondaryAccent: NSColor) {
     )
 }
 
+func drawAutoscalingArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let demandCard = topRect(684, 194, 244, 48)
+    fillRoundedRect(
+        demandCard,
+        radius: 16,
+        fill: color(hex: 0xffffff, alpha: 0.05),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+    for (index, width) in [34.0, 52.0, 28.0, 44.0, 22.0].enumerated() {
+        fillRoundedRect(
+            topRect(704 + CGFloat(index * 42), 210 - CGFloat(width) * 0.18, 20, CGFloat(width) * 0.18),
+            radius: 5,
+            fill: accent.withAlphaComponent(0.72 - CGFloat(index % 2) * 0.16)
+        )
+    }
+    drawCenteredText(
+        "Queue",
+        rect: topRect(846, 204, 56, 28),
+        font: avenir(15, "Avenir Next Demi Bold"),
+        color: color(hex: 0xf8fafc),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let nodes: [(CGFloat, CGFloat, CGFloat)] = [
+        (688, 286, 36),
+        (756, 268, 54),
+        (824, 244, 78),
+        (892, 218, 104)
+    ]
+    for (index, (x, y, height)) in nodes.enumerated() {
+        let nodeRect = topRect(x, y, 54, height)
+        fillRoundedRect(
+            nodeRect,
+            radius: 18,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+
+        let chipRect = topRect(x + 12, y + 12, 30, 18)
+        fillRoundedRect(
+            chipRect,
+            radius: 9,
+            fill: (index < 2 ? secondaryAccent : accent).withAlphaComponent(0.18),
+            stroke: (index < 2 ? secondaryAccent : accent).withAlphaComponent(0.28)
+        )
+
+        let gpu = NSBezierPath(roundedRect: topRect(x + 16, y + 38, 22, 18), xRadius: 6, yRadius: 6)
+        (index < 2 ? secondaryAccent : accent).setFill()
+        gpu.fill()
+    }
+
+    let ramp = NSBezierPath()
+    ramp.move(to: topPoint(714, 328))
+    ramp.line(to: topPoint(782, 308))
+    ramp.line(to: topPoint(850, 280))
+    ramp.line(to: topPoint(918, 248))
+    accent.setStroke()
+    ramp.lineWidth = 4
+    ramp.lineCapStyle = .round
+    ramp.lineJoinStyle = .round
+    ramp.stroke()
+
+    let arrow = NSBezierPath()
+    arrow.move(to: topPoint(918, 248))
+    arrow.line(to: topPoint(904, 250))
+    arrow.line(to: topPoint(912, 262))
+    accent.setFill()
+    arrow.fill()
+
+    let floorBadge = topRect(686, 362, 64, 30)
+    let peakBadge = topRect(860, 362, 68, 30)
+    fillRoundedRect(floorBadge, radius: 15, fill: secondaryAccent.withAlphaComponent(0.14), stroke: secondaryAccent.withAlphaComponent(0.30))
+    fillRoundedRect(peakBadge, radius: 15, fill: accent.withAlphaComponent(0.14), stroke: accent.withAlphaComponent(0.30))
+    drawCenteredText("Min", rect: floorBadge, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Scale Up", rect: peakBadge, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+}
+
+func drawMultiModelArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let poolRect = topRect(662, 176, 292, 228)
+    fillRoundedRect(
+        poolRect,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let sharedPool = topRect(760, 214, 100, 116)
+    fillRoundedRect(
+        sharedPool,
+        radius: 22,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    for row in 0..<3 {
+        let line = NSBezierPath(roundedRect: topRect(786, 238 + CGFloat(row * 22), 48, 10), xRadius: 5, yRadius: 5)
+        accent.withAlphaComponent(0.72 - CGFloat(row) * 0.12).setFill()
+        line.fill()
+    }
+
+    let models: [(String, CGFloat, CGFloat, NSColor)] = [
+        ("A", 686, 198, secondaryAccent),
+        ("B", 686, 258, accent),
+        ("C", 686, 318, secondaryAccent),
+        ("XL", 878, 228, accent),
+        ("Emb", 878, 300, secondaryAccent)
+    ]
+
+    for (label, x, y, fillColor) in models {
+        let width: CGFloat = label == "Emb" ? 64 : 58
+        let cardRect = topRect(x, y, width, 42)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredText(
+            label,
+            rect: cardRect,
+            font: avenir(15, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+
+        let dot = NSBezierPath(ovalIn: topRect(x + width - 16, y - 10, 12, 12))
+        fillColor.setFill()
+        dot.fill()
+    }
+
+    let routes = NSBezierPath()
+    for y in [219.0, 279.0, 339.0] {
+        routes.move(to: topPoint(744, y))
+        routes.line(to: topPoint(760, 272))
+    }
+    routes.move(to: topPoint(860, 256))
+    routes.line(to: topPoint(878, 249))
+    routes.move(to: topPoint(860, 288))
+    routes.line(to: topPoint(878, 321))
+    secondaryAccent.setStroke()
+    routes.lineWidth = 3.5
+    routes.lineCapStyle = .round
+    routes.lineJoinStyle = .round
+    routes.stroke()
+
+    let footer = topRect(700, 350, 214, 34)
+    fillRoundedRect(
+        footer,
+        radius: 17,
+        fill: color(hex: 0xffffff, alpha: 0.05),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+    drawCenteredText(
+        "Shared GPU Pool",
+        rect: footer,
+        font: avenir(14, "Avenir Next Demi Bold"),
+        color: color(hex: 0xe5eefb, alpha: 0.92),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawBatchingArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let queueCards: [(CGFloat, CGFloat)] = [(684, 208), (684, 262), (684, 316)]
+    for (index, pair) in queueCards.enumerated() {
+        let x = pair.0
+        let y = pair.1
+        let cardRect = topRect(x, y, 66, 34)
+        fillRoundedRect(
+            cardRect,
+            radius: 12,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        let dot = NSBezierPath(ovalIn: topRect(x + 12, y + 10, 14, 14))
+        (index == 1 ? secondaryAccent : accent).setFill()
+        dot.fill()
+        drawCenteredText(
+            "Req",
+            rect: NSRect(x: cardRect.origin.x + 22, y: cardRect.origin.y, width: 32, height: cardRect.height),
+            font: avenir(13, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+    }
+
+    let batchRect = topRect(782, 224, 84, 100)
+    fillRoundedRect(
+        batchRect,
+        radius: 20,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    for row in 0..<3 {
+        for column in 0..<2 {
+            fillRoundedRect(
+                topRect(800 + CGFloat(column * 22), 244 + CGFloat(row * 20), 14, 10),
+                radius: 4,
+                fill: accent.withAlphaComponent(0.76 - CGFloat(row) * 0.12)
+            )
+        }
+    }
+
+    let path = NSBezierPath()
+    for y in [225.0, 279.0, 333.0] {
+        path.move(to: topPoint(750, y))
+        path.line(to: topPoint(782, 274))
+    }
+    path.move(to: topPoint(866, 274))
+    path.line(to: topPoint(894, 274))
+    secondaryAccent.setStroke()
+    path.lineWidth = 3.5
+    path.lineCapStyle = .round
+    path.lineJoinStyle = .round
+    path.stroke()
+
+    let throughputRect = topRect(896, 214, 40, 56)
+    let latencyRect = topRect(896, 286, 40, 56)
+    fillRoundedRect(throughputRect, radius: 14, fill: secondaryAccent.withAlphaComponent(0.16), stroke: secondaryAccent.withAlphaComponent(0.30))
+    fillRoundedRect(latencyRect, radius: 14, fill: accent.withAlphaComponent(0.16), stroke: accent.withAlphaComponent(0.30))
+    drawCenteredText("TPS", rect: throughputRect, font: avenir(14, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("P95", rect: latencyRect, font: avenir(14, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+
+    let tradeoff = NSBezierPath()
+    tradeoff.move(to: topPoint(704, 374))
+    tradeoff.curve(to: topPoint(928, 358), controlPoint1: topPoint(762, 344), controlPoint2: topPoint(860, 344))
+    accent.setStroke()
+    tradeoff.lineWidth = 3
+    tradeoff.lineCapStyle = .round
+    tradeoff.stroke()
+
+    drawCenteredText(
+        "Throughput / Latency",
+        rect: topRect(724, 350, 188, 26),
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawFeatureStoreArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let storeRect = topRect(690, 220, 86, 114)
+    fillRoundedRect(
+        storeRect,
+        radius: 20,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    for row in 0..<4 {
+        let line = NSBezierPath(roundedRect: topRect(712, 244 + CGFloat(row * 18), 42, 8), xRadius: 4, yRadius: 4)
+        accent.withAlphaComponent(0.78 - CGFloat(row) * 0.10).setFill()
+        line.fill()
+    }
+
+    let arrows = NSBezierPath()
+    arrows.move(to: topPoint(776, 250))
+    arrows.line(to: topPoint(822, 250))
+    arrows.move(to: topPoint(776, 304))
+    arrows.line(to: topPoint(822, 304))
+    secondaryAccent.setStroke()
+    arrows.lineWidth = 4
+    arrows.lineCapStyle = .round
+    arrows.stroke()
+
+    let predictionRect = topRect(826, 214, 92, 126)
+    fillRoundedRect(
+        predictionRect,
+        radius: 22,
+        fill: color(hex: 0xffffff, alpha: 0.05),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let trend = NSBezierPath()
+    trend.move(to: topPoint(848, 258))
+    trend.line(to: topPoint(872, 244))
+    trend.line(to: topPoint(892, 272))
+    trend.line(to: topPoint(906, 236))
+    accent.setStroke()
+    trend.lineWidth = 3.5
+    trend.lineCapStyle = .round
+    trend.lineJoinStyle = .round
+    trend.stroke()
+
+    let stale = topRect(842, 290, 58, 28)
+    fillRoundedRect(
+        stale,
+        radius: 14,
+        fill: secondaryAccent.withAlphaComponent(0.16),
+        stroke: secondaryAccent.withAlphaComponent(0.30)
+    )
+    drawCenteredText(
+        "STALE",
+        rect: stale,
+        font: avenir(12, "Avenir Next Demi Bold"),
+        color: color(hex: 0xfffbeb),
+        alignment: .center,
+        lineHeight: 1.0,
+        kern: 0.8
+    )
+
+    let clock = NSBezierPath(ovalIn: topRect(860, 180, 38, 38))
+    secondaryAccent.withAlphaComponent(0.16).setFill()
+    secondaryAccent.withAlphaComponent(0.34).setStroke()
+    clock.lineWidth = 2
+    clock.fill()
+    clock.stroke()
+
+    let hands = NSBezierPath()
+    hands.move(to: topPoint(879, 199))
+    hands.line(to: topPoint(879, 189))
+    hands.move(to: topPoint(879, 199))
+    hands.line(to: topPoint(887, 204))
+    color(hex: 0xfffbeb).setStroke()
+    hands.lineWidth = 2.5
+    hands.lineCapStyle = .round
+    hands.stroke()
+
+    let footer = topRect(698, 352, 208, 28)
+    drawCenteredText(
+        "Freshness Guardrails",
+        rect: footer,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawPromptVersioningArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let versions: [(String, CGFloat, CGFloat, NSColor)] = [
+        ("v1", 688, 208, secondaryAccent),
+        ("v2", 746, 208, accent),
+        ("v3", 804, 208, secondaryAccent)
+    ]
+
+    for (label, x, y, fillColor) in versions {
+        let cardRect = topRect(x, y, 44, 44)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredText(
+            label,
+            rect: cardRect,
+            font: avenir(15, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+        let dot = NSBezierPath(ovalIn: topRect(x + 32, y - 8, 10, 10))
+        fillColor.setFill()
+        dot.fill()
+    }
+
+    let promptRect = topRect(690, 274, 136, 82)
+    fillRoundedRect(
+        promptRect,
+        radius: 18,
+        fill: accent.withAlphaComponent(0.10),
+        stroke: accent.withAlphaComponent(0.24)
+    )
+    for row in 0..<3 {
+        let line = NSBezierPath(roundedRect: topRect(710, 294 + CGFloat(row * 16), 94 - CGFloat(row * 14), 8), xRadius: 4, yRadius: 4)
+        accent.withAlphaComponent(0.74 - CGFloat(row) * 0.12).setFill()
+        line.fill()
+    }
+
+    let rollbackLine = NSBezierPath()
+    rollbackLine.move(to: topPoint(830, 312))
+    rollbackLine.curve(to: topPoint(892, 250), controlPoint1: topPoint(854, 314), controlPoint2: topPoint(882, 286))
+    accent.setStroke()
+    rollbackLine.lineWidth = 3.5
+    rollbackLine.lineCapStyle = .round
+    rollbackLine.lineJoinStyle = .round
+    rollbackLine.stroke()
+
+    let arrow = NSBezierPath()
+    arrow.move(to: topPoint(892, 250))
+    arrow.line(to: topPoint(882, 252))
+    arrow.line(to: topPoint(888, 262))
+    accent.setFill()
+    arrow.fill()
+
+    let rollbackRect = topRect(850, 266, 70, 42)
+    fillRoundedRect(
+        rollbackRect,
+        radius: 14,
+        fill: secondaryAccent.withAlphaComponent(0.14),
+        stroke: secondaryAccent.withAlphaComponent(0.30)
+    )
+    drawCenteredText(
+        "Rollback",
+        rect: rollbackRect,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xfffbeb),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let timeline = NSBezierPath()
+    timeline.move(to: topPoint(700, 372))
+    timeline.line(to: topPoint(908, 372))
+    color(hex: 0xffffff, alpha: 0.18).setStroke()
+    timeline.lineWidth = 2
+    timeline.stroke()
+    for x in [714.0, 772.0, 830.0, 888.0] {
+        let tick = NSBezierPath(ovalIn: topRect(x, 366, 12, 12))
+        (x == 772.0 ? accent : secondaryAccent.withAlphaComponent(0.78)).setFill()
+        tick.fill()
+    }
+}
+
+func drawLoadTestingArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let trafficRows: [(CGFloat, CGFloat)] = [(688, 220), (688, 274), (688, 328)]
+    for (index, (x, y)) in trafficRows.enumerated() {
+        let rowRect = topRect(x, y, 70, 32)
+        fillRoundedRect(
+            rowRect,
+            radius: 12,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        for dotIndex in 0..<3 {
+            let dot = NSBezierPath(ovalIn: topRect(x + 14 + CGFloat(dotIndex * 16), y + 10, 10, 10))
+            (index == 1 ? secondaryAccent : accent).withAlphaComponent(0.82 - CGFloat(dotIndex) * 0.12).setFill()
+            dot.fill()
+        }
+    }
+
+    let serverRect = topRect(786, 224, 74, 96)
+    fillRoundedRect(
+        serverRect,
+        radius: 20,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    for row in 0..<3 {
+        let rack = NSBezierPath(roundedRect: topRect(804, 244 + CGFloat(row * 18), 38, 8), xRadius: 4, yRadius: 4)
+        accent.withAlphaComponent(0.78 - CGFloat(row) * 0.12).setFill()
+        rack.fill()
+    }
+
+    let routes = NSBezierPath()
+    for y in [236.0, 290.0, 344.0] {
+        routes.move(to: topPoint(758, y))
+        routes.line(to: topPoint(786, 272))
+    }
+    routes.move(to: topPoint(860, 272))
+    routes.line(to: topPoint(894, 272))
+    secondaryAccent.setStroke()
+    routes.lineWidth = 3.5
+    routes.lineCapStyle = .round
+    routes.lineJoinStyle = .round
+    routes.stroke()
+
+    let chartRect = topRect(892, 220, 36, 104)
+    fillRoundedRect(
+        chartRect,
+        radius: 14,
+        fill: color(hex: 0xffffff, alpha: 0.05),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+    for (index, height) in [18.0, 36.0, 52.0].enumerated() {
+        fillRoundedRect(
+            topRect(902, 308 - CGFloat(height), 6, CGFloat(height)),
+            radius: 3,
+            fill: (index == 2 ? secondaryAccent : accent).withAlphaComponent(0.82 - CGFloat(index) * 0.10)
+        )
+        fillRoundedRect(
+            topRect(912, 308 - CGFloat(height * 0.72), 6, CGFloat(height * 0.72)),
+            radius: 3,
+            fill: secondaryAccent.withAlphaComponent(0.54)
+        )
+    }
+
+    let labelRect = topRect(710, 354, 196, 24)
+    drawCenteredText(
+        "Tokens, Queues, TTFT",
+        rect: labelRect,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawSLOArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let ring = NSBezierPath(ovalIn: topRect(688, 216, 110, 110))
+    accent.withAlphaComponent(0.16).setFill()
+    accent.withAlphaComponent(0.38).setStroke()
+    ring.lineWidth = 10
+    ring.fill()
+    ring.stroke()
+
+    let ringInner = NSBezierPath(ovalIn: topRect(716, 244, 54, 54))
+    color(hex: 0x081622).setFill()
+    ringInner.fill()
+
+    drawCenteredText(
+        "SLO",
+        rect: topRect(716, 258, 54, 24),
+        font: avenir(16, "Avenir Next Demi Bold"),
+        color: color(hex: 0xf8fafc),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let cards: [(String, CGFloat, CGFloat, NSColor)] = [
+        ("Latency", 830, 208, accent),
+        ("Format", 830, 264, secondaryAccent),
+        ("Quality", 830, 320, accent)
+    ]
+    for (label, x, y, fillColor) in cards {
+        let cardRect = topRect(x, y, 88, 38)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredText(
+            label,
+            rect: cardRect,
+            font: avenir(13, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+        let dot = NSBezierPath(ovalIn: topRect(x - 14, y + 11, 16, 16))
+        fillColor.setFill()
+        dot.fill()
+    }
+
+    let links = NSBezierPath()
+    links.move(to: topPoint(798, 250))
+    links.line(to: topPoint(830, 227))
+    links.move(to: topPoint(798, 272))
+    links.line(to: topPoint(830, 283))
+    links.move(to: topPoint(798, 292))
+    links.line(to: topPoint(830, 339))
+    secondaryAccent.setStroke()
+    links.lineWidth = 3
+    links.lineCapStyle = .round
+    links.stroke()
+
+    let budgetRect = topRect(704, 344, 82, 30)
+    fillRoundedRect(
+        budgetRect,
+        radius: 15,
+        fill: secondaryAccent.withAlphaComponent(0.14),
+        stroke: secondaryAccent.withAlphaComponent(0.30)
+    )
+    drawCenteredText(
+        "Budget",
+        rect: budgetRect,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xfffbeb),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawPlatformArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let layers: [(String, CGFloat, CGFloat, CGFloat, NSColor)] = [
+        ("Deploy", 682, 206, 92, accent),
+        ("Train", 786, 206, 88, secondaryAccent),
+        ("Serve", 884, 206, 64, accent),
+        ("Pipelines", 720, 278, 160, accent),
+        ("Observability", 706, 338, 188, secondaryAccent)
+    ]
+
+    for (label, x, y, width, fillColor) in layers {
+        let cardRect = topRect(x, y, width, 38)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredDotLabel(
+            text: label,
+            in: cardRect,
+            dotColor: fillColor,
+            font: avenir(13, "Avenir Next Demi Bold"),
+            textColor: color(hex: 0xf8fafc),
+            dotSize: 16,
+            gap: 8
+        )
+    }
+
+    let links = NSBezierPath()
+    links.move(to: topPoint(732, 244))
+    links.line(to: topPoint(800, 278))
+    links.move(to: topPoint(834, 244))
+    links.line(to: topPoint(804, 278))
+    links.move(to: topPoint(916, 244))
+    links.line(to: topPoint(850, 278))
+    links.move(to: topPoint(800, 316))
+    links.line(to: topPoint(776, 338))
+    links.move(to: topPoint(850, 316))
+    links.line(to: topPoint(838, 338))
+    secondaryAccent.setStroke()
+    links.lineWidth = 3
+    links.lineCapStyle = .round
+    links.lineJoinStyle = .round
+    links.stroke()
+}
+
+func drawTerraformArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let terraformRect = topRect(760, 214, 88, 84)
+    fillRoundedRect(
+        terraformRect,
+        radius: 22,
+        fill: accent.withAlphaComponent(0.14),
+        stroke: accent.withAlphaComponent(0.30)
+    )
+    drawCenteredText(
+        "TF",
+        rect: terraformRect,
+        font: avenir(30, "Avenir Next Bold"),
+        color: color(hex: 0xf8fafc),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let nodes: [(String, CGFloat, CGFloat, CGFloat, NSColor)] = [
+        ("GPU", 686, 210, 56, secondaryAccent),
+        ("Registry", 676, 302, 82, accent),
+        ("Pipelines", 854, 210, 72, accent),
+        ("Storage", 854, 302, 68, secondaryAccent)
+    ]
+    for (label, x, y, width, fillColor) in nodes {
+        let cardRect = topRect(x, y, width, 38)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredText(
+            label,
+            rect: cardRect,
+            font: avenir(13, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+        let dot = NSBezierPath(ovalIn: topRect(x + width - 18, y + 11, 10, 10))
+        fillColor.setFill()
+        dot.fill()
+    }
+
+    let paths = NSBezierPath()
+    paths.move(to: topPoint(742, 229))
+    paths.line(to: topPoint(760, 248))
+    paths.move(to: topPoint(758, 321))
+    paths.line(to: topPoint(760, 268))
+    paths.move(to: topPoint(848, 248))
+    paths.line(to: topPoint(854, 229))
+    paths.move(to: topPoint(848, 268))
+    paths.line(to: topPoint(854, 321))
+    secondaryAccent.setStroke()
+    paths.lineWidth = 3
+    paths.lineCapStyle = .round
+    paths.lineJoinStyle = .round
+    paths.stroke()
+
+    let footer = topRect(704, 356, 180, 22)
+    drawCenteredText(
+        "Infra as Code",
+        rect: footer,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawVectorOpsArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let clusterRect = topRect(688, 212, 108, 118)
+    fillRoundedRect(
+        clusterRect,
+        radius: 22,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    for row in 0..<3 {
+        for column in 0..<2 {
+            let node = NSBezierPath(ovalIn: topRect(712 + CGFloat(column * 34), 234 + CGFloat(row * 26), 14, 14))
+            accent.withAlphaComponent(0.82 - CGFloat(row) * 0.12).setFill()
+            node.fill()
+        }
+    }
+
+    let backupRect = topRect(832, 214, 80, 44)
+    let restoreRect = topRect(832, 272, 80, 44)
+    let drRect = topRect(832, 330, 80, 38)
+    for (rect, label, fillColor) in [(backupRect, "Backup", secondaryAccent), (restoreRect, "Restore", accent), (drRect, "DR", secondaryAccent)] {
+        fillRoundedRect(rect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+        drawCenteredText(label, rect: rect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+        let dot = NSBezierPath(ovalIn: topRect(rect.origin.x + 10, canvasHeight - rect.maxY + 11, 10, 10))
+        fillColor.setFill()
+        dot.fill()
+    }
+
+    let arrows = NSBezierPath()
+    arrows.move(to: topPoint(796, 236))
+    arrows.line(to: topPoint(832, 236))
+    arrows.move(to: topPoint(796, 294))
+    arrows.line(to: topPoint(832, 294))
+    arrows.move(to: topPoint(796, 348))
+    arrows.line(to: topPoint(832, 349))
+    secondaryAccent.setStroke()
+    arrows.lineWidth = 3
+    arrows.lineCapStyle = .round
+    arrows.stroke()
+}
+
+func drawSecretsArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let vaultRect = topRect(772, 214, 76, 102)
+    fillRoundedRect(
+        vaultRect,
+        radius: 22,
+        fill: accent.withAlphaComponent(0.14),
+        stroke: accent.withAlphaComponent(0.30)
+    )
+    let lockOuter = NSBezierPath(roundedRect: topRect(792, 242, 36, 40), xRadius: 10, yRadius: 10)
+    secondaryAccent.withAlphaComponent(0.82).setFill()
+    lockOuter.fill()
+    let shackle = NSBezierPath()
+    shackle.move(to: topPoint(802, 242))
+    shackle.curve(to: topPoint(818, 242), controlPoint1: topPoint(802, 228), controlPoint2: topPoint(818, 228))
+    color(hex: 0xfffbeb).setStroke()
+    shackle.lineWidth = 4
+    shackle.lineCapStyle = .round
+    shackle.stroke()
+
+    let endpoints: [(String, CGFloat, CGFloat, CGFloat)] = [
+        ("API", 688, 220, 56),
+        ("Weights", 676, 300, 76),
+        ("CI", 878, 220, 42),
+        ("DB", 878, 300, 42)
+    ]
+    for (label, x, y, width) in endpoints {
+        let cardRect = topRect(x, y, width, 36)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredText(
+            label,
+            rect: cardRect,
+            font: avenir(13, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+    }
+
+    let paths = NSBezierPath()
+    paths.move(to: topPoint(744, 238))
+    paths.line(to: topPoint(772, 248))
+    paths.move(to: topPoint(752, 318))
+    paths.line(to: topPoint(772, 286))
+    paths.move(to: topPoint(848, 248))
+    paths.line(to: topPoint(878, 238))
+    paths.move(to: topPoint(848, 286))
+    paths.line(to: topPoint(878, 318))
+    secondaryAccent.setStroke()
+    paths.lineWidth = 3
+    paths.lineCapStyle = .round
+    paths.lineJoinStyle = .round
+    paths.stroke()
+
+    let policy = topRect(712, 352, 164, 22)
+    drawCenteredText(
+        "Scoped Access + Rotation",
+        rect: policy,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawTokenEconomicsArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let modelRect = topRect(772, 226, 76, 92)
+    fillRoundedRect(
+        modelRect,
+        radius: 22,
+        fill: accent.withAlphaComponent(0.14),
+        stroke: accent.withAlphaComponent(0.30)
+    )
+    for row in 0..<3 {
+        let bar = NSBezierPath(roundedRect: topRect(792, 246 + CGFloat(row * 18), 36, 8), xRadius: 4, yRadius: 4)
+        accent.withAlphaComponent(0.82 - CGFloat(row) * 0.12).setFill()
+        bar.fill()
+    }
+
+    let inputs: [(String, CGFloat, CGFloat, CGFloat)] = [
+        ("In", 688, 224, 48),
+        ("Ctx", 680, 304, 56)
+    ]
+    let outputs: [(String, CGFloat, CGFloat, CGFloat)] = [
+        ("Out", 878, 224, 50),
+        ("$", 886, 304, 34)
+    ]
+
+    for (label, x, y, width) in inputs {
+        let cardRect = topRect(x, y, width, 36)
+        fillRoundedRect(cardRect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+        drawCenteredText(label, rect: cardRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    }
+    for (label, x, y, width) in outputs {
+        let cardRect = topRect(x, y, width, 36)
+        fillRoundedRect(cardRect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+        drawCenteredText(label, rect: cardRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    }
+
+    let routes = NSBezierPath()
+    routes.move(to: topPoint(736, 242))
+    routes.line(to: topPoint(772, 252))
+    routes.move(to: topPoint(736, 322))
+    routes.line(to: topPoint(772, 290))
+    routes.move(to: topPoint(848, 252))
+    routes.line(to: topPoint(878, 242))
+    routes.move(to: topPoint(848, 290))
+    routes.line(to: topPoint(886, 322))
+    secondaryAccent.setStroke()
+    routes.lineWidth = 3
+    routes.lineCapStyle = .round
+    routes.lineJoinStyle = .round
+    routes.stroke()
+
+    let spendBars = [22.0, 34.0, 48.0]
+    for (index, height) in spendBars.enumerated() {
+        fillRoundedRect(
+            topRect(712 + CGFloat(index * 18), 374 - CGFloat(height), 10, CGFloat(height)),
+            radius: 4,
+            fill: secondaryAccent.withAlphaComponent(0.78 - CGFloat(index) * 0.10)
+        )
+    }
+    drawCenteredText(
+        "Spend Controls",
+        rect: topRect(744, 352, 136, 22),
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawSpotTrainingArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let trainerRect = topRect(694, 226, 72, 96)
+    fillRoundedRect(
+        trainerRect,
+        radius: 20,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    for row in 0..<3 {
+        let rack = NSBezierPath(roundedRect: topRect(714, 246 + CGFloat(row * 18), 32, 8), xRadius: 4, yRadius: 4)
+        accent.withAlphaComponent(0.82 - CGFloat(row) * 0.12).setFill()
+        rack.fill()
+    }
+
+    let checkpointRect = topRect(794, 214, 102, 44)
+    let retryRect = topRect(820, 282, 76, 40)
+    fillRoundedRect(checkpointRect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    fillRoundedRect(retryRect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    drawCenteredText("Checkpoint", rect: checkpointRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Resume", rect: retryRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+
+    let interrupt = topRect(888, 208, 36, 36)
+    fillRoundedRect(interrupt, radius: 12, fill: secondaryAccent.withAlphaComponent(0.16), stroke: secondaryAccent.withAlphaComponent(0.30))
+    drawCenteredText("!", rect: interrupt, font: avenir(22, "Avenir Next Bold"), color: color(hex: 0xfffbeb), alignment: .center, lineHeight: 1.0)
+
+    let flow = NSBezierPath()
+    flow.move(to: topPoint(766, 244))
+    flow.line(to: topPoint(794, 236))
+    flow.move(to: topPoint(766, 286))
+    flow.curve(to: topPoint(820, 302), controlPoint1: topPoint(788, 292), controlPoint2: topPoint(802, 302))
+    flow.move(to: topPoint(872, 302))
+    flow.curve(to: topPoint(742, 346), controlPoint1: topPoint(848, 328), controlPoint2: topPoint(782, 352))
+    secondaryAccent.setStroke()
+    flow.lineWidth = 3
+    flow.lineCapStyle = .round
+    flow.lineJoinStyle = .round
+    flow.stroke()
+
+    let arrow = NSBezierPath()
+    arrow.move(to: topPoint(742, 346))
+    arrow.line(to: topPoint(750, 336))
+    arrow.line(to: topPoint(754, 348))
+    secondaryAccent.setFill()
+    arrow.fill()
+
+    let labelRect = topRect(708, 354, 160, 20)
+    drawCenteredText(
+        "Interruption-Tolerant Training",
+        rect: labelRect,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawSecurityArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let gatewayRect = topRect(774, 226, 72, 92)
+    fillRoundedRect(
+        gatewayRect,
+        radius: 22,
+        fill: accent.withAlphaComponent(0.14),
+        stroke: accent.withAlphaComponent(0.30)
+    )
+    let shield = NSBezierPath()
+    shield.move(to: topPoint(810, 242))
+    shield.line(to: topPoint(826, 248))
+    shield.line(to: topPoint(826, 268))
+    shield.curve(to: topPoint(810, 282), controlPoint1: topPoint(826, 276), controlPoint2: topPoint(818, 282))
+    shield.curve(to: topPoint(794, 268), controlPoint1: topPoint(802, 282), controlPoint2: topPoint(794, 276))
+    shield.line(to: topPoint(794, 248))
+    shield.close()
+    color(hex: 0xfffbeb).setFill()
+    shield.fill()
+
+    let nodes: [(String, CGFloat, CGFloat, CGFloat)] = [
+        ("Auth", 686, 224, 56),
+        ("Limit", 678, 304, 64),
+        ("Model", 878, 224, 60),
+        ("Abuse", 878, 304, 60)
+    ]
+    for (label, x, y, width) in nodes {
+        let cardRect = topRect(x, y, width, 36)
+        fillRoundedRect(cardRect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+        drawCenteredText(label, rect: cardRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    }
+
+    let paths = NSBezierPath()
+    paths.move(to: topPoint(742, 242))
+    paths.line(to: topPoint(774, 252))
+    paths.move(to: topPoint(742, 322))
+    paths.line(to: topPoint(774, 290))
+    paths.move(to: topPoint(846, 252))
+    paths.line(to: topPoint(878, 242))
+    paths.move(to: topPoint(846, 290))
+    paths.line(to: topPoint(878, 322))
+    secondaryAccent.setStroke()
+    paths.lineWidth = 3
+    paths.lineCapStyle = .round
+    paths.lineJoinStyle = .round
+    paths.stroke()
+}
+
+func drawPrivacyRAGArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let docs: [(CGFloat, CGFloat)] = [(690, 222), (690, 278), (690, 334)]
+    for (index, (x, y)) in docs.enumerated() {
+        let cardRect = topRect(x, y, 58, 34)
+        fillRoundedRect(cardRect, radius: 12, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+        for row in 0..<2 {
+            let line = NSBezierPath(roundedRect: topRect(x + 12, y + 9 + CGFloat(row * 10), 26, 5), xRadius: 2.5, yRadius: 2.5)
+            (index == 1 ? secondaryAccent : accent).withAlphaComponent(0.72 - CGFloat(row) * 0.14).setFill()
+            line.fill()
+        }
+    }
+
+    let filterRect = topRect(782, 236, 66, 84)
+    fillRoundedRect(
+        filterRect,
+        radius: 20,
+        fill: secondaryAccent.withAlphaComponent(0.14),
+        stroke: secondaryAccent.withAlphaComponent(0.30)
+    )
+    drawCenteredText("PII", rect: topRect(792, 262, 46, 24), font: avenir(18, "Avenir Next Bold"), color: color(hex: 0xfffbeb), alignment: .center, lineHeight: 1.0)
+
+    let modelRect = topRect(882, 250, 42, 56)
+    fillRoundedRect(modelRect, radius: 16, fill: accent.withAlphaComponent(0.14), stroke: accent.withAlphaComponent(0.30))
+    drawCenteredText("LLM", rect: modelRect, font: avenir(12, "Avenir Next Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+
+    let routes = NSBezierPath()
+    for y in [239.0, 295.0, 351.0] {
+        routes.move(to: topPoint(748, y))
+        routes.line(to: topPoint(782, 278))
+    }
+    routes.move(to: topPoint(848, 278))
+    routes.line(to: topPoint(882, 278))
+    accent.setStroke()
+    routes.lineWidth = 3
+    routes.lineCapStyle = .round
+    routes.lineJoinStyle = .round
+    routes.stroke()
+
+    let redactRect = topRect(760, 346, 132, 22)
+    drawCenteredText(
+        "Filter Before Prompting",
+        rect: redactRect,
+        font: avenir(13, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawAuditArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let timeline = NSBezierPath()
+    timeline.move(to: topPoint(708, 362))
+    timeline.line(to: topPoint(902, 362))
+    color(hex: 0xffffff, alpha: 0.18).setStroke()
+    timeline.lineWidth = 2
+    timeline.stroke()
+
+    let events: [(String, CGFloat, NSColor)] = [
+        ("Req", 722, accent),
+        ("Model", 786, secondaryAccent),
+        ("Policy", 850, accent),
+        ("Admin", 902, secondaryAccent)
+    ]
+    for (label, x, fillColor) in events {
+        let dot = NSBezierPath(ovalIn: topRect(x, 356, 12, 12))
+        fillColor.setFill()
+        dot.fill()
+        drawCenteredText(label, rect: topRect(x - 10, 332, 32, 18), font: avenir(11, "Avenir Next Demi Bold"), color: color(hex: 0xd5e3f5, alpha: 0.82), alignment: .center, lineHeight: 1.0)
+    }
+
+    let logRect = topRect(706, 220, 84, 100)
+    fillRoundedRect(logRect, radius: 20, fill: accent.withAlphaComponent(0.12), stroke: accent.withAlphaComponent(0.28))
+    for row in 0..<4 {
+        let line = NSBezierPath(roundedRect: topRect(726, 242 + CGFloat(row * 16), 44, 7), xRadius: 3.5, yRadius: 3.5)
+        accent.withAlphaComponent(0.82 - CGFloat(row) * 0.10).setFill()
+        line.fill()
+    }
+
+    let verifyRect = topRect(824, 226, 88, 58)
+    fillRoundedRect(verifyRect, radius: 18, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    drawCenteredText("Traceable", rect: verifyRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+
+    let check = NSBezierPath()
+    check.move(to: topPoint(846, 316))
+    check.line(to: topPoint(858, 328))
+    check.line(to: topPoint(878, 300))
+    secondaryAccent.setStroke()
+    check.lineWidth = 4
+    check.lineCapStyle = .round
+    check.lineJoinStyle = .round
+    check.stroke()
+}
+
+func drawCICDArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let stages: [(String, CGFloat, CGFloat, CGFloat)] = [
+        ("Code", 686, 224, 56),
+        ("Data", 758, 224, 58),
+        ("Eval", 832, 224, 54),
+        ("Canary", 730, 306, 78),
+        ("Deploy", 828, 306, 72)
+    ]
+
+    for (label, x, y, width) in stages {
+        let cardRect = topRect(x, y, width, 36)
+        fillRoundedRect(cardRect, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+        drawCenteredText(label, rect: cardRect, font: avenir(13, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    }
+
+    let flow = NSBezierPath()
+    flow.move(to: topPoint(742, 242))
+    flow.line(to: topPoint(758, 242))
+    flow.line(to: topPoint(816, 242))
+    flow.line(to: topPoint(832, 242))
+    flow.move(to: topPoint(860, 260))
+    flow.line(to: topPoint(860, 306))
+    flow.line(to: topPoint(808, 324))
+    flow.line(to: topPoint(828, 324))
+    secondaryAccent.setStroke()
+    flow.lineWidth = 3
+    flow.lineCapStyle = .round
+    flow.lineJoinStyle = .round
+    flow.stroke()
+
+    let gate = topRect(704, 344, 84, 28)
+    fillRoundedRect(gate, radius: 14, fill: accent.withAlphaComponent(0.14), stroke: accent.withAlphaComponent(0.30))
+    drawCenteredText("Quality Gate", rect: gate, font: avenir(12, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+}
+
+func drawABTestingArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let variantA = topRect(688, 224, 88, 54)
+    let variantB = topRect(688, 296, 88, 54)
+    let judge = topRect(816, 252, 76, 72)
+    fillRoundedRect(variantA, radius: 18, fill: accent.withAlphaComponent(0.12), stroke: accent.withAlphaComponent(0.28))
+    fillRoundedRect(variantB, radius: 18, fill: secondaryAccent.withAlphaComponent(0.12), stroke: secondaryAccent.withAlphaComponent(0.28))
+    fillRoundedRect(judge, radius: 20, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+
+    drawCenteredText("Variant A", rect: variantA, font: avenir(14, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Variant B", rect: variantB, font: avenir(14, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Judge", rect: judge, font: avenir(15, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+
+    let lines = NSBezierPath()
+    lines.move(to: topPoint(776, 251))
+    lines.line(to: topPoint(816, 274))
+    lines.move(to: topPoint(776, 323))
+    lines.line(to: topPoint(816, 302))
+    accent.setStroke()
+    lines.lineWidth = 3
+    lines.lineCapStyle = .round
+    lines.lineJoinStyle = .round
+    lines.stroke()
+
+    let compareRect = topRect(704, 356, 188, 18)
+    drawCenteredText(
+        "Pairwise + Rubric + Win Rate",
+        rect: compareRect,
+        font: avenir(12, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawEvalPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let frame = topRect(660, 176, 292, 228)
+    fillRoundedRect(
+        frame,
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let source = topRect(690, 240, 64, 72)
+    let baseline = topRect(786, 214, 70, 42)
+    let regression = topRect(786, 272, 70, 42)
+    let block = topRect(888, 242, 36, 44)
+
+    fillRoundedRect(source, radius: 18, fill: accent.withAlphaComponent(0.12), stroke: accent.withAlphaComponent(0.28))
+    fillRoundedRect(baseline, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    fillRoundedRect(regression, radius: 14, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    fillRoundedRect(block, radius: 14, fill: secondaryAccent.withAlphaComponent(0.14), stroke: secondaryAccent.withAlphaComponent(0.30))
+
+    drawCenteredText("Eval", rect: source, font: avenir(20, "Avenir Next Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Baseline", rect: baseline, font: avenir(12, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Regressions", rect: regression, font: avenir(12, "Avenir Next Demi Bold"), color: color(hex: 0xf8fafc), alignment: .center, lineHeight: 1.0)
+    drawCenteredText("Stop", rect: block, font: avenir(12, "Avenir Next Bold"), color: color(hex: 0xfffbeb), alignment: .center, lineHeight: 1.0)
+
+    let arrows = NSBezierPath()
+    arrows.move(to: topPoint(754, 260))
+    arrows.line(to: topPoint(786, 235))
+    arrows.move(to: topPoint(754, 292))
+    arrows.line(to: topPoint(786, 293))
+    arrows.move(to: topPoint(856, 293))
+    arrows.line(to: topPoint(888, 264))
+    secondaryAccent.setStroke()
+    arrows.lineWidth = 3
+    arrows.lineCapStyle = .round
+    arrows.lineJoinStyle = .round
+    arrows.stroke()
+
+    let captionRect = topRect(698, 356, 196, 18)
+    drawCenteredText(
+        "Catch Bad Releases Early",
+        rect: captionRect,
+        font: avenir(12, "Avenir Next Demi Bold"),
+        color: color(hex: 0xd5e3f5, alpha: 0.84),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
 func render(spec: CoverSpec, outputDir: URL) throws {
     guard let rep = NSBitmapImageRep(
         bitmapDataPlanes: nil,
@@ -1390,6 +2698,253 @@ let specs: [CoverSpec] = [
         chipText: ["Routing", "Rate Limits", "Cost Control"],
         artwork: {
             drawGatewayArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "gpu-autoscaling-inference-clusters.jpg",
+        label: "Model Deployment",
+        title: "GPU\nAutoscaling",
+        subtitle: "Right-size inference clusters with queue-aware scaling, warm capacity, and better GPU utilization.",
+        palette: [color(hex: 0x08111d), color(hex: 0x102036), color(hex: 0x17324a)],
+        accent: color(hex: 0x38bdf8),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["Queue-Based", "Warm Floor", "Right-Sizing"],
+        artwork: {
+            drawAutoscalingArtwork(accent: color(hex: 0x38bdf8), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "multi-model-serving-shared-infrastructure.jpg",
+        label: "Model Deployment",
+        title: "Multi-Model\nServing",
+        subtitle: "Run many models on shared GPU infrastructure with isolation, placement rules, and predictable performance.",
+        palette: [color(hex: 0x07101b), color(hex: 0x0f1f31), color(hex: 0x163246)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Shared Pool", "Isolation", "Scheduling"],
+        artwork: {
+            drawMultiModelArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "batching-strategies-llm-inference.jpg",
+        label: "MLOps",
+        title: "LLM Batching\nStrategies",
+        subtitle: "Balance throughput and latency with dynamic batching, queue limits, and request-shape aware serving.",
+        palette: [color(hex: 0x08111b), color(hex: 0x142133), color(hex: 0x1b2d45)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0x22d3ee),
+        chipText: ["Throughput", "Latency", "Dynamic Batching"],
+        artwork: {
+            drawBatchingArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0x22d3ee))
+        }
+    ),
+    CoverSpec(
+        filename: "feature-store-reliability-stale-features.jpg",
+        label: "AI Reliability",
+        title: "Feature Store\nReliability",
+        subtitle: "Catch stale features, lagging joins, and silent fallback paths before model quality drifts in production.",
+        palette: [color(hex: 0x0a1018), color(hex: 0x152332), color(hex: 0x1d3342)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0xf97316),
+        chipText: ["Freshness", "Parity", "Guardrails"],
+        artwork: {
+            drawFeatureStoreArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xf97316))
+        }
+    ),
+    CoverSpec(
+        filename: "prompt-versioning-rollback.jpg",
+        label: "MLOps",
+        title: "Prompt Versioning\nand Rollback",
+        subtitle: "Treat prompts like production infrastructure with version history, rollout control, and safe rollback paths.",
+        palette: [color(hex: 0x0c1018), color(hex: 0x1b2036), color(hex: 0x23294a)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0x22d3ee),
+        chipText: ["Versioning", "Canary", "Rollback"],
+        artwork: {
+            drawPromptVersioningArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0x22d3ee))
+        }
+    ),
+    CoverSpec(
+        filename: "load-testing-llm-endpoints.jpg",
+        label: "Model Deployment",
+        title: "Load Testing\nLLM Endpoints",
+        subtitle: "Measure queues, tokens, and time to first token instead of relying on ordinary web-service benchmarks.",
+        palette: [color(hex: 0x081018), color(hex: 0x122233), color(hex: 0x183648)],
+        accent: color(hex: 0x38bdf8),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["TTFT", "Queues", "Token Mix"],
+        artwork: {
+            drawLoadTestingArtwork(accent: color(hex: 0x38bdf8), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "ai-system-slos.jpg",
+        label: "AI Reliability",
+        title: "AI System\nSLOs",
+        subtitle: "Define uptime for non-deterministic systems using route-level usefulness, latency, and quality signals.",
+        palette: [color(hex: 0x0d1018), color(hex: 0x1a1f33), color(hex: 0x262b45)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Error Budgets", "Quality", "Observability"],
+        artwork: {
+            drawSLOArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "internal-ml-platform-kubernetes.jpg",
+        label: "MLOps",
+        title: "Internal ML\nPlatform",
+        subtitle: "Build a Kubernetes-based platform around the workflows teams actually repeat, not around platform theory.",
+        palette: [color(hex: 0x08111a), color(hex: 0x132334), color(hex: 0x18394a)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["Golden Paths", "Namespaces", "Serving"],
+        artwork: {
+            drawPlatformArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "terraform-ai-infrastructure.jpg",
+        label: "MLOps",
+        title: "Terraform for\nAI Infrastructure",
+        subtitle: "Provision GPU capacity, registries, storage, and pipeline dependencies with cleaner IaC boundaries.",
+        palette: [color(hex: 0x0b1018), color(hex: 0x1a1f33), color(hex: 0x223254)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0x22d3ee),
+        chipText: ["GPU Nodes", "Registries", "Pipelines"],
+        artwork: {
+            drawTerraformArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0x22d3ee))
+        }
+    ),
+    CoverSpec(
+        filename: "vector-database-operations.jpg",
+        label: "AI Reliability",
+        title: "Vector Database\nOperations",
+        subtitle: "Plan for scale, backup, restore, and disaster recovery before retrieval becomes a critical dependency.",
+        palette: [color(hex: 0x0a1017), color(hex: 0x15222d), color(hex: 0x1f3743)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Scaling", "Backup", "Disaster Recovery"],
+        artwork: {
+            drawVectorOpsArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "secrets-management-ai-pipelines.jpg",
+        label: "AI Reliability",
+        title: "Secrets\nManagement",
+        subtitle: "Protect provider keys, model artifacts, and runtime credentials across training, pipelines, and serving.",
+        palette: [color(hex: 0x0a1017), color(hex: 0x1b2133), color(hex: 0x27334b)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["API Keys", "Weights", "Credentials"],
+        artwork: {
+            drawSecretsArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "llm-token-economics.jpg",
+        label: "Model Deployment",
+        title: "LLM Token\nEconomics",
+        subtitle: "Track token-level spend and add practical controls around routing, output caps, caching, and tenant budgets.",
+        palette: [color(hex: 0x0a1018), color(hex: 0x132133), color(hex: 0x183648)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Token Usage", "Budgets", "Cost Control"],
+        artwork: {
+            drawTokenEconomicsArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "spot-training-fault-tolerance.jpg",
+        label: "Model Deployment",
+        title: "Spot Training\nFault Tolerance",
+        subtitle: "Run cheaper training workloads safely with checkpointing, interruption handling, durable state, and resume-aware retries.",
+        palette: [color(hex: 0x0a1018), color(hex: 0x171f31), color(hex: 0x223249)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["Checkpointing", "Retries", "Spot GPUs"],
+        artwork: {
+            drawSpotTrainingArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "securing-ai-endpoints.jpg",
+        label: "AI Reliability",
+        title: "Securing AI\nEndpoints",
+        subtitle: "Protect model APIs with authentication, token-aware rate limits, gateway policy, and abuse controls.",
+        palette: [color(hex: 0x0f1118), color(hex: 0x211625), color(hex: 0x2d1b2f)],
+        accent: color(hex: 0xfb7185),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Auth", "Rate Limits", "Abuse Prevention"],
+        artwork: {
+            drawSecurityArtwork(accent: color(hex: 0xfb7185), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "data-privacy-rag-systems.jpg",
+        label: "AI Reliability",
+        title: "RAG Data\nPrivacy",
+        subtitle: "Filter PII and sensitive context before retrieval results are assembled into prompts and sent to the model.",
+        palette: [color(hex: 0x0c1018), color(hex: 0x1c1933), color(hex: 0x253450)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0xa78bfa),
+        chipText: ["PII Filtering", "Retrieval", "Prompt Safety"],
+        artwork: {
+            drawPrivacyRAGArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xa78bfa))
+        }
+    ),
+    CoverSpec(
+        filename: "ai-audit-logs.jpg",
+        label: "AI Reliability",
+        title: "AI Audit\nLogs",
+        subtitle: "Capture the model, prompt, policy, and operator trail needed for investigations, governance, and review.",
+        palette: [color(hex: 0x0e1017), color(hex: 0x1b2133), color(hex: 0x27334a)],
+        accent: color(hex: 0x38bdf8),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["Traceability", "Control Plane", "Governance"],
+        artwork: {
+            drawAuditArtwork(accent: color(hex: 0x38bdf8), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "ci-cd-ml-models.jpg",
+        label: "MLOps",
+        title: "CI/CD for\nML Models",
+        subtitle: "Add data checks, quality gates, and canary controls so model releases are tested beyond ordinary unit tests.",
+        palette: [color(hex: 0x08111a), color(hex: 0x152335), color(hex: 0x1a3848)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["Data Tests", "Quality Gates", "Canary"],
+        artwork: {
+            drawCICDArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "ab-testing-llm-outputs.jpg",
+        label: "MLOps",
+        title: "A/B Testing\nLLM Outputs",
+        subtitle: "Compare free-form responses with pairwise judgment, rubric scoring, and better experiment design for text outputs.",
+        palette: [color(hex: 0x0c1018), color(hex: 0x1b1f34), color(hex: 0x262d49)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0x22d3ee),
+        chipText: ["Pairwise", "Rubrics", "Win Rate"],
+        artwork: {
+            drawABTestingArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0x22d3ee))
+        }
+    ),
+    CoverSpec(
+        filename: "eval-pipeline-regressions.jpg",
+        label: "MLOps",
+        title: "Eval Pipeline\nRegressions",
+        subtitle: "Build release-time evaluations that catch quality, cost, and runtime regressions before users become the monitors.",
+        palette: [color(hex: 0x091018), color(hex: 0x152132), color(hex: 0x203448)],
+        accent: color(hex: 0x38bdf8),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Baselines", "Release Gates", "Regression Checks"],
+        artwork: {
+            drawEvalPipelineArtwork(accent: color(hex: 0x38bdf8), secondaryAccent: color(hex: 0xf59e0b))
         }
     )
 ]

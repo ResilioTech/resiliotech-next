@@ -1,0 +1,178 @@
+---
+title: "Spot Instances for Training Workloads: Checkpointing and Fault Tolerance"
+description: "How to run ML training workloads on spot or preemptible capacity safely, with checkpointing, interruption handling, retry policy, and pipeline design for fault tolerance."
+date: "2026-03-07"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["spot-instances", "training", "fault-tolerance", "gpu-optimization", "mlops"]
+coverImage: "/blog-images/spot-training-fault-tolerance.jpg"
+featured: false
+---
+
+# Spot Instances for Training Workloads: Checkpointing and Fault Tolerance
+
+Spot and preemptible instances are some of the highest-leverage cost optimizations in ML infrastructure.
+
+They are also one of the easiest ways to create fragile training systems if you treat interruption as an edge case instead of as a normal operating condition.
+
+The core rule is simple: if you use spot capacity, your training pipeline must assume termination will happen.
+
+## Why Spot Works Well for Training
+
+Training is usually a better fit for interruption-tolerant infrastructure than online inference because:
+
+- progress can be checkpointed
+- jobs are often batch-oriented
+- restart delay is acceptable
+- lower cost matters more than instant availability
+
+That makes spot capacity attractive for:
+
+- fine-tuning
+- scheduled retraining
+- backfills
+- large experimentation workloads
+
+It is less appropriate for latency-sensitive serving paths.
+
+## Checkpointing Is the Foundation
+
+Without reliable checkpoints, spot savings are just random job failure with nicer billing language.
+
+A good checkpointing strategy should capture:
+
+- model weights
+- optimizer state
+- scheduler state
+- current epoch and step
+- dataset position when relevant
+- enough metadata to resume deterministically
+
+```python
+def save_checkpoint(path, model, optimizer, scheduler, epoch, step):
+    torch.save(
+        {
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": scheduler.state_dict(),
+            "epoch": epoch,
+            "step": step,
+        },
+        path,
+    )
+```
+
+The goal is not just saving progress. It is making restart predictable.
+
+## Handle Interruption Signals Explicitly
+
+Cloud platforms usually provide some warning before termination. If your job ignores that signal, you waste the best chance to save state cleanly.
+
+Your training wrapper should:
+
+- catch termination signals
+- stop accepting new work
+- flush the latest checkpoint
+- exit clearly so the orchestrator can retry
+
+This is one of the most important differences between a spot-aware training job and an ordinary one.
+
+## Checkpoint Frequency Is a Tradeoff
+
+Checkpoint too rarely, and interruptions waste too much work.
+
+Checkpoint too often, and I/O overhead starts to slow training.
+
+A practical policy depends on:
+
+- job duration
+- interruption frequency
+- checkpoint size
+- storage bandwidth
+- tolerance for replayed work
+
+Most teams should choose a checkpoint interval based on minutes of lost work they can tolerate, not on arbitrary epoch boundaries.
+
+## Put Checkpoints Somewhere Durable
+
+Local disk on a spot instance is not a real checkpoint destination.
+
+Use durable storage:
+
+- object storage
+- persistent volumes with clear durability assumptions
+- shared training artifact storage
+
+If the checkpoint disappears with the node, the job was never fault tolerant in the first place.
+
+## Retries Need to Resume, Not Restart Blindly
+
+An orchestrator retry only helps if the job knows how to recover correctly.
+
+A resilient retry path should:
+
+1. locate the latest valid checkpoint
+2. verify it is readable
+3. restore state
+4. resume with consistent training metadata
+
+Otherwise retries simply convert interruption into duplicated work.
+
+## Design Pipelines Around Interruption
+
+Spot-aware training should be a pipeline-level concern, not just a trainer function.
+
+The surrounding system should define:
+
+- retry budget
+- backoff policy
+- checkpoint storage location
+- job idempotency assumptions
+- failure handling when checkpoints are corrupted
+
+This is where many teams fall short. They add checkpointing code but leave the pipeline behavior undefined.
+
+## Separate Training Pools by Criticality
+
+Not every workload should share the same spot strategy.
+
+A useful split:
+
+- high-priority scheduled retraining with conservative retry settings
+- lower-priority experiments on more aggressive spot pools
+- large long-running jobs with stronger checkpoint discipline
+
+This avoids one global policy that fits none of the workloads well.
+
+## Observe Wasted Work, Not Just Cost Savings
+
+A spot-training dashboard should include:
+
+- interruption count
+- resumed-from-checkpoint success rate
+- average replayed work per interruption
+- checkpoint write time
+- retry duration
+- total cost saved compared with on-demand
+
+If you only monitor savings, you may miss that the system is burning engineering time or slowing delivery through unstable restart behavior.
+
+## Common Mistakes
+
+These show up all the time:
+
+- **checkpointing only model weights**
+- **storing checkpoints on ephemeral disk**
+- **retrying from scratch instead of resuming**
+- **no signal handling on termination notice**
+- **one interruption policy for all training workloads**
+
+Spot capacity is only a good deal when the system is designed to survive it cleanly.
+
+## Final Takeaway
+
+Spot instances can reduce training cost dramatically, but only if fault tolerance is built into the workload from the start. Checkpointing, durable storage, signal handling, and resume-aware retries are the real features that make spot viable.
+
+Used well, spot becomes a cost advantage. Used carelessly, it becomes random instability with lower hourly pricing.
+
+*Need help making training pipelines spot-safe without sacrificing reliability? We help teams design checkpointing, retry, and orchestration patterns for interruption-tolerant ML workloads. [Book a free infrastructure audit](/contact) and we’ll review your training stack.*

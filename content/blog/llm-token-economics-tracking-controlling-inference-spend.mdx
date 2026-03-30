@@ -1,0 +1,173 @@
+---
+title: "LLM Token Economics: Tracking and Controlling Inference Spend"
+description: "How to measure token-level inference spend in production and add practical controls around prompt size, output limits, routing, caching, and tenant budgets."
+date: "2026-03-08"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["llm-serving", "cost-optimization", "token-usage", "model-deployment", "observability"]
+coverImage: "/blog-images/llm-token-economics.jpg"
+featured: false
+---
+
+# LLM Token Economics: Tracking and Controlling Inference Spend
+
+Most teams notice LLM cost too late.
+
+The first version of the product works, usage grows, and then finance starts asking why inference spend is increasing faster than traffic. By then the system usually has weak token visibility, vague routing policies, and no clear idea which features or tenants are consuming the budget.
+
+That is why token economics needs to be treated as an operational concern, not just a pricing footnote.
+
+## Requests Are Not the Right Unit of Cost
+
+For ordinary APIs, request volume is often a useful proxy for cost.
+
+For LLM systems, it usually is not.
+
+Two requests can have completely different cost profiles based on:
+
+- prompt length
+- retrieved context size
+- output token count
+- model choice
+- retries or tool loops
+- system prompt overhead
+
+If you only monitor requests per second, you will miss where spend is actually going.
+
+## Track Input and Output Tokens Separately
+
+Input and output tokens behave differently operationally.
+
+Input tokens often increase because of:
+
+- longer chat history
+- larger RAG context windows
+- unnecessary prompt scaffolding
+- duplicated instructions
+
+Output tokens often increase because of:
+
+- verbose prompts
+- weak stop conditions
+- large max-token limits
+- routes that generate more explanation than the user needs
+
+You need visibility into both.
+
+```yaml
+metrics:
+  - input_tokens_total
+  - output_tokens_total
+  - cost_usd_total
+  - cost_usd_per_route
+  - cost_usd_per_tenant
+  - avg_tokens_per_response
+```
+
+Without that split, cost debugging becomes guesswork.
+
+## Attribute Spend by Route and Tenant
+
+The total bill is not a useful control surface.
+
+You need to know:
+
+- which features are consuming the most spend
+- which tenants or customers have unusual usage
+- which prompts or workflows produce the highest token volume
+- which routes are drifting upward over time
+
+This is how teams separate legitimate business growth from avoidable prompt waste.
+
+## Add Budget Controls Before Costs Spike
+
+The cheapest cost-control mechanism is the one you put in place before demand explodes.
+
+Useful controls include:
+
+- max input size
+- max output token caps
+- route-specific model selection
+- per-tenant quotas
+- rate limits
+- caching for repeated prompt patterns
+
+These are not just financial controls. They also prevent one noisy workflow from consuming too much capacity.
+
+## Prompt Design Affects Spend More Than Teams Expect
+
+Token spend often grows because prompts get bigger gradually:
+
+- extra instructions are appended
+- system prompts accumulate old rules
+- retrieval injects too much context
+- tool schemas become oversized
+
+This does not usually happen in one dramatic change. It happens through small edits that compound over time.
+
+That means prompt reviews should consider:
+
+- token footprint
+- marginal value of extra instructions
+- maximum likely context size
+- whether the route really needs the most expensive model
+
+## Use Routing as a Cost Lever
+
+One of the most effective ways to control spend is routing requests intelligently.
+
+Examples:
+
+- smaller model for low-risk classification
+- larger model only for ambiguous or high-value cases
+- structured output routes use models that are cheaper but reliable enough
+- fail open to cached or templated responses for repeated low-value tasks
+
+Routing is how cost control becomes part of system design rather than a billing afterthought.
+
+## Watch Cost per Successful Outcome
+
+Raw token cost matters, but cost per useful result matters more.
+
+For example:
+
+- cost per resolved support case
+- cost per accepted generated draft
+- cost per successful extraction
+- cost per user session
+
+This keeps teams from optimizing token usage in ways that quietly damage product value.
+
+## Build a Spend Dashboard for Operators
+
+A useful LLM cost dashboard should show:
+
+- input and output tokens by route
+- cost by tenant
+- cost by model
+- cache hit rate
+- average tokens per successful response
+- p95 token usage for heavy requests
+- sudden prompt footprint changes
+
+This makes cost observable enough to manage in the same rhythm as latency or error rate.
+
+## Common Mistakes
+
+These are common in production:
+
+- **tracking request count but not token count**
+- **no route-level attribution**
+- **one large model used for every request**
+- **no prompt size discipline**
+- **cost controls added only after the bill spikes**
+
+LLM economics becomes much easier once token spend is treated as a first-class operational metric.
+
+## Final Takeaway
+
+Inference spend is rarely just a pricing problem. It is a system design problem shaped by prompt size, routing, output caps, caching, and tenant controls.
+
+Teams that measure token usage in detail can control cost intentionally. Teams that do not usually find themselves reacting to the bill after the architecture has already drifted.
+
+*Need help reducing LLM inference spend without degrading product quality? We help teams build token-level observability, smarter routing, and practical cost controls for production AI systems. [Book a free infrastructure audit](/contact) and we’ll review your serving stack.*

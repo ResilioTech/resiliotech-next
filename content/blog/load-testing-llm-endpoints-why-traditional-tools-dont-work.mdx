@@ -1,0 +1,176 @@
+---
+title: "Load Testing LLM Endpoints: Why Traditional Tools Don't Work"
+description: "Why standard API load-testing assumptions break for LLM inference, and how to design tests that reflect token generation, concurrency, and real serving bottlenecks."
+date: "2026-03-14"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["llm-serving", "load-testing", "performance", "model-deployment", "latency"]
+coverImage: "/blog-images/load-testing-llm-endpoints.jpg"
+featured: false
+---
+
+# Load Testing LLM Endpoints: Why Traditional Tools Don't Work
+
+Teams often approach LLM endpoint testing the same way they test a normal HTTP service: send a large number of requests, measure latency and error rate, and scale from there.
+
+That approach misses the real constraints of LLM serving.
+
+LLM endpoints are not just request-response APIs. They are long-running GPU workloads with variable prompt sizes, variable generation lengths, queueing effects, and token-level runtime behavior.
+
+If your load test ignores that, the numbers will look precise and still tell you the wrong story.
+
+## Why Traditional API Testing Fails Here
+
+Classic load testing assumes requests are roughly similar and server work per request is relatively stable.
+
+LLM traffic is the opposite:
+
+- prompts vary wildly in size
+- output length can explode unpredictably
+- streaming changes connection duration
+- batching changes latency behavior under concurrency
+- one long request can distort the queue for many short ones
+
+That means "500 requests per second" is not a meaningful benchmark by itself.
+
+## Tokens Matter More Than Requests
+
+For LLM endpoints, the true workload is usually better described by:
+
+- input tokens per second
+- output tokens per second
+- concurrent active generations
+- queue wait time
+- time to first token
+- end-to-end latency
+
+Two tests with the same request count can stress the system very differently if one uses short prompts and the other uses long contexts with large outputs.
+
+## Synthetic Uniform Traffic Is Misleading
+
+Most off-the-shelf load tools generate highly uniform traffic patterns.
+
+That is convenient. It is also unrealistic.
+
+Real LLM workloads usually include a mix of:
+
+- short requests
+- long context requests
+- streaming sessions
+- retried requests
+- bursty arrival patterns
+
+If your test does not include that mix, you are not testing production behavior. You are testing a simplified fantasy version of it.
+
+## Streaming Changes the Bottleneck
+
+With streaming responses, the server may hold connections open for much longer. This affects:
+
+- open connections
+- proxy behavior
+- backpressure
+- client timeout patterns
+- concurrent sequence limits inside the serving runtime
+
+A tool that only measures total response completion time will miss whether time to first token is degrading long before full latency becomes obviously bad.
+
+## Queueing Is Part of the Product Experience
+
+For LLM systems, performance failure often starts in the queue.
+
+You need to observe:
+
+- request admission delay
+- scheduler wait time
+- batch formation delay
+- queue depth at different traffic levels
+
+```yaml
+metrics:
+  - queue_wait_ms
+  - time_to_first_token_ms
+  - tokens_generated_per_second
+  - active_sequences
+  - request_timeout_rate
+```
+
+If your load test only measures HTTP status codes and average latency, you will miss the exact stage where the service starts becoming unusable.
+
+## Test Request Shape, Not Just Volume
+
+A useful LLM load test varies:
+
+- prompt length
+- output token cap
+- route or model
+- streaming vs non-streaming
+- concurrency lane
+
+For example, a good test suite may include:
+
+1. short interactive chat requests
+2. long-context RAG requests
+3. burst traffic after idle periods
+4. mixed streaming and non-streaming traffic
+5. a few deliberately heavy requests to test tail impact
+
+This is how you find where the runtime becomes unstable under realistic contention.
+
+## GPU Saturation Is Not the Whole Story
+
+Teams often look at GPU utilization and assume high utilization means the test is good.
+
+Not necessarily.
+
+You can have:
+
+- high GPU utilization with unacceptable queue delay
+- low GPU utilization because batching is inefficient
+- healthy average latency with terrible p95 due to long prompts
+- good tokens-per-second but poor time to first token
+
+Performance is not one number. LLM endpoints need multiple views at once.
+
+## Build Load Profiles Around User-Facing SLOs
+
+Load testing should answer operational questions such as:
+
+- how many concurrent chats can we sustain before p95 TTFT breaks?
+- what happens when long-context traffic reaches 20% of the mix?
+- how does one tenant’s burst affect everyone else?
+- how much headroom do we have before queue shedding starts?
+
+Those are much more valuable than a generic benchmark headline.
+
+## A Better LLM Load-Testing Pattern
+
+For production systems, a better pattern looks like this:
+
+1. model real traffic mixes by prompt and output size
+2. separate interactive and batch workloads
+3. measure token-level and queue-level metrics
+4. test streaming explicitly
+5. capture p95 and p99 behavior, not just averages
+6. rerun tests after batching or routing changes
+
+This approach is slower than a quick `hey` or `wrk` run, but it reflects how the platform actually fails.
+
+## Common Mistakes
+
+These are easy to spot in the field:
+
+- **benchmarking requests per second without token context**
+- **ignoring time to first token**
+- **testing only one prompt size**
+- **mixing offline and interactive traffic in one synthetic profile**
+- **using average latency as the main success metric**
+
+Traditional tools are not useless. They are just incomplete for LLM systems unless the workload model is much more realistic.
+
+## Final Takeaway
+
+LLM endpoints behave like serving systems with queues, batching, and variable-length generation, not like ordinary stateless APIs. Load testing them with standard web assumptions produces clean-looking numbers that often hide the real bottlenecks.
+
+The right test is the one that mirrors request shape, concurrency, and token behavior closely enough to predict where the system breaks under real traffic.
+
+*Need help building realistic performance tests for your LLM stack? We help teams design load profiles, batching policies, and observability for AI serving systems under production traffic. [Book a free infrastructure audit](/contact) and we’ll review your serving path.*
