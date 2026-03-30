@@ -134,17 +134,20 @@ export function BlogPostLayout({ post, children }: BlogPostLayoutProps) {
 
       {/* Featured Image */}
       {post.coverImage && !imageError && (
-        <div className="relative h-64 md:h-80 lg:h-96 bg-surface-elevated">
-          <Image
-            src={post.coverImage}
-            alt={`Cover image for ${post.title}`}
-            fill
-            className="object-cover"
-            onError={() => setImageError(true)}
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative aspect-[1200/630] w-full rounded-2xl overflow-hidden bg-surface-elevated">
+              <Image
+                src={post.coverImage}
+                alt={`Cover image for ${post.title}`}
+                fill
+                className="object-cover"
+                onError={() => setImageError(true)}
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
+              />
+            </div>
+          </div>
         </div>
       )}
 
