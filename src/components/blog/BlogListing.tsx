@@ -96,6 +96,7 @@ export function BlogListing({ posts, pagination, currentFilters, loading }: Blog
                           src={post.coverImage}
                           alt={post.title}
                           fill
+                          sizes="(max-width: 1024px) 100vw, 192px"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                           onError={() => handleImageError(post.slug)}
                         />

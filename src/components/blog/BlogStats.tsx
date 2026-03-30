@@ -90,7 +90,7 @@ export function BlogStats({ stats }: BlogStatsProps) {
           )}
           style={{ transitionDelay: `${index * 100}ms` }}
         >
-          <div className="bg-surface border border-border rounded-xl p-6 hover:border-primary hover:scale-105 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/10">
+          <div className="h-full bg-surface border border-border rounded-xl p-6 hover:border-primary hover:scale-105 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/10">
             <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
               {item.icon}
             </div>
