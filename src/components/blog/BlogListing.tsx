@@ -88,15 +88,15 @@ export function BlogListing({ posts, pagination, currentFilters, loading }: Blog
             <div className="bg-surface border border-border rounded-2xl p-6 hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
               <div className="flex flex-col lg:flex-row gap-6">
                 {/* Featured Image */}
-                <div className="lg:w-48 lg:flex-shrink-0">
+                <div className="lg:w-72 lg:flex-shrink-0">
                   <Link href={post.url} className="block">
-                    <div className="relative aspect-video lg:aspect-square w-full rounded-xl overflow-hidden bg-surface-elevated">
+                    <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-surface-elevated">
                       {post.coverImage && !imageErrors.has(post.slug) ? (
                         <Image
                           src={post.coverImage}
                           alt={post.title}
                           fill
-                          sizes="(max-width: 1024px) 100vw, 192px"
+                          sizes="(max-width: 1024px) 100vw, 288px"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                           onError={() => handleImageError(post.slug)}
                         />
