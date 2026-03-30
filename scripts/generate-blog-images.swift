@@ -155,6 +155,35 @@ func drawCenteredText(
     lineHeight: CGFloat = 1.0,
     kern: CGFloat = 0
 ) {
+    let singleLine = !text.contains("\n")
+    if singleLine {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = alignment
+        paragraph.lineBreakMode = .byClipping
+
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: textColor,
+            .paragraphStyle: paragraph,
+            .kern: kern
+        ]
+
+        let measured = NSString(string: text).size(withAttributes: attrs)
+        let centeredRect = NSRect(
+            x: rect.origin.x,
+            y: rect.origin.y + max(0, floor((rect.height - ceil(measured.height)) / 2)),
+            width: rect.width,
+            height: ceil(measured.height)
+        )
+
+        NSString(string: text).draw(
+            with: centeredRect,
+            options: [.usesLineFragmentOrigin],
+            attributes: attrs
+        )
+        return
+    }
+
     let attrs = makeTextAttributes(
         font: font,
         color: textColor,
@@ -171,7 +200,7 @@ func drawCenteredText(
 
     let centeredRect = NSRect(
         x: rect.origin.x,
-        y: rect.origin.y + max(0, (rect.height - ceil(measured.height)) / 2),
+        y: rect.origin.y + max(0, floor((rect.height - ceil(measured.height)) / 2)),
         width: rect.width,
         height: ceil(measured.height)
     )
