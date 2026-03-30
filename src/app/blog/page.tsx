@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     url: 'https://resiliotech.com/blog',
     images: [
       {
-        url: '/og-images/blog-main.jpg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Resilio Tech Blog',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Blog | Resilio Tech',
     description: 'Real production lessons on AI infrastructure, MLOps, and AI reliability engineering',
-    images: ['/og-images/blog-main.jpg'],
+    images: ['/og-image.png'],
   },
 }
 

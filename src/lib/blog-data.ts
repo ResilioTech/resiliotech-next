@@ -25,32 +25,25 @@ export const AUTHORS: Author[] = [
 
 export const CATEGORIES: Category[] = [
   {
-    id: "devops",
-    name: "DevOps",
-    description: "Best practices, tools, and strategies for DevOps implementation and automation",
-    slug: "devops",
-    color: "from-blue-500 to-cyan-500"
+    id: "ai-reliability",
+    name: "AI Reliability",
+    description: "Production AI reliability, model monitoring, drift detection, and resilience engineering for ML systems",
+    slug: "ai-reliability",
+    color: "from-rose-500 to-orange-500"
   },
   {
-    id: "kubernetes",
-    name: "Kubernetes",
-    description: "Container orchestration, K8s best practices, and cloud-native development",
-    slug: "kubernetes",
-    color: "from-indigo-500 to-blue-500"
+    id: "mlops",
+    name: "MLOps",
+    description: "Machine learning operations, CI/CD for models, automated retraining, and ML pipelines",
+    slug: "mlops",
+    color: "from-sky-500 to-indigo-500"
   },
   {
-    id: "cicd",
-    name: "CI/CD",
-    description: "Continuous integration and deployment pipelines, automation, and testing strategies",
-    slug: "cicd",
-    color: "from-green-500 to-emerald-500"
-  },
-  {
-    id: "aws",
-    name: "AWS",
-    description: "Amazon Web Services tutorials, best practices, and cost optimization",
-    slug: "aws",
-    color: "from-yellow-500 to-orange-500"
+    id: "model-deployment",
+    name: "Model Deployment",
+    description: "ML model serving, GPU optimization, cost management, and production deployment strategies",
+    slug: "model-deployment",
+    color: "from-amber-500 to-yellow-500"
   }
 ]
 

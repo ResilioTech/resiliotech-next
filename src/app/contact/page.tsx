@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Us — Book a Free AI Infra Audit | Resilio Tech',
     description: 'Book a free 30-minute AI infrastructure audit. We respond within 24 hours.',
-    images: ['/og-images/contact-us.png'],
+    images: ['/og-image.png'],
   },
   twitter: {
     title: 'Contact Us — Book a Free AI Infra Audit | Resilio Tech',

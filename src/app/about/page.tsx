@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Us — Resilio Tech',
     description: 'Built by SREs who\'ve operated systems at Fortune 500 scale. We make AI work in production.',
-    images: ['/og-images/about-team.png'],
+    images: ['/og-image.png'],
   },
   twitter: {
     title: 'About Us — Resilio Tech',
