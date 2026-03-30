@@ -77,6 +77,51 @@ func fillRoundedRect(_ rect: NSRect, radius: CGFloat, fill: NSColor, stroke: NSC
     }
 }
 
+func makeTextAttributes(
+    font: NSFont,
+    color textColor: NSColor,
+    alignment: NSTextAlignment = .left,
+    lineHeight: CGFloat = 1.12,
+    kern: CGFloat = 0
+) -> [NSAttributedString.Key: Any] {
+    let paragraph = NSMutableParagraphStyle()
+    paragraph.alignment = alignment
+    paragraph.lineBreakMode = .byWordWrapping
+    paragraph.minimumLineHeight = font.pointSize * lineHeight
+    paragraph.maximumLineHeight = font.pointSize * lineHeight
+
+    return [
+        .font: font,
+        .foregroundColor: textColor,
+        .paragraphStyle: paragraph,
+        .kern: kern
+    ]
+}
+
+func measureText(
+    _ text: String,
+    width: CGFloat,
+    font: NSFont,
+    alignment: NSTextAlignment = .left,
+    lineHeight: CGFloat = 1.12,
+    kern: CGFloat = 0
+) -> NSSize {
+    let attrs = makeTextAttributes(
+        font: font,
+        color: color(hex: 0xffffff),
+        alignment: alignment,
+        lineHeight: lineHeight,
+        kern: kern
+    )
+
+    let measured = NSString(string: text).boundingRect(
+        with: NSSize(width: width, height: .greatestFiniteMagnitude),
+        options: [.usesLineFragmentOrigin, .usesFontLeading],
+        attributes: attrs
+    )
+    return NSSize(width: ceil(measured.width), height: ceil(measured.height))
+}
+
 func drawText(
     _ text: String,
     rect: NSRect,
@@ -86,23 +131,123 @@ func drawText(
     lineHeight: CGFloat = 1.12,
     kern: CGFloat = 0
 ) {
-    let paragraph = NSMutableParagraphStyle()
-    paragraph.alignment = alignment
-    paragraph.lineBreakMode = .byWordWrapping
-    paragraph.minimumLineHeight = font.pointSize * lineHeight
-    paragraph.maximumLineHeight = font.pointSize * lineHeight
-
-    let attrs: [NSAttributedString.Key: Any] = [
-        .font: font,
-        .foregroundColor: textColor,
-        .paragraphStyle: paragraph,
-        .kern: kern
-    ]
+    let attrs = makeTextAttributes(
+        font: font,
+        color: textColor,
+        alignment: alignment,
+        lineHeight: lineHeight,
+        kern: kern
+    )
 
     NSString(string: text).draw(
         with: rect,
         options: [.usesLineFragmentOrigin, .usesFontLeading],
         attributes: attrs
+    )
+}
+
+func drawCenteredText(
+    _ text: String,
+    rect: NSRect,
+    font: NSFont,
+    color textColor: NSColor,
+    alignment: NSTextAlignment = .center,
+    lineHeight: CGFloat = 1.0,
+    kern: CGFloat = 0
+) {
+    let attrs = makeTextAttributes(
+        font: font,
+        color: textColor,
+        alignment: alignment,
+        lineHeight: lineHeight,
+        kern: kern
+    )
+
+    let measured = NSString(string: text).boundingRect(
+        with: NSSize(width: rect.width, height: .greatestFiniteMagnitude),
+        options: [.usesLineFragmentOrigin, .usesFontLeading],
+        attributes: attrs
+    )
+
+    let centeredRect = NSRect(
+        x: rect.origin.x,
+        y: rect.origin.y + max(0, (rect.height - ceil(measured.height)) / 2),
+        width: rect.width,
+        height: ceil(measured.height)
+    )
+
+    NSString(string: text).draw(
+        with: centeredRect,
+        options: [.usesLineFragmentOrigin, .usesFontLeading],
+        attributes: attrs
+    )
+}
+
+func drawCenteredDotLabel(
+    text: String,
+    in rect: NSRect,
+    dotColor: NSColor,
+    font: NSFont,
+    textColor: NSColor,
+    dotSize: CGFloat = 16,
+    gap: CGFloat = 10
+) {
+    let textSize = measureText(text, width: rect.width, font: font, alignment: .left, lineHeight: 1.0)
+    let groupWidth = dotSize + gap + textSize.width
+    let startX = rect.origin.x + max(0, (rect.width - groupWidth) / 2)
+    let dotY = rect.origin.y + (rect.height - dotSize) / 2
+
+    let dot = NSBezierPath(ovalIn: NSRect(x: startX, y: dotY, width: dotSize, height: dotSize))
+    dotColor.setFill()
+    dot.fill()
+
+    drawCenteredText(
+        text,
+        rect: NSRect(x: startX + dotSize + gap, y: rect.origin.y, width: textSize.width, height: rect.height),
+        font: font,
+        color: textColor,
+        alignment: .left,
+        lineHeight: 1.0
+    )
+}
+
+func drawCenteredIconLabel(
+    text: String,
+    cardRect: NSRect,
+    accent: NSColor,
+    font: NSFont,
+    textColor: NSColor,
+    iconSize: CGFloat = 42,
+    iconDotSize: CGFloat = 16,
+    gap: CGFloat = 12
+) {
+    let availableTextWidth = cardRect.width - iconSize - gap - 20
+    let naturalTextWidth = ceil(NSString(string: text).size(withAttributes: [.font: font]).width)
+    let textWidth = min(naturalTextWidth, availableTextWidth)
+    let textSize = NSSize(width: textWidth, height: measureText(text, width: textWidth, font: font, alignment: .left, lineHeight: 1.0).height)
+    let groupWidth = iconSize + gap + textSize.width
+    let startX = cardRect.origin.x + max(14, (cardRect.width - groupWidth) / 2)
+    let iconY = cardRect.origin.y + (cardRect.height - iconSize) / 2
+
+    let iconRect = NSRect(x: startX, y: iconY, width: iconSize, height: iconSize)
+    fillRoundedRect(
+        iconRect,
+        radius: 14,
+        fill: accent.withAlphaComponent(0.16),
+        stroke: accent.withAlphaComponent(0.28)
+    )
+    let dotInset = (iconSize - iconDotSize) / 2
+    let dot = NSBezierPath(ovalIn: NSRect(x: startX + dotInset, y: iconY + dotInset, width: iconDotSize, height: iconDotSize))
+    accent.setFill()
+    dot.fill()
+
+    drawCenteredText(
+        text,
+        rect: NSRect(x: startX + iconSize + gap, y: cardRect.origin.y, width: textSize.width, height: cardRect.height),
+        font: font,
+        color: textColor,
+        alignment: .left,
+        lineHeight: 1.0
     )
 }
 
@@ -114,11 +259,12 @@ func drawBadge(text: String, x: CGFloat, y: CGFloat, width: CGFloat) {
         fill: color(hex: 0xffffff, alpha: 0.08),
         stroke: color(hex: 0xffffff, alpha: 0.14)
     )
-    drawText(
+    drawCenteredText(
         text.uppercased(),
-        rect: rect.insetBy(dx: 16, dy: 7),
+        rect: rect.insetBy(dx: 14, dy: 0),
         font: avenir(12, "Avenir Next Demi Bold"),
         color: color(hex: 0xf8fafc, alpha: 0.85),
+        alignment: .center,
         lineHeight: 1.0,
         kern: 1.2
     )
@@ -134,11 +280,12 @@ func drawChip(text: String, x: CGFloat, y: CGFloat, accent: NSColor) -> CGFloat 
         fill: accent.withAlphaComponent(0.12),
         stroke: accent.withAlphaComponent(0.26)
     )
-    drawText(
+    drawCenteredText(
         text,
-        rect: rect.insetBy(dx: 14, dy: 8),
+        rect: rect.insetBy(dx: 12, dy: 0),
         font: avenir(13, "Avenir Next Medium"),
         color: color(hex: 0xe5eefb, alpha: 0.94),
+        alignment: .center,
         lineHeight: 1.0
     )
     return width
@@ -237,9 +384,9 @@ func drawGpuArtwork(accent: NSColor, secondaryAccent: NSColor) {
         fill: secondaryAccent.withAlphaComponent(0.14),
         stroke: secondaryAccent.withAlphaComponent(0.30)
     )
-    drawText(
+    drawCenteredText(
         "40%",
-        rect: badge.insetBy(dx: 14, dy: 8),
+        rect: badge,
         font: avenir(28, "Avenir Next Bold"),
         color: color(hex: 0xfff7ed),
         alignment: .center,
@@ -270,28 +417,22 @@ func drawPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
     connector.stroke()
 
     for (name, x, y, width) in nodes {
+        let cardRect = topRect(x, y, width, 74)
         fillRoundedRect(
-            topRect(x, y, width, 74),
+            cardRect,
             radius: 22,
             fill: color(hex: 0x07192a, alpha: 0.78),
             stroke: color(hex: 0xffffff, alpha: 0.10)
         )
-        let iconRect = topRect(x + 14, y + 16, 42, 42)
-        fillRoundedRect(
-            iconRect,
-            radius: 14,
-            fill: accent.withAlphaComponent(0.16),
-            stroke: accent.withAlphaComponent(0.28)
-        )
-        let dot = NSBezierPath(ovalIn: topRect(x + 27, y + 29, 16, 16))
-        accent.setFill()
-        dot.fill()
-        drawText(
-            name,
-            rect: topRect(x + 64, y + 23, width - 76, 28),
-            font: avenir(18, "Avenir Next Demi Bold"),
-            color: color(hex: 0xf8fafc),
-            lineHeight: 1.0
+        drawCenteredIconLabel(
+            text: name,
+            cardRect: cardRect,
+            accent: accent,
+            font: avenir(16, "Avenir Next Demi Bold"),
+            textColor: color(hex: 0xf8fafc),
+            iconSize: 32,
+            iconDotSize: 12,
+            gap: 10
         )
     }
 
@@ -389,9 +530,9 @@ func drawFailureArtwork(accent: NSColor, secondaryAccent: NSColor) {
         fill: secondaryAccent.withAlphaComponent(0.16),
         stroke: secondaryAccent.withAlphaComponent(0.34)
     )
-    drawText(
+    drawCenteredText(
         "!",
-        rect: alertRect.insetBy(dx: 24, dy: 6),
+        rect: alertRect,
         font: avenir(40, "Avenir Next Bold"),
         color: color(hex: 0xfff1f2),
         alignment: .center,
@@ -433,21 +574,19 @@ func drawVLLMArtwork(accent: NSColor, secondaryAccent: NSColor) {
 
     let pods: [(CGFloat, CGFloat)] = [(676, 204), (676, 266), (676, 328)]
     for (x, y) in pods {
+        let cardRect = topRect(x, y, 114, 42)
         fillRoundedRect(
-            topRect(x, y, 114, 42),
+            cardRect,
             radius: 14,
             fill: color(hex: 0xffffff, alpha: 0.05),
             stroke: color(hex: 0xffffff, alpha: 0.10)
         )
-        let dot = NSBezierPath(ovalIn: topRect(x + 14, y + 13, 16, 16))
-        secondaryAccent.setFill()
-        dot.fill()
-        drawText(
-            "Pod",
-            rect: topRect(x + 40, y + 10, 54, 22),
+        drawCenteredDotLabel(
+            text: "Pod",
+            in: cardRect,
+            dotColor: secondaryAccent,
             font: avenir(16, "Avenir Next Demi Bold"),
-            color: color(hex: 0xf8fafc),
-            lineHeight: 1.0
+            textColor: color(hex: 0xf8fafc)
         )
     }
 
@@ -620,9 +759,249 @@ func drawObservabilityArtwork(accent: NSColor, secondaryAccent: NSColor) {
         fill: secondaryAccent.withAlphaComponent(0.16),
         stroke: secondaryAccent.withAlphaComponent(0.34)
     )
-    drawText(
+    drawCenteredText(
         "!",
-        rect: alert.insetBy(dx: 12, dy: 2),
+        rect: alert,
+        font: avenir(28, "Avenir Next Bold"),
+        color: color(hex: 0xfffbeb),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
+func drawCanaryArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    fillRoundedRect(
+        topRect(658, 176, 292, 232),
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.82),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let lane = NSBezierPath(roundedRect: topRect(688, 232, 230, 18), xRadius: 9, yRadius: 9)
+    color(hex: 0xffffff, alpha: 0.08).setFill()
+    lane.fill()
+
+    let stableFill = NSBezierPath(roundedRect: topRect(688, 232, 136, 18), xRadius: 9, yRadius: 9)
+    secondaryAccent.withAlphaComponent(0.78).setFill()
+    stableFill.fill()
+
+    let canaryFill = NSBezierPath(roundedRect: topRect(824, 232, 46, 18), xRadius: 9, yRadius: 9)
+    accent.withAlphaComponent(0.86).setFill()
+    canaryFill.fill()
+
+    let stableCard = topRect(678, 188, 122, 78)
+    let canaryCard = topRect(816, 188, 122, 78)
+    let rollbackCard = topRect(732, 318, 152, 58)
+
+    fillRoundedRect(stableCard, radius: 18, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    fillRoundedRect(canaryCard, radius: 18, fill: color(hex: 0xffffff, alpha: 0.05), stroke: color(hex: 0xffffff, alpha: 0.10))
+    fillRoundedRect(rollbackCard, radius: 18, fill: accent.withAlphaComponent(0.10), stroke: accent.withAlphaComponent(0.22))
+
+    drawCenteredDotLabel(
+        text: "Stable",
+        in: stableCard.insetBy(dx: 10, dy: 0),
+        dotColor: secondaryAccent,
+        font: avenir(18, "Avenir Next Demi Bold"),
+        textColor: color(hex: 0xf8fafc)
+    )
+    drawCenteredDotLabel(
+        text: "Canary",
+        in: canaryCard.insetBy(dx: 10, dy: 0),
+        dotColor: accent,
+        font: avenir(17, "Avenir Next Demi Bold"),
+        textColor: color(hex: 0xf8fafc)
+    )
+    drawCenteredText(
+        "Rollback",
+        rect: rollbackCard,
+        font: avenir(17, "Avenir Next Demi Bold"),
+        color: color(hex: 0xf8fafc),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let rollbackLine = NSBezierPath()
+    rollbackLine.move(to: topPoint(878, 268))
+    rollbackLine.curve(to: topPoint(850, 318), controlPoint1: topPoint(880, 290), controlPoint2: topPoint(866, 310))
+    rollbackLine.line(to: topPoint(866, 318))
+    accent.withAlphaComponent(0.82).setStroke()
+    rollbackLine.lineWidth = 4
+    rollbackLine.lineCapStyle = .round
+    rollbackLine.lineJoinStyle = .round
+    rollbackLine.stroke()
+
+    let rollbackArrow = NSBezierPath()
+    rollbackArrow.move(to: topPoint(866, 318))
+    rollbackArrow.line(to: topPoint(856, 312))
+    rollbackArrow.line(to: topPoint(858, 324))
+    rollbackArrow.close()
+    accent.setFill()
+    rollbackArrow.fill()
+
+    for (label, x) in [("5%", 704.0), ("25%", 760.0), ("50%", 818.0), ("100%", 880.0)] {
+        drawCenteredText(
+            label,
+            rect: topRect(x, 258, 36, 16),
+            font: avenir(12, "Avenir Next Medium"),
+            color: color(hex: 0xd5e3f5, alpha: 0.78),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+    }
+
+    let guardRect = topRect(892, 142, 52, 52)
+    fillRoundedRect(
+        guardRect,
+        radius: 16,
+        fill: secondaryAccent.withAlphaComponent(0.14),
+        stroke: secondaryAccent.withAlphaComponent(0.34)
+    )
+    let shield = NSBezierPath()
+    shield.move(to: topPoint(918, 154))
+    shield.line(to: topPoint(932, 160))
+    shield.line(to: topPoint(932, 176))
+    shield.curve(to: topPoint(918, 188), controlPoint1: topPoint(932, 182), controlPoint2: topPoint(924, 188))
+    shield.curve(to: topPoint(904, 176), controlPoint1: topPoint(912, 188), controlPoint2: topPoint(904, 182))
+    shield.line(to: topPoint(904, 160))
+    shield.close()
+    color(hex: 0xfffbeb).setFill()
+    shield.fill()
+}
+
+func drawIncidentArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    fillRoundedRect(
+        topRect(662, 178, 286, 226),
+        radius: 24,
+        fill: color(hex: 0x081622, alpha: 0.82),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    for row in 0..<4 {
+        let line = NSBezierPath(roundedRect: topRect(694, 214 + CGFloat(row * 28), 124, 8), xRadius: 4, yRadius: 4)
+        color(hex: 0xffffff, alpha: 0.18 + CGFloat(row) * 0.05).setFill()
+        line.fill()
+    }
+
+    let alertCard = topRect(834, 208, 88, 78)
+    fillRoundedRect(
+        alertCard,
+        radius: 18,
+        fill: accent.withAlphaComponent(0.12),
+        stroke: accent.withAlphaComponent(0.34)
+    )
+    drawCenteredText(
+        "!",
+        rect: alertCard,
+        font: avenir(40, "Avenir Next Bold"),
+        color: color(hex: 0xfff1f2),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let statusDots: [(CGFloat, CGFloat, NSColor)] = [
+        (694, 334, secondaryAccent),
+        (734, 334, accent),
+        (774, 334, secondaryAccent)
+    ]
+    for (x, y, dotColor) in statusDots {
+        let dot = NSBezierPath(ovalIn: topRect(x, y, 18, 18))
+        dotColor.setFill()
+        dot.fill()
+    }
+
+    let arrow = NSBezierPath()
+    arrow.move(to: topPoint(846, 314))
+    arrow.line(to: topPoint(884, 346))
+    arrow.line(to: topPoint(864, 346))
+    arrow.line(to: topPoint(864, 374))
+    arrow.line(to: topPoint(828, 374))
+    arrow.line(to: topPoint(828, 346))
+    arrow.line(to: topPoint(808, 346))
+    arrow.close()
+    secondaryAccent.withAlphaComponent(0.22).setFill()
+    secondaryAccent.withAlphaComponent(0.36).setStroke()
+    arrow.lineWidth = 2
+    arrow.fill()
+    arrow.stroke()
+}
+
+func drawGatewayArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let gateway = topRect(726, 206, 124, 120)
+    fillRoundedRect(
+        gateway,
+        radius: 22,
+        fill: color(hex: 0x081622, alpha: 0.84),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+    drawCenteredText(
+        "Gateway",
+        rect: gateway,
+        font: avenir(20, "Avenir Next Demi Bold"),
+        color: color(hex: 0xf8fafc),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+
+    let sources: [(CGFloat, CGFloat)] = [(666, 198), (666, 256), (666, 314)]
+    for (index, (x, y)) in sources.enumerated() {
+        fillRoundedRect(
+            topRect(x, y, 42, 42),
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.06),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        let dot = NSBezierPath(ovalIn: topRect(x + 13, y + 13, 16, 16))
+        (index == 1 ? secondaryAccent : accent).setFill()
+        dot.fill()
+    }
+
+    let models: [(String, CGFloat, CGFloat, CGFloat)] = [
+        ("Small", 872, 190, 78),
+        ("JSON", 872, 248, 78),
+        ("Large", 872, 306, 78)
+    ]
+    for (name, x, y, width) in models {
+        let cardRect = topRect(x, y, width, 42)
+        fillRoundedRect(
+            cardRect,
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.06),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        drawCenteredText(
+            name,
+            rect: cardRect,
+            font: avenir(15, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            alignment: .center,
+            lineHeight: 1.0
+        )
+    }
+
+    let path = NSBezierPath()
+    for y in [219.0, 277.0, 335.0] {
+        path.move(to: topPoint(708, y))
+        path.line(to: topPoint(726, y))
+    }
+    for y in [211.0, 269.0, 327.0] {
+        path.move(to: topPoint(850, y))
+        path.line(to: topPoint(872, y))
+    }
+    accent.setStroke()
+    path.lineWidth = 4
+    path.lineCapStyle = .round
+    path.stroke()
+
+    let limitRect = topRect(900, 144, 48, 48)
+    fillRoundedRect(
+        limitRect,
+        radius: 14,
+        fill: secondaryAccent.withAlphaComponent(0.14),
+        stroke: secondaryAccent.withAlphaComponent(0.30)
+    )
+    drawCenteredText(
+        "$",
+        rect: limitRect,
         font: avenir(28, "Avenir Next Bold"),
         color: color(hex: 0xfffbeb),
         alignment: .center,
@@ -791,6 +1170,45 @@ let specs: [CoverSpec] = [
         chipText: ["Latency", "Quality", "Cost"],
         artwork: {
             drawObservabilityArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xf97316))
+        }
+    ),
+    CoverSpec(
+        filename: "model-canary-releases.jpg",
+        label: "Model Deployment",
+        title: "Model Canary\nReleases",
+        subtitle: "Use shadow traffic, rollout gates, and fast rollback paths to ship models without production surprises.",
+        palette: [color(hex: 0x07111d), color(hex: 0x122235), color(hex: 0x183149)],
+        accent: color(hex: 0x38bdf8),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Shadow Traffic", "Promotion", "Rollback"],
+        artwork: {
+            drawCanaryArtwork(accent: color(hex: 0x38bdf8), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "ai-incident-response-runbooks.jpg",
+        label: "AI Reliability",
+        title: "AI Incident\nRunbooks",
+        subtitle: "Triage latency spikes, bad outputs, retrieval failures, and serving incidents with repeatable response paths.",
+        palette: [color(hex: 0x130d16), color(hex: 0x271329), color(hex: 0x3a182b)],
+        accent: color(hex: 0xfb7185),
+        secondaryAccent: color(hex: 0xf97316),
+        chipText: ["Triage", "Dashboards", "Mitigation"],
+        artwork: {
+            drawIncidentArtwork(accent: color(hex: 0xfb7185), secondaryAccent: color(hex: 0xf97316))
+        }
+    ),
+    CoverSpec(
+        filename: "llm-gateway-architecture.jpg",
+        label: "MLOps",
+        title: "LLM Gateway\nArchitecture",
+        subtitle: "Centralize routing, quotas, guardrails, and cost-aware fallbacks for shared model usage.",
+        palette: [color(hex: 0x081018), color(hex: 0x0f2230), color(hex: 0x143746)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["Routing", "Rate Limits", "Cost Control"],
+        artwork: {
+            drawGatewayArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0x34d399))
         }
     )
 ]
