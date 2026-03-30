@@ -16,7 +16,7 @@ const navigationItems = [
 const NAV_LINK_BASE = 'px-3 py-2 text-sm font-medium transition-colors rounded-md'
 const NAV_LINK_ACTIVE = 'text-primary bg-surface-elevated'
 const NAV_LINK_INACTIVE = 'text-text-secondary hover:text-text-primary hover:bg-surface'
-const CTA_CLASSES = 'bg-primary hover:bg-primary-hover text-background rounded-lg font-semibold text-sm transition-all duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
+const CTA_CLASSES = 'bg-primary hover:bg-primary-hover text-background rounded-lg font-semibold text-sm transition-colors duration-300 glow-effect hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
 
 const MenuIcon = memo(({ isOpen }: { isOpen: boolean }) => (
   <svg
@@ -78,7 +78,7 @@ export const Navigation = memo(function Navigation() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,border-color,backdrop-filter] duration-300',
           isScrolled ? 'glassmorphism shadow-lg' : 'bg-transparent'
         )}
       >

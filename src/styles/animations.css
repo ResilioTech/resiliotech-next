@@ -68,32 +68,26 @@
 /* Animation utility classes with GPU compositing */
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
-  will-change: opacity;
 }
 
 .animate-scale-in {
   animation: scaleIn 0.6s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 .animate-slide-in-up {
   animation: slideInUp 0.6s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 .animate-slide-in-left {
   animation: slideInLeft 0.6s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 .animate-slide-in-right {
   animation: slideInRight 0.6s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 /* Stagger delays for sequential animations */
@@ -118,7 +112,6 @@
 
 .hover-lift:hover {
   transform: translate3d(0, -8px, 0);
-  will-change: transform;
 }
 
 .hover-scale {
@@ -127,7 +120,6 @@
 
 .hover-scale:hover {
   transform: scale3d(1.05, 1.05, 1);
-  will-change: transform;
 }
 
 /* Remove will-change after animation completes to free resources */

@@ -47,7 +47,7 @@ export function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => analytics.trackCTAClick('hero', 'Book a Free AI Infra Audit', 'https://calendly.com/resiliotech')}
-              className="inline-flex items-center justify-center bg-primary hover:bg-primary-hover text-background px-8 py-4 rounded-lg font-semibold text-lg transition-all glow-effect hover:scale-105"
+              className="inline-flex items-center justify-center bg-primary hover:bg-primary-hover text-background px-8 py-4 rounded-lg font-semibold text-lg transition-colors glow-effect hover:scale-105"
             >
               Book a Free AI Infra Audit →
             </a>
@@ -55,7 +55,7 @@ export function HeroSection() {
             <Link
               href="#services"
               onClick={() => analytics.trackCTAClick('hero', 'See What We Do', '#services')}
-              className="inline-flex items-center justify-center px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-all hover:scale-105"
+              className="inline-flex items-center justify-center px-8 py-4 border border-border hover:border-primary bg-surface hover:bg-surface-elevated text-text-primary rounded-lg font-semibold text-lg transition-colors hover:scale-105"
             >
               See What We Do →
             </Link>
@@ -94,7 +94,7 @@ export function HeroSection() {
                 return (
                   <div
                     key={item.title}
-                    className="relative group p-5 sm:p-6 bg-surface/60 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/30 transition-all duration-300 text-left"
+                    className="relative group p-5 sm:p-6 bg-surface/80 border border-border/50 rounded-xl hover:border-primary/30 transition-colors duration-300 text-left"
                   >
                     <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative">

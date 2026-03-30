@@ -89,6 +89,7 @@ a {
 
 .glow-effect {
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  transition: box-shadow 0.3s ease-out;
 }
 
 .glow-effect:hover {
@@ -99,10 +100,10 @@ a {
 .fade-in-up {
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInUpGlobal 0.6s ease-out forwards;
 }
 
-@keyframes fadeInUp {
+@keyframes fadeInUpGlobal {
   to {
     opacity: 1;
     transform: translateY(0);
