@@ -86,7 +86,7 @@ export function BlogListing({ posts, pagination, currentFilters, loading }: Blog
         {posts.map((post, index) => (
           <article key={post.slug} className="group">
             <div className="bg-surface border border-border rounded-2xl p-6 hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
-              <div className="flex flex-col lg:flex-row gap-6">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                 {/* Featured Image */}
                 <div className="lg:w-72 lg:flex-shrink-0">
                   <Link href={post.url} className="block">
