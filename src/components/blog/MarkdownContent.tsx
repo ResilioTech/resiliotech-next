@@ -8,6 +8,9 @@ interface MarkdownContentProps {
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
+  // Strip the first H1 heading since it's already rendered in BlogPostLayout header
+  const processedContent = content.replace(/^#\s+.+$/m, '').trimStart()
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -89,7 +92,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
         ),
       }}
     >
-      {content}
+      {processedContent}
     </ReactMarkdown>
   )
 }
