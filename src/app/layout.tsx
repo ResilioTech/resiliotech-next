@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://resiliotech.com'),
   alternates: {
-    canonical: '/',
+    canonical: 'https://resiliotech.com',
     types: {
       'application/rss+xml': 'https://resiliotech.com/feed.xml',
     },

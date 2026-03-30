@@ -13,7 +13,7 @@ const ContactForm = dynamic(() => import('@/components/contact/ContactForm').the
 });
 
 const FAQSection = dynamic(() => import('@/components/contact/FAQSection').then(mod => ({ default: mod.FAQSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-4xl mx-auto px-6"><div className="h-64 bg-background rounded-xl"></div></div></div>
 });
 
@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: 'Contact Us — Book a Free AI Infrastructure Audit',
   description: 'Book a free 30-minute AI infrastructure audit. We assess your current setup, identify reliability gaps, and give you a concrete action plan. We respond within 24 hours.',
   keywords: ['contact resilio tech', 'AI infrastructure audit', 'MLOps consulting', 'free consultation', 'AI infrastructure help'],
+  alternates: {
+    canonical: 'https://resiliotech.com/contact',
+  },
   openGraph: {
     title: 'Contact Us — Book a Free AI Infra Audit | Resilio Tech',
     description: 'Book a free 30-minute AI infrastructure audit. We respond within 24 hours.',
@@ -35,6 +38,24 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact Resilio Tech",
+            "description": "Book a free 30-minute AI infrastructure audit",
+            "url": "https://resiliotech.com/contact",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "Resilio Tech",
+              "email": "contact@resiliotech.com",
+              "url": "https://resiliotech.com"
+            }
+          })
+        }}
+      />
       <ContactHero />
 
       {/* Contact Form Section */}

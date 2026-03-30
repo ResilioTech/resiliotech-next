@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       images: social?.image || post.coverImage ? [social?.image || post.coverImage!] : [],
     },
     alternates: {
-      canonical: seo?.canonical || post.url,
+      canonical: seo?.canonical || `https://resiliotech.com/blog/${params.slug}`,
     },
   }
 }

@@ -4,6 +4,9 @@ import { siteConfig } from '@/lib/config'
 export const metadata: Metadata = {
   title: 'Terms of Service | Legal Agreement',
   description: 'Terms and conditions for using Resilio Tech services and website.',
+  alternates: {
+    canonical: 'https://resiliotech.com/terms',
+  },
 }
 
 export default function TermsPage() {

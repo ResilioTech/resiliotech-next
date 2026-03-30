@@ -5,6 +5,9 @@ import { siteConfig } from '@/lib/config'
 export const metadata: Metadata = {
   title: 'Cookie Policy | How We Use Cookies',
   description: 'Learn about the cookies Resilio Tech uses and how to manage your preferences.',
+  alternates: {
+    canonical: 'https://resiliotech.com/cookies',
+  },
 }
 
 export default function CookiesPage() {

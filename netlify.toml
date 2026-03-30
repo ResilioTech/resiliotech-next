@@ -141,3 +141,10 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
 
+# www to non-www redirect
+[[redirects]]
+  from = "https://www.resiliotech.com/*"
+  to = "https://resiliotech.com/:splat"
+  status = 301
+  force = true
+

@@ -5,6 +5,9 @@ import { siteConfig } from '@/lib/config'
 export const metadata: Metadata = {
   title: 'Privacy Policy | How We Protect Your Data',
   description: 'Learn how Resilio Tech collects, uses, and protects your personal information.',
+  alternates: {
+    canonical: 'https://resiliotech.com/privacy',
+  },
 }
 
 export default function PrivacyPage() {

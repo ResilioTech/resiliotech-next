@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   title: 'About Us — AI Infrastructure & Reliability Engineers',
   description: 'Resilio Tech was founded by experienced SREs who saw a gap — companies building AI couldn\'t make it work reliably in production. We bridge that gap.',
   keywords: ['about resilio tech', 'AI infrastructure', 'SRE team', 'production AI', 'MLOps consulting'],
+  alternates: {
+    canonical: 'https://resiliotech.com/about',
+  },
   openGraph: {
     title: 'About Us — Resilio Tech',
     description: 'Built by SREs who\'ve operated systems at Fortune 500 scale. We make AI work in production.',
