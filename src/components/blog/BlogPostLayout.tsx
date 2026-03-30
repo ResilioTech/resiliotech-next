@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Calendar, Clock, User, ArrowLeft, Share2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -15,7 +14,6 @@ interface BlogPostLayoutProps {
 
 export function BlogPostLayout({ post, children }: BlogPostLayoutProps) {
   const [isVisible, setIsVisible] = useState(false)
-  const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
@@ -131,25 +129,6 @@ export function BlogPostLayout({ post, children }: BlogPostLayoutProps) {
           </div>
         </div>
       </header>
-
-      {/* Featured Image */}
-      {post.coverImage && !imageError && (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative aspect-[1200/630] w-full rounded-2xl overflow-hidden bg-surface-elevated">
-              <Image
-                src={post.coverImage}
-                alt={`Cover image for ${post.title}`}
-                fill
-                className="object-cover"
-                onError={() => setImageError(true)}
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 896px"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Main Content */}
       <main className="py-12">
