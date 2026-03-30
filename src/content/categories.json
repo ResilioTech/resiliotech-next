@@ -68,5 +68,26 @@
     "description": "Real-world examples and success stories from our client implementations",
     "slug": "case-studies",
     "color": "from-emerald-500 to-teal-500"
+  },
+  {
+    "id": "ai-reliability",
+    "name": "AI Reliability",
+    "description": "Production AI reliability, model monitoring, and resilience engineering for ML systems",
+    "slug": "ai-reliability",
+    "color": "from-rose-500 to-orange-500"
+  },
+  {
+    "id": "mlops",
+    "name": "MLOps",
+    "description": "Machine learning operations, CI/CD for models, and automated ML pipelines",
+    "slug": "mlops",
+    "color": "from-sky-500 to-indigo-500"
+  },
+  {
+    "id": "model-deployment",
+    "name": "Model Deployment",
+    "description": "ML model serving, GPU optimization, and production deployment strategies",
+    "slug": "model-deployment",
+    "color": "from-amber-500 to-yellow-500"
   }
 ]

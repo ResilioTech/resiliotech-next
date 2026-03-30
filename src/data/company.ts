@@ -48,9 +48,9 @@ export const companyMilestones: CompanyMilestone[] = [
   },
   {
     year: '2026',
-    title: 'Scaling AI Operations',
-    description: 'Helping startups deploy, scale, and operate production AI systems with enterprise-grade reliability.',
-    metric: 'Scaling'
+    title: 'AI Infrastructure Services Launch',
+    description: 'Launched AI infrastructure consulting services. Actively accepting clients for production AI deployment and reliability.',
+    metric: 'Launched'
   }
 ];
 

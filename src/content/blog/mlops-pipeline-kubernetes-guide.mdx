@@ -1,0 +1,401 @@
+---
+title: "Building an MLOps Pipeline on Kubernetes: A Practical Guide"
+description: "A hands-on guide to building production MLOps pipelines on Kubernetes — covering CI/CD for models, automated retraining, model registry integration, and deployment strategies."
+publishedAt: "2026-03-25"
+author: "resiliotech-team"
+category: "mlops"
+tags: ["mlops", "kubernetes", "cicd", "model-deployment", "automation"]
+coverImage: "/blog-images/mlops-pipeline-kubernetes.jpg"
+featured: false
+seo:
+  title: "Building an MLOps Pipeline on Kubernetes — Practical Guide"
+  description: "Step-by-step guide to building production MLOps pipelines on K8s. CI/CD for ML models, automated retraining, and deployment strategies."
+  keywords: ["mlops pipeline", "kubernetes ml", "ml cicd", "model deployment", "automated retraining", "mlops kubernetes"]
+---
+
+# Building an MLOps Pipeline on Kubernetes: A Practical Guide
+
+Most MLOps tutorials stop at "train a model and push it to a registry." That's maybe 20% of the work. The other 80% — automated retraining, canary deployments, drift-triggered pipelines, and production monitoring — is where things get interesting and where most teams get stuck.
+
+This guide walks through building a complete MLOps pipeline on Kubernetes, from code commit to production serving with automated feedback loops.
+
+## Architecture Overview
+
+Here's what we're building:
+
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
+│  Git Push    │────▶│  CI Pipeline  │────▶│  Model Registry │
+│  (code/data) │     │  (train/test) │     │  (versioned)    │
+└─────────────┘     └──────────────┘     └────────┬────────┘
+                                                   │
+                    ┌──────────────┐     ┌─────────▼────────┐
+                    │  Monitoring   │◀────│  CD Pipeline      │
+                    │  (drift/perf) │     │  (canary deploy)  │
+                    └──────┬───────┘     └──────────────────┘
+                           │
+                    ┌──────▼───────┐
+                    │  Retrain      │
+                    │  Trigger      │──── back to CI Pipeline
+                    └──────────────┘
+```
+
+The key principle: **models are artifacts, not code.** They need versioning, testing, and staged rollouts — just like container images, but with ML-specific validation.
+
+## Step 1: Model Training in CI
+
+We use GitHub Actions for CI, but the pattern works with any CI system. The key is treating model training as a reproducible, testable pipeline.
+
+```yaml
+# .github/workflows/model-pipeline.yml
+name: ML Pipeline
+on:
+  push:
+    paths:
+      - 'models/**'
+      - 'data/features/**'
+      - 'training/**'
+
+jobs:
+  train-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements-training.txt
+
+      - name: Run data validation
+        run: |
+          python -m pytest tests/data/ -v
+          python scripts/validate_features.py \
+            --schema schemas/features_v2.json
+
+      - name: Train model
+        run: |
+          python training/train.py \
+            --config configs/production.yaml \
+            --output artifacts/model
+
+      - name: Run model tests
+        run: |
+          python -m pytest tests/model/ -v \
+            --model-path artifacts/model
+
+      - name: Evaluate against baseline
+        run: |
+          python scripts/evaluate.py \
+            --model artifacts/model \
+            --baseline-metrics metrics/baseline.json \
+            --threshold-file configs/quality_gates.yaml
+
+      - name: Push to model registry
+        if: github.ref == 'refs/heads/main'
+        run: |
+          python scripts/push_model.py \
+            --model-path artifacts/model \
+            --registry $MODEL_REGISTRY_URL \
+            --version $(git rev-parse --short HEAD)
+```
+
+### Quality Gates
+
+The `quality_gates.yaml` defines minimum thresholds a model must meet before it can progress:
+
+```yaml
+# configs/quality_gates.yaml
+metrics:
+  accuracy:
+    minimum: 0.92
+    comparison: "gte"  # greater than or equal to baseline
+  latency_p95_ms:
+    maximum: 50
+    comparison: "lte"
+  model_size_mb:
+    maximum: 500
+  feature_importance_stability:
+    minimum: 0.85  # correlation with baseline feature importance
+```
+
+<Callout type="tip" title="Test Models Like Software">
+Model tests should cover more than accuracy. Test for latency, memory usage, edge cases (empty inputs, extreme values), and bias metrics. A model that's accurate but takes 5 seconds per inference is not production-ready.
+</Callout>
+
+## Step 2: Model Registry and Versioning
+
+Every trained model gets versioned and stored with its metadata. We use a simple registry pattern on top of object storage:
+
+```python
+# scripts/push_model.py
+import json
+import hashlib
+from datetime import datetime, timezone
+from pathlib import Path
+
+def register_model(model_path: str, registry_url: str, version: str):
+    """Register a model with full lineage metadata."""
+
+    model_hash = hashlib.sha256(
+        Path(model_path).read_bytes()
+    ).hexdigest()
+
+    metadata = {
+        "version": version,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "git_commit": version,
+        "model_hash": model_hash,
+        "training_config": "configs/production.yaml",
+        "metrics": load_metrics(f"{model_path}/metrics.json"),
+        "feature_schema": "schemas/features_v2.json",
+        "status": "staged"  # staged -> canary -> production -> archived
+    }
+
+    # Upload model artifact
+    upload_to_registry(model_path, registry_url, version)
+
+    # Store metadata alongside the model
+    upload_metadata(metadata, registry_url, version)
+
+    print(f"Model {version} registered with hash {model_hash[:12]}")
+```
+
+The lifecycle: **staged** → **canary** (serving 10% traffic) → **production** (serving 100%) → **archived**.
+
+## Step 3: Automated Deployment on Kubernetes
+
+When a new model passes quality gates and lands in the registry, we deploy it using a Kubernetes-native approach:
+
+```yaml
+# k8s/base/model-serving.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-detection-model
+  labels:
+    app: fraud-detection
+    component: model-serving
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fraud-detection
+  template:
+    metadata:
+      labels:
+        app: fraud-detection
+      annotations:
+        model-version: "v2.1.0"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      initContainers:
+        - name: model-loader
+          image: registry.example.com/model-loader:latest
+          command: ["python", "load_model.py"]
+          args:
+            - "--model-uri=s3://models/fraud-detection/v2.1.0"
+            - "--output=/models/current"
+          volumeMounts:
+            - name: model-volume
+              mountPath: /models
+      containers:
+        - name: serving
+          image: registry.example.com/model-server:latest
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 9090
+              name: metrics
+          env:
+            - name: MODEL_PATH
+              value: "/models/current"
+            - name: MAX_BATCH_SIZE
+              value: "32"
+            - name: WORKERS
+              value: "4"
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "2"
+            limits:
+              memory: "6Gi"
+              cpu: "4"
+          readinessProbe:
+            httpGet:
+              path: /v1/health/ready
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 10
+          volumeMounts:
+            - name: model-volume
+              mountPath: /models
+      volumes:
+        - name: model-volume
+          emptyDir:
+            sizeLimit: 2Gi
+```
+
+### Canary Deployments with Argo Rollouts
+
+Instead of swapping all traffic at once, we gradually shift:
+
+```yaml
+# k8s/rollout.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: fraud-detection-rollout
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      steps:
+        - setWeight: 10
+        - pause: { duration: 30m }
+        - analysis:
+            templates:
+              - templateName: model-quality-check
+        - setWeight: 30
+        - pause: { duration: 30m }
+        - analysis:
+            templates:
+              - templateName: model-quality-check
+        - setWeight: 60
+        - pause: { duration: 1h }
+        - setWeight: 100
+      canaryMetadata:
+        labels:
+          role: canary
+      stableMetadata:
+        labels:
+          role: stable
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: model-quality-check
+spec:
+  metrics:
+    - name: prediction-latency
+      interval: 5m
+      successCondition: result[0] < 100
+      provider:
+        prometheus:
+          address: http://prometheus:9090
+          query: |
+            histogram_quantile(0.95,
+              rate(model_inference_duration_seconds_bucket{
+                role="canary"
+              }[5m])
+            ) * 1000
+    - name: error-rate
+      interval: 5m
+      successCondition: result[0] < 0.01
+      provider:
+        prometheus:
+          address: http://prometheus:9090
+          query: |
+            rate(model_inference_errors_total{
+              role="canary"
+            }[5m])
+```
+
+## Step 4: Automated Retraining Loop
+
+The final piece closes the loop — when drift is detected, trigger retraining automatically:
+
+```python
+# monitoring/drift_trigger.py
+from prometheus_client import CollectorRegistry, push_to_gateway
+
+def check_and_trigger_retrain(
+    model_name: str,
+    drift_threshold: float = 0.15,
+    min_samples: int = 10000
+):
+    """Check drift scores and trigger retraining if needed."""
+
+    drift_scores = get_current_drift_scores(model_name)
+    sample_count = get_inference_count_since_last_train(model_name)
+
+    if sample_count < min_samples:
+        print(f"Only {sample_count} samples — waiting for more data")
+        return False
+
+    drifted_features = [
+        (feature, score)
+        for feature, score in drift_scores.items()
+        if score > drift_threshold
+    ]
+
+    if len(drifted_features) > len(drift_scores) * 0.3:
+        print(f"Significant drift detected in {len(drifted_features)} features")
+        trigger_training_pipeline(
+            model_name=model_name,
+            reason="automated_drift_detection",
+            drifted_features=drifted_features
+        )
+        return True
+
+    return False
+```
+
+Wire this into a Kubernetes CronJob that runs every hour:
+
+```yaml
+# k8s/drift-check-cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: drift-check
+spec:
+  schedule: "0 * * * *"  # every hour
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: drift-checker
+              image: registry.example.com/drift-checker:latest
+              command: ["python", "monitoring/drift_trigger.py"]
+              env:
+                - name: MODEL_NAME
+                  value: "fraud-detection"
+                - name: DRIFT_THRESHOLD
+                  value: "0.15"
+          restartPolicy: OnFailure
+```
+
+## Common Pitfalls
+
+1. **Training-serving skew**: Your training pipeline preprocesses data differently from your serving pipeline. Use a shared feature transformation layer.
+
+2. **No reproducibility**: Without pinned dependencies and versioned data, you can't reproduce a training run. Lock everything down.
+
+3. **Ignoring cold starts**: Models often take 30-60 seconds to load. Use init containers and readiness probes to keep cold starts out of the serving path.
+
+4. **Over-engineering early**: Start with simple deployment (rolling update), add canary when you have metrics, add automated retraining when you have drift detection. Don't build the whole thing on day one.
+
+<Callout type="warning" title="Start Simple, Add Complexity">
+A working pipeline that deploys models with health checks and basic monitoring beats a half-built ML platform with every feature imaginable. Ship the simple version first.
+</Callout>
+
+## What We Covered
+
+- CI pipelines that train, validate, and register models
+- Quality gates that prevent bad models from reaching production
+- Kubernetes deployments with proper resource management
+- Canary rollouts with automated quality analysis
+- Drift-triggered retraining loops
+
+The key insight: MLOps isn't a tool you install — it's a set of practices that treat ML models with the same rigor as production software.
+
+---
+
+*Building MLOps pipelines from scratch? We help teams design and implement production ML infrastructure on Kubernetes. [Get a free infrastructure audit](/contact) to see where your pipeline has gaps.*

@@ -8,7 +8,7 @@ const reasons = [
   {
     icon: Shield,
     title: 'Built by SREs Who\'ve Operated at Fortune 500 Scale',
-    description: 'Our team has managed production systems handling millions of authentication requests daily at a Fortune 500 identity & security company.',
+    description: 'Our team has managed mission-critical production systems handling millions of requests daily — the kind of systems where downtime isn\'t an option.',
   },
   {
     icon: Clock,

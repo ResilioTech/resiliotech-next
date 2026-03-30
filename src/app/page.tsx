@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { StructuredData } from '@/components/seo/StructuredData'
+import { faqData } from '@/data/faq'
 
 // Above-the-fold: SSR with priority loading
 const HeroSection = dynamic(() => import('@/components/sections/HeroSection').then(mod => ({ default: mod.HeroSection })), {
@@ -21,6 +22,11 @@ const WhyResilioSection = dynamic(() => import('@/components/sections/WhyResilio
 const HowWeWorkSection = dynamic(() => import('@/components/sections/HowWeWorkSection').then(mod => ({ default: mod.HowWeWorkSection })), {
   ssr: false,
   loading: () => <div className="py-24 bg-background" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
+})
+
+const FAQSection = dynamic(() => import('@/components/sections/FAQSection').then(mod => ({ default: mod.FAQSection })), {
+  ssr: false,
+  loading: () => <div className="py-24 bg-surface" style={{ contain: 'content' }}><div className="max-w-3xl mx-auto px-6"><div className="h-48 bg-surface-elevated rounded-xl"></div></div></div>
 })
 
 const TechStackSection = dynamic(() => import('@/components/sections/TechStackSection').then(mod => ({ default: mod.TechStackSection })), {
@@ -98,6 +104,7 @@ export default function HomePage() {
     <>
       <StructuredData
         organization={organizationData}
+        faq={faqData}
         services={servicesData}
         website={websiteData}
       />
@@ -105,6 +112,7 @@ export default function HomePage() {
       <ServicesSection />
       <WhyResilioSection />
       <HowWeWorkSection />
+      <FAQSection />
       <TechStackSection />
       <LearnWithUsSection />
       <CTASection />

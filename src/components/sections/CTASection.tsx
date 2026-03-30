@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { CopyEmailButton } from '@/components/ui/CopyEmailButton'
 import {
-  Mail,
   Clock,
   ArrowRight,
 } from 'lucide-react'
