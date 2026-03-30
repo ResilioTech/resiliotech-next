@@ -124,9 +124,9 @@ func drawBadge(text: String, x: CGFloat, y: CGFloat, width: CGFloat) {
     )
 }
 
-func drawChip(text: String, x: CGFloat, y: CGFloat, accent: NSColor) {
+func drawChip(text: String, x: CGFloat, y: CGFloat, accent: NSColor) -> CGFloat {
     let measureAttrs: [NSAttributedString.Key: Any] = [.font: avenir(13, "Avenir Next Medium")]
-    let width = ceil(NSString(string: text).size(withAttributes: measureAttrs).width) + 28
+    let width = ceil(NSString(string: text).size(withAttributes: measureAttrs).width) + 36
     let rect = topRect(x, y, width, 34)
     fillRoundedRect(
         rect,
@@ -141,6 +141,7 @@ func drawChip(text: String, x: CGFloat, y: CGFloat, accent: NSColor) {
         color: color(hex: 0xe5eefb, alpha: 0.94),
         lineHeight: 1.0
     )
+    return width
 }
 
 func drawCardChrome(accent: NSColor) {
@@ -398,6 +399,237 @@ func drawFailureArtwork(accent: NSColor, secondaryAccent: NSColor) {
     )
 }
 
+func drawVLLMArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    fillRoundedRect(
+        topRect(654, 158, 304, 262),
+        radius: 26,
+        fill: color(hex: 0x081622, alpha: 0.82),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let cluster = NSBezierPath()
+    cluster.move(to: topPoint(786, 182))
+    cluster.line(to: topPoint(824, 204))
+    cluster.line(to: topPoint(824, 248))
+    cluster.line(to: topPoint(786, 270))
+    cluster.line(to: topPoint(748, 248))
+    cluster.line(to: topPoint(748, 204))
+    cluster.close()
+    accent.withAlphaComponent(0.16).setFill()
+    accent.withAlphaComponent(0.38).setStroke()
+    cluster.lineWidth = 2
+    cluster.fill()
+    cluster.stroke()
+
+    let clusterMid = NSBezierPath()
+    clusterMid.move(to: topPoint(786, 182))
+    clusterMid.line(to: topPoint(786, 270))
+    clusterMid.move(to: topPoint(748, 204))
+    clusterMid.line(to: topPoint(786, 226))
+    clusterMid.line(to: topPoint(824, 204))
+    accent.withAlphaComponent(0.48).setStroke()
+    clusterMid.lineWidth = 2
+    clusterMid.stroke()
+
+    let pods: [(CGFloat, CGFloat)] = [(676, 204), (676, 266), (676, 328)]
+    for (x, y) in pods {
+        fillRoundedRect(
+            topRect(x, y, 114, 42),
+            radius: 14,
+            fill: color(hex: 0xffffff, alpha: 0.05),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        let dot = NSBezierPath(ovalIn: topRect(x + 14, y + 13, 16, 16))
+        secondaryAccent.setFill()
+        dot.fill()
+        drawText(
+            "Pod",
+            rect: topRect(x + 40, y + 10, 54, 22),
+            font: avenir(16, "Avenir Next Demi Bold"),
+            color: color(hex: 0xf8fafc),
+            lineHeight: 1.0
+        )
+    }
+
+    let routes = NSBezierPath()
+    routes.move(to: topPoint(790, 226))
+    routes.line(to: topPoint(764, 226))
+    routes.line(to: topPoint(764, 224))
+    routes.line(to: topPoint(790, 288))
+    routes.line(to: topPoint(764, 288))
+    routes.line(to: topPoint(764, 286))
+    routes.line(to: topPoint(790, 350))
+    routes.line(to: topPoint(764, 350))
+    secondaryAccent.setStroke()
+    routes.lineWidth = 3
+    routes.lineCapStyle = .round
+    routes.lineJoinStyle = .round
+    routes.stroke()
+
+    let tokenBars: [(CGFloat, CGFloat)] = [
+        (854, 208), (880, 208), (906, 208), (932, 208),
+        (854, 240), (880, 240), (906, 240),
+        (854, 272), (880, 272), (906, 272), (932, 272),
+        (854, 304), (880, 304), (906, 304),
+        (854, 336), (880, 336), (906, 336), (932, 336)
+    ]
+    for (x, y) in tokenBars {
+        fillRoundedRect(
+            topRect(x, y, 16, 10),
+            radius: 4,
+            fill: accent.withAlphaComponent(0.72)
+        )
+    }
+}
+
+func drawRAGArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    fillRoundedRect(
+        topRect(654, 160, 306, 260),
+        radius: 26,
+        fill: color(hex: 0x081523, alpha: 0.82),
+        stroke: color(hex: 0xffffff, alpha: 0.10)
+    )
+
+    let docs: [(CGFloat, CGFloat, CGFloat)] = [
+        (684, 198, -10),
+        (712, 222, 0),
+        (740, 246, 10)
+    ]
+
+    for (x, y, rotation) in docs {
+        NSGraphicsContext.current?.saveGraphicsState()
+        let transform = NSAffineTransform()
+        transform.translateX(by: x + 72, yBy: canvasHeight - y - 48)
+        transform.rotate(byDegrees: rotation)
+        transform.translateX(by: -(x + 72), yBy: -(canvasHeight - y - 48))
+        transform.concat()
+
+        fillRoundedRect(
+            topRect(x, y, 144, 96),
+            radius: 16,
+            fill: color(hex: 0xffffff, alpha: 0.06),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+        for row in 0..<3 {
+            let line = NSBezierPath(roundedRect: topRect(x + 18, y + 20 + CGFloat(row * 18), 92, 8), xRadius: 4, yRadius: 4)
+            color(hex: 0xdbeafe, alpha: 0.24).setFill()
+            line.fill()
+        }
+        NSGraphicsContext.current?.restoreGraphicsState()
+    }
+
+    let searchRing = NSBezierPath(ovalIn: topRect(842, 212, 70, 70))
+    accent.withAlphaComponent(0.22).setFill()
+    accent.withAlphaComponent(0.46).setStroke()
+    searchRing.lineWidth = 4
+    searchRing.fill()
+    searchRing.stroke()
+
+    let handle = NSBezierPath()
+    handle.move(to: topPoint(898, 274))
+    handle.line(to: topPoint(930, 306))
+    accent.withAlphaComponent(0.58).setStroke()
+    handle.lineWidth = 6
+    handle.lineCapStyle = .round
+    handle.stroke()
+
+    let checklist = topRect(842, 302, 92, 76)
+    fillRoundedRect(
+        checklist,
+        radius: 18,
+        fill: secondaryAccent.withAlphaComponent(0.12),
+        stroke: secondaryAccent.withAlphaComponent(0.34)
+    )
+    for row in 0..<3 {
+        let y = 316 + CGFloat(row * 18)
+        let check = NSBezierPath()
+        check.move(to: topPoint(858, y + 8))
+        check.line(to: topPoint(866, y + 16))
+        check.line(to: topPoint(878, y))
+        secondaryAccent.setStroke()
+        check.lineWidth = 3
+        check.lineCapStyle = .round
+        check.lineJoinStyle = .round
+        check.stroke()
+
+        let line = NSBezierPath(roundedRect: topRect(886, y + 2, 30, 6), xRadius: 3, yRadius: 3)
+        color(hex: 0xfffbeb, alpha: 0.46).setFill()
+        line.fill()
+    }
+}
+
+func drawObservabilityArtwork(accent: NSColor, secondaryAccent: NSColor) {
+    let panels: [(CGFloat, CGFloat, CGFloat, CGFloat)] = [
+        (662, 176, 126, 92),
+        (804, 176, 126, 92),
+        (662, 286, 126, 92),
+        (804, 286, 126, 92)
+    ]
+
+    for (x, y, width, height) in panels {
+        fillRoundedRect(
+            topRect(x, y, width, height),
+            radius: 18,
+            fill: color(hex: 0x081622, alpha: 0.82),
+            stroke: color(hex: 0xffffff, alpha: 0.10)
+        )
+    }
+
+    let bars = [32.0, 48.0, 22.0, 60.0]
+    for (index, height) in bars.enumerated() {
+        let x = 684 + CGFloat(index * 22)
+        fillRoundedRect(
+            topRect(CGFloat(x), 246 - CGFloat(height), 14, CGFloat(height)),
+            radius: 5,
+            fill: accent.withAlphaComponent(0.72)
+        )
+    }
+
+    let spark = NSBezierPath()
+    spark.move(to: topPoint(824, 240))
+    spark.line(to: topPoint(844, 226))
+    spark.line(to: topPoint(864, 236))
+    spark.line(to: topPoint(886, 210))
+    spark.line(to: topPoint(912, 232))
+    secondaryAccent.setStroke()
+    spark.lineWidth = 4
+    spark.lineCapStyle = .round
+    spark.lineJoinStyle = .round
+    spark.stroke()
+
+    for row in 0..<4 {
+        let line = NSBezierPath(roundedRect: topRect(684, 304 + CGFloat(row * 14), 74, 7), xRadius: 4, yRadius: 4)
+        color(hex: 0xffffff, alpha: 0.16 + CGFloat(row) * 0.04).setFill()
+        line.fill()
+    }
+
+    let donutOuter = NSBezierPath(ovalIn: topRect(832, 304, 58, 58))
+    accent.withAlphaComponent(0.18).setFill()
+    accent.withAlphaComponent(0.40).setStroke()
+    donutOuter.lineWidth = 10
+    donutOuter.fill()
+    donutOuter.stroke()
+    let donutInner = NSBezierPath(ovalIn: topRect(848, 320, 26, 26))
+    color(hex: 0x081622).setFill()
+    donutInner.fill()
+
+    let alert = topRect(908, 150, 44, 44)
+    fillRoundedRect(
+        alert,
+        radius: 14,
+        fill: secondaryAccent.withAlphaComponent(0.16),
+        stroke: secondaryAccent.withAlphaComponent(0.34)
+    )
+    drawText(
+        "!",
+        rect: alert.insetBy(dx: 12, dy: 2),
+        font: avenir(28, "Avenir Next Bold"),
+        color: color(hex: 0xfffbeb),
+        alignment: .center,
+        lineHeight: 1.0
+    )
+}
+
 func render(spec: CoverSpec, outputDir: URL) throws {
     guard let rep = NSBitmapImageRep(
         bitmapDataPlanes: nil,
@@ -462,8 +694,8 @@ func render(spec: CoverSpec, outputDir: URL) throws {
 
     var chipX: CGFloat = 258
     for text in spec.chipText {
-        drawChip(text: text, x: chipX, y: 462, accent: spec.accent)
-        chipX += CGFloat(38 + text.count * 8)
+        let chipWidth = drawChip(text: text, x: chipX, y: 462, accent: spec.accent)
+        chipX += chipWidth + 14
     }
 
     spec.artwork()
@@ -520,6 +752,45 @@ let specs: [CoverSpec] = [
         chipText: ["Drift", "Latency", "Monitoring"],
         artwork: {
             drawFailureArtwork(accent: color(hex: 0xfb7185), secondaryAccent: color(hex: 0xf97316))
+        }
+    ),
+    CoverSpec(
+        filename: "vllm-kubernetes-serving.jpg",
+        label: "Model Deployment",
+        title: "vLLM on\nKubernetes",
+        subtitle: "Serve open-source LLMs with better batching, safer routing, and GPU-aware autoscaling.",
+        palette: [color(hex: 0x06121d), color(hex: 0x0b1f31), color(hex: 0x10344f)],
+        accent: color(hex: 0x38bdf8),
+        secondaryAccent: color(hex: 0x34d399),
+        chipText: ["vLLM", "Autoscaling", "GPU Routing"],
+        artwork: {
+            drawVLLMArtwork(accent: color(hex: 0x38bdf8), secondaryAccent: color(hex: 0x34d399))
+        }
+    ),
+    CoverSpec(
+        filename: "rag-reliability-checklist.jpg",
+        label: "AI Reliability",
+        title: "RAG Reliability\nChecklist",
+        subtitle: "Harden retrieval, freshness, guardrails, and permissions before your knowledge system hits production.",
+        palette: [color(hex: 0x0d0f18), color(hex: 0x1f1230), color(hex: 0x2f1a40)],
+        accent: color(hex: 0xa78bfa),
+        secondaryAccent: color(hex: 0xf59e0b),
+        chipText: ["Retrieval", "Freshness", "Guardrails"],
+        artwork: {
+            drawRAGArtwork(accent: color(hex: 0xa78bfa), secondaryAccent: color(hex: 0xf59e0b))
+        }
+    ),
+    CoverSpec(
+        filename: "ai-observability-dashboards.jpg",
+        label: "MLOps",
+        title: "AI Observability\nDashboards",
+        subtitle: "Track latency, runtime health, quality, retrieval, and cost with dashboards built for production incidents.",
+        palette: [color(hex: 0x071018), color(hex: 0x0b2432), color(hex: 0x153847)],
+        accent: color(hex: 0x22d3ee),
+        secondaryAccent: color(hex: 0xf97316),
+        chipText: ["Latency", "Quality", "Cost"],
+        artwork: {
+            drawObservabilityArtwork(accent: color(hex: 0x22d3ee), secondaryAccent: color(hex: 0xf97316))
         }
     )
 ]
