@@ -77,6 +77,62 @@ func fillRoundedRect(_ rect: NSRect, radius: CGFloat, fill: NSColor, stroke: NSC
     }
 }
 
+func fillGradientRoundedRect(
+    _ rect: NSRect,
+    radius: CGFloat,
+    colors: [NSColor],
+    angle: CGFloat,
+    stroke: NSColor? = nil,
+    lineWidth: CGFloat = 1
+) {
+    let path = NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius)
+    NSGraphicsContext.current?.saveGraphicsState()
+    path.addClip()
+    NSGradient(colors: colors)?.draw(in: rect, angle: angle)
+    NSGraphicsContext.current?.restoreGraphicsState()
+    if let stroke {
+        stroke.setStroke()
+        path.lineWidth = lineWidth
+        path.stroke()
+    }
+}
+
+func drawOrb(x: CGFloat, y: CGFloat, radius: CGFloat, fill: NSColor, glow: NSColor? = nil) {
+    if let glow {
+        drawGlow(x: x + radius, y: y + radius, radius: radius * 2.8, color: glow, alpha: 0.10)
+    }
+    let orb = NSBezierPath(ovalIn: topRect(x, y, radius * 2, radius * 2))
+    fill.setFill()
+    orb.fill()
+}
+
+func drawBackdropConstellation(accent: NSColor, secondaryAccent: NSColor) {
+    let points: [(CGFloat, CGFloat, NSColor)] = [
+        (72, 112, accent.withAlphaComponent(0.72)),
+        (1120, 88, secondaryAccent.withAlphaComponent(0.72)),
+        (1060, 152, accent.withAlphaComponent(0.48)),
+        (92, 520, secondaryAccent.withAlphaComponent(0.42)),
+        (1038, 520, accent.withAlphaComponent(0.38))
+    ]
+
+    let connectors = NSBezierPath()
+    connectors.move(to: topPoint(72, 112))
+    connectors.line(to: topPoint(148, 168))
+    connectors.line(to: topPoint(204, 138))
+    connectors.move(to: topPoint(1038, 520))
+    connectors.line(to: topPoint(1094, 480))
+    connectors.line(to: topPoint(1120, 430))
+    color(hex: 0xffffff, alpha: 0.08).setStroke()
+    connectors.lineWidth = 1.2
+    connectors.lineJoinStyle = .round
+    connectors.lineCapStyle = .round
+    connectors.stroke()
+
+    for (x, y, fill) in points {
+        drawOrb(x: x, y: y, radius: 4, fill: fill, glow: fill)
+    }
+}
+
 func makeTextAttributes(
     font: NSFont,
     color textColor: NSColor,
@@ -303,10 +359,14 @@ func drawChip(text: String, x: CGFloat, y: CGFloat, accent: NSColor) -> CGFloat 
     let measureAttrs: [NSAttributedString.Key: Any] = [.font: avenir(13, "Avenir Next Medium")]
     let width = ceil(NSString(string: text).size(withAttributes: measureAttrs).width) + 36
     let rect = topRect(x, y, width, 34)
-    fillRoundedRect(
+    fillGradientRoundedRect(
         rect,
         radius: 17,
-        fill: accent.withAlphaComponent(0.12),
+        colors: [
+            color(hex: 0x07192a, alpha: 0.92),
+            accent.withAlphaComponent(0.14)
+        ],
+        angle: 0,
         stroke: accent.withAlphaComponent(0.26)
     )
     drawCenteredText(
@@ -323,28 +383,79 @@ func drawChip(text: String, x: CGFloat, y: CGFloat, accent: NSColor) -> CGFloat 
 func drawCardChrome(accent: NSColor) {
     let cardRect = topRect(205, 88, 790, 454)
     let shadow = NSShadow()
-    shadow.shadowBlurRadius = 30
-    shadow.shadowOffset = NSSize(width: 0, height: -8)
-    shadow.shadowColor = color(hex: 0x020617, alpha: 0.33)
+    shadow.shadowBlurRadius = 42
+    shadow.shadowOffset = NSSize(width: 0, height: -12)
+    shadow.shadowColor = color(hex: 0x020617, alpha: 0.42)
     shadow.set()
 
-    fillRoundedRect(
+    fillGradientRoundedRect(
         cardRect,
         radius: 34,
-        fill: color(hex: 0x04101d, alpha: 0.78),
+        colors: [
+            color(hex: 0x071321, alpha: 0.96),
+            color(hex: 0x05111f, alpha: 0.94),
+            color(hex: 0x08162a, alpha: 0.96)
+        ],
+        angle: 24,
         stroke: color(hex: 0xffffff, alpha: 0.10),
         lineWidth: 1.5
     )
+
+    let topSheen = NSBezierPath(roundedRect: topRect(224, 104, 752, 98), xRadius: 28, yRadius: 28)
+    NSGraphicsContext.current?.saveGraphicsState()
+    topSheen.addClip()
+    NSGradient(colors: [
+        color(hex: 0xffffff, alpha: 0.09),
+        color(hex: 0xffffff, alpha: 0.00)
+    ])?.draw(in: topRect(224, 104, 752, 98), angle: 90)
+    NSGraphicsContext.current?.restoreGraphicsState()
+
     NSGraphicsContext.current?.saveGraphicsState()
     let innerRect = topRect(225, 108, 750, 414)
-    fillRoundedRect(
+    fillGradientRoundedRect(
         innerRect,
         radius: 28,
-        fill: color(hex: 0x061423, alpha: 0.42),
+        colors: [
+            color(hex: 0x071526, alpha: 0.82),
+            color(hex: 0x07111d, alpha: 0.78)
+        ],
+        angle: 180,
         stroke: accent.withAlphaComponent(0.12),
         lineWidth: 1
     )
+    let insetBorder = NSBezierPath(roundedRect: topRect(238, 120, 724, 390), xRadius: 24, yRadius: 24)
+    color(hex: 0xffffff, alpha: 0.05).setStroke()
+    insetBorder.lineWidth = 1
+    insetBorder.stroke()
     NSGraphicsContext.current?.restoreGraphicsState()
+}
+
+func drawArtworkPanel(in rect: NSRect, accent: NSColor, secondaryAccent: NSColor) {
+    fillGradientRoundedRect(
+        rect,
+        radius: 28,
+        colors: [
+            color(hex: 0x0a1a2d, alpha: 0.92),
+            color(hex: 0x091728, alpha: 0.90)
+        ],
+        angle: 180,
+        stroke: color(hex: 0xffffff, alpha: 0.08),
+        lineWidth: 1.2
+    )
+
+    let edgeGlow = NSBezierPath(roundedRect: rect.insetBy(dx: 8, dy: 8), xRadius: 22, yRadius: 22)
+    NSGraphicsContext.current?.saveGraphicsState()
+    edgeGlow.addClip()
+    NSGradient(colors: [
+        accent.withAlphaComponent(0.10),
+        color(hex: 0xffffff, alpha: 0.0)
+    ])?.draw(in: rect.insetBy(dx: 8, dy: 8), angle: 35)
+    NSGraphicsContext.current?.restoreGraphicsState()
+
+    let topRail = NSRect(x: rect.origin.x + 18, y: rect.maxY - 26, width: 88, height: 8)
+    fillRoundedRect(topRail, radius: 4, fill: accent.withAlphaComponent(0.46))
+    let topRail2 = NSRect(x: rect.origin.x + 114, y: rect.maxY - 26, width: 44, height: 8)
+    fillRoundedRect(topRail2, radius: 4, fill: secondaryAccent.withAlphaComponent(0.30))
 }
 
 func drawGpuArtwork(accent: NSColor, secondaryAccent: NSColor) {
@@ -472,12 +583,12 @@ func drawPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
     }
 
     let cubeOuter = NSBezierPath()
-    cubeOuter.move(to: topPoint(930, 154))
-    cubeOuter.line(to: topPoint(968, 176))
-    cubeOuter.line(to: topPoint(968, 220))
-    cubeOuter.line(to: topPoint(930, 242))
-    cubeOuter.line(to: topPoint(892, 220))
-    cubeOuter.line(to: topPoint(892, 176))
+    cubeOuter.move(to: topPoint(946, 158))
+    cubeOuter.line(to: topPoint(978, 176))
+    cubeOuter.line(to: topPoint(978, 214))
+    cubeOuter.line(to: topPoint(946, 232))
+    cubeOuter.line(to: topPoint(914, 214))
+    cubeOuter.line(to: topPoint(914, 176))
     cubeOuter.close()
     secondaryAccent.withAlphaComponent(0.18).setFill()
     secondaryAccent.withAlphaComponent(0.42).setStroke()
@@ -486,11 +597,11 @@ func drawPipelineArtwork(accent: NSColor, secondaryAccent: NSColor) {
     cubeOuter.stroke()
 
     let cubeMid = NSBezierPath()
-    cubeMid.move(to: topPoint(930, 154))
-    cubeMid.line(to: topPoint(930, 242))
-    cubeMid.move(to: topPoint(892, 176))
-    cubeMid.line(to: topPoint(930, 198))
-    cubeMid.line(to: topPoint(968, 176))
+    cubeMid.move(to: topPoint(946, 158))
+    cubeMid.line(to: topPoint(946, 232))
+    cubeMid.move(to: topPoint(914, 176))
+    cubeMid.line(to: topPoint(946, 194))
+    cubeMid.line(to: topPoint(978, 176))
     secondaryAccent.withAlphaComponent(0.50).setStroke()
     cubeMid.lineWidth = 2
     cubeMid.stroke()
@@ -878,7 +989,7 @@ func drawCanaryArtwork(accent: NSColor, secondaryAccent: NSColor) {
         )
     }
 
-    let guardRect = topRect(892, 142, 52, 52)
+    let guardRect = topRect(910, 136, 46, 46)
     fillRoundedRect(
         guardRect,
         radius: 16,
@@ -886,12 +997,12 @@ func drawCanaryArtwork(accent: NSColor, secondaryAccent: NSColor) {
         stroke: secondaryAccent.withAlphaComponent(0.34)
     )
     let shield = NSBezierPath()
-    shield.move(to: topPoint(918, 154))
-    shield.line(to: topPoint(932, 160))
-    shield.line(to: topPoint(932, 176))
-    shield.curve(to: topPoint(918, 188), controlPoint1: topPoint(932, 182), controlPoint2: topPoint(924, 188))
-    shield.curve(to: topPoint(904, 176), controlPoint1: topPoint(912, 188), controlPoint2: topPoint(904, 182))
-    shield.line(to: topPoint(904, 160))
+    shield.move(to: topPoint(933, 146))
+    shield.line(to: topPoint(945, 151))
+    shield.line(to: topPoint(945, 165))
+    shield.curve(to: topPoint(933, 175), controlPoint1: topPoint(945, 170), controlPoint2: topPoint(939, 175))
+    shield.curve(to: topPoint(921, 165), controlPoint1: topPoint(927, 175), controlPoint2: topPoint(921, 170))
+    shield.line(to: topPoint(921, 151))
     shield.close()
     color(hex: 0xfffbeb).setFill()
     shield.fill()
@@ -1064,6 +1175,7 @@ func render(spec: CoverSpec, outputDir: URL) throws {
 
     drawGradient(in: topRect(0, 0, canvasWidth, canvasHeight), colors: spec.palette, angle: 18)
     drawGrid()
+    drawBackdropConstellation(accent: spec.accent, secondaryAccent: spec.secondaryAccent)
 
     drawGlow(x: 260, y: 84, radius: 210, color: spec.secondaryAccent, alpha: 0.18)
     drawGlow(x: 1026, y: 96, radius: 180, color: spec.accent, alpha: 0.22)
@@ -1100,13 +1212,53 @@ func render(spec: CoverSpec, outputDir: URL) throws {
         lineHeight: 1.34
     )
 
+    fillRoundedRect(
+        topRect(258, 456, 148, 4),
+        radius: 2,
+        fill: spec.accent.withAlphaComponent(0.70)
+    )
+    fillRoundedRect(
+        topRect(414, 456, 42, 4),
+        radius: 2,
+        fill: spec.secondaryAccent.withAlphaComponent(0.42)
+    )
+
     var chipX: CGFloat = 258
     for text in spec.chipText {
         let chipWidth = drawChip(text: text, x: chipX, y: 462, accent: spec.accent)
         chipX += chipWidth + 14
     }
 
+    NSGraphicsContext.current?.saveGraphicsState()
+    // Fit all right-side artwork into a consistent safe zone so it keeps similar padding
+    // from the card edges instead of drifting into the right boundary.
+    let artworkSourceRect = topRect(650, 132, 318, 288)
+    let artworkSafeZone = topRect(644, 154, 286, 250)
+    let artworkScale = min(
+        artworkSafeZone.width / artworkSourceRect.width,
+        artworkSafeZone.height / artworkSourceRect.height
+    )
+    let fittedWidth = artworkSourceRect.width * artworkScale
+    let fittedHeight = artworkSourceRect.height * artworkScale
+    let fittedRect = NSRect(
+        x: artworkSafeZone.origin.x + (artworkSafeZone.width - fittedWidth) / 2,
+        y: artworkSafeZone.origin.y + (artworkSafeZone.height - fittedHeight) / 2,
+        width: fittedWidth,
+        height: fittedHeight
+    )
+
+    drawArtworkPanel(in: fittedRect.insetBy(dx: -8, dy: -8), accent: spec.accent, secondaryAccent: spec.secondaryAccent)
+
+    NSBezierPath(roundedRect: fittedRect, xRadius: 24, yRadius: 24).addClip()
+
+    let artworkTransform = NSAffineTransform()
+    artworkTransform.translateX(by: fittedRect.origin.x, yBy: fittedRect.origin.y)
+    artworkTransform.scale(by: artworkScale)
+    artworkTransform.translateX(by: -artworkSourceRect.origin.x, yBy: -artworkSourceRect.origin.y)
+    artworkTransform.concat()
+
     spec.artwork()
+    NSGraphicsContext.current?.restoreGraphicsState()
 
     NSGraphicsContext.restoreGraphicsState()
 

@@ -29,6 +29,7 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',

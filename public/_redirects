@@ -1,14 +1,3 @@
 # Netlify redirects file
-
-# SPA fallback for client-side routing
-/*    /   200
-
-# API routes and form submissions
-/api/*  /.netlify/functions/:splat  200
-
-# Security headers
-/*
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-originindex.html
+# Note: @netlify/plugin-nextjs handles routing automatically.
+# Do NOT add a catch-all /* redirect — it breaks _next/image and SSR routes.
