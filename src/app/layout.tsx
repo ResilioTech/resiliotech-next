@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://resiliotech.com'),
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': 'https://resiliotech.com/feed.xml',
+    },
   },
   openGraph: {
     type: 'website',
