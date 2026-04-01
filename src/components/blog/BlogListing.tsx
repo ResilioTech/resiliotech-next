@@ -99,6 +99,7 @@ export function BlogListing({ posts, pagination, currentFilters, loading }: Blog
                           sizes="(max-width: 1024px) 100vw, 288px"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                           onError={() => handleImageError(post.slug)}
+                          priority={posts.indexOf(post) < 2}
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">

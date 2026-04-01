@@ -100,6 +100,10 @@ export default function HomePage() {
     inLanguage: "en-US"
   };
 
+  const breadcrumbs = [
+    { name: "Home", url: "https://resiliotech.com" }
+  ];
+
   return (
     <>
       <StructuredData
@@ -107,6 +111,7 @@ export default function HomePage() {
         faq={faqData}
         services={servicesData}
         website={websiteData}
+        breadcrumbs={breadcrumbs}
       />
       <HeroSection />
       <ServicesSection />
