@@ -1,0 +1,97 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08101d" />
+      <stop offset="0.5" stop-color="#0d2035" />
+      <stop offset="1" stop-color="#132b44" />
+    </linearGradient>
+    <linearGradient id="panel" x1="128" y1="84" x2="1068" y2="548" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111f" />
+      <stop offset="1" stop-color="#0f1d31" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1012 96) rotate(127) scale(512 402)">
+      <stop stop-color="rgba(251, 113, 133, 0.28)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(132 552) rotate(5) scale(388 258)">
+      <stop stop-color="rgba(250, 204, 21, 0.10)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <linearGradient id="accentLine" x1="148" y1="0" x2="424" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb7185" />
+      <stop offset="1" stop-color="#f97316" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94a3b8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <circle cx="135" cy="227" r="2" fill="#fb7185" opacity="0.61" /><circle cx="308" cy="349" r="3" fill="#fecdd3" opacity="0.44" /><circle cx="481" cy="471" r="4" fill="#f97316" opacity="0.55" /><circle cx="654" cy="87" r="2" fill="#fb7185" opacity="0.38" /><circle cx="827" cy="209" r="3" fill="#fecdd3" opacity="0.49" /><circle cx="1000" cy="331" r="4" fill="#f97316" opacity="0.60" /><circle cx="85" cy="453" r="2" fill="#fb7185" opacity="0.43" /><circle cx="258" cy="69" r="3" fill="#fecdd3" opacity="0.54" /><circle cx="431" cy="191" r="4" fill="#f97316" opacity="0.37" /><circle cx="604" cy="313" r="2" fill="#fb7185" opacity="0.48" /><path d="M215 95 L278 122 L351 149" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M276 148 L362 206 L452 194" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M117 201 L226 290 L333 319" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+
+  <rect x="128" y="84" width="940" height="464" rx="40" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="146" y="102" width="904" height="428" rx="32" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="148" y="118" width="4" height="396" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="170" y="140" width="188" height="40" rx="20" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="192" y="166" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">AI RELIABILITY</text>
+
+  <text x="170" y="222" fill="#f8fafc" font-size="32" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="170" dy="0">Securing AI Endpoints:</tspan><tspan x="170" dy="33">Authentication, Rate Limiting,</tspan><tspan x="170" dy="33">and Abuse Prevention</tspan></text>
+  <text x="170" y="354" fill="#cbd5e1" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="520"><tspan x="170" dy="0">How to secure AI APIs in production with</tspan><tspan x="170" dy="33">authentication, tenant isolation, rate limiting,</tspan><tspan x="170" dy="33">prompt abuse controls, and safer traffic handling…</tspan></text>
+  
+            <g transform="translate(170, 0)">
+              <rect x="0" y="468" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="489" r="5" fill="#fb7185" />
+              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Security</text>
+            </g>
+            
+            <g transform="translate(296, 0)">
+              <rect x="0" y="468" width="147" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="489" r="5" fill="#fb7185" />
+              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">AI Reliability</text>
+            </g>
+            
+            <g transform="translate(457, 0)">
+              <rect x="0" y="468" width="140" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="489" r="5" fill="#fb7185" />
+              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">LLM Serving</text>
+            </g>
+            <rect x="170" y="456" width="150" height="4" rx="2" fill="#fb7185" opacity="0.90" /><rect x="332" y="456" width="66" height="4" rx="2" fill="#fecdd3" opacity="0.72" />
+  
+      <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
+      <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
+      <rect x="748" y="176" width="100" height="10" rx="5" fill="#fb7185" opacity="0.88" />
+      <rect x="860" y="176" width="48" height="10" rx="5" fill="#f97316" opacity="0.62" />
+      <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
+      <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Secure by Design</text>
+    
+          <rect x="782" y="214" width="200" height="132" rx="28" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+          <path d="M882 228 L940 248 L940 292 C940 322 919 347 882 364 C845 347 824 322 824 292 L824 248 Z" fill="rgba(7, 12, 24, 0.88)" stroke="#fb7185" stroke-width="4" />
+          <rect x="868" y="274" width="28" height="46" rx="14" fill="#f97316" opacity="0.92" />
+          <rect x="854" y="258" width="56" height="34" rx="17" fill="none" stroke="#fecdd3" stroke-width="4" />
+          <path d="M798 254 L842 268" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
+          <path d="M798 314 L840 294" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
+          <path d="M966 254 L922 268" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
+          <path d="M966 314 L924 294" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
+        
+
+  <text x="976" y="512" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="976" y="532" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+  
+    <g transform="translate(992, 496)">
+      <rect width="36" height="36" rx="10" fill="#00D4FF" />
+      <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+      <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+    </g>
+    
+</svg>

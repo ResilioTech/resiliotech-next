@@ -1,0 +1,193 @@
+---
+title: "Capacity Planning for LLM Inference: GPU Memory, Throughput, and SLA Targets"
+description: "A practical framework for LLM inference capacity planning, including token demand forecasting, GPU memory budgets, queueing, batching tradeoffs, and how to plan for user-facing latency targets."
+date: "2026-03-29"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["capacity-planning", "llm-serving", "gpu-optimization", "latency", "slos"]
+coverImage: "/blog-images/capacity-planning-llm-inference-gpu-memory-throughput-slas.svg"
+featured: false
+seo:
+  title: "Capacity Planning for LLM Inference: GPU Memory, Throughput, and SLA Targets"
+  description: "How to plan LLM inference capacity using GPU memory budgets, demand models, throughput assumptions, batching, and latency SLOs."
+  keywords:
+    - llm inference capacity planning
+    - gpu memory planning for inference
+    - llm throughput calculation
+    - ai inference sla planning
+    - gpu sizing for llm serving
+social:
+  image: "/blog-images/capacity-planning-llm-inference-gpu-memory-throughput-slas.svg"
+  title: "Capacity Planning for LLM Inference"
+  description: "How AI teams size GPUs, queues, and throughput against real SLA targets."
+---
+
+# Capacity Planning for LLM Inference: GPU Memory, Throughput, and SLA Targets
+
+Capacity planning for normal web services is already imperfect. Capacity planning for LLM inference is worse if you use the same mental model.
+
+Why? Because demand is shaped by more than requests per second.
+
+For LLM workloads, your platform cost and user experience are influenced by:
+
+- prompt length
+- output length
+- concurrency
+- model size
+- KV cache pressure
+- batching policy
+- routing between models
+- latency targets by workflow
+
+That means “we average 12 requests per second” is not a capacity plan. It is barely an observation.
+
+## Start with the User-Facing SLA
+
+Do not begin with GPUs. Begin with the workflow promise.
+
+For each major route, define:
+
+- acceptable p95 latency
+- acceptable timeout rate
+- expected concurrent demand
+- fallback behavior during spikes
+- whether quality is allowed to degrade under load
+
+This matters because the same model can be “correctly sized” for batch summarization and totally undersized for interactive copilots.
+
+## Build a Token Demand Model
+
+The base unit for many inference planning exercises is not requests. It is tokens.
+
+Estimate per route:
+
+- average input tokens
+- p95 input tokens
+- average output tokens
+- p95 output tokens
+- concurrent sessions during peak windows
+
+From there, you can model token demand instead of pretending every request costs the same.
+
+This is also why `/blog/llm-token-economics-tracking-controlling-inference-spend` pairs naturally with capacity planning. Cost and capacity are deeply linked.
+
+## Treat GPU Memory as a First-Class Constraint
+
+Teams often think about throughput first and memory second. In practice, memory is frequently the earlier limit.
+
+Your memory budget includes more than model weights:
+
+- model parameters
+- runtime overhead
+- KV cache growth with concurrency and context length
+- temporary activation and batching overhead
+- fragmentation and safety headroom
+
+If your context windows or concurrency assumptions increase, the system can hit memory limits long before compute utilization looks “full.”
+
+## Separate Planning Inputs You Can Control from Ones You Can Only Bound
+
+You can usually control:
+
+- supported model list
+- max input and output tokens per route
+- batching policy
+- queue timeout policy
+- routing rules for premium versus standard traffic
+
+You usually cannot control perfectly:
+
+- user burstiness
+- the exact output length of every generation
+- prompt composition drift over time
+- tenant mix during peak periods
+
+That is why strong platforms define limits at the gateway instead of hoping demand stays polite.
+
+## Plan in Four Layers
+
+### 1. Baseline Throughput
+
+Measure the stable tokens-per-second range a single replica can sustain at acceptable latency for each model and configuration.
+
+Do this with representative prompts, not synthetic one-line requests.
+
+### 2. Concurrency and Queueing
+
+Estimate how many simultaneous generations can run before queue delay dominates p95 latency.
+
+This is where many teams discover that their “GPU utilization is only 60%” but users are already waiting too long because requests are stuck behind long generations.
+
+### 3. Burst Headroom
+
+Add headroom for tenant spikes, retries, and failover events.
+
+If your platform handles customer-facing workflows, planning for average load is just planning for incidents.
+
+### 4. Regional or Cluster Failure Scenarios
+
+If traffic must survive node pool or regional loss, model the reduced-capacity state as part of the normal plan rather than as an afterthought.
+
+## Batching Is a Capacity Lever, Not a Free Win
+
+Batching can improve throughput dramatically, but it changes the latency profile.
+
+As we cover in `/blog/batching-strategies-llm-inference-throughput-vs-latency`, the real question is not “can batching help?” It is “how much extra waiting time is acceptable for this workflow?”
+
+For interactive products, aggressive batching often makes dashboards look efficient while users feel the system is slow.
+
+## Recommended Practical Limits
+
+To keep capacity predictable, set explicit route-level controls for:
+
+- maximum prompt length
+- maximum completion length
+- per-tenant concurrency
+- per-tenant tokens per minute
+- queue timeout thresholds
+- model downgrade or overflow behavior under pressure
+
+These limits are not just for abuse prevention. They make forecasting possible.
+
+## When to Add More GPUs Versus Better Routing
+
+Extra GPUs are not always the next best step.
+
+Sometimes you should first:
+
+- move low-value traffic to a smaller model
+- introduce caching for repeated requests
+- split interactive and batch routes
+- reduce maximum context length for non-critical workflows
+- route long-context jobs to dedicated capacity pools
+
+Capacity planning is as much a product and traffic-shaping problem as an infrastructure problem.
+
+## A Simple Review Cadence
+
+We recommend a recurring review that tracks:
+
+- demand growth by route and tenant
+- actual versus assumed token distributions
+- p95 latency trends
+- queueing during peak windows
+- GPU memory pressure and OOM risk
+- cost per successful response
+
+If those are reviewed monthly, capacity planning becomes manageable. If those are reviewed only after timeouts, you are already behind.
+
+## Common Planning Errors
+
+The biggest mistakes we see are:
+
+1. sizing only on average request rate
+2. ignoring output token variance
+3. treating all routes as one shared latency class
+4. assuming batch efficiency will hold during production bursts
+5. forgetting failover headroom and tenant concentration risk
+
+## Final Takeaway
+
+Good LLM capacity planning ties together tokens, concurrency, memory, and user-facing SLOs. It does not begin with hardware procurement and it does not end with a load test screenshot.
+
+The teams that run efficient inference platforms define demand clearly, enforce limits at the edge, and plan for the degraded state before it becomes a surprise. That is what turns GPU spend into a controllable systems problem instead of a monthly firefight.

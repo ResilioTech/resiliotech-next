@@ -1,0 +1,99 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08101d" />
+      <stop offset="0.5" stop-color="#0d2035" />
+      <stop offset="1" stop-color="#132b44" />
+    </linearGradient>
+    <linearGradient id="panel" x1="128" y1="84" x2="1068" y2="548" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#12141e" />
+      <stop offset="1" stop-color="#221b13" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1012 96) rotate(127) scale(512 402)">
+      <stop stop-color="rgba(245, 158, 11, 0.24)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(132 552) rotate(5) scale(388 258)">
+      <stop stop-color="rgba(250, 204, 21, 0.10)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <linearGradient id="accentLine" x1="148" y1="0" x2="424" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b" />
+      <stop offset="1" stop-color="#f97316" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94a3b8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <circle cx="1142" cy="164" r="3" fill="#f59e0b" opacity="0.48" /><circle cx="227" cy="265" r="4" fill="#fde68a" opacity="0.59" /><circle cx="400" cy="366" r="2" fill="#f97316" opacity="0.42" /><circle cx="573" cy="467" r="3" fill="#f59e0b" opacity="0.53" /><circle cx="746" cy="62" r="4" fill="#fde68a" opacity="0.36" /><circle cx="919" cy="163" r="2" fill="#f97316" opacity="0.47" /><circle cx="1092" cy="264" r="3" fill="#f59e0b" opacity="0.58" /><circle cx="177" cy="365" r="4" fill="#fde68a" opacity="0.41" /><circle cx="350" cy="466" r="2" fill="#f97316" opacity="0.52" /><circle cx="523" cy="567" r="3" fill="#f59e0b" opacity="0.35" /><path d="M150 270 L298 382 L456 424" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M211 143 L292 196 L377 199" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M272 196 L376 280 L478 244" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+
+  <rect x="128" y="84" width="940" height="464" rx="40" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="146" y="102" width="904" height="428" rx="32" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="148" y="118" width="4" height="396" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="170" y="140" width="205" height="40" rx="20" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="192" y="166" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">MODEL DEPLOYMENT</text>
+
+  <text x="170" y="222" fill="#f8fafc" font-size="32" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="170" dy="0">Spot Instances for Training</tspan><tspan x="170" dy="33">Workloads: Checkpointing and</tspan><tspan x="170" dy="33">Fault Tolerance</tspan></text>
+  <text x="170" y="354" fill="#cbd5e1" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="520"><tspan x="170" dy="0">How to run ML training workloads on spot or</tspan><tspan x="170" dy="33">preemptible capacity safely, with checkpointing,</tspan><tspan x="170" dy="33">interruption handling, retry policy, and pipeline…</tspan></text>
+  
+            <g transform="translate(170, 0)">
+              <rect x="0" y="468" width="160" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="489" r="5" fill="#f59e0b" />
+              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Spot Instances</text>
+            </g>
+            
+            <g transform="translate(344, 0)">
+              <rect x="0" y="468" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="489" r="5" fill="#f59e0b" />
+              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Training</text>
+            </g>
+            
+            <g transform="translate(470, 0)">
+              <rect x="0" y="468" width="161" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="489" r="5" fill="#f59e0b" />
+              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Fault Tolerance</text>
+            </g>
+            <rect x="170" y="456" width="206" height="4" rx="2" fill="#f59e0b" opacity="0.90" /><rect x="388" y="456" width="66" height="4" rx="2" fill="#fde68a" opacity="0.72" />
+  
+      <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
+      <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
+      <rect x="748" y="176" width="100" height="10" rx="5" fill="#f59e0b" opacity="0.88" />
+      <rect x="860" y="176" width="48" height="10" rx="5" fill="#f97316" opacity="0.62" />
+      <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
+      <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Efficiency at Scale</text>
+    
+          <rect x="776" y="214" width="168" height="136" rx="28" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
+          <rect x="810" y="244" width="60" height="18" rx="9" fill="#f59e0b" opacity="0.92" />
+          <rect x="810" y="286" width="98" height="18" rx="9" fill="#f97316" opacity="0.82" />
+          <rect x="810" y="328" width="124" height="18" rx="9" fill="#fde68a" opacity="0.76" />
+          <rect x="958" y="232" width="22" height="118" rx="11" fill="rgba(71, 85, 105, 0.78)" />
+          <rect x="990" y="266" width="22" height="84" rx="11" fill="rgba(71, 85, 105, 0.78)" />
+          <path d="M946 318 C968 300, 986 284, 1008 248" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M998 248 L1010 250 L1004 262" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round" />
+          <rect x="964" y="202" width="82" height="48" rx="18" fill="rgba(15, 23, 42, 0.82)" stroke="rgba(148, 163, 184, 0.14)" />
+          <text x="982" y="234" fill="#f8fafc" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="760">40%</text>
+        
+
+  <text x="976" y="512" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="976" y="532" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+  
+    <g transform="translate(992, 496)">
+      <rect width="36" height="36" rx="10" fill="#00D4FF" />
+      <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+      <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+    </g>
+    
+</svg>

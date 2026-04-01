@@ -9,6 +9,7 @@ import { formatDate, getRelatedPosts as _getRelatedPosts, getAllTagsFromPosts } 
 export { formatDate } from './blog-utils'
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
+const BLOG_IMAGE_DIR = path.join(process.cwd(), 'public', 'blog-images')
 
 export const AUTHORS: Author[] = [
   {
@@ -87,6 +88,16 @@ function resolveTags(tags: string[]): Tag[] {
   }))
 }
 
+function resolveCoverImage(slug: string, explicitCover?: string): string | undefined {
+  const generatedCover = path.join(BLOG_IMAGE_DIR, `${slug}.svg`)
+
+  if (fs.existsSync(generatedCover)) {
+    return `/blog-images/${slug}.svg`
+  }
+
+  return explicitCover
+}
+
 function parsePost(filename: string): BlogPost | null {
   const filePath = path.join(BLOG_DIR, filename)
   const raw = fs.readFileSync(filePath, 'utf-8')
@@ -99,6 +110,8 @@ function parsePost(filename: string): BlogPost | null {
   const authorData = resolveAuthor(data.author || 'Resilio Tech Team')
   const categoryData = resolveCategory(data.category)
   const tagData = resolveTags(data.tags || [])
+  const resolvedCoverImage = resolveCoverImage(slug, data.coverImage || data.image)
+  const socialImage = data.social?.image || resolvedCoverImage
 
   return {
     slug,
@@ -109,8 +122,13 @@ function parsePost(filename: string): BlogPost | null {
     author: authorData.id,
     category: categoryData.slug,
     tags: data.tags || [],
-    coverImage: data.coverImage || data.image,
+    coverImage: resolvedCoverImage,
     featured: data.featured || false,
+    seo: data.seo,
+    social: (data.social || socialImage) ? {
+      ...(data.social || {}),
+      image: socialImage,
+    } : undefined,
     content,
     readingTime: {
       text: stats.text,
