@@ -2,6 +2,7 @@
 
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Image from 'next/image'
 
 interface MarkdownContentProps {
   content: string
@@ -88,7 +89,16 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           <td className="px-4 py-2 border border-border text-sm text-text-secondary">{children}</td>
         ),
         img: ({ src, alt }) => (
-          <img src={src} alt={alt || ''} className="rounded-lg my-4 max-w-full" />
+          <div className="relative w-full my-8">
+            <Image 
+              src={src || ''} 
+              alt={alt || ''} 
+              width={1200}
+              height={630}
+              className="rounded-lg h-auto w-full object-cover"
+              loading="lazy"
+            />
+          </div>
         ),
       }}
     >

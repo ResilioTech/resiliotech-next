@@ -106,19 +106,27 @@ interface ReadingStatsProps {
 
 function ReadingStats({ progress }: ReadingStatsProps) {
   const [timeRemaining, setTimeRemaining] = useState('')
+  const [totalWords, setTotalWords] = useState<number | null>(null)
 
   useEffect(() => {
-    // Get article content for calculations
-    const articleContent = document.querySelector('article')?.textContent || ''
-    const totalWords = articleContent.split(/\s+/).length
+    // Calculate total words once or when the article might have changed
+    const article = document.querySelector('article')
+    if (article) {
+      const text = article.textContent || ''
+      setTotalWords(text.split(/\s+/).length)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (totalWords === null) return
+
     const averageWordsPerMinute = 200
-    
     const currentWordsRead = Math.round((progress / 100) * totalWords)
     const remainingWords = totalWords - currentWordsRead
     const remainingMinutes = Math.ceil(remainingWords / averageWordsPerMinute)
 
     setTimeRemaining(remainingMinutes > 0 ? `${remainingMinutes} min left` : 'Complete!')
-  }, [progress])
+  }, [progress, totalWords])
 
   if (progress < 10) return null
 

@@ -110,7 +110,7 @@ function RelatedPostCard({ post }: RelatedPostCardProps) {
                 <div className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   <time dateTime={post.publishedAt}>
-                    {formatDate(post.publishedAt, 'MMM dd')}
+                    {formatDate(post.publishedAt)}
                   </time>
                 </div>
                 

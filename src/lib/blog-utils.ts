@@ -1,6 +1,6 @@
 import type { BlogPost, Tag } from '@/types/blog'
 
-export function formatDate(date: string, _formatStr: string = 'MMM dd, yyyy'): string {
+export function formatDate(date: string): string {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',

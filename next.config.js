@@ -11,21 +11,6 @@ const withPWA = require('next-pwa')({
   runtimeCaching: [],
 })
 
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [
-      // Use dynamic import for ES modules
-      () => import('remark-gfm').then(mod => mod.default),
-    ],
-    rehypePlugins: [
-      // Use dynamic imports for ES modules
-      () => import('rehype-slug').then(mod => mod.default),
-      () => import('rehype-autolink-headings').then(mod => mod.default),
-    ],
-  },
-})
-
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -43,7 +28,6 @@ const nextConfig = {
   },
   compress: true,
   experimental: {
-    mdxRs: true,
     optimizePackageImports: ['lucide-react'],
   },
   // Bundle optimization
@@ -69,4 +53,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(withPWA(withMDX(nextConfig)))
+module.exports = withBundleAnalyzer(withPWA(nextConfig))

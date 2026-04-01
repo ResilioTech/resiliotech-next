@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache } from 'react'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
@@ -146,7 +147,7 @@ function parsePost(filename: string): BlogPost | null {
 
 let _cachedPosts: BlogPost[] | null = null
 
-function loadAllPosts(): BlogPost[] {
+const loadAllPosts = cache(() => {
   if (_cachedPosts) return _cachedPosts
 
   if (!fs.existsSync(BLOG_DIR)) {
@@ -162,19 +163,19 @@ function loadAllPosts(): BlogPost[] {
 
   _cachedPosts = posts
   return _cachedPosts
-}
+})
 
 export function getAllPosts(): BlogPost[] {
   return loadAllPosts()
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
+export const getPostBySlug = cache((slug: string): BlogPost | null => {
   return loadAllPosts().find(post => post.slug === slug) || null
-}
+})
 
-export function getAllTags(): Tag[] {
+export const getAllTags = cache((): Tag[] => {
   return getAllTagsFromPosts(loadAllPosts())
-}
+})
 
 export function getCategories(): Category[] {
   return CATEGORIES
@@ -184,7 +185,7 @@ export function getAuthors(): Author[] {
   return AUTHORS
 }
 
-export function getBlogStats(): BlogStats {
+export const getBlogStats = cache((): BlogStats => {
   const posts = getAllPosts()
   const tags = getAllTags()
 
@@ -197,7 +198,7 @@ export function getBlogStats(): BlogStats {
     popularPosts: posts.filter(p => p.featured),
     trendingTags: tags.filter(t => t.trending).slice(0, 10),
   }
-}
+})
 
 export function getRelatedPosts(currentPost: BlogPost, maxPosts: number = 3): BlogPost[] {
   return _getRelatedPosts(currentPost, loadAllPosts(), maxPosts)
