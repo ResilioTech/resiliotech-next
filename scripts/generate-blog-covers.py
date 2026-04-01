@@ -8,11 +8,24 @@ CONTENT_DIR = ROOT / 'content' / 'blog'
 OUTPUT_DIR = ROOT / 'public' / 'blog-images'
 WIDTH = 1200
 HEIGHT = 630
-LEFT_X = 170
-LEFT_LINE_X = 148
+PANEL_X = 96
+PANEL_Y = 56
+PANEL_WIDTH = 1008
+PANEL_HEIGHT = 518
+INNER_PANEL_X = 114
+INNER_PANEL_Y = 74
+INNER_PANEL_WIDTH = 972
+INNER_PANEL_HEIGHT = 482
+LEFT_X = 168
+LEFT_LINE_X = 140
+LEFT_LINE_Y = 92
+LEFT_LINE_HEIGHT = 446
 TEXT_WIDTH = 500
-TAGS_Y = 468
-DESCRIPTION_BOTTOM_LIMIT = 444
+TAGS_Y = 476
+TITLE_BOTTOM_LIMIT = 440
+VISUAL_PANEL_X = 706
+VISUAL_PANEL_Y = 136
+VISUAL_SCALE = 1.12
 
 THEMES = {
     'ai-reliability': {
@@ -188,25 +201,16 @@ def text_block_height(font_size: int, line_count: int, line_height_ratio: float)
 
 def choose_title_y(line_count: int):
     if line_count <= 2:
-        return 230
+        return 244
     if line_count == 3:
-        return 222
+        return 234
     if line_count == 4:
-        return 210
-    return 198
+        return 222
+    return 208
 
 
-def compute_layout(title: str, description: str):
-    description = description.strip()
-    title_sizes = (68, 64, 60, 56, 52, 48, 44, 40, 38, 36, 34, 32)
-    description_options = [
-        (22, 3, True),
-        (20, 3, True),
-        (18, 3, True),
-        (18, 2, True),
-        (16, 2, True),
-        (0, 0, True),
-    ]
+def compute_layout(title: str):
+    title_sizes = (76, 72, 68, 64, 60, 56, 52, 48, 44, 42, 40, 38, 36)
     best_layout = None
     best_score = None
 
@@ -217,55 +221,27 @@ def compute_layout(title: str, description: str):
 
         title_y = choose_title_y(len(title_lines))
         title_height = text_block_height(title_size, len(title_lines), 1.06)
-        description_y = title_y + title_height + 34
+        if title_y + title_height <= TITLE_BOTTOM_LIMIT:
+            score = title_size * 5
+            score -= max(0, len(title_lines) - 3) * 16
 
-        for description_size, description_max_lines, description_clip in description_options:
-            if description_size == 0 or not description:
-                description_lines = []
-                description_height = 0
-            else:
-                description_lines = wrap_text(
-                    description,
-                    description_size,
-                    TEXT_WIDTH,
-                    description_max_lines,
-                    clip=description_clip,
-                )
-                description_height = text_block_height(description_size, len(description_lines), 1.45)
-
-            if description_y + description_height <= DESCRIPTION_BOTTOM_LIMIT:
-                score = title_size * 4
-                score -= max(0, len(title_lines) - 3) * 12
-                if description_lines:
-                    score += 90
-                    score += len(description_lines) * 70
-                    score += description_size * len(description_lines) * 2
-                    if description_clip:
-                        score -= 25
-
-                layout = {
-                    'title_font_size': title_size,
-                    'title_lines': title_lines,
-                    'title_y': title_y,
-                    'description_font_size': description_size,
-                    'description_lines': description_lines,
-                    'description_y': description_y,
-                }
-                if best_score is None or score > best_score:
-                    best_score = score
-                    best_layout = layout
+            layout = {
+                'title_font_size': title_size,
+                'title_lines': title_lines,
+                'title_y': title_y,
+            }
+            if best_score is None or score > best_score:
+                best_score = score
+                best_layout = layout
 
     if best_layout is not None:
         return best_layout
 
     fallback_lines = wrap_text(title, 30, TEXT_WIDTH, 6, clip=False)
     return {
-        'title_font_size': 30,
+        'title_font_size': 34,
         'title_lines': fallback_lines,
-        'title_y': 192,
-        'description_font_size': 0,
-        'description_lines': [],
-        'description_y': 0,
+        'title_y': 212,
     }
 
 
@@ -310,7 +286,7 @@ def render_description(lines, font_size, start_y):
 
 def render_tags(tags, accent, accent_soft, y):
     selected = [normalize_label(tag) for tag in tags[:3]] or ['AI Infrastructure']
-    x = 170
+    x = LEFT_X
     chips = []
 
     for label in selected:
@@ -330,10 +306,10 @@ def render_tags(tags, accent, accent_soft, y):
 
     underline_width = max(132, min(230, int(estimate_width(selected[0], 16) + 88)))
     chips.append(
-        f'<rect x="170" y="{y - 12}" width="{underline_width}" height="4" rx="2" fill="{accent}" opacity="0.90" />'
+        f'<rect x="{LEFT_X}" y="{y - 12}" width="{underline_width}" height="4" rx="2" fill="{accent}" opacity="0.90" />'
     )
     chips.append(
-        f'<rect x="{170 + underline_width + 12}" y="{y - 12}" width="66" height="4" rx="2" fill="{accent_soft}" opacity="0.72" />'
+        f'<rect x="{LEFT_X + underline_width + 12}" y="{y - 12}" width="66" height="4" rx="2" fill="{accent_soft}" opacity="0.72" />'
     )
     return ''.join(chips)
 
@@ -391,7 +367,7 @@ def render_backdrop(seed: int, accent: str, accent_soft: str, accent_two: str):
 
 
 def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: str):
-    header = f'''
+    panel_markup = f'''
       <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
       <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
       <rect x="748" y="176" width="100" height="10" rx="5" fill="{accent}" opacity="0.88" />
@@ -475,21 +451,22 @@ def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: st
           <path d="M970 334 H1008" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
         '''
 
-    return header + body
+    panel_markup += body
+    return (
+        f'<g transform="translate({VISUAL_PANEL_X} {VISUAL_PANEL_Y}) '
+        f'scale({VISUAL_SCALE}) translate(-{VISUAL_PANEL_X} -{VISUAL_PANEL_Y})">'
+        f'{panel_markup}'
+        f'</g>'
+    )
 
 
 def build_svg(title: str, description: str, category: str, tags, slug: str):
     theme = THEMES.get(category, THEMES['ai-reliability'])
-    layout = compute_layout(title, description)
+    layout = compute_layout(title)
     title_markup = render_title(
         layout['title_lines'],
         layout['title_font_size'],
         layout['title_y'],
-    )
-    description_markup = render_description(
-        layout['description_lines'],
-        layout['description_font_size'],
-        layout['description_y'],
     )
     illustration = choose_illustration(title, tags)
     badge_width = max(188, min(292, int(estimate_width(theme['badge'], 15) + 42)))
@@ -502,7 +479,7 @@ def build_svg(title: str, description: str, category: str, tags, slug: str):
       <stop offset="0.5" stop-color="#0d2035" />
       <stop offset="1" stop-color="#132b44" />
     </linearGradient>
-    <linearGradient id="panel" x1="128" y1="84" x2="1068" y2="548" gradientUnits="userSpaceOnUse">
+    <linearGradient id="panel" x1="{PANEL_X}" y1="{PANEL_Y}" x2="{PANEL_X + PANEL_WIDTH}" y2="{PANEL_Y + PANEL_HEIGHT}" gradientUnits="userSpaceOnUse">
       <stop stop-color="{theme['panel_start']}" />
       <stop offset="1" stop-color="{theme['panel_end']}" />
     </linearGradient>
@@ -535,21 +512,20 @@ def build_svg(title: str, description: str, category: str, tags, slug: str):
 
   {render_backdrop(seed, theme['accent'], theme['accent_soft'], theme['accent_two'])}
 
-  <rect x="128" y="84" width="940" height="464" rx="40" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
-  <rect x="146" y="102" width="904" height="428" rx="32" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
-  <rect x="{LEFT_LINE_X}" y="118" width="4" height="396" rx="2" fill="url(#accentLine)" opacity="0.88" />
+  <rect x="{PANEL_X}" y="{PANEL_Y}" width="{PANEL_WIDTH}" height="{PANEL_HEIGHT}" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="{INNER_PANEL_X}" y="{INNER_PANEL_Y}" width="{INNER_PANEL_WIDTH}" height="{INNER_PANEL_HEIGHT}" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="{LEFT_LINE_X}" y="{LEFT_LINE_Y}" width="4" height="{LEFT_LINE_HEIGHT}" rx="2" fill="url(#accentLine)" opacity="0.88" />
 
-  <rect x="170" y="140" width="{badge_width}" height="40" rx="20" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
-  <text x="192" y="166" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">{escape(theme['badge'])}</text>
+  <rect x="{LEFT_X}" y="128" width="{badge_width}" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="{LEFT_X + 22}" y="155" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">{escape(theme['badge'])}</text>
 
   {title_markup}
-  {description_markup}
   {render_tags(tags, theme['accent'], theme['accent_soft'], TAGS_Y)}
   {render_visual_panel(illustration, theme['accent'], theme['accent_two'], theme['accent_soft'])}
 
-  <text x="976" y="512" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
-  <text x="976" y="532" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
-  {render_brand_logo(992, 496)}
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+  {render_brand_logo(1018, 506)}
 </svg>
 '''
 

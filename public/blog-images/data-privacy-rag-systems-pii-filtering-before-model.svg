@@ -5,7 +5,7 @@
       <stop offset="0.5" stop-color="#0d2035" />
       <stop offset="1" stop-color="#132b44" />
     </linearGradient>
-    <linearGradient id="panel" x1="128" y1="84" x2="1068" y2="548" gradientUnits="userSpaceOnUse">
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
       <stop stop-color="#08111f" />
       <stop offset="1" stop-color="#0f1d31" />
     </linearGradient>
@@ -17,7 +17,7 @@
       <stop stop-color="rgba(250, 204, 21, 0.10)" />
       <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
     </radialGradient>
-    <linearGradient id="accentLine" x1="148" y1="0" x2="424" y2="0" gradientUnits="userSpaceOnUse">
+    <linearGradient id="accentLine" x1="140" y1="0" x2="416" y2="0" gradientUnits="userSpaceOnUse">
       <stop stop-color="#fb7185" />
       <stop offset="1" stop-color="#f97316" />
     </linearGradient>
@@ -38,35 +38,34 @@
 
   <circle cx="769" cy="489" r="4" fill="#fb7185" opacity="0.39" /><circle cx="942" cy="361" r="2" fill="#fecdd3" opacity="0.50" /><circle cx="1115" cy="233" r="3" fill="#f97316" opacity="0.61" /><circle cx="200" cy="105" r="4" fill="#fb7185" opacity="0.44" /><circle cx="373" cy="483" r="2" fill="#fecdd3" opacity="0.55" /><circle cx="546" cy="355" r="3" fill="#f97316" opacity="0.38" /><circle cx="719" cy="227" r="4" fill="#fb7185" opacity="0.49" /><circle cx="892" cy="99" r="2" fill="#fecdd3" opacity="0.60" /><circle cx="1065" cy="477" r="3" fill="#f97316" opacity="0.43" /><circle cx="150" cy="349" r="4" fill="#fb7185" opacity="0.54" /><path d="M97 217 L192 276 L297 265" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M158 270 L276 360 L398 390" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M219 143 L360 174 L499 165" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
 
-  <rect x="128" y="84" width="940" height="464" rx="40" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
-  <rect x="146" y="102" width="904" height="428" rx="32" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
-  <rect x="148" y="118" width="4" height="396" rx="2" fill="url(#accentLine)" opacity="0.88" />
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
 
-  <rect x="170" y="140" width="188" height="40" rx="20" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
-  <text x="192" y="166" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">AI RELIABILITY</text>
+  <rect x="168" y="128" width="188" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="155" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">AI RELIABILITY</text>
 
-  <text x="170" y="222" fill="#f8fafc" font-size="38" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="170" dy="0">Data Privacy in RAG</tspan><tspan x="170" dy="40">Systems: PII Filtering</tspan><tspan x="170" dy="40">Before It Hits the Model</tspan></text>
-  <text x="170" y="374" fill="#cbd5e1" font-size="18" font-family="Inter, Arial, sans-serif" font-weight="520"><tspan x="170" dy="0">How to keep PII and sensitive business data out of RAG</tspan><tspan x="170" dy="27">prompts with pre-retrieval controls, redaction pipelines,</tspan><tspan x="170" dy="27">access policies, and safer context assembly.</tspan></text>
+  <text x="168" y="222" fill="#f8fafc" font-size="52" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="168" dy="0">Data Privacy in</tspan><tspan x="168" dy="55">RAG Systems: PII</tspan><tspan x="168" dy="55">Filtering Before It</tspan><tspan x="168" dy="55">Hits the Model</tspan></text>
   
-            <g transform="translate(170, 0)">
-              <rect x="0" y="468" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#fb7185" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">RAG</text>
+            <g transform="translate(168, 0)">
+              <rect x="0" y="476" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#fb7185" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">RAG</text>
             </g>
             
-            <g transform="translate(296, 0)">
-              <rect x="0" y="468" width="138" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#fb7185" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Data Privacy</text>
+            <g transform="translate(294, 0)">
+              <rect x="0" y="476" width="138" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#fb7185" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Data Privacy</text>
             </g>
             
-            <g transform="translate(448, 0)">
-              <rect x="0" y="468" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#fb7185" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Pii</text>
+            <g transform="translate(446, 0)">
+              <rect x="0" y="476" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#fb7185" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Pii</text>
             </g>
-            <rect x="170" y="456" width="132" height="4" rx="2" fill="#fb7185" opacity="0.90" /><rect x="314" y="456" width="66" height="4" rx="2" fill="#fecdd3" opacity="0.72" />
-  
+            <rect x="168" y="464" width="132" height="4" rx="2" fill="#fb7185" opacity="0.90" /><rect x="312" y="464" width="66" height="4" rx="2" fill="#fecdd3" opacity="0.72" />
+  <g transform="translate(706 136) scale(1.12) translate(-706 -136)">
       <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
       <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
       <rect x="748" y="176" width="100" height="10" rx="5" fill="#fb7185" opacity="0.88" />
@@ -83,12 +82,12 @@
           <path d="M798 314 L840 294" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
           <path d="M966 254 L922 268" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
           <path d="M966 314 L924 294" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
-        
+        </g>
 
-  <text x="976" y="512" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
-  <text x="976" y="532" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
   
-    <g transform="translate(992, 496)">
+    <g transform="translate(1018, 506)">
       <rect width="36" height="36" rx="10" fill="#00D4FF" />
       <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
       <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>

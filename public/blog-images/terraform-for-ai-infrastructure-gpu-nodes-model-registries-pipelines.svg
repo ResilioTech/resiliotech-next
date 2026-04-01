@@ -5,7 +5,7 @@
       <stop offset="0.5" stop-color="#0d2035" />
       <stop offset="1" stop-color="#132b44" />
     </linearGradient>
-    <linearGradient id="panel" x1="128" y1="84" x2="1068" y2="548" gradientUnits="userSpaceOnUse">
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
       <stop stop-color="#071521" />
       <stop offset="1" stop-color="#0d2131" />
     </linearGradient>
@@ -17,7 +17,7 @@
       <stop stop-color="rgba(250, 204, 21, 0.10)" />
       <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
     </radialGradient>
-    <linearGradient id="accentLine" x1="148" y1="0" x2="424" y2="0" gradientUnits="userSpaceOnUse">
+    <linearGradient id="accentLine" x1="140" y1="0" x2="416" y2="0" gradientUnits="userSpaceOnUse">
       <stop stop-color="#38bdf8" />
       <stop offset="1" stop-color="#14b8a6" />
     </linearGradient>
@@ -38,35 +38,34 @@
 
   <circle cx="289" cy="145" r="2" fill="#38bdf8" opacity="0.43" /><circle cx="462" cy="71" r="3" fill="#bae6fd" opacity="0.54" /><circle cx="635" cy="503" r="4" fill="#14b8a6" opacity="0.37" /><circle cx="808" cy="429" r="2" fill="#38bdf8" opacity="0.48" /><circle cx="981" cy="355" r="3" fill="#bae6fd" opacity="0.59" /><circle cx="66" cy="281" r="4" fill="#14b8a6" opacity="0.42" /><circle cx="239" cy="207" r="2" fill="#38bdf8" opacity="0.53" /><circle cx="412" cy="133" r="3" fill="#bae6fd" opacity="0.36" /><circle cx="585" cy="565" r="4" fill="#14b8a6" opacity="0.47" /><circle cx="758" cy="491" r="2" fill="#38bdf8" opacity="0.58" /><path d="M129 269 L276 380 L433 401" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M190 142 L270 194 L354 176" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M251 195 L354 278 L455 301" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
 
-  <rect x="128" y="84" width="940" height="464" rx="40" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
-  <rect x="146" y="102" width="904" height="428" rx="32" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
-  <rect x="148" y="118" width="4" height="396" rx="2" fill="url(#accentLine)" opacity="0.88" />
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
 
-  <rect x="170" y="140" width="188" height="40" rx="20" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
-  <text x="192" y="166" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">MLOPS</text>
+  <rect x="168" y="128" width="188" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="155" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">MLOPS</text>
 
-  <text x="170" y="222" fill="#f8fafc" font-size="32" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="170" dy="0">Terraform for AI Infrastructure:</tspan><tspan x="170" dy="33">GPU Nodes, Model Registries,</tspan><tspan x="170" dy="33">and Pipelines</tspan></text>
-  <text x="170" y="354" fill="#cbd5e1" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="520"><tspan x="170" dy="0">How to use Terraform to provision AI</tspan><tspan x="170" dy="33">infrastructure safely, with practical guidance on</tspan><tspan x="170" dy="33">GPU node pools, registries, pipeline…</tspan></text>
+  <text x="168" y="208" fill="#f8fafc" font-size="44" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="168" dy="0">Terraform for AI</tspan><tspan x="168" dy="46">Infrastructure: GPU</tspan><tspan x="168" dy="46">Nodes, Model</tspan><tspan x="168" dy="46">Registries, and</tspan><tspan x="168" dy="46">Pipelines</tspan></text>
   
-            <g transform="translate(170, 0)">
-              <rect x="0" y="468" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#38bdf8" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Terraform</text>
+            <g transform="translate(168, 0)">
+              <rect x="0" y="476" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#38bdf8" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Terraform</text>
             </g>
             
-            <g transform="translate(296, 0)">
-              <rect x="0" y="468" width="174" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#38bdf8" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">AI Infrastructure</text>
+            <g transform="translate(294, 0)">
+              <rect x="0" y="476" width="174" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#38bdf8" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">AI Infrastructure</text>
             </g>
             
-            <g transform="translate(484, 0)">
-              <rect x="0" y="468" width="173" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#38bdf8" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">GPU Optimization</text>
+            <g transform="translate(482, 0)">
+              <rect x="0" y="476" width="173" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#38bdf8" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">GPU Optimization</text>
             </g>
-            <rect x="170" y="456" width="155" height="4" rx="2" fill="#38bdf8" opacity="0.90" /><rect x="337" y="456" width="66" height="4" rx="2" fill="#bae6fd" opacity="0.72" />
-  
+            <rect x="168" y="464" width="155" height="4" rx="2" fill="#38bdf8" opacity="0.90" /><rect x="335" y="464" width="66" height="4" rx="2" fill="#bae6fd" opacity="0.72" />
+  <g transform="translate(706 136) scale(1.12) translate(-706 -136)">
       <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
       <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
       <rect x="748" y="176" width="100" height="10" rx="5" fill="#38bdf8" opacity="0.88" />
@@ -85,12 +84,12 @@
           <path d="M998 248 L1010 250 L1004 262" stroke="#38bdf8" stroke-width="5" fill="none" stroke-linecap="round" />
           <rect x="964" y="202" width="82" height="48" rx="18" fill="rgba(15, 23, 42, 0.82)" stroke="rgba(148, 163, 184, 0.14)" />
           <text x="982" y="234" fill="#f8fafc" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="760">40%</text>
-        
+        </g>
 
-  <text x="976" y="512" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
-  <text x="976" y="532" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
   
-    <g transform="translate(992, 496)">
+    <g transform="translate(1018, 506)">
       <rect width="36" height="36" rx="10" fill="#00D4FF" />
       <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
       <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>

@@ -5,7 +5,7 @@
       <stop offset="0.5" stop-color="#0d2035" />
       <stop offset="1" stop-color="#132b44" />
     </linearGradient>
-    <linearGradient id="panel" x1="128" y1="84" x2="1068" y2="548" gradientUnits="userSpaceOnUse">
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
       <stop stop-color="#08111f" />
       <stop offset="1" stop-color="#0f1d31" />
     </linearGradient>
@@ -17,7 +17,7 @@
       <stop stop-color="rgba(250, 204, 21, 0.10)" />
       <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
     </radialGradient>
-    <linearGradient id="accentLine" x1="148" y1="0" x2="424" y2="0" gradientUnits="userSpaceOnUse">
+    <linearGradient id="accentLine" x1="140" y1="0" x2="416" y2="0" gradientUnits="userSpaceOnUse">
       <stop stop-color="#fb7185" />
       <stop offset="1" stop-color="#f97316" />
     </linearGradient>
@@ -38,35 +38,34 @@
 
   <circle cx="889" cy="423" r="4" fill="#fb7185" opacity="0.55" /><circle cx="1062" cy="273" r="2" fill="#fecdd3" opacity="0.38" /><circle cx="147" cy="123" r="3" fill="#f97316" opacity="0.49" /><circle cx="320" cy="479" r="4" fill="#fb7185" opacity="0.60" /><circle cx="493" cy="329" r="2" fill="#fecdd3" opacity="0.43" /><circle cx="666" cy="179" r="3" fill="#f97316" opacity="0.54" /><circle cx="839" cy="535" r="4" fill="#fb7185" opacity="0.37" /><circle cx="1012" cy="385" r="2" fill="#fecdd3" opacity="0.48" /><circle cx="97" cy="235" r="3" fill="#f97316" opacity="0.59" /><circle cx="270" cy="85" r="4" fill="#fb7185" opacity="0.42" /><path d="M273 133 L374 198 L485 163" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M114 186 L238 282 L366 288" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" /><path d="M175 239 L322 276 L467 243" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
 
-  <rect x="128" y="84" width="940" height="464" rx="40" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
-  <rect x="146" y="102" width="904" height="428" rx="32" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
-  <rect x="148" y="118" width="4" height="396" rx="2" fill="url(#accentLine)" opacity="0.88" />
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
 
-  <rect x="170" y="140" width="188" height="40" rx="20" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
-  <text x="192" y="166" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">AI RELIABILITY</text>
+  <rect x="168" y="128" width="188" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="155" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">AI RELIABILITY</text>
 
-  <text x="170" y="222" fill="#f8fafc" font-size="32" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="170" dy="0">Vector Database Operations:</tspan><tspan x="170" dy="33">Scaling, Backup, and Disaster</tspan><tspan x="170" dy="33">Recovery</tspan></text>
-  <text x="170" y="354" fill="#cbd5e1" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="520"><tspan x="170" dy="0">Operational guidance for vector databases in</tspan><tspan x="170" dy="33">production, including capacity planning, backup</tspan><tspan x="170" dy="33">strategy, restore testing, and how to think about…</tspan></text>
+  <text x="168" y="222" fill="#f8fafc" font-size="52" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.4"><tspan x="168" dy="0">Vector Database</tspan><tspan x="168" dy="55">Operations: Scaling,</tspan><tspan x="168" dy="55">Backup, and</tspan><tspan x="168" dy="55">Disaster Recovery</tspan></text>
   
-            <g transform="translate(170, 0)">
-              <rect x="0" y="468" width="165" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#fb7185" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Vector Database</text>
+            <g transform="translate(168, 0)">
+              <rect x="0" y="476" width="165" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#fb7185" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Vector Database</text>
             </g>
             
-            <g transform="translate(349, 0)">
-              <rect x="0" y="468" width="176" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#fb7185" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Disaster Recovery</text>
+            <g transform="translate(347, 0)">
+              <rect x="0" y="476" width="176" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#fb7185" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Disaster Recovery</text>
             </g>
             
-            <g transform="translate(539, 0)">
-              <rect x="0" y="468" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
-              <circle cx="22" cy="489" r="5" fill="#fb7185" />
-              <text x="36" y="495" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Backup</text>
+            <g transform="translate(537, 0)">
+              <rect x="0" y="476" width="112" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+              <circle cx="22" cy="497" r="5" fill="#fb7185" />
+              <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Backup</text>
             </g>
-            <rect x="170" y="456" width="211" height="4" rx="2" fill="#fb7185" opacity="0.90" /><rect x="393" y="456" width="66" height="4" rx="2" fill="#fecdd3" opacity="0.72" />
-  
+            <rect x="168" y="464" width="211" height="4" rx="2" fill="#fb7185" opacity="0.90" /><rect x="391" y="464" width="66" height="4" rx="2" fill="#fecdd3" opacity="0.72" />
+  <g transform="translate(706 136) scale(1.12) translate(-706 -136)">
       <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
       <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
       <rect x="748" y="176" width="100" height="10" rx="5" fill="#fb7185" opacity="0.88" />
@@ -84,12 +83,12 @@
           <path d="M906 332 C938 324, 958 316, 968 302" stroke="#fb7185" stroke-width="5" fill="none" stroke-linecap="round" />
           <path d="M806 272 C838 294, 856 308, 872 324" stroke="#fecdd3" stroke-width="5" fill="none" stroke-linecap="round" />
           <rect x="770" y="212" width="248" height="156" rx="28" fill="none" stroke="rgba(148, 163, 184, 0.10)" />
-        
+        </g>
 
-  <text x="976" y="512" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
-  <text x="976" y="532" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
   
-    <g transform="translate(992, 496)">
+    <g transform="translate(1018, 506)">
       <rect width="36" height="36" rx="10" fill="#00D4FF" />
       <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
       <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
