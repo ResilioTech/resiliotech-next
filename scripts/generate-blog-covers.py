@@ -59,10 +59,19 @@ THEMES = {
 
 KIND_METADATA = {
     'shield': 'Secure by Design',
+    'audit': 'Compliance Controls',
     'network': 'Fault-Tolerant Systems',
     'layers': 'Structured AI Data',
+    'vector': 'Similarity Search',
+    'observability': 'Live Telemetry',
+    'slo': 'Error Budget Tracking',
+    'eval': 'Regression Scoring',
+    'loadtest': 'Latency Under Load',
     'dashboard': 'Operational Visibility',
+    'runbook': 'Incident Response',
     'gpu': 'Efficiency at Scale',
+    'token': 'Inference Cost Flow',
+    'experiment': 'Controlled Experiments',
     'pipeline': 'Production-Ready Workflows',
 }
 
@@ -324,19 +333,47 @@ def render_brand_logo(x: int, y: int):
     '''
 
 
-def choose_illustration(title: str, tags):
+def choose_visual_context(title: str, tags):
     text = (title + ' ' + ' '.join(tags)).lower()
-    if any(keyword in text for keyword in ('security', 'privacy', 'secret', 'audit', 'soc 2', 'soc2', 'compliance', 'auth')):
-        return 'shield'
+
+    if any(keyword in text for keyword in ('canary', 'shadow traffic', 'shadow-traffic', 'ab testing', 'ab-testing', 'experiment')):
+        return 'experiment', 'Canary Traffic Split'
+    if any(keyword in text for keyword in ('incident', 'runbook', 'response')):
+        return 'runbook', 'Runbook Automation'
+    if any(keyword in text for keyword in ('audit', 'audit logs', 'regulator', 'soc 2', 'soc2', 'compliance')):
+        return 'audit', 'Evidence Trails'
+    if any(keyword in text for keyword in ('vector', 'embedding', 'similarity', 'database')):
+        return 'vector', 'Similarity Search'
+    if any(keyword in text for keyword in ('slo', 'slos', 'sla', 'slas', 'error budget', 'burn rate', 'burn-rate')):
+        return 'slo', 'Error Budget Tracking'
+    if any(keyword in text for keyword in ('eval', 'evaluation', 'regression', 'regressions')):
+        return 'eval', 'Regression Scoring'
+    if any(keyword in text for keyword in ('load testing', 'load-testing', 'latency', 'throughput test', 'stress test')):
+        return 'loadtest', 'Latency Under Load'
+    if any(keyword in text for keyword in ('observability', 'dashboard', 'dashboards', 'metrics', 'telemetry', 'traces')):
+        return 'observability', 'Live Telemetry'
     if any(keyword in text for keyword in ('disaster', 'failover', 'multi-region', 'gateway', 'routing', 'traffic')):
-        return 'network'
-    if any(keyword in text for keyword in ('rag', 'vector', 'retrieval', 'feature store', 'data', 'embedding')):
-        return 'layers'
-    if any(keyword in text for keyword in ('observability', 'incident', 'slo', 'eval', 'testing', 'monitoring', 'metrics')):
-        return 'dashboard'
-    if any(keyword in text for keyword in ('gpu', 'inference', 'capacity', 'cost', 'autoscaling', 'token', 'serving')):
-        return 'gpu'
-    return 'pipeline'
+        return 'network', 'Traffic Routing'
+    if any(keyword in text for keyword in ('rag', 'retrieval', 'feature store', 'data', 'pii')):
+        return 'layers', 'Retrieval Pipeline'
+    if any(keyword in text for keyword in ('security', 'privacy', 'secret', 'auth', 'abuse', 'private ai')):
+        return 'shield', 'Secure by Design'
+    if any(keyword in text for keyword in ('autoscaling', 'capacity')):
+        return 'gpu', 'Capacity at Scale'
+    if any(keyword in text for keyword in ('batching', 'throughput', 'latency')):
+        return 'gpu', 'Throughput Tuning'
+    if any(keyword in text for keyword in ('token', 'economics', 'spend', 'cost control', 'cost-controls', 'inference spend')):
+        return 'token', 'Inference Cost Flow'
+    if any(keyword in text for keyword in ('rollback', 'versioning', 'terraform', 'mlops', 'ci/cd', 'ci-cd', 'platform')):
+        return 'pipeline', 'Platform Workflows'
+    if any(keyword in text for keyword in ('testing', 'monitoring')):
+        return 'dashboard', 'Operational Signals'
+    if any(keyword in text for keyword in ('serving', 'inference', 'gpu', 'vllm', 'multi-model', 'spot instances')):
+        return 'gpu', 'Serving Efficiency'
+    if any(keyword in text for keyword in ('pipeline', 'kubernetes')):
+        return 'pipeline', 'Platform Workflows'
+
+    return 'pipeline', KIND_METADATA['pipeline']
 
 
 def render_backdrop(seed: int, accent: str, accent_soft: str, accent_two: str):
@@ -366,7 +403,7 @@ def render_backdrop(seed: int, accent: str, accent_soft: str, accent_two: str):
     return ''.join(dots + lines)
 
 
-def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: str):
+def render_visual_panel(kind: str, label: str, accent: str, accent_two: str, accent_soft: str):
     panel_markup = f'''
       <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
       <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
@@ -374,7 +411,7 @@ def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: st
       <rect x="860" y="176" width="48" height="10" rx="5" fill="{accent_two}" opacity="0.62" />
       <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
       <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">{escape(KIND_METADATA[kind])}</text>
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">{escape(label)}</text>
     '''
 
     if kind == 'shield':
@@ -387,6 +424,29 @@ def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: st
           <path d="M798 314 L840 294" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
           <path d="M966 254 L922 268" stroke="{accent_two}" stroke-width="4" stroke-linecap="round" />
           <path d="M966 314 L924 294" stroke="{accent_two}" stroke-width="4" stroke-linecap="round" />
+        '''
+    elif kind == 'audit':
+        body = f'''
+          <rect x="776" y="214" width="112" height="146" rx="22" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.18)" />
+          <rect x="914" y="226" width="108" height="132" rx="22" fill="rgba(9, 14, 26, 0.84)" stroke="rgba(148, 163, 184, 0.16)" />
+          <rect x="800" y="238" width="64" height="10" rx="5" fill="{accent}" opacity="0.90" />
+          <rect x="800" y="262" width="52" height="8" rx="4" fill="rgba(148, 163, 184, 0.30)" />
+          <rect x="800" y="282" width="68" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+          <rect x="800" y="302" width="58" height="8" rx="4" fill="rgba(148, 163, 184, 0.20)" />
+          <circle cx="934" cy="254" r="9" fill="rgba(15, 23, 42, 0.90)" stroke="{accent_two}" stroke-width="3" />
+          <path d="M930 254 L933 257 L939 250" stroke="{accent_two}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="934" cy="286" r="9" fill="rgba(15, 23, 42, 0.90)" stroke="{accent}" stroke-width="3" />
+          <path d="M930 286 L933 289 L939 282" stroke="{accent}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="934" cy="318" r="9" fill="rgba(15, 23, 42, 0.90)" stroke="{accent_soft}" stroke-width="3" />
+          <rect x="950" y="249" width="48" height="8" rx="4" fill="rgba(148, 163, 184, 0.26)" />
+          <rect x="950" y="281" width="42" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+          <rect x="950" y="313" width="38" height="8" rx="4" fill="rgba(148, 163, 184, 0.22)" />
+          <path d="M888 292 H914" stroke="{accent_two}" stroke-width="4" stroke-linecap="round" />
+          <circle cx="898" cy="340" r="12" fill="rgba(15, 23, 42, 0.92)" stroke="{accent}" stroke-width="3" />
+          <circle cx="944" cy="340" r="12" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_two}" stroke-width="3" />
+          <circle cx="990" cy="340" r="12" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_soft}" stroke-width="3" />
+          <path d="M910 340 H932" stroke="rgba(148, 163, 184, 0.24)" stroke-width="3" stroke-linecap="round" />
+          <path d="M956 340 H978" stroke="rgba(148, 163, 184, 0.24)" stroke-width="3" stroke-linecap="round" />
         '''
     elif kind == 'network':
         body = f'''
@@ -410,6 +470,94 @@ def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: st
           <circle cx="882" cy="290" r="7" fill="{accent_two}" />
           <circle cx="848" cy="334" r="7" fill="{accent_soft}" />
         '''
+    elif kind == 'vector':
+        body = f'''
+          <circle cx="886" cy="290" r="78" fill="rgba(9, 14, 26, 0.84)" stroke="rgba(148, 163, 184, 0.14)" />
+          <circle cx="836" cy="254" r="8" fill="{accent}" />
+          <circle cx="868" cy="318" r="8" fill="{accent_two}" />
+          <circle cx="914" cy="274" r="8" fill="{accent_soft}" />
+          <circle cx="948" cy="326" r="8" fill="{accent}" opacity="0.92" />
+          <circle cx="906" cy="338" r="8" fill="{accent_two}" opacity="0.92" />
+          <circle cx="966" cy="254" r="10" fill="rgba(15, 23, 42, 0.95)" stroke="{accent}" stroke-width="4" />
+          <path d="M966 254 L914 274" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
+          <path d="M966 254 L948 326" stroke="{accent_two}" stroke-width="4" stroke-linecap="round" opacity="0.88" />
+          <path d="M966 254 L906 338" stroke="{accent_soft}" stroke-width="4" stroke-linecap="round" opacity="0.82" />
+          <path d="M820 290 H952" stroke="rgba(148, 163, 184, 0.12)" stroke-width="2" stroke-dasharray="8 8" />
+          <path d="M886 224 V356" stroke="rgba(148, 163, 184, 0.12)" stroke-width="2" stroke-dasharray="8 8" />
+          <rect x="972" y="214" width="52" height="32" rx="16" fill="rgba(15, 23, 42, 0.90)" stroke="rgba(148, 163, 184, 0.12)" />
+          <text x="998" y="235" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="700">Q</text>
+        '''
+    elif kind == 'observability':
+        body = f'''
+          <rect x="774" y="208" width="254" height="162" rx="26" fill="rgba(9, 14, 26, 0.92)" stroke="rgba(148, 163, 184, 0.16)" />
+          <rect x="792" y="226" width="74" height="14" rx="7" fill="{accent}" opacity="0.90" />
+          <rect x="878" y="226" width="42" height="14" rx="7" fill="{accent_two}" opacity="0.70" />
+          <rect x="932" y="226" width="58" height="14" rx="7" fill="rgba(148, 163, 184, 0.20)" />
+          <rect x="792" y="254" width="108" height="78" rx="18" fill="rgba(15, 23, 42, 0.78)" stroke="rgba(148, 163, 184, 0.12)" />
+          <path d="M804 312 C818 288, 828 302, 842 274 C852 254, 864 286, 884 266" stroke="{accent}" stroke-width="4" fill="none" stroke-linecap="round" />
+          <path d="M804 300 C816 294, 828 304, 840 294 C852 284, 866 286, 884 280" stroke="{accent_soft}" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.84" />
+          <circle cx="842" cy="274" r="6" fill="{accent}" />
+          <circle cx="884" cy="266" r="6" fill="{accent_soft}" />
+          <rect x="914" y="254" width="96" height="78" rx="18" fill="rgba(15, 23, 42, 0.78)" stroke="rgba(148, 163, 184, 0.12)" />
+          <circle cx="962" cy="293" r="28" fill="none" stroke="rgba(148, 163, 184, 0.14)" stroke-width="8" />
+          <path d="M962 265 A28 28 0 1 1 939 308" stroke="{accent_two}" stroke-width="8" fill="none" stroke-linecap="round" />
+          <text x="962" y="299" text-anchor="middle" fill="#f8fafc" font-size="18" font-family="Inter, Arial, sans-serif" font-weight="760">99%</text>
+          <rect x="792" y="344" width="218" height="14" rx="7" fill="rgba(148, 163, 184, 0.12)" />
+          <rect x="792" y="344" width="166" height="14" rx="7" fill="{accent}" opacity="0.88" />
+          <rect x="792" y="366" width="66" height="8" rx="4" fill="rgba(148, 163, 184, 0.22)" />
+          <rect x="868" y="366" width="52" height="8" rx="4" fill="rgba(148, 163, 184, 0.18)" />
+          <rect x="930" y="366" width="80" height="8" rx="4" fill="rgba(148, 163, 184, 0.14)" />
+        '''
+    elif kind == 'slo':
+        body = f'''
+          <rect x="780" y="214" width="116" height="144" rx="24" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+          <circle cx="838" cy="274" r="34" fill="none" stroke="rgba(148, 163, 184, 0.14)" stroke-width="10" />
+          <path d="M838 240 A34 34 0 1 1 812 322" stroke="{accent}" stroke-width="10" fill="none" stroke-linecap="round" />
+          <text x="838" y="280" text-anchor="middle" fill="#f8fafc" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="780">72%</text>
+          <text x="838" y="304" text-anchor="middle" fill="{accent_soft}" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="650">budget left</text>
+          <rect x="916" y="214" width="110" height="58" rx="20" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+          <text x="971" y="238" text-anchor="middle" fill="#f8fafc" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="720">Burn Rate</text>
+          <text x="971" y="260" text-anchor="middle" fill="{accent_two}" font-size="24" font-family="Inter, Arial, sans-serif" font-weight="800">1.3×</text>
+          <rect x="916" y="286" width="110" height="72" rx="20" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+          <path d="M930 338 C946 334, 958 314, 972 304 C986 294, 996 298, 1012 282" stroke="{accent}" stroke-width="4" fill="none" stroke-linecap="round" />
+          <path d="M930 326 H1012" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" />
+          <path d="M930 314 H1012" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" />
+          <circle cx="972" cy="304" r="6" fill="{accent_two}" />
+        '''
+    elif kind == 'eval':
+        body = f'''
+          <rect x="776" y="214" width="112" height="144" rx="24" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+          <text x="832" y="238" text-anchor="middle" fill="#f8fafc" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="720">Baseline</text>
+          <rect x="796" y="254" width="72" height="12" rx="6" fill="rgba(148, 163, 184, 0.16)" />
+          <rect x="796" y="254" width="60" height="12" rx="6" fill="{accent}" opacity="0.90" />
+          <rect x="796" y="280" width="72" height="12" rx="6" fill="rgba(148, 163, 184, 0.16)" />
+          <rect x="796" y="280" width="48" height="12" rx="6" fill="{accent_two}" opacity="0.84" />
+          <rect x="796" y="306" width="72" height="12" rx="6" fill="rgba(148, 163, 184, 0.16)" />
+          <rect x="796" y="306" width="66" height="12" rx="6" fill="{accent_soft}" opacity="0.80" />
+          <rect x="914" y="214" width="112" height="144" rx="24" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+          <text x="970" y="238" text-anchor="middle" fill="#f8fafc" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="720">Candidate</text>
+          <circle cx="938" cy="272" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="{accent}" stroke-width="3" />
+          <path d="M934 272 L937 275 L943 268" stroke="{accent}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="954" y="268" width="44" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+          <circle cx="938" cy="300" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_two}" stroke-width="3" />
+          <path d="M934 296 L942 304 M942 296 L934 304" stroke="{accent_two}" stroke-width="3" stroke-linecap="round" />
+          <rect x="954" y="296" width="38" height="8" rx="4" fill="rgba(148, 163, 184, 0.20)" />
+          <circle cx="938" cy="328" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_soft}" stroke-width="3" />
+          <path d="M934 328 L937 331 L943 324" stroke="{accent_soft}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="954" y="324" width="52" height="8" rx="4" fill="rgba(148, 163, 184, 0.18)" />
+        '''
+    elif kind == 'loadtest':
+        body = f'''
+          <rect x="776" y="214" width="250" height="148" rx="26" fill="rgba(9, 14, 26, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+          <path d="M796 338 C818 314, 836 260, 858 246 C880 232, 900 278, 924 286 C944 292, 962 252, 988 226" stroke="{accent}" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M796 328 C822 320, 846 300, 864 296 C884 292, 902 298, 922 306 C946 316, 966 318, 988 302" stroke="{accent_two}" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.85" />
+          <path d="M796 350 H1006" stroke="rgba(148, 163, 184, 0.12)" stroke-width="2" />
+          <path d="M796 308 H1006" stroke="rgba(148, 163, 184, 0.08)" stroke-width="2" />
+          <rect x="798" y="226" width="60" height="14" rx="7" fill="{accent_soft}" opacity="0.22" />
+          <rect x="938" y="226" width="70" height="18" rx="9" fill="rgba(15, 23, 42, 0.94)" stroke="{accent_two}" stroke-width="3" />
+          <text x="973" y="239" text-anchor="middle" fill="#f8fafc" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="720">p95 420ms</text>
+          <circle cx="924" cy="286" r="7" fill="{accent_two}" />
+        '''
     elif kind == 'dashboard':
         body = f'''
           <rect x="782" y="220" width="90" height="62" rx="18" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
@@ -424,6 +572,28 @@ def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: st
           <rect x="888" y="306" width="14" height="38" rx="7" fill="{accent_two}" opacity="0.78" />
           <rect x="912" y="294" width="14" height="50" rx="7" fill="{accent_soft}" opacity="0.78" />
         '''
+    elif kind == 'runbook':
+        body = f'''
+          <rect x="776" y="216" width="92" height="70" rx="18" fill="rgba(9, 14, 26, 0.92)" stroke="rgba(148, 163, 184, 0.18)" />
+          <path d="M822 232 L844 272 H800 Z" fill="rgba(127, 29, 29, 0.32)" stroke="{accent}" stroke-width="4" stroke-linejoin="round" />
+          <path d="M822 244 V256" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
+          <circle cx="822" cy="264" r="3" fill="{accent}" />
+          <rect x="896" y="208" width="126" height="150" rx="24" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.16)" />
+          <rect x="922" y="234" width="56" height="10" rx="5" fill="{accent_two}" opacity="0.90" />
+          <circle cx="922" cy="270" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="{accent}" stroke-width="3" />
+          <path d="M918 270 L921 273 L927 266" stroke="{accent}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="938" y="266" width="52" height="8" rx="4" fill="rgba(148, 163, 184, 0.26)" />
+          <circle cx="922" cy="296" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_two}" stroke-width="3" />
+          <path d="M918 296 L921 299 L927 292" stroke="{accent_two}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="938" y="292" width="44" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+          <circle cx="922" cy="322" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_soft}" stroke-width="3" />
+          <rect x="938" y="318" width="48" height="8" rx="4" fill="rgba(148, 163, 184, 0.22)" />
+          <path d="M868 252 C882 252, 892 252, 904 252" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
+          <path d="M836 322 C872 318, 888 310, 904 294" stroke="{accent_two}" stroke-width="4" stroke-linecap="round" />
+          <circle cx="878" cy="324" r="14" fill="rgba(15, 23, 42, 0.92)" stroke="{accent_soft}" stroke-width="3" />
+          <path d="M872 324 H884" stroke="{accent_soft}" stroke-width="3" stroke-linecap="round" />
+          <path d="M878 318 V330" stroke="{accent_soft}" stroke-width="3" stroke-linecap="round" />
+        '''
     elif kind == 'gpu':
         body = f'''
           <rect x="776" y="214" width="168" height="136" rx="28" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
@@ -436,6 +606,42 @@ def render_visual_panel(kind: str, accent: str, accent_two: str, accent_soft: st
           <path d="M998 248 L1010 250 L1004 262" stroke="{accent}" stroke-width="5" fill="none" stroke-linecap="round" />
           <rect x="964" y="202" width="82" height="48" rx="18" fill="rgba(15, 23, 42, 0.82)" stroke="rgba(148, 163, 184, 0.14)" />
           <text x="982" y="234" fill="#f8fafc" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="760">40%</text>
+        '''
+    elif kind == 'token':
+        body = f'''
+          <circle cx="832" cy="300" r="42" fill="rgba(15, 23, 42, 0.92)" stroke="{accent}" stroke-width="4" />
+          <circle cx="832" cy="300" r="24" fill="rgba(9, 14, 26, 0.84)" stroke="rgba(148, 163, 184, 0.14)" />
+          <path d="M820 300 H844" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
+          <path d="M832 288 V312" stroke="{accent}" stroke-width="4" stroke-linecap="round" />
+          <rect x="904" y="220" width="102" height="18" rx="9" fill="rgba(148, 163, 184, 0.16)" />
+          <rect x="904" y="220" width="56" height="18" rx="9" fill="{accent}" opacity="0.90" />
+          <rect x="904" y="254" width="128" height="18" rx="9" fill="rgba(148, 163, 184, 0.16)" />
+          <rect x="904" y="254" width="84" height="18" rx="9" fill="{accent_two}" opacity="0.84" />
+          <rect x="904" y="288" width="144" height="18" rx="9" fill="rgba(148, 163, 184, 0.16)" />
+          <rect x="904" y="288" width="112" height="18" rx="9" fill="{accent_soft}" opacity="0.80" />
+          <path d="M892 334 C922 318, 950 300, 982 248" stroke="{accent}" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M970 248 L982 248 L978 260" stroke="{accent}" stroke-width="5" fill="none" stroke-linecap="round" />
+          <rect x="928" y="334" width="108" height="34" rx="17" fill="rgba(15, 23, 42, 0.84)" stroke="rgba(148, 163, 184, 0.12)" />
+          <text x="982" y="357" text-anchor="middle" fill="#f8fafc" font-size="20" font-family="Inter, Arial, sans-serif" font-weight="760">$ / 1M</text>
+        '''
+    elif kind == 'experiment':
+        body = f'''
+          <rect x="780" y="242" width="76" height="46" rx="18" fill="rgba(15, 23, 42, 0.92)" stroke="rgba(148, 163, 184, 0.14)" />
+          <text x="818" y="271" text-anchor="middle" fill="#f8fafc" font-size="18" font-family="Inter, Arial, sans-serif" font-weight="760">100%</text>
+          <rect x="902" y="214" width="106" height="60" rx="22" fill="rgba(9, 14, 26, 0.90)" stroke="{accent}" stroke-width="3" />
+          <text x="955" y="242" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760">CANARY</text>
+          <text x="955" y="262" text-anchor="middle" fill="{accent_soft}" font-size="20" font-family="Inter, Arial, sans-serif" font-weight="800">10%</text>
+          <rect x="902" y="300" width="106" height="60" rx="22" fill="rgba(9, 14, 26, 0.90)" stroke="{accent_two}" stroke-width="3" />
+          <text x="955" y="328" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760">STABLE</text>
+          <text x="955" y="348" text-anchor="middle" fill="{accent_soft}" font-size="20" font-family="Inter, Arial, sans-serif" font-weight="800">90%</text>
+          <path d="M856 264 C878 264, 888 252, 902 244" stroke="{accent}" stroke-width="5" fill="none" stroke-linecap="round" />
+          <path d="M856 266 C878 278, 890 294, 902 320" stroke="{accent_two}" stroke-width="5" fill="none" stroke-linecap="round" />
+          <circle cx="874" cy="258" r="8" fill="{accent}" />
+          <circle cx="874" cy="284" r="8" fill="{accent_two}" />
+          <rect x="790" y="324" width="72" height="18" rx="9" fill="rgba(148, 163, 184, 0.18)" />
+          <rect x="790" y="324" width="18" height="18" rx="9" fill="{accent}" opacity="0.92" />
+          <rect x="790" y="350" width="72" height="18" rx="9" fill="rgba(148, 163, 184, 0.18)" />
+          <rect x="790" y="350" width="54" height="18" rx="9" fill="{accent_two}" opacity="0.82" />
         '''
     else:
         body = f'''
@@ -468,7 +674,7 @@ def build_svg(title: str, description: str, category: str, tags, slug: str):
         layout['title_font_size'],
         layout['title_y'],
     )
-    illustration = choose_illustration(title, tags)
+    illustration, illustration_label = choose_visual_context(title, tags)
     badge_width = max(188, min(292, int(estimate_width(theme['badge'], 15) + 42)))
     seed = make_seed(slug)
 
@@ -521,7 +727,7 @@ def build_svg(title: str, description: str, category: str, tags, slug: str):
 
   {title_markup}
   {render_tags(tags, theme['accent'], theme['accent_soft'], TAGS_Y)}
-  {render_visual_panel(illustration, theme['accent'], theme['accent_two'], theme['accent_soft'])}
+  {render_visual_panel(illustration, illustration_label, theme['accent'], theme['accent_two'], theme['accent_soft'])}
 
   <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
   <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>

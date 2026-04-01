@@ -17,7 +17,7 @@
 - **Cross-linking**: Enhanced stat callouts with direct links to supporting case studies
 
 ### 📝 Blog Content Updates
-- **Freshness**: Changed "Weekly updates" → "Occasional updates on DevOps, Cloud & MLOps" 
+- **Freshness**: Changed "Weekly updates" → "Occasional updates on AI Reliability, MLOps & Infrastructure" 
 - **Timestamps**: Enhanced blog post layout with "Updated on" display (frontmatter supported)
 
 ### 🔍 Technical SEO

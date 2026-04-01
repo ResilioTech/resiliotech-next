@@ -68,25 +68,4 @@ export const analytics = {
     });
   },
 
-  // Navigation events
-  trackNavigation: (section: string, destination: string) => {
-    trackEvent('navigation_click', {
-      action: 'click',
-      category: 'navigation',
-      label: `${section} → ${destination}`,
-      nav_section: section,
-      destination: destination
-    });
-  },
-
-  // Content engagement
-  trackContentView: (contentType: string, contentName: string) => {
-    trackEvent('content_view', {
-      action: 'view',
-      category: 'content',
-      label: contentName,
-      content_type: contentType,
-      content_name: contentName
-    });
-  }
 };

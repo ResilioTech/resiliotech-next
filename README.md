@@ -1,23 +1,23 @@
-# Resiliotech - Next.js Website
+# Resilio Tech — AI Infrastructure & Reliability
 
-> A modern, high-performance DevOps consultancy website built with Next.js 14, TypeScript, and Tailwind CSS.
+> A modern, high-performance website for Resilio Tech — an AI Infrastructure & Reliability company. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ![Resiliotech Banner](public/og-image.png)
 
 ## 🚀 Overview
 
-Resiliotech is a cutting-edge DevOps consultancy website showcasing modern infrastructure solutions, cloud automation, and enterprise-grade development services. Built with performance, accessibility, and SEO optimization in mind.
+Resilio Tech helps companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure by engineers who've run systems at enterprise scale. Built with performance, accessibility, and SEO optimization in mind.
 
 ### ✨ Key Features
 
 - **🏗️ Modern Architecture**: Next.js 14 with App Router, TypeScript, and Server Components
 - **🎨 Beautiful UI**: Custom dark theme with smooth animations using Framer Motion
 - **📱 Responsive Design**: Mobile-first approach with Tailwind CSS
-- **📝 Content Management**: MDX-based blog system with syntax highlighting
+- **📝 Content Management**: Markdown/MDX blog system with file-based content in `content/blog/`
 - **🚀 Performance**: Optimized with image optimization, code splitting, and caching
 - **♿ Accessible**: WCAG compliant with semantic HTML and proper ARIA attributes
 - **🔍 SEO Optimized**: Structured data, meta tags, and sitemap generation
-- **📧 Newsletter**: Integrated newsletter signup with Netlify Forms
+- **📊 Analytics**: Google Analytics 4 & Microsoft Clarity with cookie consent
 - **🔒 Security**: CSP headers, security best practices, and form validation
 
 ## 🛠️ Tech Stack
@@ -32,7 +32,7 @@ Resiliotech is a cutting-edge DevOps consultancy website showcasing modern infra
 ### Content & Forms
 - **Content**: [MDX](https://mdxjs.com/) with [remark](https://remark.js.org/) & [rehype](https://github.com/rehypejs/rehype)
 - **Forms**: [React Hook Form](https://react-hook-form.com/) with [Zod](https://zod.dev/) validation
-- **Search**: [Fuse.js](https://fusejs.io/) for fuzzy search functionality
+- **Search**: Client-side blog search and filtering
 
 ### Development Tools
 - **Build Tool**: Next.js built-in webpack configuration
@@ -44,67 +44,61 @@ Resiliotech is a cutting-edge DevOps consultancy website showcasing modern infra
 
 ```
 resiliotech-next/
+├── 📂 content/
+│   ├── 📂 blog/               # Markdown/MDX blog posts
+│   ├── changelog.md            # Changelog content
+│   └── roadmap.md              # Roadmap content
+│
 ├── 📂 src/
-│   ├── 📂 app/                    # Next.js App Router pages
-│   │   ├── 📂 about/              # About page
-│   │   ├── 📂 blog/               # Blog listing and individual posts
-│   │   ├── 📂 contact/            # Contact form page
-│   │   ├── 📂 products/           # Product showcase pages
-│   │   ├── 📂 projects/           # Project portfolio
-│   │   ├── 📂 services/           # Service detail pages
-│   │   ├── layout.tsx             # Root layout with navigation
-│   │   ├── page.tsx               # Homepage
-│   │   ├── not-found.tsx          # Custom 404 page
-│   │   └── globals.css            # Global styles
+│   ├── 📂 app/                 # Next.js App Router pages
+│   │   ├── 📂 (legal)/         # Legal pages (privacy, terms, cookies)
+│   │   ├── 📂 about/           # About page
+│   │   ├── 📂 blog/            # Blog listing and [slug] posts
+│   │   ├── 📂 contact/         # Contact form page
+│   │   ├── 📂 services/        # Services page
+│   │   ├── layout.tsx           # Root layout
+│   │   ├── page.tsx             # Homepage
+│   │   └── sitemap.ts           # Dynamic sitemap generator
 │   │
-│   ├── 📂 components/             # Reusable React components
-│   │   ├── 📂 about/              # About page components
-│   │   ├── 📂 blog/               # Blog-related components
-│   │   ├── 📂 contact/            # Contact form components
-│   │   ├── 📂 layout/             # Layout components (Header, Footer)
-│   │   ├── 📂 sections/           # Homepage sections
-│   │   ├── 📂 seo/                # SEO components
-│   │   └── 📂 ui/                 # Generic UI components
+│   ├── 📂 components/           # Reusable React components
+│   │   ├── 📂 about/            # About page components
+│   │   ├── 📂 analytics/        # Cookie consent & analytics
+│   │   ├── 📂 blog/             # Blog components
+│   │   ├── 📂 contact/          # Contact form components
+│   │   ├── 📂 layout/           # Navigation & Footer
+│   │   ├── 📂 sections/         # Homepage sections
+│   │   ├── 📂 seo/              # Structured data components
+│   │   └── 📂 ui/               # Generic UI components
 │   │
-│   ├── 📂 content/                # Content files
-│   │   ├── 📂 blog/               # MDX blog posts
-│   │   ├── authors.json           # Author information
-│   │   └── categories.json        # Blog categories
+│   ├── 📂 data/                 # Static data files
+│   │   ├── company.ts           # Company values & milestones
+│   │   └── faq.ts               # FAQ data
 │   │
-│   ├── 📂 data/                   # Static data files
-│   │   ├── company.ts             # Company information
-│   │   ├── product-features.ts    # Product feature data
-│   │   └── sample-projects.ts     # Project portfolio data
+│   ├── 📂 lib/                  # Utility functions
+│   │   ├── analytics.ts         # GA4 event tracking helpers
+│   │   ├── blog-data.ts         # Blog content processing (server-only)
+│   │   ├── blog-utils.ts        # Blog utilities (client-safe)
+│   │   ├── config.ts            # Site configuration
+│   │   └── utils.ts             # General utilities (cn)
 │   │
-│   ├── 📂 lib/                    # Utility functions
-│   │   ├── blog-data.ts           # Blog content processing
-│   │   └── utils.ts               # General utilities
+│   ├── 📂 styles/               # CSS files
+│   │   └── animations.css       # Custom animation classes
 │   │
-│   └── 📂 types/                  # TypeScript type definitions
-│       ├── blog.ts                # Blog-related types
-│       ├── company.ts             # Company data types
-│       └── projects.ts            # Project types
+│   └── 📂 types/                # TypeScript type definitions
+│       ├── blog.ts              # Blog-related types
+│       └── company.ts           # Company data types
 │
-├── 📂 public/                     # Static assets
-│   ├── 📂 blog-images/            # Blog post images
-│   ├── 📂 icons/                  # Favicon and app icons
-│   ├── 📂 og-images/              # Open Graph images
-│   ├── 📂 project-images/         # Project thumbnails
-│   ├── 📂 team/                   # Team member photos
-│   ├── 📂 tech-logos/             # Technology logos (SVG)
-│   │   ├── aws.svg                # Cloud platform logos
-│   │   ├── docker.svg             # Container technology
-│   │   ├── kubernetes.svg         # Orchestration tools
-│   │   └── README.md              # Logo usage guide
-│   ├── favicon.ico                # Website favicon
-│   ├── site.webmanifest           # PWA manifest
-│   └── _redirects                 # Netlify redirects
+├── 📂 public/                   # Static assets
+│   ├── 📂 blog-images/          # Blog post cover images
+│   ├── 📂 icons/                # PWA icons
+│   ├── 📂 og-images/            # Open Graph images
+│   ├── 📂 team/                 # Team placeholder images
+│   └── 📂 tech-logos/           # Technology stack SVG logos
 │
-├── next.config.js                 # Next.js configuration
-├── tailwind.config.ts             # Tailwind CSS configuration
-├── tsconfig.json                  # TypeScript configuration
-├── netlify.toml                   # Netlify build configuration
-└── package.json                   # Dependencies and scripts
+├── next.config.js               # Next.js + MDX + PWA configuration
+├── tailwind.config.ts           # Tailwind CSS configuration
+├── netlify.toml                 # Netlify build & headers
+└── package.json                 # Dependencies and scripts
 ```
 
 ## 🚀 Getting Started
@@ -193,29 +187,29 @@ Our design uses a sophisticated dark theme with accent colors:
 
 ### Blog Posts
 
-Blog posts are written in MDX format and stored in `src/content/blog/`. Each post includes:
+Blog posts are written in MDX format and stored in `content/blog/`. Each post includes:
 
 ```markdown
 ---
 title: "Your Blog Post Title"
-excerpt: "Brief description of the post"
+description: "Brief description of the post"
 date: "2024-01-15"
-author: "author-id"
-category: "category-id"  
-tags: ["devops", "kubernetes", "automation"]
-image: "/blog-images/your-image.jpg"
+updatedAt: "2024-01-20"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["mlops", "kubernetes", "ai-reliability"]
+coverImage: "/blog-images/your-image.svg"
+featured: true
 ---
 
-Your MDX content here with React components support...
+Your content here...
 ```
 
 ### Adding New Content
 
-1. **Blog Posts**: Create new `.mdx` files in `src/content/blog/`
-2. **Authors**: Update `src/content/authors.json`
-3. **Categories**: Modify `src/content/categories.json`
-4. **Projects**: Edit `src/data/sample-projects.ts`
-5. **Images**: Add to respective folders in `public/`
+1. **Blog Posts**: Create new `.md` or `.mdx` files in `content/blog/`
+2. **Cover Images**: Add to `public/blog-images/`
+3. **Company Data**: Edit `src/data/company.ts` and `src/data/faq.ts`
 
 ## 🌐 SEO & Performance
 
@@ -259,15 +253,6 @@ Target metrics:
 - Protected API routes
 - Safe external link handling
 
-## 📧 Newsletter Integration
-
-The website includes newsletter signup functionality using Netlify Forms:
-
-1. **Forms**: Located in contact page and modal
-2. **Processing**: Netlify handles form submissions
-3. **Storage**: Submissions stored in Netlify dashboard
-4. **Notifications**: Email alerts for new signups
-
 ## 🚀 Deployment
 
 ### Netlify Deployment
@@ -307,7 +292,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 1. **Colors**: Modify `tailwind.config.ts`
 2. **Typography**: Update font imports in `layout.tsx`
-3. **Content**: Edit files in `src/data/` and `src/content/`
+3. **Content**: Edit files in `src/data/` and `content/`
 4. **Components**: Customize components in `src/components/`
 
 ## 🤝 Contributing
@@ -350,7 +335,7 @@ For support and questions:
 ---
 
 <p align="center">
-  <strong>Built with ❤️ by the Resiliotech Team</strong>
+  <strong>Built with ❤️ by the Resilio Tech Team</strong>
 </p>
 
 <p align="center">

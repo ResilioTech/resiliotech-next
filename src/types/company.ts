@@ -1,19 +1,3 @@
-export interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  bio: string;
-  avatar?: string;
-  expertise: string[];
-  social: {
-    linkedin?: string;
-    github?: string;
-    twitter?: string;
-    email?: string;
-  };
-  experience: string;
-}
-
 export interface CompanyValue {
   id: string;
   title: string;

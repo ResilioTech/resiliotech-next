@@ -44,7 +44,7 @@ const nextConfig = {
   compress: true,
   experimental: {
     mdxRs: true,
-    optimizePackageImports: ['lucide-react', 'date-fns'],
+    optimizePackageImports: ['lucide-react'],
   },
   // Bundle optimization
   compiler: {
