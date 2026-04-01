@@ -19,8 +19,10 @@ export const AUTHORS: Author[] = [
     bio: "Building AI infrastructure tools and sharing knowledge to help companies deploy ML systems reliably.",
     avatar: "/team/placeholder-1.jpg",
     social: {
-      linkedin: "resilio-tech",
-      github: "resiliotech"
+      linkedin: "company/resiliotech",
+      github: "resiliotech",
+      email: "contact@resiliotech.com",
+      youtube: "@ResilioTech"
     }
   }
 ]

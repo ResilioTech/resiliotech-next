@@ -7,6 +7,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents'
 import { SocialShare } from '@/components/blog/SocialShare'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { MarkdownContent } from '@/components/blog/MarkdownContent'
+import { StructuredData } from '@/components/seo/StructuredData'
 
 interface BlogPostPageProps {
   params: {
@@ -72,9 +73,38 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
+  const blogPostSchema = {
+    headline: post.title,
+    description: post.description,
+    image: post.coverImage,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt || post.publishedAt,
+    author: {
+      name: post.authorData.name,
+      url: `https://resiliotech.com/blog?author=${post.author}`
+    },
+    publisher: {
+      name: "Resilio Tech",
+      logo: "https://resiliotech.com/favicon-32x32.png"
+    },
+    url: `https://resiliotech.com/blog/${post.slug}`,
+    keywords: post.tagData.map(t => t.name),
+    wordCount: post.readingTime.words
+  }
+
+  const breadcrumbs = [
+    { name: "Home", url: "https://resiliotech.com" },
+    { name: "Blog", url: "https://resiliotech.com/blog" },
+    { name: post.title, url: `https://resiliotech.com/blog/${post.slug}` }
+  ]
+
   return (
     <>
       <ReadingProgress />
+      <StructuredData 
+        blogPost={blogPostSchema}
+        breadcrumbs={breadcrumbs}
+      />
       
       <div className="min-h-screen bg-background">
         <BlogPostLayout post={post}>
@@ -134,7 +164,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                         )}
                         {post.authorData.social.linkedin && (
                           <a
-                            href={`https://linkedin.com/in/${post.authorData.social.linkedin}`}
+                            href={`https://linkedin.com/${post.authorData.social.linkedin}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-text-muted hover:text-primary transition-colors"
@@ -160,6 +190,24 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                             className="text-text-muted hover:text-primary transition-colors"
                           >
                             Website
+                          </a>
+                        )}
+                        {post.authorData.social.email && (
+                          <a
+                            href={`mailto:${post.authorData.social.email}`}
+                            className="text-text-muted hover:text-primary transition-colors"
+                          >
+                            Email
+                          </a>
+                        )}
+                        {post.authorData.social.youtube && (
+                          <a
+                            href={`https://youtube.com/${post.authorData.social.youtube}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-text-muted hover:text-primary transition-colors"
+                          >
+                            YouTube
                           </a>
                         )}
                       </div>

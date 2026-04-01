@@ -8,6 +8,8 @@ export interface Author {
     linkedin?: string
     github?: string
     website?: string
+    email?: string
+    youtube?: string
   }
   postCount?: number
 }

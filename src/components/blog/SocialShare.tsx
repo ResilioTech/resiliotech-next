@@ -15,12 +15,13 @@ interface SocialShareProps {
 export function SocialShare({ url, title, description, hashtags, className }: SocialShareProps) {
   const [copied, setCopied] = useState(false)
 
-  const shareData = {
-    url,
-    title,
-    description: description || title,
-    hashtags: hashtags?.join(',') || 'DevOps,CloudInfrastructure,Automation'
-  }
+  const shareDescription = description || title
+  const formattedHashtags = hashtags
+    ?.map(h => '#' + h.replace(/\s+/g, ''))
+    .join(' ') || '#DevOps #CloudInfrastructure #Automation'
+
+  const twitterText = `${title}\n\n${url}\n\n${formattedHashtags}`
+  const linkedInText = `${title}\n\n${shareDescription}\n\n${url}\n\n${formattedHashtags}`
 
   const shareLinks = [
     {
@@ -28,28 +29,28 @@ export function SocialShare({ url, title, description, hashtags, className }: So
       icon: Twitter,
       color: 'hover:text-blue-400',
       bgColor: 'hover:bg-blue-400/10',
-      href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareData.title)}&url=${encodeURIComponent(shareData.url)}&hashtags=${shareData.hashtags}`,
+      href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}`,
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
       color: 'hover:text-blue-600',
       bgColor: 'hover:bg-blue-600/10',
-      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareData.url)}`,
+      href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(shareDescription)}&source=ResilioTech`,
     },
     {
       name: 'Facebook',
       icon: Facebook,
       color: 'hover:text-blue-500',
       bgColor: 'hover:bg-blue-500/10',
-      href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`,
+      href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(`${title} - ${shareDescription}`)}`,
     },
     {
       name: 'Email',
       icon: Mail,
       color: 'hover:text-green-600',
       bgColor: 'hover:bg-green-600/10',
-      href: `mailto:?subject=${encodeURIComponent(shareData.title)}&body=${encodeURIComponent(`${shareData.description}\n\nRead more: ${shareData.url}`)}`,
+      href: `mailto:?subject=${encodeURIComponent(`Worth reading: ${title}`)}&body=${encodeURIComponent(`Hi,\n\nI came across this article and thought you might find it valuable:\n\n${title}\n\n${shareDescription}\n\nRead the full article here: ${url}`)}`,
     },
   ]
 
@@ -57,9 +58,9 @@ export function SocialShare({ url, title, description, hashtags, className }: So
     if (navigator.share) {
       try {
         await navigator.share({
-          title: shareData.title,
-          text: shareData.description,
-          url: shareData.url,
+          title,
+          text: shareDescription,
+          url,
         })
       } catch (error) {
         console.log('Error sharing:', error)
@@ -69,7 +70,7 @@ export function SocialShare({ url, title, description, hashtags, className }: So
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(shareData.url)
+      await navigator.clipboard.writeText(url)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (error) {
@@ -115,7 +116,7 @@ export function SocialShare({ url, title, description, hashtags, className }: So
                 ;(window as any).gtag('event', 'share', {
                   method: platform.name.toLowerCase(),
                   content_type: 'article',
-                  item_id: shareData.url,
+                  item_id: url,
                 })
               }
             }}
