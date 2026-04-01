@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm'
 
 export const metadata: Metadata = {
   title: 'Product Roadmap | AI Infrastructure Tools',
-  description: 'See what Resilio Tech is building — AI infrastructure tools, MLOps automation, and reliability solutions for production AI systems.',
+  description: 'Explore Resilio Tech\'s product roadmap — AI infrastructure tools, MLOps automation, and reliability solutions we\'re building for production AI systems.',
   alternates: {
     canonical: 'https://resiliotech.com/roadmap',
   },

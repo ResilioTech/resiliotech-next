@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     default: 'Resilio Tech — AI Infrastructure That Doesn\'t Break in Production',
     template: '%s | Resilio Tech'
   },
-  description: 'We help companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure by engineers who\'ve run systems at enterprise scale.',
+  description: 'We help companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure built for scale.',
   keywords: ['AI infrastructure consulting', 'MLOps services', 'ML model deployment', 'AI reliability engineering', 'production AI systems', 'AI SRE', 'deploy ML models to production', 'AI infrastructure for startups'],
   authors: [{ name: 'Resilio Tech' }],
   creator: 'Resilio Tech',

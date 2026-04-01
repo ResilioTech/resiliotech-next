@@ -47,7 +47,7 @@ const CTASection = dynamic(() => import('@/components/sections/CTASection').then
 export default function HomePage() {
   const organizationData = {
     name: "Resilio Tech",
-    description: "We help companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure by engineers who've run systems at enterprise scale.",
+    description: "We help companies deploy, scale, and operate AI systems reliably. From model serving to monitoring — production-grade AI infrastructure built for scale.",
     url: "https://resiliotech.com",
     logo: "https://resiliotech.com/favicon-32x32.png",
     contactPoint: {

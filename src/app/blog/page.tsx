@@ -13,7 +13,7 @@ import type { SearchFilters } from '@/types/blog'
 
 export const metadata: Metadata = {
   title: 'Blog | AI Infrastructure & MLOps Insights',
-  description: 'Real production lessons on AI infrastructure, MLOps, model deployment, and AI reliability. Technical deep-dives from the Resilio Tech team.',
+  description: 'Real production lessons on AI infrastructure, MLOps, model deployment, and AI reliability engineering. Technical deep-dives from the Resilio Tech team.',
   keywords: [
     'MLOps blog',
     'AI infrastructure',

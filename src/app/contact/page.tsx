@@ -19,7 +19,7 @@ const FAQSection = dynamic(() => import('@/components/contact/FAQSection').then(
 
 export const metadata: Metadata = {
   title: 'Contact Us — Book a Free AI Infrastructure Audit',
-  description: 'Book a free 30-minute AI infrastructure audit. We assess your current setup, identify reliability gaps, and give you a concrete action plan. We respond within 24 hours.',
+  description: 'Book a free 30-minute AI infrastructure audit. We assess your current setup, identify reliability gaps, and deliver a concrete action plan within 24 hours.',
   keywords: ['contact resilio tech', 'AI infrastructure audit', 'MLOps consulting', 'free consultation', 'AI infrastructure help'],
   alternates: {
     canonical: 'https://resiliotech.com/contact',

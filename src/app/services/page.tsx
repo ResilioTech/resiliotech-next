@@ -5,7 +5,7 @@ import { CopyEmailButton } from '@/components/ui/CopyEmailButton';
 
 export const metadata: Metadata = {
   title: 'AI Infrastructure Services — Deploy, Scale & Operate AI Systems',
-  description: 'Production-grade AI infrastructure services: ML deployment, MLOps & reliability, custom AI agents. We deploy ML models to production and make sure they stay up.',
+  description: 'Production-grade AI infrastructure services: ML deployment, MLOps & reliability, custom AI agents. We deploy ML models to production and keep them running.',
   keywords: ['AI infrastructure consulting', 'MLOps services', 'ML model deployment', 'AI reliability engineering', 'production AI systems', 'AI SRE'],
   alternates: {
     canonical: 'https://resiliotech.com/services',
