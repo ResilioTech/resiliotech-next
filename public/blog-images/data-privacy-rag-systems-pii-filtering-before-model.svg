@@ -72,16 +72,15 @@
       <rect x="860" y="176" width="48" height="10" rx="5" fill="#f97316" opacity="0.62" />
       <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
       <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Secure by Design</text>
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Retrieval Pipeline</text>
     
-          <rect x="782" y="214" width="200" height="132" rx="28" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-          <path d="M882 228 L940 248 L940 292 C940 322 919 347 882 364 C845 347 824 322 824 292 L824 248 Z" fill="rgba(7, 12, 24, 0.88)" stroke="#fb7185" stroke-width="4" />
-          <rect x="868" y="274" width="28" height="46" rx="14" fill="#f97316" opacity="0.92" />
-          <rect x="854" y="258" width="56" height="34" rx="17" fill="none" stroke="#fecdd3" stroke-width="4" />
-          <path d="M798 254 L842 268" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
-          <path d="M798 314 L840 294" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
-          <path d="M966 254 L922 268" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
-          <path d="M966 314 L924 294" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
+          <path d="M786 246 L880 212 L974 246 L880 280 Z" fill="rgba(8, 13, 24, 0.94)" stroke="#fb7185" stroke-width="4" />
+          <path d="M786 290 L880 256 L974 290 L880 324 Z" fill="rgba(10, 17, 31, 0.86)" stroke="#f97316" stroke-width="4" />
+          <path d="M786 334 L880 300 L974 334 L880 368 Z" fill="rgba(16, 24, 40, 0.82)" stroke="#fecdd3" stroke-width="4" />
+          <circle cx="954" cy="224" r="26" fill="rgba(9, 14, 26, 0.92)" stroke="#fb7185" stroke-width="4" />
+          <path d="M968 238 L988 258" stroke="#fb7185" stroke-width="5" stroke-linecap="round" />
+          <circle cx="882" cy="290" r="7" fill="#f97316" />
+          <circle cx="848" cy="334" r="7" fill="#fecdd3" />
         </g>
 
   <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>

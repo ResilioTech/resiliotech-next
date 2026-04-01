@@ -66,7 +66,7 @@
       <rect x="860" y="176" width="48" height="10" rx="5" fill="#f97316" opacity="0.62" />
       <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
       <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Efficiency at Scale</text>
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Serving Efficiency</text>
     
           <rect x="776" y="214" width="168" height="136" rx="28" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
           <rect x="810" y="244" width="60" height="18" rx="9" fill="#f59e0b" opacity="0.92" />

@@ -72,19 +72,27 @@
       <rect x="860" y="176" width="48" height="10" rx="5" fill="#f97316" opacity="0.62" />
       <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
       <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Operational Visibility</text>
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Runbook Automation</text>
     
-          <rect x="782" y="220" width="90" height="62" rx="18" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
-          <rect x="892" y="220" width="116" height="62" rx="18" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
-          <rect x="838" y="300" width="136" height="62" rx="18" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.18)" />
-          <path d="M802 256 C824 228, 836 288, 860 248 C882 212, 908 284, 944 242 C966 216, 984 250, 1000 232" stroke="#fb7185" stroke-width="5" fill="none" stroke-linecap="round" />
-          <circle cx="802" cy="256" r="8" fill="#fb7185" />
-          <circle cx="860" cy="248" r="8" fill="#f97316" />
-          <circle cx="944" cy="242" r="8" fill="#fb7185" />
-          <circle cx="1000" cy="232" r="8" fill="#fecdd3" />
-          <rect x="864" y="318" width="14" height="26" rx="7" fill="#fb7185" opacity="0.88" />
-          <rect x="888" y="306" width="14" height="38" rx="7" fill="#f97316" opacity="0.78" />
-          <rect x="912" y="294" width="14" height="50" rx="7" fill="#fecdd3" opacity="0.78" />
+          <rect x="776" y="216" width="92" height="70" rx="18" fill="rgba(9, 14, 26, 0.92)" stroke="rgba(148, 163, 184, 0.18)" />
+          <path d="M822 232 L844 272 H800 Z" fill="rgba(127, 29, 29, 0.32)" stroke="#fb7185" stroke-width="4" stroke-linejoin="round" />
+          <path d="M822 244 V256" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
+          <circle cx="822" cy="264" r="3" fill="#fb7185" />
+          <rect x="896" y="208" width="126" height="150" rx="24" fill="rgba(9, 14, 26, 0.88)" stroke="rgba(148, 163, 184, 0.16)" />
+          <rect x="922" y="234" width="56" height="10" rx="5" fill="#f97316" opacity="0.90" />
+          <circle cx="922" cy="270" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="#fb7185" stroke-width="3" />
+          <path d="M918 270 L921 273 L927 266" stroke="#fb7185" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="938" y="266" width="52" height="8" rx="4" fill="rgba(148, 163, 184, 0.26)" />
+          <circle cx="922" cy="296" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="#f97316" stroke-width="3" />
+          <path d="M918 296 L921 299 L927 292" stroke="#f97316" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="938" y="292" width="44" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+          <circle cx="922" cy="322" r="8" fill="rgba(15, 23, 42, 0.92)" stroke="#fecdd3" stroke-width="3" />
+          <rect x="938" y="318" width="48" height="8" rx="4" fill="rgba(148, 163, 184, 0.22)" />
+          <path d="M868 252 C882 252, 892 252, 904 252" stroke="#fb7185" stroke-width="4" stroke-linecap="round" />
+          <path d="M836 322 C872 318, 888 310, 904 294" stroke="#f97316" stroke-width="4" stroke-linecap="round" />
+          <circle cx="878" cy="324" r="14" fill="rgba(15, 23, 42, 0.92)" stroke="#fecdd3" stroke-width="3" />
+          <path d="M872 324 H884" stroke="#fecdd3" stroke-width="3" stroke-linecap="round" />
+          <path d="M878 318 V330" stroke="#fecdd3" stroke-width="3" stroke-linecap="round" />
         </g>
 
   <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>

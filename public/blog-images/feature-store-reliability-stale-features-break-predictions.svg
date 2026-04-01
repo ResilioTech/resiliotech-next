@@ -72,7 +72,7 @@
       <rect x="860" y="176" width="48" height="10" rx="5" fill="#f97316" opacity="0.62" />
       <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
       <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Structured AI Data</text>
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Retrieval Pipeline</text>
     
           <path d="M786 246 L880 212 L974 246 L880 280 Z" fill="rgba(8, 13, 24, 0.94)" stroke="#fb7185" stroke-width="4" />
           <path d="M786 290 L880 256 L974 290 L880 324 Z" fill="rgba(10, 17, 31, 0.86)" stroke="#f97316" stroke-width="4" />

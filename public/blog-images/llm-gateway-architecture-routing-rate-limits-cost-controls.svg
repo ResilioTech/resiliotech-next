@@ -72,7 +72,7 @@
       <rect x="860" y="176" width="48" height="10" rx="5" fill="#14b8a6" opacity="0.62" />
       <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
       <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
-      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Fault-Tolerant Systems</text>
+      <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Traffic Routing</text>
     
           <circle cx="792" cy="258" r="20" fill="rgba(9, 14, 26, 0.92)" stroke="#38bdf8" stroke-width="4" />
           <circle cx="932" cy="234" r="20" fill="rgba(9, 14, 26, 0.92)" stroke="#14b8a6" stroke-width="4" />
