@@ -2,6 +2,9 @@
   "name": "resiliotech-nextjs",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.17.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,7 +26,6 @@
     "lucide-react": "^0.537.0",
     "next": "^14.0.0",
     "postcss": "^8.4.32",
-    "puppeteer": "^24.40.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.0.0",
@@ -33,7 +35,6 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "server-only": "^0.0.1",
-    "sharp": "^0.33.5",
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "^3.0.0",
     "typescript": "^5.0.0",

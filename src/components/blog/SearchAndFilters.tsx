@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Search, Filter, X, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Author, Category, Tag, SearchFilters } from '@/types/blog'
@@ -22,7 +22,6 @@ export function SearchAndFilters({
   totalResults
 }: SearchAndFiltersProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [query, setQuery] = useState(currentFilters.query || '')
   const [showFilters, setShowFilters] = useState(false)
   const [activeFilters, setActiveFilters] = useState<SearchFilters>(currentFilters)
@@ -130,7 +129,7 @@ export function SearchAndFilters({
         <div className="flex flex-wrap gap-2">
           {query && (
             <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-sm">
-              <span className="text-primary">Search: "{query}"</span>
+              <span className="text-primary">Search: &quot;{query}&quot;</span>
               <button
                 onClick={() => {
                   setQuery('')

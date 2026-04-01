@@ -106,7 +106,6 @@ interface ReadingStatsProps {
 
 function ReadingStats({ progress }: ReadingStatsProps) {
   const [timeRemaining, setTimeRemaining] = useState('')
-  const [wordsRead, setWordsRead] = useState(0)
 
   useEffect(() => {
     // Get article content for calculations
@@ -118,7 +117,6 @@ function ReadingStats({ progress }: ReadingStatsProps) {
     const remainingWords = totalWords - currentWordsRead
     const remainingMinutes = Math.ceil(remainingWords / averageWordsPerMinute)
 
-    setWordsRead(currentWordsRead)
     setTimeRemaining(remainingMinutes > 0 ? `${remainingMinutes} min left` : 'Complete!')
   }, [progress])
 

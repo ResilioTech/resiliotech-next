@@ -26,7 +26,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">1. Acceptance of Terms</h2>
             <p>
-              By accessing or using {siteConfig.name}'s website and services, you agree to be bound by these Terms of Service.
+              By accessing or using {siteConfig.name}&apos;s website and services, you agree to be bound by these Terms of Service.
               If you do not agree to these terms, do not use our services.
             </p>
           </section>
@@ -127,7 +127,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-2xl font-bold text-text-primary mb-4">9. Disclaimer of Warranties</h2>
             <p>
-              Services are provided "as is" without warranties of any kind, express or implied.
+              Services are provided &quot;as is&quot; without warranties of any kind, express or implied.
               We make no guarantees regarding specific outcomes, uptime, or error-free operation.
             </p>
           </section>
@@ -136,7 +136,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">10. Termination</h2>
             <p>Either party may terminate services:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>For convenience with 30 days' written notice (for ongoing services)</li>
+              <li>For convenience with 30 days&apos; written notice (for ongoing services)</li>
               <li>Immediately for breach of terms</li>
               <li>Upon mutual agreement</li>
             </ul>

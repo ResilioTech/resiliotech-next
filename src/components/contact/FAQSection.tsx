@@ -99,18 +99,18 @@ export function FAQSection() {
             </div>
             
             <h2 className="text-4xl font-bold text-text-primary mb-6">
-              Got Questions? We've Got <span className="text-secondary">Answers</span>
+              Got Questions? We&apos;ve Got <span className="text-secondary">Answers</span>
             </h2>
             
             <p className="text-lg text-text-secondary">
-              Here are the most common questions we receive. Don't see yours? 
+              Here are the most common questions we receive. Don&apos;t see yours? 
               Feel free to reach out directly.
             </p>
           </motion.div>
 
           {/* FAQ Items */}
           <motion.div variants={containerVariants} className="space-y-4">
-            {faqs.map((faq, index) => (
+            {faqs.map((faq) => (
               <motion.div
                 key={faq.id}
                 variants={itemVariants}
@@ -161,7 +161,7 @@ export function FAQSection() {
                 Still have questions?
               </h3>
               <p className="text-text-secondary mb-6">
-                We're happy to provide more detailed answers about your specific situation.
+                We&apos;re happy to provide more detailed answers about your specific situation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button

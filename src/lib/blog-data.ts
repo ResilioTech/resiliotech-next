@@ -4,7 +4,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
 import type { BlogPost, Author, Category, Tag, BlogStats } from '@/types/blog'
-import { formatDate, getRelatedPosts as _getRelatedPosts, getAllTagsFromPosts } from './blog-utils'
+import { getRelatedPosts as _getRelatedPosts, getAllTagsFromPosts } from './blog-utils'
 
 export { formatDate } from './blog-utils'
 

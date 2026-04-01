@@ -107,9 +107,9 @@ export default function CookiesPage() {
             <h3 className="text-xl font-semibold text-text-primary mb-3 mt-6">Opt-Out of Analytics</h3>
             <p>To opt out of analytics tracking:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Easiest:</strong> Decline our consent banner when it appears (or clear localStorage key "rtx-consent" to reset your choice)</li>
+              <li><strong>Easiest:</strong> Decline our consent banner when it appears (or clear localStorage key &quot;rtx-consent&quot; to reset your choice)</li>
               <li>Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Google Analytics Opt-out Browser Add-on</a></li>
-              <li>Enable "Do Not Track" in your browser settings</li>
+              <li>Enable &quot;Do Not Track&quot; in your browser settings</li>
               <li>Use privacy-focused browsers or extensions (e.g., Brave, uBlock Origin)</li>
             </ul>
 
@@ -124,7 +124,7 @@ export default function CookiesPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">Impact of Disabling Cookies</h2>
             <p>If you disable cookies:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Analytics cookies:</strong> We won't be able to analyze site usage, but the site will function normally</li>
+              <li><strong>Analytics cookies:</strong> We won&apos;t be able to analyze site usage, but the site will function normally</li>
               <li><strong>Strictly necessary cookies:</strong> Some features may not work (e.g., login, security)</li>
             </ul>
           </section>
@@ -141,7 +141,7 @@ export default function CookiesPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-4">Updates to This Policy</h2>
             <p>
               We may update this Cookie Policy as we add new features or comply with regulations.
-              Changes will be posted on this page with an updated "Last updated" date.
+              Changes will be posted on this page with an updated &quot;Last updated&quot; date.
             </p>
           </section>
 

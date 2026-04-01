@@ -83,7 +83,7 @@ export function BlogListing({ posts, pagination, currentFilters, loading }: Blog
     <div className="space-y-8">
       {/* Posts Grid */}
       <div className="space-y-8">
-        {posts.map((post, index) => (
+        {posts.map((post) => (
           <article key={post.slug} className="group">
             <div className="bg-surface border border-border rounded-2xl p-6 hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center gap-6">

@@ -30,11 +30,10 @@ export function RelatedPosts({ currentPost, maxPosts = 3, className }: RelatedPo
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {relatedPosts.map((post, index) => (
+        {relatedPosts.map((post) => (
           <RelatedPostCard 
             key={post.slug} 
             post={post} 
-            index={index}
           />
         ))}
       </div>
@@ -55,10 +54,9 @@ export function RelatedPosts({ currentPost, maxPosts = 3, className }: RelatedPo
 
 interface RelatedPostCardProps {
   post: BlogPost
-  index: number
 }
 
-function RelatedPostCard({ post, index }: RelatedPostCardProps) {
+function RelatedPostCard({ post }: RelatedPostCardProps) {
   return (
     <article className="group h-full">
       <Link href={post.url} className="block h-full">
@@ -128,57 +126,5 @@ function RelatedPostCard({ post, index }: RelatedPostCardProps) {
         </div>
       </Link>
     </article>
-  )
-}
-
-// Alternative: Compact Related Posts List
-export function CompactRelatedPosts({ currentPost, maxPosts = 5 }: RelatedPostsProps) {
-  const relatedPosts = getRelatedPosts(currentPost, maxPosts)
-
-  if (relatedPosts.length === 0) {
-    return null
-  }
-
-  return (
-    <div className="bg-surface border border-border rounded-xl p-6">
-      <h3 className="text-lg font-semibold text-text-primary mb-4 flex items-center gap-2">
-        <span>📖</span>
-        Related Articles
-      </h3>
-      
-      <div className="space-y-4">
-        {relatedPosts.map((post, index) => (
-          <Link
-            key={post.slug}
-            href={post.url}
-            className="block group"
-          >
-            <div className="flex items-start gap-4 p-3 rounded-lg hover:bg-surface-elevated transition-colors">
-              {/* Small thumbnail or icon */}
-              <div className={cn(
-                'w-12 h-12 flex-shrink-0 rounded-lg flex items-center justify-center text-sm font-bold text-white bg-gradient-to-br',
-                post.categoryData.color
-              )}>
-                {index + 1}
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-medium text-text-primary group-hover:text-primary transition-colors line-clamp-2 mb-1">
-                  {post.title}
-                </h4>
-                
-                <div className="flex items-center gap-3 text-xs text-text-muted">
-                  <span>{post.categoryData.name}</span>
-                  <span>•</span>
-                  <span>{post.readingTime.text}</span>
-                </div>
-              </div>
-
-              <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-primary transition-colors flex-shrink-0" />
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
   )
 }

@@ -25,7 +25,7 @@ export default function ThankYouPage() {
           Thank You!
         </h1>
         <p className="text-xl text-text-secondary mb-12">
-          We've received your submission and will respond within <strong>24 hours</strong>.
+          We&apos;ve received your submission and will respond within <strong>24 hours</strong>.
         </p>
 
         {/* What Happens Next */}
@@ -51,7 +51,7 @@ export default function ThankYouPage() {
                 <span className="text-primary font-bold text-sm">2</span>
               </div>
               <div>
-                <h3 className="font-semibold text-text-primary mb-1">You'll Hear From Us</h3>
+                <h3 className="font-semibold text-text-primary mb-1">You&apos;ll Hear From Us</h3>
                 <p className="text-text-secondary">
                   Expect an email from <a href={`mailto:${siteConfig.email.contact}`} className="text-primary hover:underline">{siteConfig.email.contact}</a> within 24 hours.
                 </p>
@@ -63,9 +63,9 @@ export default function ThankYouPage() {
                 <span className="text-primary font-bold text-sm">3</span>
               </div>
               <div>
-                <h3 className="font-semibold text-text-primary mb-1">Let's Talk</h3>
+                <h3 className="font-semibold text-text-primary mb-1">Let&apos;s Talk</h3>
                 <p className="text-text-secondary">
-                  We'll schedule a call to discuss your needs and explore how we can help.
+                  We&apos;ll schedule a call to discuss your needs and explore how we can help.
                 </p>
               </div>
             </div>

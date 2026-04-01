@@ -14,7 +14,6 @@ import {
   DollarSign,
   Briefcase
 } from 'lucide-react';
-import { ContactFormData } from '@/types/company';
 import { analytics } from '@/lib/analytics';
 
 const contactSchema = z.object({
@@ -131,7 +130,7 @@ export function ContactForm() {
             Message Sent Successfully!
           </h3>
           <p className="text-text-secondary mb-6 leading-relaxed">
-            Thank you for reaching out! We've received your message and will get back to you 
+            Thank you for reaching out! We&apos;ve received your message and will get back to you 
             within 24 hours. Our team is excited to discuss your project.
           </p>
           
@@ -141,7 +140,7 @@ export function ContactForm() {
             <div className="text-left space-y-2 text-sm text-text-secondary">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
-                <span>We'll review your requirements and prepare a tailored response</span>
+                <span>We&apos;ll review your requirements and prepare a tailored response</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
@@ -149,7 +148,7 @@ export function ContactForm() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
-                <span>We'll provide a detailed project proposal and timeline</span>
+                <span>We&apos;ll provide a detailed project proposal and timeline</span>
               </div>
             </div>
           </div>
