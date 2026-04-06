@@ -58,7 +58,7 @@ for feature in drift_results['metrics'][0]['result']['drift_by_columns']:
 
 ## 2. Infrastructure Gaps: The Notebook-to-Production Chasm
 
-A Jupyter notebook is not a deployment artifact. The infrastructure needed to serve models reliably is fundamentally different from training infrastructure.
+A Jupyter notebook is not a deployment artifact. The infrastructure needed to serve models reliably is fundamentally different from training infrastructure. Teams that successfully bridge this gap often use [specialized LLM gateways](/blog/llm-gateway-architecture-routing-rate-limits-cost-controls) or [highly optimized serving stacks like vLLM](/blog/serving-open-source-llms-with-vllm-kubernetes).
 
 ### Common Infrastructure Failures
 
@@ -70,6 +70,8 @@ A Jupyter notebook is not a deployment artifact. The infrastructure needed to se
 | No autoscaling | Static replicas can't handle traffic spikes | Dropped requests during peaks |
 
 ### Production-Grade Model Serving
+
+When you move beyond simple deployments, [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) becomes critical to managing both performance and [infrastructure costs](/blog/ai-infrastructure-cost-optimization).
 
 ```yaml
 # kubernetes/model-deployment.yaml

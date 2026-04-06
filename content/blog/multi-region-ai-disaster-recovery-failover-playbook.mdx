@@ -123,7 +123,7 @@ A failover region serving the wrong prompt set is a correctness incident waiting
 
 ### Vector Databases and Retrieval Indexes
 
-This is usually the hardest DR surface in RAG systems.
+This is usually the hardest DR surface in RAG systems. For a deeper dive into the data persistence layer of this problem, see our [Vector Database Disaster Recovery Guide](/blog/vector-database-operations-scaling-backup-disaster-recovery).
 
 Decide whether the backup region will use:
 
@@ -194,4 +194,6 @@ The most common DR mistakes in AI systems are:
 
 Multi-region AI disaster recovery is a systems problem, not just an infrastructure problem. Inference, retrieval, policy, and observability all have to move together.
 
-The winning design is usually the one that clearly separates what must stay consistent, what can degrade safely, and what can be recovered later. That is how teams keep production AI available without pretending every component needs the same level of redundancy.
+The winning design is usually the one that clearly separates what must stay consistent, what can degrade safely, and what can be recovered later. By building these patterns into your platform early, you move from "hoping it works" to "knowing it will." At Resilio Tech, we specialize in building this kind of multi-region resilience for production AI systems.
+
+*Need help designing a multi-region disaster recovery strategy for your AI infrastructure? We help teams build resilient, failover-ready platforms that keep high-stakes RAG and inference services available through regional outages. [Book a free infrastructure audit](/contact) and we’ll review your DR plan.*

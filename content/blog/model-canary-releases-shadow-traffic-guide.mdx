@@ -15,7 +15,7 @@ Shipping a new model directly to 100% of production traffic is one of the fastes
 
 The problem is simple: model quality in a notebook is not the same thing as model behavior under real traffic. Real requests are messier. Context is longer. Input distributions are weirder. Downstream systems are less forgiving.
 
-That is why model rollouts need the same discipline as application rollouts, plus a few ML-specific checks around quality and drift.
+That is why model rollouts need the same discipline as [application CI/CD](/blog/ci-cd-ml-models-testing-beyond-unit-tests), plus a few ML-specific checks around quality and drift.
 
 This is the rollout pattern we recommend for production systems.
 
@@ -219,11 +219,7 @@ A typical pattern:
 5. 50% canary
 6. 100% promotion
 
-Spend more time at lower percentages if:
-
-- traffic is highly variable
-- the new model is resource-heavy
-- the model affects customer trust or money movement
+For major prompt or behavioral changes, you may want to run a formal [A/B test](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses) during the canary phase to measure qualitative impact before full promotion.
 
 ## Common Rollout Mistakes
 
@@ -251,6 +247,6 @@ That level of discipline prevents a large percentage of model release incidents.
 
 Model release safety is mostly about process and visibility. Shadow traffic shows you what offline tests miss. Canary slices limit blast radius. Rollback keeps mistakes survivable.
 
-The goal is not to eliminate all risk. The goal is to make new model releases boring.
+By adopting a mature rollout strategy, you transition from "hoping it works" to "knowing it's safe." This level of operational rigor is what separates experimental projects from production-grade AI applications.
 
-*Need help putting safe model release workflows in place? We help teams add shadow traffic, rollout gates, and rollback controls to production ML platforms. [Book a free infrastructure audit](/contact) and we’ll review your current release path.*
+*Need help putting safe model release workflows in place? At Resilio Tech, we help teams add shadow traffic, rollout gates, and rollback controls to production ML platforms. [Book a free infrastructure audit](/contact) and we’ll review your current release path to ensure your model deployments are a non-event.*

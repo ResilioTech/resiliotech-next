@@ -143,8 +143,8 @@ For many teams, a workable stack on Kubernetes looks like this:
 
 1. namespaces and quotas for team isolation
 2. standard CI/CD for model and service release
-3. Argo Workflows or similar for pipelines
-4. KServe, vLLM, or standard Deployments for serving depending on workload
+3. Argo Workflows or similar for pipelines (often managed with [Terraform](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines) for environment consistency)
+4. KServe, vLLM, or standard Deployments for serving depending on workload (with [properly tuned autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters))
 5. shared observability with logs, metrics, traces, and alerts
 6. documented golden paths instead of endless custom abstractions
 
@@ -166,6 +166,6 @@ The best internal platforms are not the most complex. They are the ones teams ca
 
 An internal ML platform on Kubernetes works when it standardizes the small set of workflows teams repeat constantly, provides clear golden paths, and keeps the underlying system understandable.
 
-The goal is not to build a magical layer over everything. The goal is to make the common case easy, safe, and repeatable.
+The goal is not to build a magical layer over everything. The goal is to make the common case easy, safe, and repeatable. At Resilio Tech, we specialize in building these types of "invisible" platforms that let your team focus on models, not manifests.
 
 *Need help designing an internal ML platform that teams actually use? We help organizations define sane Kubernetes-based golden paths for training, deployment, observability, and rollback. [Book a free infrastructure audit](/contact) and we’ll review your platform approach.*

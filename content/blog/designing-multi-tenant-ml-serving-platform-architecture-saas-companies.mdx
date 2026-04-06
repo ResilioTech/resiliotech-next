@@ -232,7 +232,7 @@ Characteristics:
 - clean cost allocation
 - premium support and SLA posture
 
-This approach gives you a way to map business commitments to infrastructure behavior instead of improvising per customer.
+This approach gives you a way to map business commitments to infrastructure behavior instead of improvising per customer. For more on managing the compliance implications of these isolation decisions, see our guide on [SOC 2 Controls for AI Infrastructure](/blog/soc2-controls-for-ai-infrastructure-enterprise-checklist).
 
 ## Serving Different Models Per Customer
 
@@ -566,18 +566,6 @@ That gets you most of the operational value without inventing an entirely custom
 
 Multi-tenant ML serving for SaaS is not just about packing many models onto one cluster. It is about turning shared infrastructure into a system with explicit tenant contracts.
 
-The strongest platforms do three things well:
+The strongest platforms do three things well: isolate the workloads that need isolation, enforce fair queuing for everything that shares, and emit cost and usage signals at the tenant level. This approach allows a SaaS company to scale its AI features without letting the platform collapse into either unmanageable chaos or prohibitive single-tenancy costs.
 
-- isolate the workloads that need isolation
-- enforce fair queuing for everything that shares
-- emit cost and usage signals at the tenant level
-
-That is what allows a SaaS company to serve different models per customer without letting the platform collapse into either chaos or full single-tenancy.
-
-If you are designing a `saas ml platform architecture`, start with three questions:
-
-- what kinds of tenant-specific model behavior do we actually support?
-- where do we enforce fairness and isolation before the runtime saturates?
-- can we explain cost and performance by tenant without hand-waving?
-
-Those answers will shape a far more durable multi-tenant ML platform than any autoscaler setting alone.
+*Building a multi-tenant ML platform for your SaaS? We help teams design and deploy serving architectures that balance resource efficiency with customer-grade isolation. [Book a free infrastructure audit](/contact) and we’ll review your multi-tenant strategy.*

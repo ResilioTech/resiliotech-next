@@ -72,7 +72,7 @@ With streaming responses, the server may hold connections open for much longer. 
 - client timeout patterns
 - concurrent sequence limits inside the serving runtime
 
-A tool that only measures total response completion time will miss whether time to first token is degrading long before full latency becomes obviously bad.
+A tool that only measures total response completion time will miss whether time to first token is degrading long before full latency becomes obviously bad. This is particularly relevant when evaluating [Batching Strategies](/blog/batching-strategies-llm-inference-throughput-vs-latency), where throughput gains often come at the cost of higher initial wait times.
 
 ## Queueing Is Part of the Product Experience
 
@@ -171,6 +171,6 @@ Traditional tools are not useless. They are just incomplete for LLM systems unle
 
 LLM endpoints behave like serving systems with queues, batching, and variable-length generation, not like ordinary stateless APIs. Load testing them with standard web assumptions produces clean-looking numbers that often hide the real bottlenecks.
 
-The right test is the one that mirrors request shape, concurrency, and token behavior closely enough to predict where the system breaks under real traffic.
+The right test is the one that mirrors request shape, concurrency, and token behavior closely enough to predict where the system breaks under real traffic. At Resilio Tech, we build realistic load-testing suites that help teams understand their system's true limits before they hit them in production.
 
 *Need help building realistic performance tests for your LLM stack? We help teams design load profiles, batching policies, and observability for AI serving systems under production traffic. [Book a free infrastructure audit](/contact) and we’ll review your serving path.*

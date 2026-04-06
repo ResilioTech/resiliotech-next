@@ -117,7 +117,7 @@ Why the cooldown? Because aggressive scale-down is how clusters start flapping b
 
 ## Right-Size by Model Class
 
-Autoscaling cannot fix bad instance selection.
+Autoscaling cannot fix bad instance selection. If your base infrastructure isn't [right-sized for the model class](/blog/ai-infrastructure-cost-optimization), you'll scale up and down while still wasting money or performance.
 
 If a small embedding model is placed on an oversized GPU, scaling policy might look healthy while cost stays terrible. If a large generative model is placed on a marginal GPU, scaling adds replicas when the real issue is per-replica capacity.
 
@@ -218,6 +218,8 @@ That gets most teams to a much better place without building a complicated custo
 
 Right-sizing GPU inference clusters is mostly about matching workload behavior to the right scaling signals and the right hardware class. Autoscaling helps, but only when the cluster is already segmented properly and the demand signals reflect real user pain.
 
-The cheapest cluster is not the one with the fewest GPUs. It's the one that meets latency targets without carrying waste all day.
+The cheapest cluster is not the one with the fewest GPUs. It's the one that meets latency targets without carrying waste all day. Building this balance is a core part of any [functional internal ML platform](/blog/building-internal-ml-platform-kubernetes-what-actually-works).
 
-*Need help tuning GPU inference clusters? We help teams right-size hardware, add queue-aware autoscaling, and reduce over-provisioning without hurting production latency. [Book a free infrastructure audit](/contact) and we’ll review your current scaling policy.*
+At Resilio Tech, we help teams design these types of high-performance, cost-aware systems from day one, ensuring your scaling policy matches your real-world traffic needs.
+
+*Need help tuning GPU inference clusters? We help teams right-size hardware, add queue-aware autoscaling, and reduce over-provisioning without hurting production latency. [Book a free infrastructure audit](/contact) and we’ll review your current scaling policy to help you find the right balance between cost and performance.*

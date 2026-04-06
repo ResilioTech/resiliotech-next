@@ -294,7 +294,38 @@ A useful medical ai kubernetes topology usually separates workloads into predict
 
 ### Restricted PHI zone
 
-This zone handles raw patient data ingestion, tokenization, and highly sensitive inference paths.
+This zone handles raw patient data ingestion, tokenization, and highly sensitive inference paths. A common way to enforce this isolation is via Kubernetes `NetworkPolicy` resources that ensure only authorized gateways can enter the PHI-restricted namespace.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: phi-zone-isolation
+  namespace: healthcare-ai
+spec:
+  podSelector:
+    matchLabels:
+      zone: phi-restricted
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: clinical-gateway
+    ports:
+    - protocol: TCP
+      port: 8443
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          role: patient-database
+    ports:
+    - protocol: TCP
+      port: 5432
+```
 
 Typical workloads:
 
@@ -303,7 +334,7 @@ Typical workloads:
 - patient identity resolution
 - highly restricted model services
 
-This zone should be the smallest possible set of services that genuinely needs direct access to raw PHI.
+This zone should be the smallest possible set of services that genuinely needs direct access to raw PHI. For more on the governance structures required for these environments, see our guide on [SOC 2 Controls for AI Infrastructure](/blog/soc2-controls-for-ai-infrastructure-enterprise-checklist) and our article on [AI Audit Logs](/blog/ai-audit-logs-regulators-ask-for-how-to-prepare).
 
 ### Clinical serving zone
 
@@ -511,3 +542,5 @@ If you are designing hipaa compliant ai infrastructure for diagnostic models, cl
 - how will we reconstruct, govern, and roll back every meaningful change?
 
 Those answers will shape a safer and more supportable platform than any model benchmark alone.
+
+*Need help building HIPAA-compliant AI infrastructure on Kubernetes? We help healthcare teams design and deploy secure platforms that protect patient data while accelerating clinical AI workflows. [Book a free infrastructure audit](/contact) and we’ll review your compliance architecture.*

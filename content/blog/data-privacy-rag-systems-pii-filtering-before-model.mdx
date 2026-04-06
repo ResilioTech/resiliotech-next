@@ -30,7 +30,7 @@ A RAG system adds:
 - ranking and reranking
 - prompt assembly logic
 
-Each layer creates new ways for PII or sensitive business content to leak into the final model input.
+Each layer creates new ways for PII or sensitive business content to leak into the final model input. For a complete look at how to harden these retrieval pipelines, see our [Production RAG Reliability Checklist](/blog/production-rag-systems-reliability-checklist).
 
 ## The Main Risk Is Over-Retrieval
 
@@ -151,8 +151,6 @@ RAG privacy is mostly about controlling what reaches the prompt, not just what l
 
 ## Final Takeaway
 
-The safest RAG system is not the one that tries to clean up privacy problems after generation. It is the one that prevents sensitive context from entering the model input unless it is truly required and explicitly authorized.
-
-Privacy in RAG starts at retrieval and prompt assembly. That is where the strongest controls belong.
+The safest RAG system is not the one that tries to clean up privacy problems after generation. It is the one that prevents sensitive context from entering the model input unless it is truly required and explicitly authorized. At Resilio Tech, we help organizations build secure, production-ready AI infrastructure that respects data boundaries. From redaction pipelines to advanced access-control layers, we ensure your RAG systems are both powerful and private.
 
 *Need help hardening RAG privacy boundaries before sensitive data reaches the model? We help teams design filtering, redaction, and access-control layers around retrieval pipelines and prompt assembly. [Book a free infrastructure audit](/contact) and we’ll review your system.*

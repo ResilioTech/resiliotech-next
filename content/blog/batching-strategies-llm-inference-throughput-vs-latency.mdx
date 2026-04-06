@@ -168,11 +168,12 @@ Different products need different operating points.
 
 ## Continuous Batching Changes the Tradeoff
 
-Serving runtimes like vLLM make batching more efficient because they can continuously admit work rather than waiting for rigid fixed batches.
+Serving runtimes like [vLLM](/blog/serving-open-source-llms-with-vllm-kubernetes) make batching more efficient because they can continuously admit work rather than waiting for rigid fixed batches.
 
-That is one reason modern LLM serving systems perform better than naive request queues. But even with continuous batching, request shape and queue policy still matter.
+That is one reason modern LLM serving systems perform better than naive request queues. But even with continuous batching, request shape and queue policy still matter. You can validate these policies through targeted [Load Testing for LLM Endpoints](/blog/load-testing-llm-endpoints-why-traditional-tools-dont-work).
 
-You still need:
+## Common Mistakes
+
 
 - max sequence controls
 - prompt length caps

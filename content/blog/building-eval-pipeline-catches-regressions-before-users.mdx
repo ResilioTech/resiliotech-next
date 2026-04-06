@@ -93,11 +93,11 @@ Not every evaluation signal can be fully automated. That is fine.
 A practical pipeline usually combines:
 
 - deterministic checks
-- model-based or heuristic scoring
+- model-based or heuristic scoring (using tools like **DeepEval** or **Ragas** for LLM-specific metrics)
 - pairwise comparison
 - sampled human review for ambiguous cases
 
-The mistake is waiting for perfect automation before building anything useful.
+Popular platforms like **LangSmith** and **Weights & Biases** have also become industry standards for tracking these experiments and managing the resulting datasets. The mistake is waiting for perfect automation before building anything useful.
 
 ## Integrate Evals Into Release Flow
 
@@ -107,7 +107,8 @@ Common integration points:
 
 - pull request checks for prompt or config changes
 - model promotion gates
-- canary analysis
+- [canary analysis](/blog/model-canary-releases-shadow-traffic-guide)
+- [A/B testing workflows](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses)
 - scheduled regression runs on current production versions
 
 If the evaluation output never influences rollout or rollback, the pipeline is not really part of production control.
@@ -166,6 +167,6 @@ Eval pipelines work when they are treated as operational control systems, not ju
 
 An evaluation pipeline should be built to catch the kinds of regressions users actually notice: weaker answers, unstable formats, higher cost, slower responses, and policy failures. That requires representative data, baseline comparisons, and direct integration with release flow.
 
-The best eval pipeline is not the fanciest one. It is the one that blocks bad changes before users become the monitoring system.
+Building a reliable evaluation engine is the foundation of any mature MLOps strategy. By moving away from anecdotal testing and toward systematic, automated gates, you ensure that every deployment is a step forward, not a regression in disguise.
 
-*Need help turning evaluation into a release gate instead of a reporting exercise? We help teams build eval pipelines that combine quality, runtime, and cost checks for safer ML and LLM releases. [Book a free infrastructure audit](/contact) and we’ll review your setup.*
+*Need help turning evaluation into a release gate instead of a reporting exercise? At Resilio Tech, we specialize in building robust evaluation pipelines that combine quality, runtime, and cost checks for safer ML and LLM releases. [Book a free infrastructure audit](/contact) and we’ll review your setup to ensure your models are production-ready.*

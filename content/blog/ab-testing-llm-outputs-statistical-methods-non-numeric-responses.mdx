@@ -127,9 +127,9 @@ This improves signal quality without pretending human judgment is perfectly obje
 
 A robust LLM A/B test often combines:
 
-1. offline pairwise or rubric-based evaluation
+1. offline pairwise or rubric-based evaluation (often as part of a [continuous eval pipeline](/blog/building-eval-pipeline-catches-regressions-before-users))
 2. policy and format checks
-3. limited online exposure
+3. limited online exposure via [canary or shadow deployments](/blog/model-canary-releases-shadow-traffic-guide)
 4. downstream behavioral metrics
 
 That layered approach is much safer than picking a winner from one metric alone.
@@ -162,6 +162,6 @@ LLM experimentation works best when qualitative judgments are turned into struct
 
 A/B testing LLM outputs is not impossible because the responses are non-numeric. It just requires measurement designed for text: pairwise comparison, narrow rubrics, careful sampling, and connection to downstream user outcomes.
 
-The teams that do this well treat qualitative output evaluation as an experimental discipline, not as a side conversation in a review meeting.
+Moving from "vibe-based" testing to rigorous, structured experimentation is how you build trust with your users and stakeholders. It’s about being able to defend every prompt change with data rather than intuition.
 
-*Need help designing LLM experiments that compare output quality rigorously? We help teams build evaluation methods, reviewer workflows, and rollout strategies for prompt and model changes. [Book a free infrastructure audit](/contact) and we’ll review your evaluation approach.*
+*Need help designing LLM experiments that compare output quality rigorously? At Resilio Tech, we help teams build evaluation methods, reviewer workflows, and rollout strategies for prompt and model changes. [Book a free infrastructure audit](/contact) and we’ll review your evaluation approach to help you ship with confidence.*

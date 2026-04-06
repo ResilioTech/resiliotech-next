@@ -176,10 +176,14 @@ These are common:
 
 Terraform helps most when it makes the platform more predictable, not when it becomes another layer of indirection.
 
+Terraform is a strong fit for the stable parts of AI infrastructure: [GPU node pools](/blog/gpu-autoscaling-right-sizing-inference-clusters), registries, storage, identity, and shared platform services. It becomes much less effective when teams use it as a generic replacement for deployment tooling like Helm or Argo CD.
+
+Used well, it creates a cleaner boundary between infrastructure that should be controlled carefully and runtime changes that should move faster. At Resilio Tech, we advocate for an "Infrastructure-as-Code-First" approach to ensure that even the most complex [multi-region AI environments](/blog/multi-region-ai-disaster-recovery-failover-playbook) remain reproducible and audit-ready.
+
 ## Final Takeaway
 
-Terraform is a strong fit for the stable parts of AI infrastructure: clusters, GPU capacity, registries, storage, identity, and shared platform services. It becomes much less effective when teams use it as a generic replacement for deployment tooling.
+Don't let your AI infrastructure become a collection of manual patches. By codifying your GPU capacity, networking, and security boundaries in Terraform, you build a platform that can survive growth, audits, and migrations without the "tribal knowledge" bottleneck.
 
-Used well, it creates a cleaner boundary between infrastructure that should be controlled carefully and runtime changes that should move faster.
+---
 
-*Need help structuring Terraform for AI environments without creating module sprawl or operational drift? We help teams define sane IaC boundaries for GPU clusters, registries, pipelines, and shared platform services. [Book a free infrastructure audit](/contact) and we’ll review your setup.*
+*Need help structuring Terraform for AI environments without creating module sprawl or operational drift? We help teams define sane IaC boundaries for GPU clusters, registries, pipelines, and shared platform services. [Book a free infrastructure audit](/contact) and we’ll review your setup and help you build a robust, versioned infrastructure foundation.*

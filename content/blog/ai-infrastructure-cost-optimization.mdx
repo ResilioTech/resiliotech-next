@@ -114,15 +114,20 @@ spec:
     enabled: true
 ```
 
-**Cost impact**: Training costs reduced by 60-70%.
+**Cost impact**: Training costs reduced by 60-70%. This strategy works best when integrated into a full [automated MLOps pipeline](/blog/mlops-pipeline-kubernetes-guide).
 
-> **Don't Use Spot for Inference** — Spot instances can be terminated with 2 minutes' notice. For training, that's fine — you checkpoint and resume. For real-time inference, that means dropped requests. Keep inference on on-demand or reserved instances.
+> **Don't Use Spot for Inference**
+ — Spot instances can be terminated with 2 minutes' notice. For training, that's fine — you checkpoint and resume. For real-time inference, that means dropped requests. Keep inference on on-demand or reserved instances.
 
 ## Strategy 2: GPU Time-Sharing and Scheduling
 
 Most inference models don't need a full GPU. A text classification model might use 2GB of a 24GB A10G. Without GPU sharing, you're paying for 22GB of unused VRAM.
 
-### NVIDIA MPS for GPU Sharing
+### NVIDIA MPS and MIG for GPU Sharing
+
+**Multi-Process Service (MPS)** is a standard way to share a single GPU across multiple containers. However, for more modern A100 and H100 GPUs, **NVIDIA Multi-Instance GPU (MIG)** provides a more robust alternative by partitioning the GPU into isolated hardware instances. This prevents a single model's memory spike from affecting others sharing the same chip.
+
+When combined with [queue-aware autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters), GPU sharing can dramatically improve utilization.
 
 ```yaml
 # k8s/gpu-sharing-config.yaml
@@ -340,8 +345,8 @@ The 40% in our title is actually conservative. Teams that implement all four str
 3. **Quantize serving models**: INT8 quantization is often a one-line change with negligible quality impact.
 4. **Right-size**: Match GPU type to actual VRAM and compute needs.
 
-Don't try to implement everything at once. Pick the strategy that matches your biggest cost center and start there.
+Don't try to implement everything at once. Pick the strategy that matches your biggest cost center and start there. At Resilio Tech, we’ve found that most teams are sitting on 30-50% in potential savings just by fixing basic scheduling and right-sizing issues.
 
 ---
 
-*Struggling with GPU costs? We help teams optimize their AI infrastructure spend without sacrificing model performance. [Book a free audit](/contact) and we'll identify your top cost-saving opportunities.*
+*Struggling with GPU costs? We help teams optimize their AI infrastructure spend without sacrificing model performance. [Book a free audit](/contact) and we'll identify your top cost-saving opportunities and help you build a roadmap to more efficient AI operations.*

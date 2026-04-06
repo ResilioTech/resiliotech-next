@@ -145,12 +145,12 @@ A practical target layout often looks like this:
 ```text
         Source State                                Target State
 
-  SageMaker training jobs                  CI / pipelines / training jobs
+  SageMaker training jobs                  CI / [MLOps pipelines](/blog/mlops-pipeline-kubernetes-guide) / training jobs
   SageMaker endpoints                      Kubernetes model-serving deployments
   SageMaker autoscaling        ----->      K8s HPA / KEDA / queue-driven scaling
   SageMaker model registry                 object storage + registry metadata
   CloudWatch-only metrics                  Prometheus / Grafana / traces / logs
-  SageMaker-specific rollout               GitOps / Helm / canary rollout tooling
+  SageMaker-specific rollout               GitOps / [Terraform-managed infrastructure](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines)
 ```
 
 The point is not to clone SageMaker semantics exactly. The point is to decide what Kubernetes-native replacements your team will actually support.
@@ -531,9 +531,9 @@ That sequence usually gets teams much further than a giant “replatform ML” i
 
 Teams usually leave SageMaker because they want more control: over cost, runtime behavior, deployment shape, or platform integration.
 
-Kubernetes can absolutely provide that. But only if the migration is treated as an operating-model redesign, not just a packaging exercise.
+Kubernetes can absolutely provide that, especially when combined with [automated MLOps pipelines](/blog/mlops-pipeline-kubernetes-guide) and [Terraform-managed infrastructure](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines). But those benefits only show up if the migration is treated as an operating-model redesign, not just a packaging exercise.
 
-If you want to `migrate sagemaker to kubernetes`, start with the narrowest production-safe path:
+If you want to migrate from SageMaker to Kubernetes, start with the narrowest production-safe path:
 
 - inventory what SageMaker is really doing for you
 - make the runtime explicit
@@ -542,3 +542,7 @@ If you want to `migrate sagemaker to kubernetes`, start with the narrowest produ
 - validate cost after the move instead of assuming it
 
 That is how you leave SageMaker without replacing one black box with a messier one.
+
+---
+
+*Planning a migration from SageMaker to Kubernetes? We help teams design low-risk migration paths, right-size GPU node pools, and build production-grade MLOps platforms that scale. [Book a free infrastructure audit](/contact) to review your migration strategy and identify the quickest wins for cost and flexibility.*

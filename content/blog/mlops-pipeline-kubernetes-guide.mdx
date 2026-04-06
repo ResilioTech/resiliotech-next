@@ -220,6 +220,7 @@ spec:
             limits:
               memory: "6Gi"
               cpu: "4"
+          # For more on right-sizing GPU resources, see our [guide on AI infrastructure cost optimization](/blog/ai-infrastructure-cost-optimization).
           readinessProbe:
             httpGet:
               path: /v1/health/ready
@@ -330,6 +331,8 @@ def check_and_trigger_retrain(
 
     if len(drifted_features) > len(drift_scores) * 0.3:
         print(f"Significant drift detected in {len(drifted_features)} features")
+        # For more on why models fail when drift isn't caught, see:
+        # [/blog/why-your-ml-models-fail-in-production](/blog/why-your-ml-models-fail-in-production)
         trigger_training_pipeline(
             model_name=model_name,
             reason="automated_drift_detection",
@@ -388,6 +391,8 @@ spec:
 
 The key insight: MLOps isn't a tool you install — it's a set of practices that treat ML models with the same rigor as production software.
 
+At Resilio Tech, we specialize in building these types of automated, resilient ML systems for scale. We help teams move beyond manual notebook-based workflows to production-grade infrastructure that self-heals and scales with demand.
+
 ---
 
-*Building MLOps pipelines from scratch? We help teams design and implement production ML infrastructure on Kubernetes. [Get a free infrastructure audit](/contact) to see where your pipeline has gaps.*
+*Building MLOps pipelines from scratch? We help teams design and implement production ML infrastructure on Kubernetes. [Get a free infrastructure audit](/contact) to see where your pipeline has gaps and how we can help you close them.*

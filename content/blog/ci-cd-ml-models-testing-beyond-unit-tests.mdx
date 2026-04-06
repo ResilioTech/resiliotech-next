@@ -113,9 +113,9 @@ Offline evaluation is important, but it is not the whole story.
 
 A safer release flow usually includes:
 
-1. offline quality checks
+1. offline quality checks (using a dedicated [eval pipeline](/blog/building-eval-pipeline-catches-regressions-before-users))
 2. serving-path smoke tests
-3. shadow traffic or replay
+3. [shadow traffic or replay](/blog/model-canary-releases-shadow-traffic-guide)
 4. canary deployment
 5. gradual promotion
 
@@ -177,6 +177,6 @@ ML CI/CD works when it treats model quality, data correctness, and serving behav
 
 CI/CD for ML models has to test the full release surface: data, quality, serving behavior, and rollback readiness. Unit tests still matter, but they are only the smallest layer of protection.
 
-The right pipeline is the one that catches user-visible regressions before the deployment reaches users, not the one that simply produces a green build badge.
+Modernizing your release pipeline is the most effective way to reduce the "mean time to recovery" and "mean time to failure" for your AI products. By treating your model as a first-class citizen of your deployment infrastructure, you can ship faster and with significantly higher confidence.
 
-*Need help building release gates for production model systems? We help teams design CI/CD pipelines that combine data validation, offline evals, shadow testing, and safe rollout controls. [Book a free infrastructure audit](/contact) and we’ll review your release flow.*
+*Need help building release gates for production model systems? At Resilio Tech, we help teams design CI/CD pipelines that combine data validation, offline evals, shadow testing, and safe rollout controls. [Book a free infrastructure audit](/contact) and we’ll review your release flow to ensure your deployments are bulletproof.*

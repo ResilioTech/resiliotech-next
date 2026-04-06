@@ -30,7 +30,7 @@ Compared to a naive Hugging Face server, vLLM is designed for throughput:
 
 That doesn't mean you can just deploy it and walk away. You still need to answer:
 
-- Which model belongs on which GPU class?
+- Which model belongs on which GPU class? (See our guide on [Capacity Planning for LLM Inference](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas))
 - How do you handle context length explosions?
 - When do you scale replicas vs scale up GPU size?
 - How do you roll out a new model without breaking production traffic?
@@ -186,7 +186,7 @@ Better scaling signals:
 - p95 latency
 - GPU utilization
 
-If you're using KEDA or a custom metrics adapter, scale on demand signals that match user pain.
+If you're using KEDA or a custom metrics adapter, scale on demand signals that match user pain. To understand the relationship between concurrency and GPU efficiency, see our detailed breakdown of [Batching Strategies for LLM Inference](/blog/batching-strategies-llm-inference-throughput-vs-latency).
 
 ```yaml
 # keda/scaledobject.yaml
@@ -310,3 +310,4 @@ The real objective is not maximum sophistication. It's predictable behavior unde
 Treat LLM serving as infrastructure, not as a demo wrapper around a model. The teams that do that early avoid most of the painful failures later.
 
 *Need help deploying open-source LLMs in production? We help teams design GPU-efficient serving stacks, rollout strategies, and observability for real workloads. [Book a free infrastructure audit](/contact) and we'll review your current serving architecture.*
+our current serving architecture.*

@@ -111,7 +111,7 @@ Minimum controls:
 - audit logs for retrieved protected content
 - explicit deny behavior when authorized context is insufficient
 
-The safe response is sometimes: "I don't have access to enough approved material to answer that."
+The safe response is sometimes: "I don't have access to enough approved material to answer that." For more on securing these pipelines, see our guide on [PII Filtering in RAG Systems](/blog/data-privacy-rag-systems-pii-filtering-before-model).
 
 ## 5. Measure Retrieval Quality Directly
 
@@ -125,7 +125,7 @@ Track retrieval metrics such as:
 - proportion of answers built from top-ranked documents
 - no-result rate
 
-If answer quality drops, you need to know whether the issue started in retrieval, reranking, prompting, or generation.
+If answer quality drops, you need to know whether the issue started in retrieval, reranking, prompting, or generation. For a deep dive into maintaining the underlying infrastructure for these systems, read our guide on [Vector Database Operations](/blog/vector-database-operations-scaling-backup-disaster-recovery).
 
 ## 6. Create a Small but Serious Eval Set
 
@@ -227,8 +227,8 @@ Before broader rollout, confirm:
 
 ## Final Takeaway
 
-Production RAG reliability is mostly about discipline. The model matters, but the system around it matters more: retrieval quality, freshness, permissions, evaluations, and safe failure behavior.
+Production RAG reliability is mostly about discipline. The model matters, but the system around it matters more: retrieval quality, freshness, permissions, evaluations, and safe failure behavior. If your RAG system cannot explain where an answer came from, whether the source is current, and why it chose those documents, it isn't production-ready yet.
 
-If your RAG system cannot explain where an answer came from, whether the source is current, and why it chose those documents, it isn't production-ready yet.
+At Resilio Tech, we specialize in helping teams bridge the gap between AI prototypes and mission-critical production systems. From designing robust retrieval architectures to implementing advanced guardrails and observability, we ensure your AI applications remain reliable, secure, and useful for your users.
 
 *Building an internal RAG system or customer-facing knowledge assistant? We help teams design retrieval pipelines, guardrails, and observability so answers stay reliable beyond the demo. [Book a free infrastructure audit](/contact) and we'll review the weak points in your current stack.*

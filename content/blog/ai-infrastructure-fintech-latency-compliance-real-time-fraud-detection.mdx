@@ -228,9 +228,42 @@ In practice, we recommend:
 
 If a model score came from degraded feature state, the audit trail should show that immediately.
 
-## PCI-DSS and Data Boundary Design Should Shape the Topology
+### Enforcing PCI Boundaries with Kubernetes Network Policies
 
 For ML model deployment in banking or payments, compliance is not a wrapper added after the platform works. It shapes the platform boundary itself.
+
+A practical way to enforce these boundaries on Kubernetes is through `NetworkPolicy` resources that isolate the "Restricted PCI Zone" from the rest of the cluster.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pci-zone-isolation
+  namespace: fintech-inference
+spec:
+  podSelector:
+    matchLabels:
+      zone: pci-restricted
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          role: pci-compliant-hsm
+    ports:
+    - protocol: TCP
+      port: 443
+```
 
 PCI-DSS does not tell you how to design a feature store, but it does force decisions about:
 
@@ -240,7 +273,7 @@ PCI-DSS does not tell you how to design a feature store, but it does force decis
 - how segmentation is enforced between workloads
 - how keys, secrets, and tokens are handled
 
-In practice, that means the cleanest architecture is usually not one giant shared ML platform.
+In practice, that means the cleanest architecture is usually not one giant shared ML platform. For more on meeting these requirements, see our guide on [SOC 2 Controls for AI Infrastructure](/blog/soc2-controls-for-ai-infrastructure-enterprise-checklist) and our deep dive into [AI Audit Logs](/blog/ai-audit-logs-regulators-ask-for-how-to-prepare).
 
 A stronger pattern is:
 
@@ -406,3 +439,5 @@ If your team is building real-time fraud detection ML infrastructure, credit sco
 - what evidence do we need to reconstruct every high-stakes decision?
 
 Those answers will shape the right topology, the right controls, and the right deployment pattern long before the next model benchmark does.
+
+*Need help building low-latency, compliant AI infrastructure for fintech? We help teams design and deploy high-stakes decisioning platforms that meet both performance and audit requirements. [Book a free infrastructure audit](/contact) and we’ll review your serving path.*

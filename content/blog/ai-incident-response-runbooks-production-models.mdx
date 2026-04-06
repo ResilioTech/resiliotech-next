@@ -208,10 +208,10 @@ Do not make responders search for the right dashboard during an incident.
 
 Each runbook should link directly to:
 
-- service health dashboard
-- model runtime dashboard
-- retrieval dashboard
-- rollout comparison dashboard
+- [service health and observability dashboards](/blog/ai-observability-metrics-dashboards-that-matter)
+- [SLO and error budget status](/blog/ai-system-slos-non-deterministic-systems)
+- model runtime metrics
+- rollout comparison views
 - log query templates
 
 If someone has to ask "Which Grafana panel should I open?", the runbook is incomplete.
@@ -236,8 +236,8 @@ The goal is to validate:
 
 ## Final Takeaway
 
-AI incident response improves dramatically when the team has written paths for common failures instead of treating every event as novel.
+AI incident response improves dramatically when the team has written paths for common failures instead of treating every event as novel. Most incidents still reduce to a few operational patterns: bad rollout, unhealthy serving stack, degraded retrieval, or broken upstream data.
 
-Most AI incidents still reduce to a few operational patterns: bad rollout, unhealthy serving stack, degraded retrieval, or broken upstream data. A good runbook turns those from chaos into routine response.
+Building these runbooks is an investment in your team's sanity and your system's uptime. When the pressure is on, a clear, pre-vetted plan is the difference between a minor blip and a major outage.
 
-*Need help operationalizing AI systems? We help teams build dashboards, alerts, and runbooks so production model incidents are faster to diagnose and safer to mitigate. [Book a free infrastructure audit](/contact) and we’ll review your current incident readiness.*
+*Need help operationalizing your AI systems? At Resilio Tech, we help teams build dashboards, alerts, and runbooks so production model incidents are faster to diagnose and safer to mitigate. [Book a free infrastructure audit](/contact) and we’ll review your current incident readiness.*
