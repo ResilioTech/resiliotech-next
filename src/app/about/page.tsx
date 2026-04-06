@@ -8,17 +8,17 @@ const AboutHero = dynamic(() => import('@/components/about/AboutHero').then(mod 
 });
 
 const TeamSection = dynamic(() => import('@/components/about/TeamSection').then(mod => ({ default: mod.TeamSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-96 bg-background rounded-xl"></div></div></div>
 });
 
 const ValuesSection = dynamic(() => import('@/components/about/ValuesSection').then(mod => ({ default: mod.ValuesSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-background animate-pulse"><div className="max-w-7xl mx-auto px-6"><div className="h-80 bg-surface rounded-xl"></div></div></div>
 });
 
 const TimelineSection = dynamic(() => import('@/components/about/TimelineSection').then(mod => ({ default: mod.TimelineSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-surface animate-pulse"><div className="max-w-6xl mx-auto px-6"><div className="h-96 bg-background rounded-xl"></div></div></div>
 });
 

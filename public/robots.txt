@@ -4,6 +4,15 @@
 User-agent: *
 Allow: /
 
+# Block faceted search/filtering URLs to save crawl budget and prevent duplicate content
+Disallow: /*?*tag=
+Disallow: /*?*category=
+Disallow: /*?*author=
+Disallow: /*?*service=
+Disallow: /*?*sort=
+Disallow: /*?*page=
+Disallow: /*?*q=
+
 # Sitemap location
 Sitemap: https://resiliotech.com/sitemap.xml
 

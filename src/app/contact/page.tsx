@@ -8,7 +8,7 @@ const ContactHero = dynamic(() => import('@/components/contact/ContactHero').the
 });
 
 const ContactForm = dynamic(() => import('@/components/contact/ContactForm').then(mod => ({ default: mod.ContactForm })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="max-w-2xl mx-auto p-8 bg-surface-elevated rounded-xl animate-pulse"><div className="h-96 bg-surface rounded-lg"></div></div>
 });
 

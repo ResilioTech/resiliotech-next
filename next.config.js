@@ -49,6 +49,21 @@ const nextConfig = {
       { source: '/projects/:path+', destination: '/services', permanent: true },
       { source: '/founding-pilot', destination: '/services', permanent: true },
       { source: '/changelog', destination: '/', permanent: true },
+      
+      // Fix 404s for legacy blog posts (Error 1)
+      { source: '/blog/cicd-github-actions-guide', destination: '/blog', permanent: true },
+      { source: '/blog/devops-blueprint-seed-to-series-a', destination: '/blog', permanent: true },
+      { source: '/blog/fluxcd-kustomize-prod-ready', destination: '/blog', permanent: true },
+      { source: '/blog/aws-cost-guardrails-terraform', destination: '/blog', permanent: true },
+      { source: '/blog/getting-started-kubernetes-beginners', destination: '/blog', permanent: true },
+      { source: '/blog/aws-cost-optimization-strategies', destination: '/blog', permanent: true },
+      
+      // Fix 404s for scraped email addresses
+      { source: '/contact@resiliotech.com', destination: '/contact', permanent: true },
+      { source: '/shivam@resiliotech.com', destination: '/contact', permanent: true },
+
+      // Redirect legacy /changelog route (was returning 404; now indexed pages see redirect)
+      { source: '/products/cloudwatch-pro', destination: '/services', permanent: true },
     ]
   },
 }

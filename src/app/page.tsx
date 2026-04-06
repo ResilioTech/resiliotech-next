@@ -10,37 +10,37 @@ const HeroSection = dynamic(() => import('@/components/sections/HeroSection').th
 
 // Below-the-fold: Lazy load to reduce initial JS bundle
 const ServicesSection = dynamic(() => import('@/components/sections/ServicesSection').then(mod => ({ default: mod.ServicesSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-background" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-64 bg-surface rounded-xl"></div></div></div>
 })
 
 const WhyResilioSection = dynamic(() => import('@/components/sections/WhyResilioSection').then(mod => ({ default: mod.WhyResilioSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-surface" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface-elevated rounded-xl"></div></div></div>
 })
 
 const HowWeWorkSection = dynamic(() => import('@/components/sections/HowWeWorkSection').then(mod => ({ default: mod.HowWeWorkSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-background" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
 })
 
 const FAQSection = dynamic(() => import('@/components/sections/FAQSection').then(mod => ({ default: mod.FAQSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-surface" style={{ contain: 'content' }}><div className="max-w-3xl mx-auto px-6"><div className="h-48 bg-surface-elevated rounded-xl"></div></div></div>
 })
 
 const TechStackSection = dynamic(() => import('@/components/sections/TechStackSection').then(mod => ({ default: mod.TechStackSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-16 bg-surface-elevated" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
 })
 
 const LearnWithUsSection = dynamic(() => import('@/components/sections/LearnWithUsSection').then(mod => ({ default: mod.LearnWithUsSection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-background" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-48 bg-surface rounded-xl"></div></div></div>
 })
 
 const CTASection = dynamic(() => import('@/components/sections/CTASection').then(mod => ({ default: mod.CTASection })), {
-  ssr: false,
+  ssr: true,
   loading: () => <div className="py-24 bg-surface" style={{ contain: 'content' }}><div className="max-w-7xl mx-auto px-6"><div className="h-32 bg-background rounded-xl"></div></div></div>
 })
 
