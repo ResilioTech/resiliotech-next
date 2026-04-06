@@ -1,0 +1,138 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07121b" />
+      <stop offset="0.5" stop-color="#0a1f2f" />
+      <stop offset="1" stop-color="#123149" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08161f" />
+      <stop offset="1" stop-color="#10222b" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1020 104) rotate(126) scale(540 410)">
+      <stop stop-color="rgba(34, 197, 94, 0.18)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 530) rotate(6) scale(380 260)">
+      <stop stop-color="rgba(6, 182, 212, 0.16)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <linearGradient id="accentLine" x1="140" y1="0" x2="430" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22c55e" />
+      <stop offset="1" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="shield" x1="876" y1="220" x2="876" y2="344" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22c55e" />
+      <stop offset="1" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94a3b8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <circle cx="154" cy="174" r="4" fill="#22c55e" opacity="0.46" />
+  <circle cx="324" cy="130" r="2" fill="#99f6e4" opacity="0.50" />
+  <circle cx="464" cy="410" r="3" fill="#06b6d4" opacity="0.54" />
+  <circle cx="690" cy="96" r="4" fill="#22c55e" opacity="0.44" />
+  <circle cx="938" cy="146" r="2" fill="#99f6e4" opacity="0.58" />
+  <circle cx="1052" cy="340" r="3" fill="#06b6d4" opacity="0.38" />
+  <path d="M110 186 L224 232 L312 210" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+  <path d="M154 268 L236 308 L362 316" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+  <path d="M98 416 L180 388 L282 424" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="168" y="128" width="198" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="155" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">FINTECH AI INFRA</text>
+
+  <text x="168" y="204" fill="#f8fafc" font-size="41" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.1">
+    <tspan x="168" dy="0">AI Infrastructure</tspan>
+    <tspan x="168" dy="46">for Fintech:</tspan>
+    <tspan x="168" dy="46">Latency, Compliance,</tspan>
+    <tspan x="168" dy="46">and Real-Time Fraud</tspan>
+    <tspan x="168" dy="46">Detection</tspan>
+  </text>
+
+  <rect x="168" y="454" width="160" height="4" rx="2" fill="#22c55e" opacity="0.90" />
+  <rect x="340" y="454" width="74" height="4" rx="2" fill="#67e8f9" opacity="0.74" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="476" width="132" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="497" r="5" fill="#22c55e" />
+    <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Fraud Detection</text>
+  </g>
+
+  <g transform="translate(314, 0)">
+    <rect x="0" y="476" width="106" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="497" r="5" fill="#22c55e" />
+    <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">PCI-DSS</text>
+  </g>
+
+  <g transform="translate(434, 0)">
+    <rect x="0" y="476" width="114" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="497" r="5" fill="#22c55e" />
+    <text x="36" y="503" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Sub-50ms</text>
+  </g>
+
+  <g transform="translate(760 146) scale(0.98) translate(-760 -146)">
+    <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
+    <rect x="748" y="176" width="94" height="10" rx="5" fill="#22c55e" opacity="0.88" />
+    <rect x="854" y="176" width="54" height="10" rx="5" fill="#06b6d4" opacity="0.70" />
+    <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
+
+    <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="766" y="410" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Latency, Controls, and Auditability</text>
+
+    <rect x="760" y="214" width="100" height="120" rx="24" fill="rgba(7, 15, 23, 0.88)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="778" y="236" width="64" height="10" rx="5" fill="#22c55e" opacity="0.92" />
+    <rect x="778" y="260" width="44" height="8" rx="4" fill="rgba(148, 163, 184, 0.28)" />
+    <rect x="778" y="280" width="54" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+    <rect x="778" y="300" width="36" height="8" rx="4" fill="rgba(148, 163, 184, 0.22)" />
+    <text x="810" y="352" text-anchor="middle" fill="#cbd5e1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">Tx Stream</text>
+
+    <rect x="876" y="214" width="72" height="120" rx="24" fill="rgba(7, 15, 23, 0.88)" stroke="rgba(148, 163, 184, 0.16)" />
+    <path d="M912 228 L938 238 L938 280 C938 305 927 324 912 336 C897 324 886 305 886 280 L886 238 Z" fill="rgba(6, 15, 22, 0.90)" stroke="url(#shield)" stroke-width="4" />
+    <path d="M901 281 L909 289 L923 272" stroke="#67e8f9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="912" y="352" text-anchor="middle" fill="#cbd5e1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">PCI Zone</text>
+
+    <rect x="964" y="214" width="76" height="120" rx="24" fill="rgba(7, 15, 23, 0.88)" stroke="rgba(148, 163, 184, 0.16)" />
+    <circle cx="986" cy="248" r="12" fill="rgba(12, 24, 34, 0.94)" stroke="#22c55e" stroke-width="3" />
+    <circle cx="1018" cy="248" r="12" fill="rgba(12, 24, 34, 0.94)" stroke="#06b6d4" stroke-width="3" />
+    <circle cx="986" cy="284" r="12" fill="rgba(12, 24, 34, 0.94)" stroke="#67e8f9" stroke-width="3" />
+    <circle cx="1018" cy="284" r="12" fill="rgba(12, 24, 34, 0.94)" stroke="#22c55e" stroke-width="3" />
+    <path d="M998 248 H1006" stroke="rgba(148, 163, 184, 0.28)" stroke-width="3" stroke-linecap="round" />
+    <path d="M986 260 V272" stroke="rgba(148, 163, 184, 0.22)" stroke-width="3" stroke-linecap="round" />
+    <path d="M1018 260 V272" stroke="rgba(148, 163, 184, 0.22)" stroke-width="3" stroke-linecap="round" />
+    <text x="1002" y="352" text-anchor="middle" fill="#cbd5e1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">GPU Scoring</text>
+
+    <path d="M860 274 H876" stroke="#22c55e" stroke-width="4" stroke-linecap="round" />
+    <path d="M948 274 H964" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" />
+
+    <g opacity="0.92">
+      <path d="M784 374 C804 360 820 356 838 346 C858 335 872 316 888 300" stroke="#22c55e" stroke-width="4" stroke-linecap="round" fill="none" />
+      <path d="M888 300 C904 282 924 266 946 264 C968 262 984 276 1006 286" stroke="#67e8f9" stroke-width="4" stroke-linecap="round" fill="none" />
+    </g>
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>

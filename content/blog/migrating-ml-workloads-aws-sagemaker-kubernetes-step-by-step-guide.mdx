@@ -1,0 +1,544 @@
+---
+title: "Migrating ML Workloads from AWS SageMaker to Kubernetes: A Step-by-Step Guide"
+description: "A deep guide to migrating ML workloads from AWS SageMaker to Kubernetes, covering model export, containerization, GPU scheduling, monitoring migration, and post-migration cost comparison."
+date: "2026-04-06"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["sagemaker", "kubernetes", "mlops", "migration", "model-deployment"]
+coverImage: "/blog-images/migrating-ml-workloads-aws-sagemaker-kubernetes-step-by-step-guide.svg"
+featured: false
+---
+
+# Migrating ML Workloads from AWS SageMaker to Kubernetes: A Step-by-Step Guide
+
+SageMaker is often a reasonable place to start.
+
+It helps teams get models trained, deployed, and managed without building every piece of infrastructure from scratch. For early teams or isolated workloads, that is a real advantage.
+
+But many teams eventually outgrow it.
+
+The reasons are usually practical rather than ideological:
+
+- serving costs become harder to justify
+- deployment flexibility is too limited
+- GPU and instance choices do not map cleanly to the workload
+- MLOps workflows feel constrained by the managed platform shape
+- monitoring and runtime control are not deep enough for how the team actually operates
+- more of the company is already standardizing on Kubernetes
+
+At that point, “should we leave SageMaker?” turns into “how do we leave it without causing a production incident or rebuilding everything the hard way?”
+
+That is what this guide covers.
+
+This is a step-by-step migration plan for teams moving ML workloads from SageMaker to Kubernetes, with a focus on:
+
+- model and artifact export
+- containerization
+- GPU scheduling and workload placement
+- monitoring migration
+- cost comparison after the move
+
+The goal is not to recreate SageMaker feature-for-feature. The goal is to move to a Kubernetes-based platform that your team can actually operate, extend, and cost-control once SageMaker has become too rigid or too expensive.
+
+## Why Teams Leave SageMaker
+
+Most migrations start after the same realization: the platform is no longer the accelerator it used to be.
+
+Common triggers include:
+
+- too many workloads now depend on one managed vendor surface
+- endpoint and notebook spend has crept upward without clear efficiency gains
+- model-serving patterns no longer fit the SageMaker abstraction well
+- infrastructure teams want one operating model across apps and ML
+- custom scheduling, rollout, or networking controls are now more important
+
+A lot of teams do not actually want “self-host everything.” They want:
+
+- better cost control
+- better runtime flexibility
+- better integration with the rest of their platform
+
+That is an important distinction.
+
+If SageMaker is still reducing complexity for your current scale and operating model, moving may not be worth it yet. But if your team is increasingly fighting the platform, the migration question becomes legitimate.
+
+## What Usually Lives in SageMaker Today
+
+Before planning the target state, inventory what the current platform is actually doing.
+
+Many organizations think they are migrating “model serving,” but SageMaker is often carrying more than that:
+
+- training jobs
+- notebooks or development environments
+- endpoints for online inference
+- batch transform jobs
+- model registry or artifact tracking
+- pipelines and automation
+- experiment metadata
+- autoscaling and deployment policy
+
+Do not collapse all of that into one migration stream.
+
+The right move is usually to split the work into layers:
+
+1. online serving
+2. training and pipeline orchestration
+3. artifact management and release controls
+4. observability and operations
+
+That makes it possible to leave SageMaker in phases instead of doing a single high-risk cutover.
+
+## Step 1: Inventory the SageMaker Dependencies
+
+Start with a dependency map, not a destination cluster.
+
+For each workload, capture:
+
+- model type and framework
+- training path
+- serving mode
+- traffic profile
+- latency target
+- GPU or CPU dependency
+- current SageMaker integrations
+- downstream consumers
+
+At minimum, your inventory should distinguish:
+
+- real-time endpoints
+- asynchronous or batch jobs
+- retraining pipelines
+- notebook-based workflows
+
+It should also answer questions like:
+
+- where are model artifacts stored?
+- where do features come from?
+- which endpoints are truly production critical?
+- what scaling behavior is required today?
+- what model packaging assumptions are SageMaker-specific?
+
+This is the stage where teams often discover their actual problem is narrower than they feared. Sometimes only the inference plane needs to move first. Sometimes training can stay managed longer. Sometimes notebooks should be the last thing you touch.
+
+That clarity matters because the lowest-risk migration is the one that moves the fewest things at once.
+
+## Step 2: Define the Kubernetes Target State
+
+Do not migrate from SageMaker to “Kubernetes” as if Kubernetes itself were the destination design.
+
+You need a concrete target operating model.
+
+For most teams, that target state should define:
+
+- how models are packaged
+- how inference services are deployed
+- where batch jobs run
+- how GPU nodes are segmented
+- how secrets, config, and credentials are handled
+- how CI/CD and rollback work
+- how logs, metrics, and traces are collected
+
+If that operating model is vague, the migration becomes expensive guesswork.
+
+A practical target layout often looks like this:
+
+```text
+        Source State                                Target State
+
+  SageMaker training jobs                  CI / pipelines / training jobs
+  SageMaker endpoints                      Kubernetes model-serving deployments
+  SageMaker autoscaling        ----->      K8s HPA / KEDA / queue-driven scaling
+  SageMaker model registry                 object storage + registry metadata
+  CloudWatch-only metrics                  Prometheus / Grafana / traces / logs
+  SageMaker-specific rollout               GitOps / Helm / canary rollout tooling
+```
+
+The point is not to clone SageMaker semantics exactly. The point is to decide what Kubernetes-native replacements your team will actually support.
+
+## Step 3: Export Models and Runtime Assumptions
+
+Once the inventory is clear, export the parts of the workload that are currently hidden behind SageMaker.
+
+That includes:
+
+- model artifacts
+- inference code
+- preprocessing and postprocessing code
+- environment dependencies
+- startup assumptions
+- health check expectations
+
+This is where some migrations get stuck. The model itself may be exportable, but the serving behavior is not always self-contained. SageMaker wrappers, environment variables, built-in handlers, or custom entry points may be doing more than the team remembers.
+
+You want to know:
+
+- is the model saved as a clean artifact?
+- can inference run without SageMaker runtime assumptions?
+- is preprocessing bundled with the serving container or scattered in separate code?
+- are there hidden assumptions about batch size, worker count, or model loading?
+
+A simple rule: if you cannot run the model locally in a plain container outside SageMaker, you are not ready to migrate the serving path yet.
+
+## Step 4: Containerize for Kubernetes, Not for the Demo
+
+Once you can run the model outside SageMaker, containerize it as a production workload.
+
+That container should own:
+
+- model loading
+- inference server startup
+- health and readiness behavior
+- configuration through environment or mounted config
+- metrics emission
+
+It should not depend on tribal knowledge.
+
+A Kubernetes-ready inference container typically needs to answer:
+
+- when is the model actually ready?
+- how much memory does it require to warm?
+- what concurrency does it support safely?
+- how does it fail when dependencies are missing?
+
+For example:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-model
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: serving
+          image: registry.example.com/recommendation-model:v1
+          env:
+            - name: MODEL_PATH
+              value: /models/current
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8080
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+            limits:
+              cpu: "4"
+              memory: "6Gi"
+```
+
+This sounds basic, but many SageMaker workloads were never forced into this level of explicitness. Kubernetes will force it.
+
+That is good. It makes the runtime easier to understand and operate later.
+
+## Step 5: Rebuild Deployment and Rollout Behavior
+
+SageMaker gives teams a managed deployment surface. When you leave it, you must replace the release path deliberately.
+
+At minimum, define:
+
+- how model images are built
+- how artifacts are versioned
+- how deployments are promoted
+- how traffic is shifted
+- how rollback works
+
+Do not treat model deployment like a manual `kubectl apply` step.
+
+For many teams, the cleanest pattern is:
+
+1. build the serving image in CI
+2. publish model metadata and artifact reference
+3. deploy via Helm, Argo CD, or another GitOps layer
+4. canary or shadow before full promotion
+5. keep rollback fast and documented
+
+This is one of the biggest differences after leaving SageMaker: your team is now explicitly responsible for the release system, not just the model.
+
+That is also where Kubernetes becomes more powerful than SageMaker if you do it well. You are no longer constrained to one managed rollout shape.
+
+## Step 6: Plan GPU Scheduling Before Production Traffic Moves
+
+GPU scheduling is one of the places where teams underestimate migration difficulty.
+
+On SageMaker, much of the serving and instance choice feels bundled. On Kubernetes, you need to decide:
+
+- which workloads really require GPUs
+- which node pools should be GPU-only
+- how inference, batch, and experimentation are separated
+- how autoscaling interacts with GPU node provisioning
+
+A good migration does not start by putting every model on one generic GPU pool.
+
+Instead, classify workloads:
+
+- latency-sensitive online inference
+- batch inference
+- internal experimentation
+- training workloads
+
+These often deserve different scheduling rules or even different node groups.
+
+For example:
+
+- customer-facing inference gets dedicated or prioritized GPU pools
+- batch inference can tolerate queueing and preemption
+- experiments should not compete with production traffic
+
+If you skip this design, the first weeks after migration often feel worse than SageMaker even when the long-term platform is more capable.
+
+## Step 7: Migrate Monitoring as a First-Class Workstream
+
+A lot of teams think monitoring is what they will “add after the cutover.”
+
+That is backwards.
+
+Monitoring migration should happen before production traffic moves.
+
+SageMaker often hides some operational detail behind managed services and CloudWatch integrations. Once you self-host, you need to make that telemetry explicit.
+
+At minimum, migrate visibility for:
+
+- request rate
+- p50, p95, and p99 latency
+- error and timeout rate
+- model version serving which traffic
+- CPU, memory, and GPU utilization
+- queue depth where relevant
+- container restart or OOM behavior
+
+For ML-specific visibility, also include:
+
+- prediction distribution
+- feature freshness or missing-feature rate
+- fallback usage
+- canary versus stable performance
+
+If the new Kubernetes stack does not answer more operational questions than SageMaker did, the migration is incomplete.
+
+A healthy target stack often includes:
+
+- Prometheus metrics
+- Grafana dashboards
+- centralized logs
+- distributed tracing where request chains matter
+- alerts tied to user-facing routes and model behavior
+
+The migration is not just “replace CloudWatch.” It is “build a better operating picture.”
+
+## Step 8: Move One Workload Class at a Time
+
+Do not cut everything over together.
+
+A phased migration is almost always safer.
+
+One practical sequence:
+
+### Phase 1: Online inference for one non-critical model
+
+Use this to validate:
+
+- packaging
+- deployment pipeline
+- rollback
+- runtime metrics
+
+### Phase 2: More inference services with mixed CPU/GPU profiles
+
+Use this to validate:
+
+- node pool design
+- autoscaling behavior
+- queue or traffic policies
+
+### Phase 3: Batch jobs and asynchronous inference
+
+Use this to validate:
+
+- job orchestration
+- scheduling policy
+- artifact and dependency handling
+
+### Phase 4: Training and retraining pipelines
+
+Only move these after the serving path is stable unless there is a strong reason to do otherwise.
+
+This sequencing matters because the failure modes are different. Serving incidents are customer-visible. Training migration issues are usually easier to absorb if the serving path is already healthy.
+
+## Step 8.5: Plan the Cutover and Rollback Window Explicitly
+
+One of the biggest migration risks is assuming that “deployment complete” means “migration complete.”
+
+It does not.
+
+You still need a controlled cutover plan for production traffic.
+
+That plan should answer:
+
+- will traffic switch by percentage, by route, or by tenant?
+- how long will SageMaker and Kubernetes run in parallel?
+- what metrics must remain healthy for the new path to stay live?
+- who can trigger rollback, and how fast can it happen?
+
+For many teams, the safest approach is a staged parallel run:
+
+1. deploy the Kubernetes service with no user traffic
+2. mirror or replay production-shaped requests
+3. compare latency, output, and error behavior against SageMaker
+4. shift a small portion of live traffic
+5. hold the old path ready until the new one proves stable
+
+This is especially important when the migration changes more than infrastructure.
+
+If you are also changing:
+
+- model server implementation
+- feature retrieval path
+- scaling policy
+- logging and observability stack
+
+then your cutover is effectively a platform change, not just a hosting change.
+
+Treat it accordingly.
+
+Rollback must also be explicit.
+
+Do not rely on “we can probably point traffic back” as the plan. Define:
+
+- the traffic control point
+- the config or deployment to revert
+- the metrics threshold that triggers rollback
+- the person or team authorized to do it
+
+That discipline matters because migrations often look healthy in dashboards until the first real traffic burst or the first production-scale dependency timeout.
+
+## Step 9: Run a Real Cost Comparison After Migration
+
+Many teams move off SageMaker because they expect cost savings. Sometimes they get them. Sometimes they do not.
+
+The migration is only economically successful if you compare like for like.
+
+Do not compare:
+
+- SageMaker monthly bill
+against
+- raw Kubernetes node cost
+
+That is incomplete.
+
+A useful post-migration cost comparison should include:
+
+- compute cost
+- GPU utilization or idle time
+- storage and artifact cost
+- observability cost
+- operational overhead
+- reliability gains or losses
+
+You should also compare by workload class:
+
+- online inference
+- batch jobs
+- training
+- shared platform services
+
+In many organizations, the cost story after migration looks like this:
+
+- lower unit cost for steady-state serving
+- better resource packing for multiple models
+- more flexibility in instance and node choices
+- more explicit operational ownership cost
+
+That last point matters. Self-hosting often reduces direct managed-service spend while increasing the need for platform discipline. That is usually a good trade only when the team is ready to operate the new system properly.
+
+## Step 10: Decide What Should Stay Managed
+
+Leaving SageMaker does not require leaving every managed service behind.
+
+Some teams make the migration harder by trying to self-host every adjacent component immediately:
+
+- notebooks
+- pipeline orchestration
+- artifact management
+- experiment tracking
+- observability backends
+
+That is rarely necessary.
+
+A better post-migration question is:
+
+- which components truly need to move onto the Kubernetes operating model?
+- which managed services still provide good value without constraining us?
+
+For example, after moving serving and some pipeline workloads to Kubernetes, a team might still choose to keep:
+
+- managed object storage for model artifacts
+- managed registries or container repositories
+- managed metrics backends
+- a hosted CI platform
+
+That can be a perfectly sane target state.
+
+The migration should reduce platform friction, not become a purity test.
+
+If the pain is mainly in:
+
+- SageMaker endpoint cost
+- limited rollout control
+- workload scheduling rigidity
+- inconsistent integration with the rest of the platform
+
+then solve those problems first.
+
+Do not add unnecessary self-hosted burden in unrelated areas unless the team has a clear reason and clear ownership.
+
+## What Teams Commonly Get Wrong
+
+These are the migration mistakes that show up repeatedly:
+
+1. trying to move training, serving, notebooks, and registry workflows all at once
+2. exporting the model artifact but not the full inference runtime behavior
+3. treating GPU scheduling as a later optimization instead of a first deployment concern
+4. rebuilding a weaker monitoring stack than the managed platform had
+5. assuming cost savings are automatic once workloads run on Kubernetes
+
+None of these are unusual. All of them create avoidable friction.
+
+## A Practical Migration Checklist
+
+If you need a concrete starting checklist, use this:
+
+1. inventory SageMaker workloads and dependencies
+2. define the Kubernetes operating model for serving, jobs, and artifacts
+3. export one real workload and run it cleanly outside SageMaker
+4. containerize with explicit health checks and resource limits
+5. create the deployment and rollback path
+6. design GPU and node pool segmentation before moving traffic
+7. migrate metrics, logs, traces, and alerts
+8. canary one production-like service
+9. compare cost and reliability after the first cutover
+
+That sequence usually gets teams much further than a giant “replatform ML” initiative plan.
+
+## Final Takeaway
+
+Teams usually leave SageMaker because they want more control: over cost, runtime behavior, deployment shape, or platform integration.
+
+Kubernetes can absolutely provide that. But only if the migration is treated as an operating-model redesign, not just a packaging exercise.
+
+If you want to `migrate sagemaker to kubernetes`, start with the narrowest production-safe path:
+
+- inventory what SageMaker is really doing for you
+- make the runtime explicit
+- move serving first in controlled phases
+- rebuild observability before cutover
+- validate cost after the move instead of assuming it
+
+That is how you leave SageMaker without replacing one black box with a messier one.

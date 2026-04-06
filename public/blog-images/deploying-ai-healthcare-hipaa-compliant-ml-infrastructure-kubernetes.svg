@@ -1,0 +1,136 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08131A" />
+      <stop offset="0.52" stop-color="#0D2230" />
+      <stop offset="1" stop-color="#143A46" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08151D" />
+      <stop offset="1" stop-color="#102129" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1010 98) rotate(126) scale(530 404)">
+      <stop stop-color="rgba(45, 212, 191, 0.22)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(160 548) rotate(4) scale(392 262)">
+      <stop stop-color="rgba(16, 185, 129, 0.14)" />
+      <stop offset="1" stop-color="rgba(15, 23, 42, 0)" />
+    </radialGradient>
+    <linearGradient id="accentLine" x1="140" y1="0" x2="420" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2DD4BF" />
+      <stop offset="1" stop-color="#22C55E" />
+    </linearGradient>
+    <linearGradient id="shield" x1="910" y1="228" x2="910" y2="342" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2DD4BF" />
+      <stop offset="1" stop-color="#22C55E" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <circle cx="132" cy="172" r="4" fill="#2DD4BF" opacity="0.42" />
+  <circle cx="318" cy="112" r="2" fill="#A7F3D0" opacity="0.54" />
+  <circle cx="520" cy="396" r="3" fill="#22C55E" opacity="0.44" />
+  <circle cx="876" cy="120" r="4" fill="#2DD4BF" opacity="0.48" />
+  <circle cx="1018" cy="286" r="3" fill="#A7F3D0" opacity="0.42" />
+  <path d="M92 198 L172 232 L282 218" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+  <path d="M116 402 L214 374 L320 418" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+  <path d="M204 264 L290 316 L394 298" stroke="rgba(148, 163, 184, 0.10)" stroke-width="2" fill="none" />
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="168" y="126" width="214" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">HEALTHCARE ML DEPLOYMENT</text>
+
+  <text x="168" y="198" fill="#F8FAFC" font-size="39" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.1">
+    <tspan x="168" dy="0">Deploying AI in</tspan>
+    <tspan x="168" dy="44">Healthcare:</tspan>
+    <tspan x="168" dy="44">HIPAA-Compliant ML</tspan>
+    <tspan x="168" dy="44">Infrastructure on</tspan>
+    <tspan x="168" dy="44">Kubernetes</tspan>
+  </text>
+
+  <rect x="168" y="448" width="166" height="4" rx="2" fill="#2DD4BF" opacity="0.92" />
+  <rect x="346" y="448" width="74" height="4" rx="2" fill="#A7F3D0" opacity="0.72" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="474" width="98" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#2DD4BF" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">HIPAA</text>
+  </g>
+
+  <g transform="translate(280, 0)">
+    <rect x="0" y="474" width="136" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#2DD4BF" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Clinical NLP</text>
+  </g>
+
+  <g transform="translate(430, 0)">
+    <rect x="0" y="474" width="128" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#2DD4BF" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Kubernetes</text>
+  </g>
+
+  <g transform="translate(778 150) scale(0.95) translate(-778 -150)">
+    <rect x="706" y="136" width="352" height="326" rx="36" fill="rgba(9, 14, 26, 0.54)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="724" y="154" width="316" height="290" rx="28" fill="rgba(10, 17, 31, 0.76)" stroke="rgba(148, 163, 184, 0.08)" />
+    <rect x="748" y="176" width="96" height="10" rx="5" fill="#2DD4BF" opacity="0.88" />
+    <rect x="856" y="176" width="52" height="10" rx="5" fill="#22C55E" opacity="0.70" />
+    <rect x="920" y="176" width="76" height="10" rx="5" fill="rgba(148, 163, 184, 0.20)" />
+    <rect x="742" y="388" width="280" height="34" rx="17" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="766" y="410" fill="#E2E8F0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="680">Protected ML Reference Architecture</text>
+
+    <rect x="752" y="216" width="90" height="120" rx="22" fill="rgba(7, 15, 23, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+    <path d="M780 238 H814" stroke="#2DD4BF" stroke-width="5" stroke-linecap="round" />
+    <path d="M797 221 V255" stroke="#2DD4BF" stroke-width="5" stroke-linecap="round" />
+    <rect x="772" y="272" width="50" height="8" rx="4" fill="rgba(148, 163, 184, 0.26)" />
+    <rect x="772" y="292" width="40" height="8" rx="4" fill="rgba(148, 163, 184, 0.22)" />
+    <text x="797" y="356" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">Clinical App</text>
+
+    <rect x="868" y="216" width="84" height="120" rx="22" fill="rgba(7, 15, 23, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+    <path d="M910 228 L936 238 L936 278 C936 302 925 322 910 334 C895 322 884 302 884 278 L884 238 Z" fill="rgba(6, 15, 22, 0.92)" stroke="url(#shield)" stroke-width="4" />
+    <path d="M899 278 L907 286 L920 270" stroke="#A7F3D0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="910" y="356" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">HIPAA Guardrail</text>
+
+    <rect x="970" y="216" width="72" height="120" rx="22" fill="rgba(7, 15, 23, 0.90)" stroke="rgba(148, 163, 184, 0.16)" />
+    <circle cx="992" cy="248" r="11" fill="rgba(12, 24, 34, 0.94)" stroke="#2DD4BF" stroke-width="3" />
+    <circle cx="1020" cy="248" r="11" fill="rgba(12, 24, 34, 0.94)" stroke="#22C55E" stroke-width="3" />
+    <circle cx="992" cy="280" r="11" fill="rgba(12, 24, 34, 0.94)" stroke="#A7F3D0" stroke-width="3" />
+    <circle cx="1020" cy="280" r="11" fill="rgba(12, 24, 34, 0.94)" stroke="#2DD4BF" stroke-width="3" />
+    <path d="M1002 248 H1010" stroke="rgba(148, 163, 184, 0.26)" stroke-width="3" stroke-linecap="round" />
+    <path d="M992 258 V270" stroke="rgba(148, 163, 184, 0.22)" stroke-width="3" stroke-linecap="round" />
+    <path d="M1020 258 V270" stroke="rgba(148, 163, 184, 0.22)" stroke-width="3" stroke-linecap="round" />
+    <text x="1006" y="356" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">ML Serving</text>
+
+    <path d="M842 276 H868" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round" />
+    <path d="M952 276 H970" stroke="#22C55E" stroke-width="4" stroke-linecap="round" />
+
+    <g opacity="0.92">
+      <path d="M782 380 C806 364 826 354 848 342 C872 329 888 314 902 296" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round" fill="none" />
+      <path d="M902 296 C916 280 934 268 952 266 C972 264 988 276 1008 286" stroke="#A7F3D0" stroke-width="4" stroke-linecap="round" fill="none" />
+    </g>
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>
