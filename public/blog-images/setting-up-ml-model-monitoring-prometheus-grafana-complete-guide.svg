@@ -1,0 +1,120 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07111C" />
+      <stop offset="0.5" stop-color="#0F2233" />
+      <stop offset="1" stop-color="#17364A" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08131E" />
+      <stop offset="1" stop-color="#171F2A" />
+    </linearGradient>
+    <linearGradient id="accent" x1="140" y1="0" x2="434" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22C55E" />
+      <stop offset="1" stop-color="#38BDF8" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1008 122) rotate(132) scale(540 380)">
+      <stop stop-color="#38BDF8" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(224 538) rotate(3) scale(410 250)">
+      <stop stop-color="#22C55E" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#22C55E" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.1" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accent)" opacity="0.9" />
+
+  <rect x="168" y="126" width="248" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.25">PROMETHEUS + GRAFANA</text>
+
+  <text x="168" y="196" fill="#F8FAFC" font-size="37" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1">
+    <tspan x="168" dy="0">Setting Up ML</tspan>
+    <tspan x="168" dy="42">Model Monitoring</tspan>
+    <tspan x="168" dy="42">with Prometheus</tspan>
+    <tspan x="168" dy="42">and Grafana</tspan>
+    <tspan x="168" dy="42">A Complete Guide</tspan>
+  </text>
+
+  <rect x="168" y="448" width="174" height="4" rx="2" fill="#22C55E" opacity="0.92" />
+  <rect x="354" y="448" width="76" height="4" rx="2" fill="#38BDF8" opacity="0.76" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="474" width="146" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#22C55E" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Latency</text>
+  </g>
+
+  <g transform="translate(328, 0)">
+    <rect x="0" y="474" width="124" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#38BDF8" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Drift</text>
+  </g>
+
+  <g transform="translate(466, 0)">
+    <rect x="0" y="474" width="132" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#22C55E" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Alerts</text>
+  </g>
+
+  <g transform="translate(786 136)">
+    <rect width="294" height="356" rx="34" fill="rgba(8, 14, 24, 0.68)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="16" y="16" width="262" height="324" rx="26" fill="rgba(10, 17, 31, 0.84)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="28" y="28" width="72" height="10" rx="5" fill="#22C55E" opacity="0.92" />
+    <rect x="108" y="28" width="44" height="10" rx="5" fill="#38BDF8" opacity="0.78" />
+    <rect x="160" y="28" width="66" height="10" rx="5" fill="rgba(148, 163, 184, 0.18)" />
+
+    <rect x="30" y="58" width="108" height="66" rx="16" fill="rgba(12, 22, 34, 0.95)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="44" y="82" fill="#94A3B8" font-size="11" font-family="Inter, Arial, sans-serif" font-weight="700" letter-spacing="1">P95 LATENCY</text>
+    <text x="44" y="112" fill="#F8FAFC" font-size="25" font-family="Inter, Arial, sans-serif" font-weight="800">243ms</text>
+
+    <rect x="152" y="58" width="108" height="66" rx="16" fill="rgba(12, 22, 34, 0.95)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="166" y="82" fill="#94A3B8" font-size="11" font-family="Inter, Arial, sans-serif" font-weight="700" letter-spacing="1">ERROR RATE</text>
+    <text x="166" y="112" fill="#F8FAFC" font-size="25" font-family="Inter, Arial, sans-serif" font-weight="800">0.8%</text>
+
+    <rect x="30" y="142" width="230" height="88" rx="18" fill="rgba(12, 22, 34, 0.94)" stroke="rgba(148, 163, 184, 0.12)" />
+    <path d="M46 206 C74 188, 98 178, 118 184 C136 188, 152 164, 174 168 C192 172, 210 152, 244 156" stroke="#22C55E" stroke-width="4" stroke-linecap="round" fill="none" />
+    <path d="M46 194 C74 196, 96 186, 120 176 C138 168, 158 176, 182 166 C204 156, 224 162, 244 146" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.92" />
+    <text x="46" y="166" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="700">Traffic and Latency Trend</text>
+
+    <rect x="30" y="248" width="110" height="70" rx="16" fill="rgba(12, 22, 34, 0.95)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="44" y="272" fill="#94A3B8" font-size="11" font-family="Inter, Arial, sans-serif" font-weight="700" letter-spacing="1">DRIFT SCORE</text>
+    <rect x="44" y="286" width="68" height="10" rx="5" fill="rgba(34, 197, 94, 0.20)" />
+    <rect x="44" y="286" width="48" height="10" rx="5" fill="#22C55E" />
+    <text x="44" y="312" fill="#E2E8F0" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">income: 0.19</text>
+
+    <rect x="150" y="248" width="110" height="70" rx="16" fill="rgba(12, 22, 34, 0.95)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="164" y="272" fill="#94A3B8" font-size="11" font-family="Inter, Arial, sans-serif" font-weight="700" letter-spacing="1">MISSING DATA</text>
+    <rect x="164" y="286" width="68" height="10" rx="5" fill="rgba(56, 189, 248, 0.18)" />
+    <rect x="164" y="286" width="18" height="10" rx="5" fill="#38BDF8" />
+    <text x="164" y="312" fill="#E2E8F0" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">zipcode: 1.2%</text>
+
+    <rect x="30" y="330" width="230" height="10" rx="5" fill="rgba(148, 163, 184, 0.14)" />
+    <rect x="30" y="330" width="162" height="10" rx="5" fill="#38BDF8" opacity="0.88" />
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>
