@@ -1,0 +1,109 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111D" />
+      <stop offset="0.5" stop-color="#0F2237" />
+      <stop offset="1" stop-color="#173246" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09141F" />
+      <stop offset="1" stop-color="#151D27" />
+    </linearGradient>
+    <linearGradient id="accentLine" x1="140" y1="0" x2="430" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B" />
+      <stop offset="1" stop-color="#38BDF8" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1014 98) rotate(126) scale(524 404)">
+      <stop stop-color="#F59E0B" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(164 546) rotate(5) scale(388 262)">
+      <stop stop-color="#38BDF8" stop-opacity="0.14" />
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="168" y="126" width="176" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.35">DISTRIBUTED SERVING</text>
+
+  <text x="168" y="196" fill="#F8FAFC" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.0">
+    <tspan x="168" dy="0">Migrating from</tspan>
+    <tspan x="168" dy="41">Single-GPU to</tspan>
+    <tspan x="168" dy="41">Multi-Node</tspan>
+    <tspan x="168" dy="41">Inference</tspan>
+  </text>
+
+  <rect x="168" y="448" width="166" height="4" rx="2" fill="#F59E0B" opacity="0.92" />
+  <rect x="346" y="448" width="74" height="4" rx="2" fill="#7DD3FC" opacity="0.76" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="474" width="116" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#F59E0B" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Tensor</text>
+  </g>
+
+  <g transform="translate(298, 0)">
+    <rect x="0" y="474" width="124" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#38BDF8" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Pipeline</text>
+  </g>
+
+  <g transform="translate(436, 0)">
+    <rect x="0" y="474" width="118" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#F59E0B" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Network</text>
+  </g>
+
+  <g transform="translate(786 140)">
+    <rect width="294" height="348" rx="34" fill="rgba(9, 14, 26, 0.56)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="18" y="18" width="258" height="312" rx="28" fill="rgba(10, 17, 31, 0.82)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="34" y="36" width="88" height="10" rx="5" fill="#F59E0B" opacity="0.88" />
+    <rect x="132" y="36" width="48" height="10" rx="5" fill="#38BDF8" opacity="0.70" />
+    <rect x="190" y="36" width="56" height="10" rx="5" fill="rgba(148, 163, 184, 0.18)" />
+
+    <rect x="44" y="92" width="82" height="70" rx="18" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <text x="85" y="132" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="700">1 GPU</text>
+
+    <path d="M126 127 H160" stroke="#F59E0B" stroke-width="4" stroke-linecap="round" />
+
+    <rect x="170" y="76" width="72" height="54" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="170" y="146" width="72" height="54" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="170" y="216" width="72" height="54" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <text x="206" y="108" text-anchor="middle" fill="#CBD5E1" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="700">Node A</text>
+    <text x="206" y="178" text-anchor="middle" fill="#CBD5E1" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="700">Node B</text>
+    <text x="206" y="248" text-anchor="middle" fill="#CBD5E1" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="700">Node C</text>
+
+    <path d="M206 130 V146" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" />
+    <path d="M206 200 V216" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" />
+
+    <rect x="50" y="286" width="184" height="24" rx="12" fill="rgba(148, 163, 184, 0.14)" />
+    <rect x="50" y="286" width="126" height="24" rx="12" fill="#38BDF8" opacity="0.78" />
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>

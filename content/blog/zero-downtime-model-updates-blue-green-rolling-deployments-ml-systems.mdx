@@ -1,0 +1,444 @@
+---
+title: "Zero-Downtime Model Updates: Blue-Green and Rolling Deployments for ML Systems"
+description: "A deep guide to zero-downtime model deployment, covering blue-green and rolling updates for ML systems, stateful model servers, in-flight request handling, and warm-up strategies."
+date: "2026-04-10"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["model-deployment", "kubernetes", "rollouts", "mlops", "llm-serving"]
+coverImage: "/blog-images/zero-downtime-model-updates-blue-green-rolling-deployments-ml-systems.svg"
+featured: false
+seo:
+  title: "Zero-Downtime Model Updates: Blue-Green and Rolling Deployments for ML Systems"
+  description: "How to implement zero-downtime model deployment with blue-green and rolling strategies, including warm-up, draining, and stateful model-server concerns."
+  keywords:
+    - zero downtime model deployment
+    - blue green ml deployment
+    - rolling update ml models
+    - model server warmup strategy
+    - in-flight request draining ml
+social:
+  image: "/blog-images/zero-downtime-model-updates-blue-green-rolling-deployments-ml-systems.svg"
+  title: "Zero-Downtime Model Updates for ML Systems"
+  description: "Blue-green and rolling deployment patterns for production model serving."
+---
+
+# Zero-Downtime Model Updates: Blue-Green and Rolling Deployments for ML Systems
+
+Most deployment advice for ML systems stops too early.
+
+It tells you:
+
+- use canaries
+- add health checks
+- roll back quickly if metrics degrade
+
+That is useful. It is not enough when the serving system itself is stateful, memory-heavy, or expensive to warm.
+
+Model updates are harder than standard stateless web deployments because the “new version” often needs time and resources to become truly ready:
+
+- weights must load
+- caches must warm
+- GPU memory must stabilize
+- runtimes must prove they can actually serve traffic
+
+That is why `zero downtime model deployment` for ML systems needs more than a generic rolling update.
+
+This guide goes deeper than a canary overview and focuses on the operational details that matter in production:
+
+- when to use blue-green versus rolling deployment
+- how to handle in-flight requests
+- how to warm stateful model servers safely
+- what changes when the serving stack is GPU-backed or large-model-heavy
+
+## Why Zero-Downtime Is Harder for ML Systems
+
+A typical stateless web service can often pass readiness quickly:
+
+- process starts
+- dependencies respond
+- request handler returns
+
+A model server can look “up” before it is genuinely ready.
+
+Examples:
+
+- the process is listening, but the weights are still loading
+- the model is loaded, but first-request latency is terrible
+- the KV cache or runtime allocator is still unstable
+- the new version has not been warmed with realistic traffic shape
+
+This is why teams doing `rolling update ml models` often get surprised:
+
+- no pod crash
+- no obvious error spike
+- still, real user latency or correctness degrades during rollout
+
+The deployment is technically live but operationally unready.
+
+## Blue-Green Versus Rolling: The Core Tradeoff
+
+Both patterns can work. The right choice depends on the cost and statefulness of the serving layer.
+
+### Rolling deployments
+
+Rolling updates replace replicas gradually inside the same service.
+
+Advantages:
+
+- lower peak capacity cost
+- simpler if the runtime is lightweight
+- natural fit for many Kubernetes services
+
+Risks for ML:
+
+- partial capacity drops while new replicas warm
+- slower rollback if the rollout has already progressed
+- harder to isolate old and new versions if runtime behavior diverges
+
+### Blue-green deployments
+
+Blue-green keeps the current environment fully intact while the new environment is prepared separately, then traffic switches over.
+
+Advantages:
+
+- clean separation between old and new
+- easier rollback by switching traffic back
+- better for heavyweight, stateful, or expensive warm-up paths
+
+Risks:
+
+- temporarily doubles capacity
+- can be more expensive for GPU-backed serving
+- traffic switch needs to be designed carefully
+
+This is why `blue green ml deployment` is usually stronger when:
+
+- model load time is substantial
+- the runtime needs prewarming
+- the serving path is stateful or cache-sensitive
+- rollback speed matters more than temporary capacity efficiency
+
+## When Rolling Deployments Are Enough
+
+Rolling deployments still make sense when:
+
+- the model is relatively small
+- warm-up is fast and deterministic
+- the service can tolerate brief capacity overlap issues
+- startup and readiness checks are genuinely representative
+
+A typical pattern:
+
+```yaml
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 1
+```
+
+This is usually acceptable for:
+
+- lightweight classifiers
+- embedding services with predictable startup
+- CPU-based inference services
+
+It is often a poor fit for:
+
+- large LLM serving
+- multimodal models with long warm-up
+- model servers with big memory spikes during load
+
+## When Blue-Green Is the Better Choice
+
+Blue-green is the stronger option when model readiness takes real time to validate.
+
+A practical sequence looks like:
+
+1. Stand up the green environment with the new model version.
+2. Load weights and run warm-up traffic.
+3. Confirm readiness on live-like checks, not just process health.
+4. Shift traffic from blue to green at the load balancer, gateway, or service-routing layer.
+5. Keep blue available until green is stable.
+
+This works especially well for:
+
+- `vLLM` or other GPU-serving runtimes
+- retrieval-heavy model services with warm caches
+- low-latency user-facing inference
+
+The deeper point is this:
+
+Blue-green is not just about safer switching. It is about giving the new environment enough isolated time to become truly ready.
+
+## Readiness Checks Must Reflect Model Reality
+
+A normal HTTP health check is not enough.
+
+For ML systems, readiness should validate:
+
+- model artifact is loaded
+- tokenizer or preprocessing resources are available
+- required memory has stabilized
+- a synthetic inference passes within a threshold
+
+For example:
+
+```yaml
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  failureThreshold: 6
+```
+
+And the `/ready` endpoint should do more than return “process is alive.”
+
+A better readiness flow:
+
+- check model loaded flag
+- check warm-up completed flag
+- optionally run a cheap synthetic inference
+
+If your readiness signal is weak, your zero-downtime rollout is weak too.
+
+## Warm-Up Strategies That Actually Help
+
+Warm-up matters because first-request behavior can be much worse than steady-state behavior.
+
+For model serving, warm-up can include:
+
+- loading weights into memory
+- compiling kernels
+- initializing allocators
+- priming tokenizer caches
+- running representative sample requests
+
+A simple warm-up command pattern:
+
+```python
+def warm_model(client):
+    samples = [
+        {"text": "Warmup request 1"},
+        {"text": "Warmup request 2"}
+    ]
+    for sample in samples:
+        client.predict(sample)
+```
+
+For LLM serving, warm-up should be shaped enough to exercise:
+
+- prompt parsing
+- token generation
+- memory allocation path
+
+not just a trivial empty request.
+
+The key idea is to warm the serving behavior you expect in production, not just to tick a startup checkbox.
+
+## Handling In-Flight Requests Correctly
+
+This is where many rollouts break user experience.
+
+If an old replica is terminated while requests are still in flight, you can get:
+
+- interrupted responses
+- partial generations
+- retry storms
+- latency spikes at the gateway
+
+To avoid this, model deployments need graceful draining.
+
+Typical ingredients:
+
+- remove the instance from readiness before shutdown
+- keep the process alive long enough to finish current work
+- stop accepting new requests while draining
+
+In Kubernetes, this usually means combining:
+
+- readiness transitions
+- `preStop` hooks
+- a sufficient `terminationGracePeriodSeconds`
+
+Example:
+
+```yaml
+lifecycle:
+  preStop:
+    exec:
+      command: ["/bin/sh", "-c", "sleep 20"]
+terminationGracePeriodSeconds: 120
+```
+
+The sleep itself is not the strategy. The strategy is:
+
+- stop new traffic
+- allow active work to complete
+
+For long-running generation requests, that grace period may need to be much larger than teams initially expect.
+
+## Stateful Model Servers Need Special Care
+
+A lot of “stateless deployment” advice breaks for model runtimes that keep meaningful state in memory.
+
+Examples of runtime state:
+
+- loaded weights
+- KV cache behavior
+- memory allocator state
+- batch scheduler state
+- warmed retrieval or embedding caches
+
+This matters because the new environment may technically match the old one while still behaving differently under load.
+
+That is why stateful model servers benefit more from:
+
+- blue-green isolation
+- shadow traffic before cutover
+- post-cutover soak time before blue is removed
+
+You do not have to make the system fully stateful at the Kubernetes object level for this to matter. It is enough that the runtime behavior is stateful in practice.
+
+## A Practical Blue-Green Pattern for ML
+
+For many teams, the safest pattern is:
+
+1. Deploy `model-v2` alongside `model-v1`.
+2. Warm `model-v2` fully.
+3. Send synthetic or shadow traffic to validate runtime behavior.
+4. Switch gateway or service routing to `model-v2`.
+5. Watch latency, error rate, and model-specific behavior.
+6. Keep `model-v1` available for instant rollback.
+
+Represented simply:
+
+```text
+Gateway
+  |
+  +----> Blue: model-v1 (current)
+  |
+  +----> Green: model-v2 (warming, then active)
+```
+
+That costs more during rollout. It also reduces a lot of the operational uncertainty that makes large-model updates risky.
+
+## Rolling Updates Still Need ML-Specific Guardrails
+
+If you do use rolling deployment, add controls that reflect ML runtime behavior:
+
+- low `maxUnavailable`
+- enough surge capacity for warm-up
+- readiness that waits for real model readiness
+- termination grace for long requests
+- rollout pause if latency or error rate degrades
+
+This is where a standard web deployment config is often too aggressive.
+
+A rollout that is fine for stateless JSON APIs may be too fast for a model service with large startup cost.
+
+## How to Switch Traffic Safely
+
+The traffic switch itself is often treated as trivial.
+
+It should not be.
+
+For blue-green updates, the cutover usually happens at one of three layers:
+
+- service selector change in Kubernetes
+- ingress or load balancer route change
+- gateway-level route flip
+
+The gateway-level option is often safest because it gives you more control over:
+
+- percent-based shifting if needed
+- tenant or route scoping
+- instant rollback
+
+The main goal is to make the switch reversible and observable.
+
+If your only cutover mechanism is a one-way deployment replacement with no clean traffic control plane, then your “blue-green” process is weaker than it sounds.
+
+## Validate with Shadow or Synthetic Traffic Before Cutover
+
+For stateful or expensive model servers, blue-green gets even safer when warm-up is followed by validation traffic.
+
+That validation can be:
+
+- synthetic requests that reflect common production shapes
+- replayed representative inputs
+- shadow traffic whose outputs are logged but not served
+
+This matters because a model server can pass readiness and still behave badly under real concurrency, prompt length, or sequence mix.
+
+The stronger pattern is:
+
+1. load and warm the new environment
+2. send validation traffic
+3. inspect latency, memory, and output sanity
+4. cut traffic only after the runtime proves itself
+
+That is especially valuable for:
+
+- LLM serving
+- retrieval-heavy inference
+- GPU fleets with tight memory behavior
+
+## Practice Rollback Before You Need It
+
+Rollback is part of zero-downtime design, not just an emergency action.
+
+If a team has never actually switched back from green to blue under realistic conditions, the rollback path is still theoretical.
+
+A useful rollout practice is to rehearse:
+
+- cut to green
+- observe
+- switch back to blue
+
+That validates:
+
+- route control
+- drain behavior
+- metrics visibility
+- operator familiarity
+
+This is one of the clearest differences between a rollout pattern that looks good on paper and one that is ready for production load.
+
+## What to Monitor During the Update
+
+Zero-downtime deployment is not just a deployment configuration. It is an observed rollout.
+
+Track:
+
+- request success rate
+- p95 and p99 latency
+- in-flight request count
+- queue depth
+- warm-up duration
+- model load failures
+- GPU memory stabilization
+- fallback or retry activation
+
+The rollout is only truly zero-downtime if the user-visible service remains inside the acceptable reliability envelope during the switch.
+
+That is a stronger standard than “no pod crashed.”
+
+## Final Takeaway
+
+`Zero downtime model deployment` for ML systems requires more than generic deployment mechanics.
+
+You need to account for:
+
+- model warm-up
+- stateful runtime behavior
+- in-flight request draining
+- real readiness, not just process readiness
+
+If the model server is lightweight, a careful rolling update may be enough.
+
+If the runtime is heavy, stateful, or slow to warm, `blue green ml deployment` is often the safer choice.
+
+That is the real lesson: the rollout strategy should match the operating behavior of the model server, not just the defaults of the orchestrator.
