@@ -11,7 +11,7 @@ featured: false
 
 # AI System SLOs: Defining Uptime for Non-Deterministic Systems
 
-In traditional software, a "99.9% uptime" SLO is unambiguous. In AI, a system can be "up" (returning 200 OK) while being completely broken (serving hallucinations or stale predictions). This requires a shift from binary uptime to [multi-layered observability](/blog/ai-observability-metrics-dashboards-that-matter).
+In traditional software, a "99.9% uptime" SLO is unambiguous. In AI, a system can be "up" (returning 200 OK) while being completely broken (serving hallucinations or stale predictions). This requires an [SRE mindset for AI](/blog/sre-mindset-for-ai-what-platform-engineers-get-wrong-about-ml-systems) and a shift from binary uptime to [multi-layered observability](/blog/ai-observability-metrics-dashboards-that-matter).
 
 ## Defining Meaningful AI SLIs
 
@@ -23,7 +23,7 @@ To build robust SLOs, you must first define your Service Level Indicators (SLIs)
 
 ## Managing the Error Budget
 
-Your error budget isn't just for downtime; it's for experiments, [canary releases](/blog/model-canary-releases-shadow-traffic-guide), and [A/B testing](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses). If a new model version degrades your quality SLI, it should consume the error budget just like a traditional outage would.
+Your error budget isn't just for downtime; it's for experiments, [canary releases](/blog/model-canary-releases-shadow-traffic-guide), and [A/B testing](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses). If a new model version degrades your quality SLI, it should consume the error budget, and you should consider [graceful degradation strategies](/blog/implementing-graceful-degradation-ai-features-fallback-strategies-that-work) to maintain user experience.
 
 ## Final Takeaway
 

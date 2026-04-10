@@ -13,7 +13,7 @@ featured: true
 
 Running an LLM in a notebook is easy. Running it in production with predictable latency, [sane GPU costs](/blog/ai-infrastructure-cost-optimization), and [safe deployments](/blog/model-canary-releases-shadow-traffic-guide) is where the real work starts.
 
-For most teams serving open-source models, **vLLM + Kubernetes** is the gold standard. vLLM provides efficient inference through paged attention and [continuous batching](/blog/batching-strategies-llm-inference-throughput-vs-latency), while Kubernetes handles the [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) and operational consistency.
+For most teams serving open-source models, **vLLM + Kubernetes** is the gold standard. vLLM provides efficient inference through paged attention and [continuous batching](/blog/batching-strategies-llm-inference-throughput-vs-latency), while Kubernetes handles [multi-node inference](/blog/migrating-from-single-gpu-to-multi-node-inference-when-model-outgrows-one-machine), [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters), and operational consistency.
 
 ## The Production vLLM Playbook
 
@@ -25,6 +25,9 @@ Don't expose your model servers directly. Use an [LLM Gateway](/blog/llm-gateway
 
 ### 3. Integrated Observability
 A production vLLM deployment is incomplete without [deep observability](/blog/ai-observability-metrics-dashboards-that-matter). Track TTFT, tokens per second, and GPU duty cycle using [Prometheus and Grafana](/blog/setting-up-ml-model-monitoring-prometheus-grafana-complete-guide).
+
+### 4. Zero-Downtime Updates
+Ensure that model updates don't interrupt service by using [blue-green or rolling deployments](/blog/zero-downtime-model-updates-blue-green-rolling-deployments-ml-systems).
 
 ## Final Takeaway
 

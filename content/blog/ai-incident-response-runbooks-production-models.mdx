@@ -17,7 +17,7 @@ To handle these "silent" failures, you need a runbook that connects [observabili
 
 ## Triage: Identifying the Failure Class
 
-Is the failure in the [infrastructure](/blog/why-your-ml-models-fail-in-production), the data pipeline, or the model weights themselves? Your runbook should provide specific commands for each stage:
+Is the failure in the [infrastructure](/blog/why-your-ml-models-fail-in-production)—perhaps a [GPU pod OOMKilled event](/blog/kubernetes-oomkilled-gpu-pods-causes-debugging-prevention)—the data pipeline, or the model weights themselves? Your runbook should provide specific commands for each stage:
 
 ```bash
 # Check for model-server pod restarts and OOMs
@@ -29,7 +29,7 @@ kubectl logs -f deployment/vllm-server | grep "cache_utilization"
 
 ## Mitigation: Rollback and Failover
 
-Once a failure is confirmed, the immediate goal is to restore service. This often involves rolling back to a [previous prompt version](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure) or failing over to a more stable [multi-region cluster](/blog/multi-region-ai-disaster-recovery-failover-playbook).
+Once a failure is confirmed, the immediate goal is to restore service. This often involves [graceful degradation](/blog/implementing-graceful-degradation-ai-features-fallback-strategies-that-work), rolling back to a [previous prompt version](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure) or failing over to a more stable [multi-region cluster](/blog/multi-region-ai-disaster-recovery-failover-playbook).
 
 ## Final Takeaway
 

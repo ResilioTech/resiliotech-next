@@ -16,7 +16,7 @@ Traditional observability focuses on the "Golden Signals": latency, traffic, err
 ## The Three Layers of AI Observability
 
 ### Layer 1: Infrastructure Health
-This is the baseline. Use **Prometheus and Grafana** to track GPU temperature, VRAM utilization, and [autoscaling events](/blog/gpu-autoscaling-right-sizing-inference-clusters). If your [incident response runbook](/blog/ai-incident-response-runbooks-production-models) starts with "is the pod alive?", this is where you build that visibility.
+This is the baseline. Use **Prometheus and Grafana** to track GPU temperature, VRAM utilization, and [autoscaling events](/blog/gpu-autoscaling-right-sizing-inference-clusters). This visibility is critical for diagnosing issues like [GPU pod OOMKilled events](/blog/kubernetes-oomkilled-gpu-pods-causes-debugging-prevention). If your [incident response runbook](/blog/ai-incident-response-runbooks-production-models) starts with "is the pod alive?", this is where you build that visibility.
 
 ### Layer 2: Model Performance
 Track Time to First Token (TTFT), tokens per second, and request queue depth. These metrics tell you whether your [batching strategy](/blog/batching-strategies-llm-inference-throughput-vs-latency) is actually working or just increasing wait times.
