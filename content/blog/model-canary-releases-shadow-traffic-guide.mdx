@@ -1,252 +1,35 @@
 ---
 title: "Model Canary Releases: Shadow Traffic, Rollbacks, and Safe Promotion"
-description: "A practical guide to rolling out ML models safely in production using shadow traffic, canary promotion, quality gates, and fast rollback paths."
-date: "2026-03-26"
+description: "How to implement safe model rollouts using canary releases, shadow traffic, and automated promotion gates for production AI."
+date: "2026-04-07"
 author: "Resilio Tech Team"
-category: "model-deployment"
-tags: ["model-deployment", "canary-releases", "mlops", "monitoring", "kubernetes"]
+category: "testing-reliability"
+tags: ["canary-release", "shadow-traffic", "rollbacks", "mlops", "testing-reliability"]
 coverImage: "/blog-images/model-canary-releases-shadow-traffic-guide.svg"
 featured: false
 ---
 
 # Model Canary Releases: Shadow Traffic, Rollbacks, and Safe Promotion
 
-Shipping a new model directly to 100% of production traffic is one of the fastest ways to turn a good offline evaluation into a customer-facing incident.
+Promoting a new model directly to 100% of production traffic is a massive risk. Even with a robust [eval pipeline](/blog/building-eval-pipeline-catches-regressions-before-users), real-world data often reveals edge cases that offline tests miss.
 
-The problem is simple: model quality in a notebook is not the same thing as model behavior under real traffic. Real requests are messier. Context is longer. Input distributions are weirder. Downstream systems are less forgiving.
+To mitigate this, you must use **canary releases and shadow traffic**.
 
-That is why model rollouts need the same discipline as [application CI/CD](/blog/ci-cd-ml-models-testing-beyond-unit-tests), plus a few ML-specific checks around quality and drift.
+## The Safe Promotion Flow
 
-This is the rollout pattern we recommend for production systems.
+### 1. Shadow Traffic (The Dark Launch)
+Send 100% of production traffic to the new model in "shadow mode." Log the results but don't serve them to users. Compare the shadow outputs against the production baseline using [statistical A/B testing methods](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses).
 
-## Why Direct Cutovers Fail
+### 2. Canary Rollout
+Once the shadow results are validated, shift 5% of user traffic to the new model. Monitor [latency and error rates](/blog/setting-up-ml-model-monitoring-prometheus-grafana-complete-guide) closely.
 
-A new model can be "better" on paper and still fail in production because:
-
-- latency is worse at higher concurrency
-- output shape changes break downstream consumers
-- feature distributions differ from the evaluation set
-- memory use is higher than expected
-- one tenant or workflow behaves much worse than the average
-
-The safest default is gradual promotion with the ability to stop and roll back immediately.
-
-## Stage 1: Run Shadow Traffic First
-
-Shadow traffic means a copy of live requests is sent to the new model, but its outputs are not used for the user-facing response.
-
-This lets you answer operational questions before exposure:
-
-- Can the new model keep up with production load?
-- Does latency stay within budget?
-- Are outputs structurally compatible?
-- Does it fail on request types the offline test set missed?
-
-```python
-class ShadowRouter:
-    def __init__(self, primary_model, shadow_model, metrics):
-        self.primary_model = primary_model
-        self.shadow_model = shadow_model
-        self.metrics = metrics
-
-    async def predict(self, request):
-        primary_response = await self.primary_model.predict(request)
-
-        # Fire and forget shadow path for comparison only
-        schedule_background_task(self._run_shadow(request, primary_response))
-
-        return primary_response
-
-    async def _run_shadow(self, request, primary_response):
-        shadow_response = await self.shadow_model.predict(request)
-        self.metrics.record_comparison(
-            request_type=request.route,
-            primary_latency_ms=primary_response.latency_ms,
-            shadow_latency_ms=shadow_response.latency_ms,
-            primary_status=primary_response.status,
-            shadow_status=shadow_response.status
-        )
-```
-
-Shadow traffic is especially useful when:
-
-- you're changing the model family
-- the feature pipeline changed
-- the prompt template changed
-- you are moving to a different serving stack
-
-## Stage 2: Define Promotion Gates Before the Rollout
-
-Do not improvise the definition of "good enough" halfway through a canary.
-
-Promotion gates should be explicit and measurable:
-
-- p95 latency does not regress more than 10%
-- error rate remains below threshold
-- output schema compatibility stays above threshold
-- business KPI or review score is not worse than baseline
-- no spike in GPU OOMs or pod restarts
-
-```yaml
-promotion_gates:
-  latency_p95_ms:
-    maximum_regression_percent: 10
-  error_rate:
-    maximum: 0.01
-  schema_validation_pass_rate:
-    minimum: 0.995
-  human_review_score:
-    minimum_delta: -0.02
-  gpu_oom_events:
-    maximum: 0
-```
-
-Without gates, rollout decisions become subjective and usually drift toward "it looks okay."
-
-## Stage 3: Start with a Small Canary Slice
-
-Once shadow traffic looks healthy, move to a small live slice such as 1% or 5%.
-
-At this point you care about:
-
-- user-visible latency
-- downstream breakage
-- bad edge-case behavior
-- tenant-specific degradation
-
-Use weighted routing rather than switching whole services:
-
-```yaml
-http:
-  - route:
-      - destination:
-          host: fraud-model
-          subset: stable
-        weight: 95
-      - destination:
-          host: fraud-model
-          subset: canary
-        weight: 5
-```
-
-This needs to be reversible in seconds, not hours.
-
-## Stage 4: Compare Like-for-Like Traffic
-
-A canary that only sees easy traffic will look healthy even when it isn't.
-
-Break down comparisons by:
-
-- endpoint or workflow
-- tenant tier
-- geography
-- prompt or request size
-- feature availability
-
-The important question is not "Is the average okay?"
-
-The important question is "Where is the new model worse?"
-
-## Stage 5: Validate Output Compatibility
-
-A lot of model incidents are not raw accuracy problems. They are interface problems.
-
-Examples:
-
-- classification labels change subtly
-- JSON fields are missing or reordered
-- confidence score ranges drift
-- tool-call formatting becomes less reliable
-
-Add a compatibility validator to the rollout pipeline:
-
-```python
-def validate_output(payload: dict) -> bool:
-    required_fields = {"prediction", "confidence", "model_version"}
-    if not required_fields.issubset(payload.keys()):
-        return False
-
-    if not isinstance(payload["confidence"], (int, float)):
-        return False
-
-    return 0.0 <= payload["confidence"] <= 1.0
-```
-
-Offline benchmark wins do not matter if the surrounding system can no longer safely consume the output.
-
-## Stage 6: Monitor the Rollout Dashboard
-
-The rollout dashboard should show stable and canary side by side:
-
-- request volume
-- p50 and p95 latency
-- timeout rate
-- error rate
-- resource usage
-- output validation failures
-- business KPI or review score
-
-For LLM or RAG systems, also track:
-
-- prompt tokens
-- completion tokens
-- citation rate
-- abstention rate
-- fallback model usage
-
-If you need to open five different dashboards to understand the rollout, the system is too hard to operate.
-
-## Stage 7: Keep Rollback Dead Simple
-
-Rollback should be a routing change, not a redeploy.
-
-If rollback requires rebuilding images, draining node pools, or reloading large artifacts under pressure, you do not have a real rollback path.
-
-The fastest rollback design is:
-
-1. keep the stable version warm
-2. shift routing back to stable
-3. preserve rollout telemetry for postmortem analysis
-
-## Stage 8: Promote in Steps, Not One Jump
-
-A typical pattern:
-
-1. Shadow traffic
-2. 1% canary
-3. 5% canary
-4. 25% canary
-5. 50% canary
-6. 100% promotion
-
-For major prompt or behavioral changes, you may want to run a formal [A/B test](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses) during the canary phase to measure qualitative impact before full promotion.
-
-## Common Rollout Mistakes
-
-These show up all the time:
-
-- **No shadow stage**, so the first real test is production users
-- **No per-segment analysis**, so one customer cohort suffers silently
-- **No output validation**, so integration failures look like random app bugs
-- **No warm rollback path**, so reverting is slow and risky
-- **Promoting too quickly**, before enough traffic has been observed
-
-## A Good Default Rollout Policy
-
-If you need a simple starting point:
-
-- require shadow traffic for all major model changes
-- require schema validation for any machine-consumed output
-- require canary exposure before 100% rollout
-- require a written rollback condition and owner
-- require post-rollout review for high-impact systems
-
-That level of discipline prevents a large percentage of model release incidents.
+### 3. Automated Promotion Gate
+If the canary passes all [system SLOs](/blog/ai-system-slos-non-deterministic-systems), automatically promote it to 100%. If any metric regresses, trigger an immediate rollback to the [previous version](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure).
 
 ## Final Takeaway
 
-Model release safety is mostly about process and visibility. Shadow traffic shows you what offline tests miss. Canary slices limit blast radius. Rollback keeps mistakes survivable.
+Canary releases and shadow traffic are the only ways to ship new models with 100% confidence. By validating new candidates against live data before they impact users, you protect your production environment from the non-deterministic risks of ML.
 
-By adopting a mature rollout strategy, you transition from "hoping it works" to "knowing it's safe." This level of operational rigor is what separates experimental projects from production-grade AI applications.
+---
 
-*Need help putting safe model release workflows in place? At Resilio Tech, we help teams add shadow traffic, rollout gates, and rollback controls to production ML platforms. [Book a free infrastructure audit](/contact) and we’ll review your current release path to ensure your model deployments are a non-event.*
+*Need help implementing safe model rollout strategies? We help teams build canary, shadow, and blue-green deployment workflows for production AI. [Book a free infrastructure audit](/contact) and we’ll review your release and promotion path.*

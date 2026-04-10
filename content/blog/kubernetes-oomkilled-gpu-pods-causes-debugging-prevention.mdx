@@ -1,0 +1,331 @@
+---
+title: "Kubernetes OOMKilled on GPU Pods: Causes, Debugging, and Prevention"
+description: "A tactical guide to debugging OOMKilled GPU pods on Kubernetes, including the difference between CUDA OOM and Kubernetes OOMKilled, memory-limit tuning for model serving, and how to monitor GPU versus system memory."
+date: "2026-04-10"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["kubernetes", "gpu-optimization", "troubleshooting", "model-deployment", "llm-serving"]
+coverImage: "/blog-images/kubernetes-oomkilled-gpu-pods-causes-debugging-prevention.svg"
+featured: false
+seo:
+  title: "Kubernetes OOMKilled on GPU Pods: Causes, Debugging, and Prevention"
+  description: "How to diagnose and prevent OOMKilled GPU pods in Kubernetes by separating system memory issues from CUDA out-of-memory failures."
+  keywords:
+    - kubernetes oomkilled gpu pod
+    - gpu pod out of memory kubernetes
+    - fix oom gpu kubernetes
+    - cuda oom vs kubernetes oomkilled
+    - gpu memory monitoring kubernetes
+social:
+  image: "/blog-images/kubernetes-oomkilled-gpu-pods-causes-debugging-prevention.svg"
+  title: "Kubernetes OOMKilled on GPU Pods"
+  description: "A practical debugging guide for GPU pod memory failures in production."
+---
+
+# Kubernetes OOMKilled on GPU Pods: Causes, Debugging, and Prevention
+
+One of the most common debugging mistakes in GPU-backed model serving is assuming every memory failure is the same.
+
+It is not.
+
+A pod can fail because:
+
+- the container exceeded its Kubernetes memory limit
+- the model runtime hit CUDA out-of-memory on the GPU
+- both happened in sequence
+
+If you do not separate those cases, you can spend hours tuning VRAM usage while the real problem is normal system RAM, or vice versa.
+
+This is the practical path to fix a `kubernetes oomkilled gpu pod` issue in production.
+
+## First: Kubernetes OOMKilled and CUDA OOM Are Different Failures
+
+This distinction matters more than almost anything else.
+
+### Kubernetes `OOMKilled`
+
+This usually means the Linux kernel killed the container because it exceeded the pod or container memory limit for system RAM.
+
+Signals:
+
+- pod status shows `OOMKilled`
+- `kubectl describe pod` shows container termination reason
+- restart count increases
+
+This is a CPU memory or host memory limit issue, even if the workload uses a GPU.
+
+### CUDA OOM
+
+This means the process could not allocate additional GPU memory.
+
+Signals:
+
+- application logs show CUDA out-of-memory errors
+- the pod may stay running or crash with an application-level error
+- Kubernetes may not show `OOMKilled` at all
+
+This is a VRAM issue, not a Kubernetes RAM limit issue.
+
+The first rule of `gpu pod out of memory kubernetes` debugging is simple:
+
+- `OOMKilled` usually points at system memory
+- `CUDA out of memory` points at GPU memory
+
+Do not collapse them into one category.
+
+## Why GPU Pods Still Die From Normal Memory Limits
+
+Teams often assume that because the expensive resource is the GPU, the main memory risk is VRAM.
+
+In practice, GPU-serving pods also consume plenty of normal memory for:
+
+- model weights staged in CPU memory
+- tokenizer state
+- request buffers
+- batch assembly
+- framework overhead
+- Python workers and multiprocessing
+- pinned host memory for transfers
+
+This is why a serving stack can have:
+
+- 40% GPU memory free
+- and still get `OOMKilled`
+
+The pod did not die because VRAM was exhausted. It died because the container crossed its RAM limit.
+
+## Step 1: Confirm What Actually Failed
+
+Start with the pod status, not assumptions.
+
+```bash
+kubectl describe pod llm-serving-7d8f6f9c6b-4mnl2
+```
+
+If you see:
+
+```text
+Last State:     Terminated
+Reason:         OOMKilled
+Exit Code:      137
+```
+
+you are dealing with a Kubernetes memory kill.
+
+If the pod is not marked `OOMKilled`, inspect the app logs:
+
+```bash
+kubectl logs llm-serving-7d8f6f9c6b-4mnl2 --previous
+```
+
+If the runtime logs something like:
+
+```text
+RuntimeError: CUDA out of memory. Tried to allocate 512.00 MiB
+```
+
+then the first issue is VRAM pressure.
+
+This distinction should happen in the first five minutes of debugging.
+
+## Step 2: Check Both Memory Planes
+
+For GPU pods, inspect:
+
+- container RAM usage
+- GPU memory usage
+
+For Kubernetes memory:
+
+```bash
+kubectl top pod llm-serving-7d8f6f9c6b-4mnl2 --containers
+```
+
+For GPU memory, use your exporter or node-level tooling. A common quick check on the node is:
+
+```bash
+nvidia-smi
+```
+
+In production, you usually want this exposed through metrics instead of SSHing to nodes. But during triage, the goal is simple: compare container RAM pressure and VRAM pressure at the same time.
+
+If RAM is near the pod limit while GPU memory is moderate, increase focus on:
+
+- system memory limits
+- worker count
+- request batching
+- tokenizer and preprocessing footprint
+
+If VRAM is saturated while container RAM is stable, focus on:
+
+- model size
+- batch size
+- concurrent sequences
+- KV cache behavior
+
+## Step 3: Inspect the Resource Limits You Actually Set
+
+A lot of incidents come from limits that were copied from a CPU service and never revisited.
+
+Example:
+
+```yaml
+resources:
+  requests:
+    cpu: "2"
+    memory: "8Gi"
+    nvidia.com/gpu: "1"
+  limits:
+    cpu: "4"
+    memory: "8Gi"
+    nvidia.com/gpu: "1"
+```
+
+That might be too low for a GPU-serving workload if:
+
+- the model is loaded into CPU memory before GPU placement
+- the runtime keeps large host-side buffers
+- batching creates spikes in RAM usage
+
+A common pattern is that teams size the GPU but guess at RAM.
+
+That is why `fix oom gpu kubernetes` often starts with correcting a misleading configuration, not rewriting the model server.
+
+## Common Causes of `OOMKilled` on GPU Pods
+
+### 1. Loading large weights into CPU memory before transfer
+
+Some runtimes briefly hold substantial model state in host memory during load or reload.
+
+### 2. Too many workers per pod
+
+Multiple Python workers or serving processes can duplicate runtime overhead and tokenizer memory.
+
+### 3. Aggressive batching
+
+Bigger batches can improve throughput while also increasing:
+
+- input tensor staging
+- preprocessing memory
+- host-side queue state
+
+### 4. Large request payloads
+
+Prompt-heavy LLM workloads and multimodal requests can create large host-memory spikes before GPU execution even begins.
+
+### 5. Memory limits equal to requests with no headroom
+
+This leaves no room for transient spikes during warmup, model swap, or traffic bursts.
+
+## A Practical Debugging Flow
+
+Use this order:
+
+1. Confirm whether the pod was `OOMKilled` or the app hit CUDA OOM.
+2. Check container RAM against the configured limit.
+3. Check GPU memory at the same time.
+4. Review recent changes in batch size, worker count, or model version.
+5. Look for spikes during startup, reload, or peak concurrency.
+
+If the pod dies on startup, suspect:
+
+- model load behavior
+- duplicated workers
+- low RAM limit
+
+If the pod dies only under traffic, suspect:
+
+- batching
+- request size
+- concurrency
+- KV cache or host-side buffering
+
+## Prevention: Set Memory Limits for the Actual Serving Pattern
+
+The safest approach is to size memory from measurements, not intuition.
+
+For each model service, measure:
+
+- startup RAM peak
+- steady-state RAM
+- peak RAM under expected traffic
+- startup GPU memory
+- steady-state GPU memory
+- peak GPU memory under expected traffic
+
+Then set limits with real headroom.
+
+For example:
+
+```yaml
+resources:
+  requests:
+    cpu: "4"
+    memory: "16Gi"
+    nvidia.com/gpu: "1"
+  limits:
+    cpu: "6"
+    memory: "24Gi"
+    nvidia.com/gpu: "1"
+```
+
+This is not about choosing large numbers. It is about choosing numbers that match the serving behavior of the model runtime.
+
+## Monitor GPU Memory and System Memory Separately
+
+If you only monitor one plane, you will miss half the problem.
+
+Track at minimum:
+
+- container memory working set
+- pod restarts
+- `OOMKilled` events
+- GPU memory used
+- GPU utilization
+- batch size
+- request queue depth
+
+In Prometheus-style terms, that usually means combining normal Kubernetes metrics with GPU exporter metrics.
+
+Useful signals include:
+
+- `container_memory_working_set_bytes`
+- `kube_pod_container_status_last_terminated_reason`
+- `DCGM_FI_DEV_FB_USED`
+
+That mix is how you tell whether the service is CPU-memory-bound, GPU-memory-bound, or both.
+
+## The Most Important Prevention Habit
+
+Load test memory behavior before production.
+
+Not just latency.
+
+Memory behavior.
+
+Teams often benchmark throughput and p95 latency, then discover in production that:
+
+- startup memory is higher than expected
+- one traffic shape triggers large host-side buffers
+- a new model version raises RAM requirements quietly
+
+Memory regressions are release risks. Treat them like release risks.
+
+## Final Takeaway
+
+When a GPU pod fails, do not jump straight to VRAM tuning.
+
+Separate:
+
+- Kubernetes `OOMKilled`
+- CUDA OOM
+
+Then inspect:
+
+- system memory limits
+- GPU memory usage
+- batching
+- worker count
+- model load behavior
+
+That is how you fix a `kubernetes oomkilled gpu pod` problem without wasting time on the wrong memory layer.

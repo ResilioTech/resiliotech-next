@@ -1,0 +1,111 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07111B" />
+      <stop offset="0.52" stop-color="#122233" />
+      <stop offset="1" stop-color="#1E3141" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09131D" />
+      <stop offset="1" stop-color="#171E28" />
+    </linearGradient>
+    <linearGradient id="accentLine" x1="140" y1="0" x2="428" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8" />
+      <stop offset="1" stop-color="#F59E0B" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1010 100) rotate(126) scale(520 396)">
+      <stop stop-color="#38BDF8" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(176 546) rotate(5) scale(392 258)">
+      <stop stop-color="#F59E0B" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="168" y="126" width="150" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.4">CHECKLIST</text>
+
+  <text x="168" y="196" fill="#F8FAFC" font-size="37" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1">
+    <tspan x="168" dy="0">What to Look for</tspan>
+    <tspan x="168" dy="42">When Hiring an</tspan>
+    <tspan x="168" dy="42">AI Infrastructure</tspan>
+    <tspan x="168" dy="42">Consultant</tspan>
+  </text>
+
+  <rect x="168" y="446" width="164" height="4" rx="2" fill="#38BDF8" opacity="0.92" />
+  <rect x="344" y="446" width="72" height="4" rx="2" fill="#FCD34D" opacity="0.76" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="474" width="114" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#38BDF8" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Skills</text>
+  </g>
+
+  <g transform="translate(296, 0)">
+    <rect x="0" y="474" width="138" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#F59E0B" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Red Flags</text>
+  </g>
+
+  <g transform="translate(448, 0)">
+    <rect x="0" y="474" width="154" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#38BDF8" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Questions</text>
+  </g>
+
+  <g transform="translate(792 140)">
+    <rect width="286" height="346" rx="34" fill="rgba(9, 14, 26, 0.56)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="18" y="18" width="250" height="310" rx="28" fill="rgba(10, 17, 31, 0.80)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="36" y="42" width="78" height="10" rx="5" fill="#38BDF8" opacity="0.88" />
+    <rect x="124" y="42" width="44" height="10" rx="5" fill="#F59E0B" opacity="0.7" />
+    <rect x="178" y="42" width="56" height="10" rx="5" fill="rgba(148, 163, 184, 0.18)" />
+
+    <rect x="40" y="78" width="206" height="48" rx="14" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.14)" />
+    <circle cx="62" cy="102" r="10" fill="rgba(12, 24, 34, 0.96)" stroke="#22C55E" stroke-width="3" />
+    <path d="M57 102 L61 106 L68 97" stroke="#86EFAC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="82" y="107" fill="#E2E8F0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="650">Production case studies</text>
+
+    <rect x="40" y="136" width="206" height="48" rx="14" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.14)" />
+    <circle cx="62" cy="160" r="10" fill="rgba(12, 24, 34, 0.96)" stroke="#22C55E" stroke-width="3" />
+    <path d="M57 160 L61 164 L68 155" stroke="#86EFAC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="82" y="165" fill="#E2E8F0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="650">Rollback + monitoring</text>
+
+    <rect x="40" y="194" width="206" height="48" rx="14" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.14)" />
+    <circle cx="62" cy="218" r="10" fill="rgba(12, 24, 34, 0.96)" stroke="#F59E0B" stroke-width="3" />
+    <path d="M57 213 L67 223" stroke="#FCD34D" stroke-width="3" stroke-linecap="round" />
+    <path d="M67 213 L57 223" stroke="#FCD34D" stroke-width="3" stroke-linecap="round" />
+    <text x="82" y="223" fill="#E2E8F0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="650">Vague “AI strategy” pitch</text>
+
+    <rect x="40" y="254" width="206" height="46" rx="14" fill="rgba(12, 22, 34, 0.92)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="58" y="282" fill="#CBD5E1" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="700">Evaluate the partner,</text>
+    <text x="58" y="300" fill="#CBD5E1" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="700">not the pitch deck.</text>
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>

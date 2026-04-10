@@ -1,189 +1,35 @@
 ---
 title: "Terraform for AI Infrastructure: GPU Nodes, Model Registries, and Pipelines"
-description: "How to use Terraform to provision AI infrastructure safely, with practical guidance on GPU node pools, registries, pipeline dependencies, and avoiding drift across environments."
-date: "2026-03-11"
+description: "How to use Terraform to provision and manage AI infrastructure, covering GPU node pools, model registries, and GitOps-based infrastructure management."
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "mlops"
-tags: ["terraform", "ai-infrastructure", "gpu-optimization", "mlops", "kubernetes"]
+tags: ["terraform", "iac", "kubernetes", "gpu", "mlops"]
 coverImage: "/blog-images/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines.svg"
 featured: false
 ---
 
 # Terraform for AI Infrastructure: GPU Nodes, Model Registries, and Pipelines
 
-AI infrastructure becomes expensive and fragile quickly when environments are provisioned manually.
+Manual infrastructure management is a recipe for [production failures](/blog/why-your-ml-models-fail-in-production). To build a scalable and [reproducible ML platform](/blog/building-internal-ml-platform-kubernetes-what-actually-works), you must treat your [GPU node pools](/blog/gpu-autoscaling-right-sizing-inference-clusters) and networking as versioned code.
 
-GPU node pools get configured differently across regions. Model registry permissions drift. Pipeline dependencies get added in one environment and forgotten in another. Six months later, the team is treating infrastructure state like tribal knowledge.
+**Terraform** is the industry standard for this task.
 
-Terraform helps because it forces infrastructure decisions into versioned, reviewable configuration.
+## What to Codify in Terraform
 
-That does not automatically make AI infrastructure clean. It just gives you a way to make it governable.
+### 1. GPU Node Pools and Autoscaling
+Define your [capacity planning](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas) requirements in HCL. This allows you to spin up new regions or [disaster recovery sites](/blog/multi-region-ai-disaster-recovery-failover-playbook) in minutes rather than days.
 
-## What Belongs in Terraform
+### 2. Private Model Registries and Storage
+Codify the [secrets and access controls](/blog/secrets-management-ai-pipelines-api-keys-model-weights-credentials) for your model artifacts. This ensures that only authorized CI/CD pipelines can push or pull production weights.
 
-For AI platforms, Terraform is a strong fit for:
-
-- cloud networking and cluster dependencies
-- Kubernetes clusters and node pools
-- GPU-specific capacity groups
-- object storage and artifact buckets
-- model registries
-- service accounts and IAM policies
-- secrets backends and supporting infra
-
-It is less useful for fast-moving runtime objects that teams change constantly during experimentation.
-
-## Separate Base Infrastructure from Runtime Deployments
-
-One of the easiest mistakes is stuffing everything into one Terraform state.
-
-A healthier split is:
-
-- base infrastructure: VPCs, clusters, node pools, registries, storage
-- shared platform services: observability, secrets backends, ingress, controllers
-- application/runtime deployment: handled by CI/CD, Helm, Argo CD, or another release layer
-
-This keeps Terraform focused on infrastructure that should change deliberately rather than on every model release.
-
-## GPU Nodes Need Explicit Shape Control
-
-GPU clusters are where sloppy IaC becomes expensive fast.
-
-Define clearly:
-
-- GPU instance families
-- autoscaling bounds
-- taints and labels
-- capacity type
-- driver/runtime assumptions
-- regional or zonal placement constraints
-
-```hcl
-resource "aws_eks_node_group" "gpu_serving" {
-  cluster_name    = aws_eks_cluster.main.name
-  node_group_name = "gpu-serving"
-  instance_types  = ["g5.2xlarge"]
-
-  scaling_config {
-    desired_size = 2
-    min_size     = 1
-    max_size     = 8
-  }
-
-  labels = {
-    workload = "inference"
-    gpu_pool = "serving"
-  }
-}
-```
-
-If GPU pools are not modeled cleanly, cost control and workload isolation both degrade.
-
-## Treat the Model Registry as Infrastructure
-
-Model registries are often managed ad hoc even though they are a critical control point.
-
-Terraform can help standardize:
-
-- storage backends
-- retention policies
-- access control
-- encryption settings
-- promotion environments
-
-This matters because the registry often sits between training and serving. If permissions and promotion paths are inconsistent, delivery becomes much harder to reason about.
-
-## Pipelines Depend on More Than Compute
-
-A pipeline usually needs:
-
-- artifact storage
-- metadata storage
-- queueing or orchestration services
-- identity and service accounts
-- network access to data systems
-
-Teams sometimes provision the cluster and forget these dependencies, then wonder why the pipeline platform remains unstable across environments.
-
-Terraform is useful here because it lets you encode the supporting infrastructure around pipelines, not just the compute where they run.
-
-## Guard Against Drift Across Environments
-
-The value of IaC disappears when one environment gets patched manually.
-
-For AI systems, drift often appears in:
-
-- IAM exceptions for a serving service
-- extra registry permissions in staging
-- GPU node groups configured differently in production
-- manually created buckets or topics
-
-Use plans, reviews, and periodic drift detection. Otherwise Terraform becomes documentation of how the system used to look.
-
-## Keep Modules Boring
-
-Reusable Terraform modules help, but only when they stay understandable.
-
-Bad signs:
-
-- modules with too many conditionals
-- one "universal AI module" handling every use case
-- hidden defaults that change behavior unexpectedly
-
-Prefer smaller modules with explicit purpose, such as:
-
-- GPU node pool module
-- model registry module
-- artifact bucket module
-- shared observability module
-
-That makes the platform easier to evolve without making plans unreadable.
-
-## State and Change Control Matter
-
-Because AI infra often spans multiple teams, Terraform state handling matters a lot.
-
-Use:
-
-- remote state
-- locking
-- review gates
-- environment separation
-- predictable ownership boundaries
-
-The point is not just successful applies. It is making infrastructure changes attributable and reversible.
-
-## A Practical Terraform Scope for AI Teams
-
-For many organizations, a good boundary is:
-
-1. Terraform provisions the base platform
-2. CI/CD provisions application and model-serving releases
-3. GitOps or Helm handles fast-moving runtime configuration
-4. secrets stay in a proper backend, not as Terraform values in plaintext
-
-That split keeps infrastructure stable while letting teams iterate on models and services quickly.
-
-## Common Mistakes
-
-These are common:
-
-- **using Terraform for every runtime change**
-- **one giant state file for unrelated resources**
-- **manual GPU configuration drift**
-- **registry and pipeline dependencies not treated as first-class infra**
-- **modules so abstract that nobody can safely edit them**
-
-Terraform helps most when it makes the platform more predictable, not when it becomes another layer of indirection.
-
-Terraform is a strong fit for the stable parts of AI infrastructure: [GPU node pools](/blog/gpu-autoscaling-right-sizing-inference-clusters), registries, storage, identity, and shared platform services. It becomes much less effective when teams use it as a generic replacement for deployment tooling like Helm or Argo CD.
-
-Used well, it creates a cleaner boundary between infrastructure that should be controlled carefully and runtime changes that should move faster. At Resilio Tech, we advocate for an "Infrastructure-as-Code-First" approach to ensure that even the most complex [multi-region AI environments](/blog/multi-region-ai-disaster-recovery-failover-playbook) remain reproducible and audit-ready.
+### 3. Network and Security Boundaries
+Use Terraform to provision the [VPCs, Subnets, and NetworkPolicies](/blog/ai-infrastructure-fintech-latency-compliance-real-time-fraud-detection) required for your private AI environment.
 
 ## Final Takeaway
 
-Don't let your AI infrastructure become a collection of manual patches. By codifying your GPU capacity, networking, and security boundaries in Terraform, you build a platform that can survive growth, audits, and migrations without the "tribal knowledge" bottleneck.
+Infrastructure-as-Code is the "Ops" in MLOps. By codifying your AI platform in Terraform, you ensure that your environment is predictable, audit-ready, and easily scalable as your model count grows.
 
 ---
 
-*Need help structuring Terraform for AI environments without creating module sprawl or operational drift? We help teams define sane IaC boundaries for GPU clusters, registries, pipelines, and shared platform services. [Book a free infrastructure audit](/contact) and we’ll review your setup and help you build a robust, versioned infrastructure foundation.*
+*Need to codify or optimize your AI infrastructure with Terraform? We help teams build reproducible, GitOps-based ML platforms on AWS, GCP, and Azure. [Book a free infrastructure audit](/contact) and we’ll review your IaC strategy.*

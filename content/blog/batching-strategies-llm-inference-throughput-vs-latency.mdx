@@ -1,215 +1,34 @@
 ---
 title: "Batching Strategies for LLM Inference: Throughput vs Latency Tradeoffs"
-description: "A practical guide to batching LLM inference workloads, including static batching, dynamic batching, queue controls, and when higher throughput starts hurting latency."
-date: "2026-03-17"
+description: "A deep dive into static and continuous batching for LLM inference, covering performance tradeoffs, GPU utilization, and when to use each for production workloads."
+date: "2026-04-07"
 author: "Resilio Tech Team"
-category: "mlops"
-tags: ["llm-serving", "batching", "mlops", "gpu-optimization", "latency"]
+category: "model-deployment"
+tags: ["llm-serving", "vllm", "batching", "performance", "model-deployment"]
 coverImage: "/blog-images/batching-strategies-llm-inference-throughput-vs-latency.svg"
 featured: false
 ---
 
 # Batching Strategies for LLM Inference: Throughput vs Latency Tradeoffs
 
-Batching is one of the fastest ways to improve GPU efficiency in LLM inference. It is also one of the fastest ways to make an interactive product feel worse if you apply it badly.
+In the world of [LLM serving](/blog/serving-open-source-llms-with-vllm-kubernetes), the most critical configuration is often the batching strategy. It is the primary lever for balancing **throughput** (how many requests you can handle) against **latency** (how fast each request feels).
 
-That is the core tradeoff:
+## Static Batching vs. Continuous Batching
 
-- bigger batches usually improve throughput
-- bigger batches also increase wait time before execution
+### Static Batching
+The traditional approach waits for a fixed number of requests to arrive before processing them together. This maximizes GPU utilization but introduces significant "wait time" for the first request in the batch, leading to [variable inference latency](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production).
 
-The right batching policy depends on the product you are running, not just the GPU you want to optimize.
+### Continuous Batching (vLLM)
+Modern runtimes like **vLLM** use continuous batching (or iteration-level scheduling). Instead of waiting for the whole batch to finish, new requests can be inserted as soon as any sequence in the current batch completes. This is essential for [high-concurrency SaaS applications](/blog/designing-multi-tenant-ml-serving-platform-architecture-saas-companies).
 
-## Why Batching Works
+## Finding the Sweet Spot
 
-GPUs like parallel work. If you process one request at a time, you leave performance on the table.
-
-Batching helps by:
-
-- amortizing launch overhead
-- improving hardware utilization
-- increasing tokens-per-second output
-- reducing cost per request under concurrency
-
-This is especially valuable when requests are frequent and similar in size.
-
-## The First Question: Interactive or Batch?
-
-Do not use one batching rule for every workflow.
-
-Good candidates for aggressive batching:
-
-- offline summarization
-- large embedding jobs
-- nightly classification pipelines
-- internal backfill tasks
-
-More conservative batching for:
-
-- interactive chat
-- customer-facing assistants
-- real-time copilots
-
-If users expect instant responses, the queue delay matters more than the GPU utilization chart.
-
-## Static vs Dynamic Batching
-
-### Static batching
-
-You collect a fixed number of requests and process them together.
-
-Pros:
-
-- simple
-- predictable batch size
-
-Cons:
-
-- idle time while waiting for the batch to fill
-- bad fit for bursty or uneven traffic
-
-### Dynamic batching
-
-You collect requests for a short window and run whatever is available.
-
-Pros:
-
-- better for variable traffic
-- easier to balance throughput and latency
-
-Cons:
-
-- more tuning complexity
-
-For most online LLM systems, dynamic batching is the more practical default.
-
-## Tune by Time Window, Not Just Batch Size
-
-Teams often focus only on `max_batch_size`. That is not enough.
-
-The real control variables are:
-
-- max batch size
-- max waiting time
-- max concurrent sequences
-- request size constraints
-
-```python
-class DynamicBatcher:
-    def __init__(self, max_batch_size=16, max_wait_ms=20):
-        self.max_batch_size = max_batch_size
-        self.max_wait_ms = max_wait_ms
-        self.queue = []
-
-    async def next_batch(self):
-        start = now_ms()
-        while len(self.queue) < self.max_batch_size:
-            if now_ms() - start >= self.max_wait_ms:
-                break
-            await sleep_ms(1)
-        return self.queue[:self.max_batch_size]
-```
-
-That `max_wait_ms` is where user experience often lives or dies.
-
-## Separate Long and Short Requests
-
-One long request can hold a short request hostage inside the same batch.
-
-A useful pattern is routing requests into lanes:
-
-- short prompts
-- medium prompts
-- long prompts
-
-That prevents very heavy requests from degrading the entire interactive workload.
-
-## Set Queue Limits Explicitly
-
-Batching without queue limits is how systems look efficient on dashboards while users wait forever.
-
-Define:
-
-- max queue depth
-- max wait per class of request
-- timeout before admission
-
-If the batcher cannot serve traffic within your latency budget, reject or shed load intentionally rather than pretending the system is fine.
-
-## Measure Both Throughput and User Cost
-
-The batching dashboard should show:
-
-- average batch size
-- queue wait time
-- end-to-end latency
-- tokens per second
-- GPU utilization
-- timeout rate
-
-If you only look at throughput, every batching change looks good. If you only look at latency, every batching change looks bad. You need both views.
-
-## Good Default Policies
-
-For interactive LLM APIs:
-
-- modest batch size
-- very short wait window
-- separate lane for large prompts
-- fast queue rejection
-
-For offline jobs:
-
-- larger batch size
-- longer wait window
-- lower priority scheduling
-
-Different products need different operating points.
-
-## Continuous Batching Changes the Tradeoff
-
-Serving runtimes like [vLLM](/blog/serving-open-source-llms-with-vllm-kubernetes) make batching more efficient because they can continuously admit work rather than waiting for rigid fixed batches.
-
-That is one reason modern LLM serving systems perform better than naive request queues. But even with continuous batching, request shape and queue policy still matter. You can validate these policies through targeted [Load Testing for LLM Endpoints](/blog/load-testing-llm-endpoints-why-traditional-tools-dont-work).
-
-## Common Mistakes
-
-
-- max sequence controls
-- prompt length caps
-- route-specific policies
-
-## Common Mistakes
-
-These show up often:
-
-- **batching interactive and offline traffic together**
-- **optimizing for average throughput while p95 latency worsens**
-- **no queue cap**
-- **letting very long prompts share a lane with tiny requests**
-- **tuning only batch size, not wait time**
-
-Most batching incidents are policy mistakes, not runtime bugs.
-
-## A Practical Starting Point
-
-For many user-facing LLM APIs:
-
-- start with dynamic batching
-- keep wait windows very short
-- split large prompts into their own lane
-- watch p95 latency and queue wait together
-
-For internal or offline systems:
-
-- increase batch size gradually
-- accept longer wait windows
-- maximize throughput only where latency is not user-visible
+Your batching strategy must align with your [system SLOs](/blog/ai-system-slos-non-deterministic-systems). For interactive chat, you might sacrifice some throughput for lower TTFT. For [batch model scoring](/blog/ai-infrastructure-cost-optimization), you'll push for maximum batch size.
 
 ## Final Takeaway
 
-Batching is not a universal optimization knob. It is a policy decision about how much waiting you are willing to trade for throughput.
+Batching is not a "set and forget" configuration. It requires continuous tuning based on your request patterns, model size, and hardware. By moving to continuous batching, most teams can significantly improve both their GPU utilization and their user experience.
 
-The best batching setup is the one that matches the product’s latency expectations, not the one that simply makes the GPU chart look the best.
+---
 
-*Need help tuning LLM inference performance? We help teams choose batching, routing, and queueing strategies that improve throughput without quietly wrecking latency. [Book a free infrastructure audit](/contact) and we’ll review your serving setup.*
+*Need help tuning your LLM serving stack for better throughput or lower latency? We help teams optimize vLLM, Triton, and other runtimes for production workloads. [Book a free infrastructure audit](/contact) and we’ll review your batching and serving configuration.*

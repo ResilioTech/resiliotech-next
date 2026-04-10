@@ -1,171 +1,35 @@
 ---
 title: "Building an Internal ML Platform on Kubernetes: What Actually Works"
-description: "A pragmatic guide to internal ML platforms on Kubernetes, covering the patterns that reduce platform sprawl and the abstractions teams actually use in production."
-date: "2026-03-12"
+description: "A practical guide to building an internal ML platform on Kubernetes, covering common pitfalls, successful patterns, and how to balance flexibility with operational stability."
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "mlops"
-tags: ["ml-platform", "kubernetes", "mlops", "platform-engineering", "model-deployment"]
+tags: ["mlops", "platform-engineering", "kubernetes", "ml-platform", "infrastructure"]
 coverImage: "/blog-images/building-internal-ml-platform-kubernetes-what-actually-works.svg"
 featured: false
 ---
 
 # Building an Internal ML Platform on Kubernetes: What Actually Works
 
-Most internal ML platforms start with the right intention: give data and ML teams a consistent way to train, deploy, monitor, and operate models without rebuilding the same infrastructure on every project.
+Many teams start by trying to build a generalized ML platform that solves every problem for every user. This often leads to [platform overengineering](/blog/stop-building-ml-platforms-start-shipping-ml-features) and years of development without shipping a single feature.
 
-Many of them then become a pile of wrappers, YAML generators, and half-owned services that nobody actually likes using.
+The teams that succeed are the ones that start with a [single production MLOps pipeline](/blog/mlops-pipeline-kubernetes-guide) and then generalize only the parts that are repeatedly painful.
 
-The problem is rarely Kubernetes itself. The problem is trying to build a grand platform before understanding which workflows really need standardization.
+## Successful Patterns for K8s ML Platforms
 
-The ML platforms that work in production are usually narrower, more opinionated, and much less magical than people expect.
+### 1. Abstracting the Infrastructure, Not the Workflow
+Provide standardized [GPU node pools](/blog/gpu-autoscaling-right-sizing-inference-clusters) and [secrets management](/blog/secrets-management-ai-pipelines-api-keys-model-weights-credentials), but don't force every team to use the same training framework.
 
-## Start with the Workflows That Repeat
+### 2. Standardizing the Release Path
+Use **Argo CD** or **Flux** for GitOps-based deployments. This makes [canary releases](/blog/model-canary-releases-shadow-traffic-guide) and rollbacks a standard part of the platform, not a manual exception.
 
-An internal platform should reduce repeated operational work.
-
-That usually means focusing on a small set of common workflows:
-
-- training jobs
-- scheduled pipelines
-- model deployment
-- secrets and config injection
-- environment setup
-- observability and incident response
-
-If the platform does not make repeated tasks materially easier, teams will keep bypassing it.
-
-## Kubernetes Helps When You Standardize the Right Layers
-
-Kubernetes is useful for ML platforms because it gives you:
-
-- workload scheduling
-- namespaces and isolation
-- reusable deployment patterns
-- autoscaling and rollout primitives
-- a consistent control plane for services and jobs
-
-What it does not give you by default is a good ML developer experience.
-
-That means your platform should not expose raw Kubernetes as the product. It should use Kubernetes underneath while giving teams a smaller, safer interface.
-
-## What Teams Actually Need From the Platform
-
-In practice, most teams want answers to a few basic questions:
-
-- how do I launch a training job?
-- how do I deploy a model safely?
-- where do logs, metrics, and traces go?
-- how do I access data and secrets?
-- what is the rollback path when serving breaks?
-
-They usually do not want to learn five different CRDs just to ship one service.
-
-## Good Platforms Provide Golden Paths
-
-The most effective pattern is a set of golden paths:
-
-- one default path for batch training
-- one default path for online inference
-- one default path for scheduled pipelines
-- one default path for observability
-
-These paths should be opinionated enough to prevent chaos, but simple enough that teams can follow them without platform assistance every day.
-
-## Avoid Platform Over-Abstraction
-
-One common failure mode is hiding too much behind custom abstractions.
-
-That often leads to:
-
-- debugging becoming harder
-- teams not understanding what actually runs
-- every exception turning into platform work
-- custom tooling that only one or two engineers understand
-
-Good abstraction removes repetitive toil. Bad abstraction hides the underlying system so completely that nobody can operate it when things go wrong.
-
-## Separate Training, Pipelines, and Serving
-
-These workloads have different requirements and should not be mashed into one generic template.
-
-- training jobs need checkpointing, retries, and possibly spot capacity
-- pipelines need orchestration and dependency handling
-- serving needs latency, autoscaling, and rollout controls
-
-Trying to use the same platform contract for all three usually creates a lowest-common-denominator experience that serves none of them well.
-
-## Use Namespaces and Policies Deliberately
-
-Internal platforms become more reliable when isolation is explicit:
-
-- per-team namespaces
-- resource quotas
-- network policies
-- priority classes
-- clear secrets boundaries
-
-This keeps one team’s experiment from turning into everyone else’s incident.
-
-## Developer Experience Matters More Than Fancy Architecture
-
-The interface matters.
-
-If launching a model requires editing too many manifests or understanding too many platform-specific concepts, teams will route around the platform.
-
-A useful internal ML platform often offers:
-
-- a simple deployment spec
-- templates or scaffolding
-- one command or CI path to release
-- clear dashboards and logs
-- documented rollback steps
-
-That is usually more valuable than a theoretically elegant but highly abstract framework.
-
-## Observe the Platform Like a Product
-
-Platform teams often instrument workloads but not the platform experience itself.
-
-Track:
-
-- deployment success rate
-- time to first successful model deploy
-- failed rollout causes
-- training job retry rate
-- platform usage by team
-- how often teams bypass the golden paths
-
-If users keep bypassing the platform, that is a platform reliability signal, not just an adoption problem.
-
-## A Practical Internal ML Platform Stack
-
-For many teams, a workable stack on Kubernetes looks like this:
-
-1. namespaces and quotas for team isolation
-2. standard CI/CD for model and service release
-3. Argo Workflows or similar for pipelines (often managed with [Terraform](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines) for environment consistency)
-4. KServe, vLLM, or standard Deployments for serving depending on workload (with [properly tuned autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters))
-5. shared observability with logs, metrics, traces, and alerts
-6. documented golden paths instead of endless custom abstractions
-
-This is enough to build a stable platform without turning the project into a multi-year platform rewrite.
-
-## Common Mistakes
-
-These show up repeatedly:
-
-- **building too many custom abstractions too early**
-- **treating raw Kubernetes YAML as the user interface**
-- **using one generic template for training, pipelines, and serving**
-- **weak isolation between teams**
-- **measuring infrastructure health but not platform usability**
-
-The best internal platforms are not the most complex. They are the ones teams can use without opening a platform ticket every week.
+### 3. Integrated Observability
+Embed **Prometheus and Grafana** dashboards into the platform from day one. If a user deploys a model, they should automatically get [latency and quality metrics](/blog/ai-observability-metrics-dashboards-that-matter).
 
 ## Final Takeaway
 
-An internal ML platform on Kubernetes works when it standardizes the small set of workflows teams repeat constantly, provides clear golden paths, and keeps the underlying system understandable.
+An internal ML platform is a product, not a project. By focusing on removing friction from the most common workflows first, you build a system that people actually want to use.
 
-The goal is not to build a magical layer over everything. The goal is to make the common case easy, safe, and repeatable. At Resilio Tech, we specialize in building these types of "invisible" platforms that let your team focus on models, not manifests.
+---
 
-*Need help designing an internal ML platform that teams actually use? We help organizations define sane Kubernetes-based golden paths for training, deployment, observability, and rollback. [Book a free infrastructure audit](/contact) and we’ll review your platform approach.*
+*Need to build or refine your internal ML platform? We help teams design and build production-ready ML platforms on Kubernetes that balance developer flexibility with operational stability. [Book a free infrastructure audit](/contact) and we’ll review your platform strategy.*

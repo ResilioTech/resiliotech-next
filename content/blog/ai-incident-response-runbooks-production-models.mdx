@@ -1,243 +1,40 @@
 ---
-title: "AI Incident Response Runbooks for Production Models"
-description: "How to build practical incident response runbooks for production AI systems, including triage flows for latency spikes, drift, bad outputs, and model-serving failures."
-date: "2026-03-23"
+title: "AI Incident Response Runbooks: Production Model Failures"
+description: "A practical guide to building AI incident response runbooks, covering triage, rollback, mitigation, and post-mortem workflows for non-deterministic model failures."
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "ai-reliability"
-tags: ["ai-reliability", "incident-response", "monitoring", "production-ml", "mlops"]
+tags: ["incident-response", "sre", "reliability", "mlops", "ai-reliability"]
 coverImage: "/blog-images/ai-incident-response-runbooks-production-models.svg"
 featured: false
 ---
 
-# AI Incident Response Runbooks for Production Models
+# AI Incident Response Runbooks: Production Model Failures
 
-Most teams have incident response runbooks for databases, APIs, and Kubernetes. Very few have good runbooks for AI systems.
+When a traditional service fails, it usually returns a 5xx error. When a model fails, it might continue returning a 200 OK while serving hallucinated, biased, or nonsensical outputs. This makes AI incident response fundamentally different from standard SRE workflows.
 
-That gap becomes painful the first time a model starts timing out, outputs go off-spec, or a retrieval pipeline quietly serves stale content for hours.
+To handle these "silent" failures, you need a runbook that connects [observability dashboards](/blog/ai-observability-metrics-dashboards-that-matter) with clear, actionable [SLO targets](/blog/ai-system-slos-non-deterministic-systems).
 
-AI incidents are harder than standard infra incidents because the failure modes span multiple layers:
+## Triage: Identifying the Failure Class
 
-- the serving stack
-- the model runtime
-- the feature or retrieval pipeline
-- the business logic consuming outputs
+Is the failure in the [infrastructure](/blog/why-your-ml-models-fail-in-production), the data pipeline, or the model weights themselves? Your runbook should provide specific commands for each stage:
 
-Without a runbook, every incident starts from scratch. That increases time to mitigation and usually leads to the same mistakes being repeated.
+```bash
+# Check for model-server pod restarts and OOMs
+kubectl get pods -n ai-production -l app=model-server --sort-by='.status.containerStatuses[0].restartCount'
 
-## What an AI Incident Runbook Should Contain
-
-A useful runbook is not a theory document. It should answer:
-
-- how the issue is detected
-- who owns the response
-- what signals confirm the problem
-- what safe mitigations are available
-- what must not be changed during the incident
-
-Minimum sections:
-
-1. incident symptoms
-2. likely causes
-3. dashboards to open
-4. fast mitigations
-5. rollback criteria
-6. escalation path
-
-## Runbook 1: Latency Spike in Model Serving
-
-### Symptoms
-
-- p95 or p99 latency jumps
-- timeouts increase
-- queue depth rises
-- users report slow responses
-
-### Most Common Causes
-
-- replica saturation
-- GPU memory pressure
-- longer request contexts than usual
-- a bad rollout
-- cold starts after scale-up
-
-### First Checks
-
-- compare stable vs canary latency
-- inspect active requests per replica
-- inspect prompt token size distribution
-- check GPU utilization and memory usage
-- confirm whether fallback traffic increased
-
-### Safe Mitigations
-
-- shift traffic back to stable
-- cap request length
-- reduce concurrency per replica
-- scale warm replicas up
-- disable the heaviest route if needed
-
-```yaml
-incident_playbook:
-  trigger:
-    latency_p95_ms: "> 3000"
-  immediate_actions:
-    - compare canary and stable deployments
-    - inspect queue depth and in-flight requests
-    - enforce reduced max request tokens
-    - scale min replicas from 2 to 4
-  rollback_condition:
-    - canary latency > stable latency by 20%
+# Check for KV cache pressure in vLLM logs
+kubectl logs -f deployment/vllm-server | grep "cache_utilization"
 ```
 
-## Runbook 2: Model Outputs Are Wrong or Unstable
+## Mitigation: Rollback and Failover
 
-This is often more dangerous than a hard outage because the system appears healthy.
-
-### Symptoms
-
-- customer complaints about bad predictions
-- abrupt quality score drop
-- human-review escalations increase
-- structured output validation failures rise
-
-### Likely Causes
-
-- recent model rollout
-- prompt template regression
-- stale or changed upstream features
-- retrieval degradation
-- label mapping mismatch
-
-### First Checks
-
-- identify the last model, prompt, or pipeline release
-- compare baseline and current output samples
-- check schema validation pass rate
-- inspect drift or retrieval metrics
-- confirm whether one tenant or route is affected
-
-### Safe Mitigations
-
-- route traffic to the previous model
-- enable stricter output validation
-- fall back to a safer smaller model
-- disable the affected workflow
-- switch to abstain mode for low-confidence cases
-
-## Runbook 3: Retrieval or Knowledge Base Degradation
-
-For RAG systems, retrieval issues often masquerade as model issues.
-
-### Symptoms
-
-- more unsupported answers
-- stale citations
-- answer quality drops for doc-based workflows
-- no-result rate increases
-
-### Likely Causes
-
-- ingestion failure
-- stale embeddings
-- broken metadata filters
-- reranker timeout
-- index version mismatch
-
-### First Checks
-
-- check last successful ingestion time
-- inspect retrieval hit rate and no-result rate
-- compare index version against expected
-- inspect permission-filter failures
-- trace a known-bad query end to end
-
-### Safe Mitigations
-
-- switch back to previous index version
-- bypass reranker if it is timing out
-- disable documents marked stale
-- reduce the affected assistant to browse-only or abstain behavior
-
-## Runbook 4: Serving Pods Are Crashing
-
-### Symptoms
-
-- repeated pod restarts
-- OOMKilled events
-- readiness failures
-- sudden capacity loss
-
-### Likely Causes
-
-- model no longer fits in VRAM with current config
-- rollout introduced higher memory use
-- prompt/context lengths exceeded expectations
-- node instability or image issues
-
-### First Checks
-
-- inspect restart reason and event logs
-- compare memory usage against prior deployment
-- inspect recent config changes
-- inspect prompt length percentile changes
-
-### Safe Mitigations
-
-- roll back the deployment
-- lower max context length
-- reduce concurrency
-- move traffic to a smaller model
-
-## Build Runbooks Around Mitigations, Not Just Diagnosis
-
-The best runbooks prioritize time to mitigation. That means the document should tell responders:
-
-- what is safe to change immediately
-- what should wait for daylight
-- what requires approval
-
-For example:
-
-- traffic shifts are usually safe
-- changing the feature pipeline mid-incident usually is not
-- disabling a workflow may be safer than tweaking thresholds blindly
-
-## Add Links to the Exact Dashboards and Queries
-
-Do not make responders search for the right dashboard during an incident.
-
-Each runbook should link directly to:
-
-- [service health and observability dashboards](/blog/ai-observability-metrics-dashboards-that-matter)
-- [SLO and error budget status](/blog/ai-system-slos-non-deterministic-systems)
-- model runtime metrics
-- rollout comparison views
-- log query templates
-
-If someone has to ask "Which Grafana panel should I open?", the runbook is incomplete.
-
-## Practice the Runbook Before You Need It
-
-Runbooks that have never been exercised are usually wrong.
-
-Good practice drills:
-
-- simulated model latency spike
-- bad canary rollout
-- stale RAG index
-- schema-breaking output regression
-
-The goal is to validate:
-
-- the alerts fire
-- the dashboards help
-- the mitigations work
-- ownership is clear
+Once a failure is confirmed, the immediate goal is to restore service. This often involves rolling back to a [previous prompt version](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure) or failing over to a more stable [multi-region cluster](/blog/multi-region-ai-disaster-recovery-failover-playbook).
 
 ## Final Takeaway
 
-AI incident response improves dramatically when the team has written paths for common failures instead of treating every event as novel. Most incidents still reduce to a few operational patterns: bad rollout, unhealthy serving stack, degraded retrieval, or broken upstream data.
+AI incident response is a muscle that must be trained before the incident happens. By building structured runbooks and automated triage paths, you ensure that your team can respond to model failures with precision rather than panic.
 
-Building these runbooks is an investment in your team's sanity and your system's uptime. When the pressure is on, a clear, pre-vetted plan is the difference between a minor blip and a major outage.
+---
 
-*Need help operationalizing your AI systems? At Resilio Tech, we help teams build dashboards, alerts, and runbooks so production model incidents are faster to diagnose and safer to mitigate. [Book a free infrastructure audit](/contact) and we’ll review your current incident readiness.*
+*Is your team ready for the next production AI incident? We help teams build incident response runbooks, automated triage tools, and high-availability infrastructure. [Book a free infrastructure audit](/contact) and we’ll review your reliability and recovery path.*

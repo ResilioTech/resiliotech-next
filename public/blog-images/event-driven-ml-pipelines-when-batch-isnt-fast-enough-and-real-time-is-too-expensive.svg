@@ -1,0 +1,125 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111C" />
+      <stop offset="0.52" stop-color="#122235" />
+      <stop offset="1" stop-color="#1B3244" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09141F" />
+      <stop offset="1" stop-color="#171E27" />
+    </linearGradient>
+    <linearGradient id="accentLine" x1="140" y1="0" x2="430" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B" />
+      <stop offset="1" stop-color="#22C55E" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1012 98) rotate(126) scale(522 400)">
+      <stop stop-color="#22C55E" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#22C55E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(170 548) rotate(5) scale(392 258)">
+      <stop stop-color="#F59E0B" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="168" y="126" width="190" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.35">EVENT-DRIVEN ML</text>
+
+  <text x="168" y="196" fill="#F8FAFC" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.0">
+    <tspan x="168" dy="0">Event-Driven ML</tspan>
+    <tspan x="168" dy="41">Pipelines:</tspan>
+    <tspan x="168" dy="41">When Batch Isn't</tspan>
+    <tspan x="168" dy="41">Fast Enough and</tspan>
+    <tspan x="168" dy="41">Real-Time Is Too</tspan>
+    <tspan x="168" dy="41">Expensive</tspan>
+  </text>
+
+  <rect x="168" y="458" width="166" height="4" rx="2" fill="#F59E0B" opacity="0.92" />
+  <rect x="346" y="458" width="74" height="4" rx="2" fill="#86EFAC" opacity="0.74" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="484" width="94" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="505" r="5" fill="#F59E0B" />
+    <text x="36" y="511" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Kafka</text>
+  </g>
+
+  <g transform="translate(276, 0)">
+    <rect x="0" y="484" width="96" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="505" r="5" fill="#22C55E" />
+    <text x="36" y="511" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Pulsar</text>
+  </g>
+
+  <g transform="translate(386, 0)">
+    <rect x="0" y="484" width="138" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="505" r="5" fill="#F59E0B" />
+    <text x="36" y="511" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Near Real-Time</text>
+  </g>
+
+  <g transform="translate(782 132)">
+    <rect width="304" height="362" rx="34" fill="rgba(9, 14, 26, 0.56)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="18" y="18" width="268" height="326" rx="28" fill="rgba(10, 17, 31, 0.80)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="34" y="34" width="88" height="10" rx="5" fill="#F59E0B" opacity="0.9" />
+    <rect x="132" y="34" width="48" height="10" rx="5" fill="#22C55E" opacity="0.74" />
+    <rect x="190" y="34" width="52" height="10" rx="5" fill="rgba(148, 163, 184, 0.18)" />
+
+    <rect x="34" y="74" width="72" height="46" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="34" y="144" width="72" height="46" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="34" y="214" width="72" height="46" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.14)" />
+    <text x="70" y="102" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="700">Events</text>
+    <text x="70" y="172" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="700">Enrich</text>
+    <text x="70" y="242" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="700">Infer</text>
+
+    <rect x="144" y="144" width="108" height="70" rx="20" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <text x="198" y="173" text-anchor="middle" fill="#E2E8F0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="720">Topic Queue</text>
+    <rect x="164" y="186" width="68" height="8" rx="4" fill="rgba(148, 163, 184, 0.20)" />
+    <rect x="164" y="186" width="44" height="8" rx="4" fill="#F59E0B" />
+
+    <rect x="166" y="240" width="66" height="70" rx="20" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="180" y="258" width="14" height="36" rx="7" fill="#22C55E" />
+    <rect x="200" y="248" width="14" height="46" rx="7" fill="#86EFAC" opacity="0.86" />
+    <text x="199" y="326" text-anchor="middle" fill="#CBD5E1" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="650">GPU</text>
+
+    <rect x="230" y="240" width="30" height="70" rx="14" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="239" y="252" width="12" height="30" rx="6" fill="#F59E0B" />
+    <text x="245" y="326" text-anchor="middle" fill="#CBD5E1" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="650">CPU</text>
+
+    <rect x="144" y="84" width="116" height="32" rx="16" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="202" y="105" text-anchor="middle" fill="#E2E8F0" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="680">Lag-Aware Scaling</text>
+
+    <path d="M106 97 H144" stroke="#F59E0B" stroke-width="4" stroke-linecap="round" />
+    <path d="M106 167 H144" stroke="#22C55E" stroke-width="4" stroke-linecap="round" />
+    <path d="M106 237 H166" stroke="#F59E0B" stroke-width="4" stroke-linecap="round" />
+    <path d="M198 214 V240" stroke="#22C55E" stroke-width="4" stroke-linecap="round" />
+
+    <rect x="138" y="320" width="124" height="16" rx="8" fill="rgba(148, 163, 184, 0.14)" />
+    <rect x="138" y="320" width="82" height="16" rx="8" fill="#22C55E" opacity="0.84" />
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>

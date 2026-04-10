@@ -1,179 +1,34 @@
 ---
 title: "AI System SLOs: Defining Uptime for Non-Deterministic Systems"
-description: "How to define service level objectives for AI systems when correctness is probabilistic, outputs are variable, and traditional uptime metrics miss user-facing failures."
-date: "2026-03-13"
+description: "How to define and measure Service Level Objectives (SLOs) for AI systems, covering latency, quality proxies, and reliability targets for non-deterministic model outputs."
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "ai-reliability"
-tags: ["slo", "ai-reliability", "observability", "llm-serving", "production-ai"]
+tags: ["slo", "reliability", "sre", "metrics", "ai-reliability"]
 coverImage: "/blog-images/ai-system-slos-non-deterministic-systems.svg"
 featured: false
 ---
 
 # AI System SLOs: Defining Uptime for Non-Deterministic Systems
 
-Traditional uptime metrics work well for deterministic systems. A request either succeeds or fails. A database is either reachable or not. A page either loads or returns an error.
+In traditional software, a "99.9% uptime" SLO is unambiguous. In AI, a system can be "up" (returning 200 OK) while being completely broken (serving hallucinations or stale predictions). This requires a shift from binary uptime to [multi-layered observability](/blog/ai-observability-metrics-dashboards-that-matter).
 
-AI systems are different.
+## Defining Meaningful AI SLIs
 
-An LLM can return a response with HTTP 200 and still fail the user. A recommendation system can stay online while serving low-quality rankings. A RAG system can answer quickly with stale or irrelevant context.
+To build robust SLOs, you must first define your Service Level Indicators (SLIs). For [production LLMs](/blog/serving-open-source-llms-with-vllm-kubernetes), this usually includes:
 
-That is why "uptime" for AI needs a broader definition than service availability alone.
+- **TTFT (Time to First Token)**: < 200ms for interactive chat.
+- **Inference Latency**: < 2s for [real-time fraud detection](/blog/ai-infrastructure-fintech-latency-compliance-real-time-fraud-detection).
+- **Quality Proxy**: > 95% of responses must pass [automated eval filters](/blog/building-eval-pipeline-catches-regressions-before-users).
 
-## Availability Is Necessary but Not Sufficient
+## Managing the Error Budget
 
-You still need the traditional basics:
-
-- request success rate
-- latency
-- timeout rate
-- infrastructure health
-
-But those only tell you whether the system is reachable. They do not tell you whether it is useful.
-
-For AI systems, usefulness often depends on:
-
-- output quality
-- safety behavior
-- retrieval quality
-- freshness
-- structural correctness
-- cost staying within acceptable bounds
-
-If you ignore those dimensions, your SLO will say the system is healthy while users are having a bad experience.
-
-## Start with the User-Facing Contract
-
-Define what a successful interaction means for each route.
-
-Examples:
-
-- chat assistant returns a grounded answer within a latency budget
-- extraction endpoint returns valid structured JSON
-- recommendation API returns results with minimum coverage and freshness
-- classification system returns a decision with calibrated confidence
-
-An AI SLO should represent the product contract, not just the network contract.
-
-## Split SLOs into Reliability Layers
-
-A practical approach is to define multiple layers:
-
-### Platform SLOs
-
-- availability
-- latency
-- timeouts
-- infrastructure saturation
-
-### AI Runtime SLOs
-
-- valid response format rate
-- time to first token
-- tool-call success rate
-- retrieval success rate
-
-### Outcome SLOs
-
-- quality pass rate on sampled traffic
-- human review acceptance rate
-- groundedness or hallucination thresholds
-- freshness compliance
-
-Not every system needs all of these, but most production AI systems need more than one layer.
-
-## Use Proxy Metrics Where Direct Correctness Is Hard
-
-You usually cannot label every live response in real time.
-
-That is fine. Use practical proxies:
-
-- JSON schema adherence
-- citation presence for grounded routes
-- retrieval hit rate
-- fallback rate
-- user retry rate
-- escalation-to-human rate
-
-Proxy metrics are not perfect. They are still far better than pretending HTTP 200 means success.
-
-## Error Budgets Still Matter
-
-Once you define the SLO, you also need an error budget.
-
-Examples:
-
-- 99.9% request availability
-- 99% valid JSON responses for extraction
-- 95% of interactive responses under a p95 latency budget
-- 98% retrieval freshness compliance
-
-The error budget is what lets the team make tradeoffs rationally. If a new prompt or model consumes too much quality budget, that release should slow down or roll back.
-
-## Do Not Collapse Everything into One Number
-
-It is tempting to build one "AI health score." That usually hides the failure mode you need to act on.
-
-Better approach:
-
-- one small set of route-level SLOs (supported by [layered observability dashboards](/blog/ai-observability-metrics-dashboards-that-matter))
-- one owner per SLO
-- one alert path tied to a specific [incident response runbook](/blog/ai-incident-response-runbooks-production-models) when the budget burns too fast
-
-That keeps the system understandable during incidents.
-
-## Sampled Evaluation Is Part of Reliability
-
-For non-deterministic systems, sampled evaluation is often part of production reliability, not just model research.
-
-Useful patterns:
-
-- score a slice of production outputs continuously
-- compare quality before and after prompt or model changes
-- monitor drift in evaluator pass rates
-- route ambiguous failures to human review
-
-This is how teams build quality signals that complement infrastructure metrics.
-
-## Tie SLOs to Release Decisions
-
-AI SLOs should affect operations directly:
-
-- canary promotion
-- prompt rollout speed
-- model rollback
-- feature enablement
-- rate limiting or load shedding
-
-If SLOs are only dashboard decorations, they will not change production behavior when things go wrong.
-
-## A Practical Starting Set
-
-If you need a first pass for an LLM-backed product, start with:
-
-1. availability
-2. p95 latency or time to first token
-3. valid output rate
-4. fallback or degraded-mode rate
-5. one route-specific quality proxy
-
-That is enough to build a useful operational picture without inventing a complex reliability framework on day one.
-
-## Common Mistakes
-
-These show up often:
-
-- **using HTTP success rate as the only SLO**
-- **no route-specific quality metric**
-- **no clear owner for sampled evaluation**
-- **combining unrelated failure modes into one score**
-- **no error budget policy tied to releases**
-
-AI reliability becomes tractable once teams define success in terms the product actually cares about.
+Your error budget isn't just for downtime; it's for experiments, [canary releases](/blog/model-canary-releases-shadow-traffic-guide), and [A/B testing](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses). If a new model version degrades your quality SLI, it should consume the error budget just like a traditional outage would.
 
 ## Final Takeaway
 
-Uptime for AI systems is not just about whether the endpoint responds. It is about whether the system remains fast enough, safe enough, fresh enough, and useful enough for the product contract it supports.
+SLOs for AI systems must bridge the gap between infrastructure availability and model correctness. By defining clear SLIs for latency and quality, you provide your engineering and product teams with a common language for reliability and risk.
 
-At the end of the day, an SLO is a communication tool. It aligns engineering, product, and business on what "good enough" looks like in a probabilistic world. When you get this right, you move from reactive firefighting to proactive, data-driven reliability.
+---
 
-*Need help defining SLOs for LLM and ML production systems? At Resilio Tech, we help teams map user-facing success to measurable runtime and quality signals so incidents are easier to detect and release decisions are easier to defend. [Book a free infrastructure audit](/contact) and we’ll review your reliability model.*
+*Struggling to define or meet SLOs for your AI systems? We help teams establish meaningful SLIs, monitor error budgets, and build high-availability infrastructure. [Book a free infrastructure audit](/contact) and we’ll help you define your path to reliability.*

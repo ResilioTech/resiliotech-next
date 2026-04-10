@@ -1,225 +1,37 @@
 ---
-title: "GPU Autoscaling: Right-Sizing Inference Clusters Without Over-Provisioning"
-description: "How to autoscale GPU-backed inference clusters without wasting money, including queue-based scaling, warm capacity, and right-sizing by workload profile."
-date: "2026-03-21"
+title: "GPU Autoscaling: Right-Sizing Inference Clusters"
+description: "How to implement intelligent GPU autoscaling for inference clusters, covering metrics, cooldown periods, and how to balance cost with performance."
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "model-deployment"
-tags: ["gpu-optimization", "autoscaling", "model-deployment", "kubernetes", "cost-optimization"]
+tags: ["gpu", "autoscaling", "kubernetes", "performance", "model-deployment"]
 coverImage: "/blog-images/gpu-autoscaling-right-sizing-inference-clusters.svg"
 featured: false
 ---
 
-# GPU Autoscaling: Right-Sizing Inference Clusters Without Over-Provisioning
+# GPU Autoscaling: Right-Sizing Inference Clusters
 
-GPU inference clusters are expensive for the same reason they are valuable: you are paying for scarce, high-performance hardware that can sit mostly idle if you size it badly.
+Traditional [Horizontal Pod Autoscaling (HPA)](/blog/mlops-pipeline-kubernetes-guide) based on CPU or memory is often ineffective for AI workloads. A GPU can be at 100% utilization while your [inference queue explodes](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production) due to [batching misconfiguration](/blog/batching-strategies-llm-inference-throughput-vs-latency).
 
-Most teams make one of two mistakes:
+To scale correctly, you must use **inference-specific metrics**.
 
-- they over-provision for peak and accept low utilization as "the cost of reliability"
-- they under-provision, then scramble when latency spikes under real traffic
+## Scaling on the Right Metrics
 
-The right goal is neither maximum utilization nor minimum replica count. The goal is predictable latency at the lowest steady-state cost you can safely run.
+We recommend scaling based on:
+1. **Inference Queue Depth**: The number of requests waiting for a GPU.
+2. **Duty Cycle**: The percentage of time the GPU is actively processing.
+3. **Concurrency**: The number of active [KV cache sequences](/blog/serving-open-source-llms-with-vllm-kubernetes).
 
-Here is the autoscaling pattern we recommend for production inference workloads.
+## Managing Scale-Up and Scale-Down
 
-## Why GPU Autoscaling Is Harder Than CPU Autoscaling
-
-CPU web workloads usually scale fast and cheap. GPU workloads do not.
-
-With GPU-backed model serving, new capacity often means:
-
-- pulling a large image
-- loading model weights
-- warming the runtime
-- filling caches
-
-That makes reactive autoscaling slower. If your trigger fires only after users are already waiting, the scale-up often comes too late to help.
-
-## Start with Workload Profiles, Not One Global Policy
-
-Different inference paths need different scaling behavior:
-
-- **interactive APIs** need low latency and some warm spare capacity
-- **batch jobs** can tolerate queues and slower scale-up
-- **internal experiments** should not compete with user traffic
-
-If all of these share one cluster and one autoscaling rule, your latency will always feel random.
-
-At minimum, split clusters or deployments by traffic type.
-
-## Measure the Right Signals
-
-CPU is rarely the best scaling signal for inference. A GPU-backed service can show moderate CPU while request queues grow and p95 latency gets worse.
-
-Better signals include:
-
-- active requests
-- queue depth
-- tokens per second
-- GPU utilization
-- GPU memory pressure
-- p95 latency
-
-```yaml
-triggers:
-  - metric: gpu_active_requests
-    threshold: 24
-  - metric: inference_queue_depth
-    threshold: 8
-  - metric: latency_p95_ms
-    threshold: 1200
-```
-
-Use at least one demand signal and one user-impact signal.
-
-## Keep Warm Capacity on Purpose
-
-One common anti-pattern is scaling all the way to the theoretical minimum, then paying for it in cold-start latency.
-
-For interactive workloads, keep a small amount of warm headroom:
-
-- one or two ready replicas
-- pre-pulled model images on the node pool
-- startup probes that reflect real readiness
-
-This costs more than perfect efficiency on paper, but it prevents a lot of user-visible latency spikes.
-
-## Scale on Queue Pressure with a Floor
-
-A good default policy for many inference APIs looks like this:
-
-1. keep a minimum number of warm replicas
-2. scale up when queue depth or active requests rises
-3. scale down conservatively
-4. never let batch traffic evict interactive capacity
-
-```yaml
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: inference-autoscaler
-spec:
-  scaleTargetRef:
-    name: recommendation-inference
-  minReplicaCount: 2
-  maxReplicaCount: 10
-  cooldownPeriod: 180
-  triggers:
-    - type: prometheus
-      metadata:
-        serverAddress: http://prometheus.monitoring:9090
-        metricName: inference_queue_depth
-        threshold: "8"
-        query: max(inference_queue_depth{deployment="recommendation-inference"})
-```
-
-Why the cooldown? Because aggressive scale-down is how clusters start flapping between "empty" and "not enough."
-
-## Right-Size by Model Class
-
-Autoscaling cannot fix bad instance selection. If your base infrastructure isn't [right-sized for the model class](/blog/ai-infrastructure-cost-optimization), you'll scale up and down while still wasting money or performance.
-
-If a small embedding model is placed on an oversized GPU, scaling policy might look healthy while cost stays terrible. If a large generative model is placed on a marginal GPU, scaling adds replicas when the real issue is per-replica capacity.
-
-Profile by model class:
-
-| Workload | Good Starting Shape | Key Risk |
-|---|---|---|
-| Embeddings | L4 / smaller GPU class | Overspending on oversized hardware |
-| Mid-size encoder/decoder | A10G | CPU/GPU imbalance |
-| Larger LLM inference | A100/H100 or tensor parallel | Cold start and memory pressure |
-
-Pick the smallest instance class that handles your target request size with headroom.
-
-## Separate Scale-Up from Node Provisioning Expectations
-
-Replica autoscaling and node autoscaling are not the same thing.
-
-If your pods scale faster than your GPU nodes can appear, the scheduler becomes your bottleneck.
-
-This is especially common on Kubernetes when:
-
-- cluster autoscaler reacts slowly
-- GPU nodes take too long to boot
-- node images are missing required drivers or images
-
-Use a dedicated GPU node group and make provisioning predictable.
-
-## Add Request Guardrails Before You Add More GPUs
-
-Many "capacity" incidents are actually request-shape incidents.
-
-Examples:
-
-- prompt sizes suddenly increase
-- one customer starts sending huge payloads
-- timeout settings are too generous
-- concurrency exceeds what the model server handles well
-
-Add limits:
-
-- max tokens
-- max prompt size
-- max concurrent requests per replica
-- per-tenant rate limits
-
-This prevents autoscaling from becoming a substitute for traffic discipline.
-
-## Use Scale-Down Rules That Respect Cache and Warmup Costs
-
-Scale-down should be slower than scale-up.
-
-You paid to load weights and warm the runtime. Throwing that capacity away the moment traffic dips by a little is usually a bad trade.
-
-A practical rule:
-
-- scale up quickly when queues form
-- scale down only after a sustained quiet period
-
-## Monitor Cost Alongside Performance
-
-The autoscaling dashboard should include:
-
-- replicas
-- GPU node count
-- queue depth
-- p95 latency
-- cost per hour
-- cost per 1,000 requests
-
-Without cost visibility, teams often celebrate "good autoscaling" that simply bought its way out of every problem.
-
-## Common Mistakes
-
-We see these often:
-
-- **Scaling on CPU** instead of queue or runtime signals
-- **No warm floor** for interactive traffic
-- **One policy for every workload type**
-- **Ignoring node provisioning lag**
-- **Using autoscaling to mask bad request limits**
-
-Autoscaling is a control system. Bad inputs produce bad behavior.
-
-## A Good Starting Policy
-
-If you need a reasonable default:
-
-- separate interactive and batch traffic
-- keep 2 warm replicas for interactive APIs
-- scale up on queue depth
-- scale down conservatively
-- track cost per request
-- review GPU sizing per model class quarterly
-
-That gets most teams to a much better place without building a complicated custom scheduler.
+GPU cold starts are expensive (often 60s+). Your autoscaling policy should include:
+- **Aggressive Scale-Up**: Start new nodes early to absorb [predicted burst traffic](/blog/ecommerce-ai-infrastructure-recommendation-engines-search-personalization-scale).
+- **Graceful Scale-Down**: Use long cooldown periods to avoid "thrashing" and to maintain [warm capacity](/blog/ai-infrastructure-cost-optimization) during minor fluctuations.
 
 ## Final Takeaway
 
-Right-sizing GPU inference clusters is mostly about matching workload behavior to the right scaling signals and the right hardware class. Autoscaling helps, but only when the cluster is already segmented properly and the demand signals reflect real user pain.
+GPU autoscaling is a balance between [cost and performance](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas). By scaling on inference-specific metrics and maintaining a warm buffer, you can ensure that your platform meets demand while minimizing wasted spend.
 
-The cheapest cluster is not the one with the fewest GPUs. It's the one that meets latency targets without carrying waste all day. Building this balance is a core part of any [functional internal ML platform](/blog/building-internal-ml-platform-kubernetes-what-actually-works).
+---
 
-At Resilio Tech, we help teams design these types of high-performance, cost-aware systems from day one, ensuring your scaling policy matches your real-world traffic needs.
-
-*Need help tuning GPU inference clusters? We help teams right-size hardware, add queue-aware autoscaling, and reduce over-provisioning without hurting production latency. [Book a free infrastructure audit](/contact) and we’ll review your current scaling policy to help you find the right balance between cost and performance.*
+*Need help implementing intelligent GPU autoscaling? We help teams design metric-driven scaling policies, optimize cold starts, and balance cost with production performance. [Book a free infrastructure audit](/contact) and we’ll review your scaling and capacity strategy.*

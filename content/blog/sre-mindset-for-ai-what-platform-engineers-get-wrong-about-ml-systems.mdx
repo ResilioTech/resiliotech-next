@@ -1,0 +1,328 @@
+---
+title: "The SRE Mindset for AI: What Platform Engineers Get Wrong About ML Systems"
+description: "An opinionated guide to applying SRE thinking to AI systems, including why ML systems fail differently from web apps and how platform engineers need to adapt reliability practices for non-deterministic behavior."
+date: "2026-04-10"
+author: "Resilio Tech Team"
+category: "ai-reliability"
+tags: ["sre", "ai-reliability", "platform-engineering", "mlops", "production"]
+coverImage: "/blog-images/sre-mindset-for-ai-what-platform-engineers-get-wrong-about-ml-systems.svg"
+featured: false
+seo:
+  title: "The SRE Mindset for AI: What Platform Engineers Get Wrong About ML Systems"
+  description: "Why SRE principles still matter for AI systems, but need adaptation for non-deterministic outputs, silent failures, and data-dependent behavior."
+  keywords:
+    - sre for ai systems
+    - platform engineering ml
+    - reliability engineering ai
+    - ai sre mindset
+    - ml systems reliability
+social:
+  image: "/blog-images/sre-mindset-for-ai-what-platform-engineers-get-wrong-about-ml-systems.svg"
+  title: "The SRE Mindset for AI"
+  description: "How platform engineers should adapt SRE thinking for production ML and AI systems."
+---
+
+# The SRE Mindset for AI: What Platform Engineers Get Wrong About ML Systems
+
+A lot of platform engineers approach AI systems with the same mental model they use for web services.
+
+That is understandable. It is also where many reliability mistakes begin.
+
+The usual reasoning goes like this:
+
+- if the endpoint is up
+- if latency is acceptable
+- if error rate is low
+
+then the system is healthy
+
+That logic works reasonably well for many traditional services.
+
+It breaks down fast for AI systems.
+
+An ML system can return `200 OK` while:
+
+- serving degraded predictions
+- drifting silently
+- retrieving bad context
+- producing unstable outputs under the same input shape
+- making errors that are data-dependent instead of infrastructure-dependent
+
+This is why `sre for ai systems` is not about discarding SRE. It is about adapting it.
+
+The problem is not that SRE principles stop being useful. The problem is that many teams apply them too literally, without accounting for how AI systems actually fail.
+
+That is the gap Resilio spends a lot of time in. We take an SRE-first view of AI infrastructure, but not a copy-paste SRE view. AI reliability needs the mindset, the rigor, and the operational discipline of SRE, with different assumptions about what “healthy” means.
+
+## What Platform Engineers Usually Get Wrong
+
+The biggest mistake is treating ML systems like deterministic APIs with expensive hardware attached.
+
+That leads to three bad assumptions:
+
+### 1. Availability equals correctness
+
+In normal platform work, a low error rate usually means the service is broadly working.
+
+In AI systems, low error rate may simply mean the system is confidently returning bad output.
+
+That is a fundamentally different reliability problem.
+
+### 2. Failure is obvious
+
+Traditional outages tend to be visible:
+
+- 5xx responses
+- timeouts
+- crash loops
+
+AI failures are often silent:
+
+- lower-quality answers
+- skewed predictions
+- wrong retrieval context
+- broken ranking quality
+
+### 3. Inputs are mostly stable
+
+A lot of classical service reliability assumes the application logic is relatively stable under valid input.
+
+ML systems are far more input-sensitive. Behavior changes with:
+
+- data distribution
+- prompt structure
+- context retrieved
+- sequence length
+- feature freshness
+
+That means the same infrastructure can look healthy while the system is functionally broken for a subset of requests.
+
+This is why `platform engineering ml` work cannot stop at uptime, autoscaling, and deployment hygiene.
+
+## SRE Principles Still Apply, But They Need Translation
+
+Some teams overreact to the above and conclude that SRE is not useful for AI.
+
+That is also wrong.
+
+Core SRE principles still matter:
+
+- define service levels
+- measure reliability
+- manage change carefully
+- reduce toil
+- build strong incident response
+
+The problem is that the indicators and failure models need adaptation.
+
+### SLOs need quality-aware proxies
+
+For a web API, an uptime SLO may be enough to describe baseline service health.
+
+For AI, you usually need a stack of indicators:
+
+- infrastructure availability
+- latency
+- output quality proxies
+- data freshness or drift signals
+- fallback activation rate
+
+The service is not healthy just because it answered. It is healthy if it answered within the reliability envelope the product actually needs.
+
+### Error budgets need to cover bad behavior, not just downtime
+
+A rollout that keeps the service live but materially worsens output quality should consume reliability budget.
+
+If it does not, the team will optimize for uptime while quietly degrading user outcomes.
+
+### Change management matters more, not less
+
+AI systems often change through:
+
+- model versions
+- prompts
+- retrieval logic
+- thresholds
+- feature pipelines
+
+That means release discipline has to cover more than application code.
+
+This is where many platform teams are still behind. They have mature CI/CD for code and weak operational control for the actual parts that shape AI behavior.
+
+## The Failure Modes Are Different
+
+If you want a useful `reliability engineering ai` mindset, start by accepting that AI systems break differently.
+
+### Silent failures
+
+The service stays up, but outputs degrade.
+
+This includes:
+
+- hallucinations
+- prediction drift
+- retrieval irrelevance
+- poor ranking quality
+
+### Data-dependent failures
+
+The system fails only on certain slices:
+
+- certain languages
+- certain customer segments
+- certain feature combinations
+- long prompts or edge-case inputs
+
+### Control-plane failures disguised as model failures
+
+Sometimes the model is fine. The failure is in:
+
+- stale features
+- prompt misrouting
+- document indexing lag
+- model version mismatch
+
+### Cost failures
+
+The system remains technically functional while becoming economically broken:
+
+- token cost spikes
+- GPU utilization collapses
+- routing uses the expensive path too often
+
+Traditional platform thinking underweights these because cost inflation is not usually treated as a reliability signal. For AI systems, it often should be.
+
+## What an Adapted SRE Mindset Looks Like
+
+The right SRE posture for AI is not “treat everything as mysterious.”
+
+It is:
+
+- keep the operational discipline
+- change what you measure
+- change what you classify as failure
+
+A practical AI-aware SRE mindset usually includes:
+
+### 1. Multi-layer reliability
+
+Track:
+
+- infra health
+- model runtime health
+- data path health
+- output quality proxies
+
+This prevents the classic “everything is green but users are unhappy” trap.
+
+### 2. Slice-aware observability
+
+Overall averages are often misleading.
+
+You need breakdowns by:
+
+- model version
+- route
+- tenant
+- input segment
+- fallback path
+
+AI systems often fail unevenly, not universally.
+
+### 3. Strong degradation and rollback paths
+
+AI reliability is not just about keeping the primary path alive. It is about having credible fallback behavior:
+
+- cached outputs
+- smaller models
+- retrieval-only paths
+- rules-based modes
+- feature flags
+
+### 4. Incidents classified by behavior, not only by infrastructure state
+
+Good AI incident response distinguishes:
+
+- infrastructure failure
+- data failure
+- model behavior failure
+- evaluation or policy failure
+
+That classification speeds up response and prevents every incident from landing on the same team with the same playbook.
+
+## Why Web-Service Thinking Is Not Enough
+
+A lot of platform teams still treat AI systems as if their reliability model is basically:
+
+- pods
+- autoscaling
+- metrics
+- logs
+
+Those things matter. They are not sufficient.
+
+If you are running a recommendation system, risk model, RAG workflow, or LLM assistant, the system behavior depends on a larger surface:
+
+- model artifacts
+- prompts
+- context
+- feature pipelines
+- runtime policies
+
+That means the control plane for reliability is wider than many platform engineers initially expect.
+
+This is exactly why Resilio takes an SRE-first angle to AI infrastructure. Not because AI should be managed like a standard web app, but because the missing discipline in many ML environments is still operational discipline:
+
+- explicit reliability targets
+- clear ownership
+- change safety
+- rollback
+- measured degradation
+
+Without that, teams end up with a lot of model sophistication and surprisingly weak production behavior.
+
+## The Better Mental Model
+
+Here is the better way to think about it:
+
+An AI system is not just an API.
+
+It is a layered service whose correctness depends on:
+
+- infrastructure
+- data
+- model behavior
+- configuration
+- evaluation assumptions
+
+SRE still applies because those layers need:
+
+- defined service levels
+- controlled change
+- measurable risk
+- on-call-ready operations
+
+But the implementation of SRE has to adapt to the fact that AI systems are:
+
+- non-deterministic
+- data-dependent
+- quality-sensitive
+- often silently degradable
+
+That is the distinction many platform teams miss.
+
+## Final Take
+
+If you apply classic SRE thinking to AI without modification, you will measure the wrong things and miss the failures that matter most.
+
+If you reject SRE entirely because AI feels different, you will lose the discipline that production systems still need.
+
+The right answer sits in the middle:
+
+- keep the SRE mindset
+- adapt the reliability model
+- treat silent degradation and data-dependent behavior as first-class failure modes
+
+That is what `sre for ai systems` actually means.
+
+And it is why the strongest `platform engineering ml` teams are not the ones with the fanciest model stack. They are the ones that combine AI-specific awareness with real reliability engineering discipline.

@@ -24,199 +24,42 @@ social:
 
 # Stop Building ML Platforms — Start Shipping ML Features
 
-There is a pattern that shows up in company after company.
+Many teams spend a year building a generalized [internal ML platform on Kubernetes](/blog/building-internal-ml-platform-kubernetes-what-actually-works) before they've even shipped their first production model. This is the definition of overengineering. You shouldn't solve for your fifth model before you've earned the right to ship your first.
 
-Leadership decides machine learning matters. A few promising use cases appear. An internal team forms. Then, instead of shipping the first production model quickly, the company starts designing a platform.
+## The Case for Incrementalism
 
-Not a deployment path. Not a narrow serving stack. A platform.
+Instead of building a "platform," focus on a single, high-value [MLOps pipeline](/blog/mlops-pipeline-kubernetes-guide). Ship one model with real production standards—repeatable deployment, [observability](/blog/ai-observability-metrics-dashboards-that-matter), and a [rollback path](/blog/model-canary-releases-shadow-traffic-guide).
 
-Twelve months later, the team has:
+### A Minimal CI/CD Deployment Pattern
 
-- architecture diagrams
-- orchestration layers
-- internal SDKs
-- model registry abstractions
-- three environments
-- zero meaningful production usage
+Start with a simple, automated path from your [model registry](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines) to production:
 
-This is one of the most common forms of `ml platform overengineering`.
+```yaml
+name: Deploy Model
+on:
+  push:
+    tags: ['v*']
 
-The problem is not that platforms are always bad. The problem is sequencing. Many teams build a generalized ML platform before they have earned the right to generalize anything.
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update K8s Manifest
+        run: |
+          sed -i "s|image:.*|image: ${REGISTRY}/${MODEL}:${GITHUB_REF_NAME}|" k8s/deploy.yaml
+          kubectl apply -f k8s/deploy.yaml
+      - name: Verify Health
+        run: kubectl rollout status deployment/model-server
+```
 
-## The Mistake: Solving for the Fifth Model Before Shipping the First
+## Standardize After Success
 
-The argument for a platform usually sounds reasonable.
+Once you have three models in production, the patterns for [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) and [secrets management](/blog/secrets-management-ai-pipelines-api-keys-model-weights-credentials) will become obvious. Standardize only what has already proven to be a bottleneck.
 
-Teams say they need:
+## Final Takeaway
 
-- repeatable deployments
-- standardized monitoring
-- model versioning
-- feature pipelines
-- safe rollout workflows
+Internal platforms should remove friction, not create it. By focusing on shipping features first and generalizing later, you ensure that your infrastructure work is always anchored to real business value.
 
-All of that is true eventually.
+---
 
-But eventually is doing a lot of work in that sentence.
-
-If you have not yet served one high-value model in production, you do not know:
-
-- which workflows actually repeat
-- which abstractions are stable
-- which controls are essential versus theoretical
-- what your real bottlenecks are
-
-That means the first version of the “platform” is usually a pile of guesses disguised as architecture.
-
-The result is predictable: teams spend months building generalized systems around imagined future needs while the actual product teams wait for something useful to appear.
-
-## Why the Platform Team Trend Goes Wrong
-
-The current “platform team” trend borrows a lot from internal developer platform thinking in software infrastructure. Some of that logic carries over. A lot of it does not.
-
-ML systems have more variation than most teams want to admit:
-
-- batch scoring and online inference are different
-- classical models and LLM applications have different operational needs
-- internal analytics use cases and customer-facing product features have different risk profiles
-
-When teams force all of that diversity into one grand platform too early, they often create the worst of both worlds:
-
-- too much process for simple use cases
-- not enough specialization for hard ones
-
-The platform becomes an organizational project before it becomes a product-enabling tool.
-
-That is the key distinction. A useful internal platform removes friction from shipping ML features. An early platform initiative often creates friction in the name of future efficiency.
-
-## What Teams Should Do Instead
-
-If you want to `ship ml features faster`, take the opposite path:
-
-1. Pick one model or ML-powered feature with obvious business value.
-2. Ship that one use case with real production standards.
-3. Document what was painful.
-4. Generalize only the parts that were painful twice.
-
-That sequence is less glamorous than announcing an ML platform roadmap. It is also much more likely to produce a useful system.
-
-For the first production use case, you probably need only a narrow slice of infrastructure:
-
-- one deployment path
-- one monitoring baseline
-- one rollback mechanism
-- one set of data contracts
-- one ownership model
-
-That is not “anti-platform.” It is incremental platform development grounded in reality.
-
-## Ship One Model Well
-
-“Ship one model well” sounds simple, but most teams still skip the hard parts.
-
-For a first production model, “well” means:
-
-- the model can be deployed repeatably
-- latency and error rates are measured
-- failures are visible
-- there is a rollback path
-- ownership is clear when something breaks
-
-That is enough to learn a huge amount.
-
-You will discover:
-
-- whether the real pain is serving, data freshness, observability, or approvals
-- whether you need more standardization in CI/CD or in feature pipelines
-- whether the use case actually deserves continued investment
-
-Those lessons are vastly more valuable than an elegant internal abstraction layer built before any production contact.
-
-## The Real Cost of Premature Platforms
-
-Premature platforms cost more than salary.
-
-They also create:
-
-- delayed product learning
-- delayed customer feedback
-- delayed revenue impact
-- organizational confusion about who owns outcomes
-
-A team can spend 12 months building a platform and still avoid the hard question:
-
-- did we make the business meaningfully better with ML?
-
-That is why `ml platform vs features` is often the wrong framing. Features are not a distraction from the platform. Features are the evidence that tells you what platform you actually need.
-
-Without that evidence, platform work drifts toward internal optimization theater.
-
-## When a Real Platform Effort Does Make Sense
-
-There are cases where a dedicated platform investment is absolutely justified.
-
-For example:
-
-- multiple teams are already shipping models
-- the same deployment and monitoring problems repeat every quarter
-- compliance, auditability, or multi-tenant controls need a common standard
-- there is proven demand for shared workflows across the company
-
-At that point, the platform is no longer speculative. It is responding to repeated operational pain.
-
-That is the threshold many companies skip. They create a platform team based on ambition, not repeated demand.
-
-## A Better Rule: Standardize the Path, Not the Universe
-
-The better approach is narrow and boring:
-
-- standardize one serving path
-- standardize one observability stack
-- standardize one release process
-- standardize one incident workflow
-
-Do that for one successful use case first.
-
-Then extend it to the second and third use cases. Only after that should you decide which parts deserve to become reusable platform primitives.
-
-This is how strong internal platforms usually emerge in practice. Not from a perfect up-front design, but from a small number of working patterns that proved themselves under load.
-
-## Counterargument: “If We Don’t Build the Platform Now, We’ll Create Tech Debt”
-
-This sounds responsible. It is often wrong.
-
-Yes, shipping quickly can create debt. But preemptively building for every future possibility creates a different kind of debt:
-
-- abstraction debt
-- coordination debt
-- maintenance debt
-- process debt
-
-A narrowly scoped production system with a few sharp edges is often easier to improve than a broad platform with weak adoption and unclear value.
-
-The goal is not no debt. The goal is debt attached to real usage and real business value.
-
-That is manageable. Speculative infrastructure debt usually is not.
-
-## What Leaders Should Ask Instead
-
-Instead of asking, “Should we build an ML platform team?” ask:
-
-- what is the first ML feature that must work in production?
-- what controls are required for that feature specifically?
-- which parts are likely to be reused within the next two quarters?
-- what can stay manual until usage proves the need to automate?
-
-Those questions produce better technical decisions because they force the team to anchor infrastructure work to product outcomes.
-
-## Final Take
-
-Most companies do not need an ML platform first. They need one production ML feature that works reliably.
-
-That is the missing discipline in a lot of ML infrastructure planning. Teams want the elegance of a platform before they have the evidence of repeated use.
-
-If you want to avoid `ml platform overengineering`, resist the urge to design for the future in the abstract.
-
-Ship one model well. Learn from the friction. Then generalize the parts that are actually repeated.
-
-That is how you `ship ml features faster` without creating another internal platform project that takes a year and serves almost nothing.
+*Stuck in "platform development hell" while your ML features wait in the backlog? We help teams build lean, production-ready MLOps workflows that prioritize shipping over overengineering. [Book a free infrastructure audit](/contact) and we’ll help you find the fastest path to production.*

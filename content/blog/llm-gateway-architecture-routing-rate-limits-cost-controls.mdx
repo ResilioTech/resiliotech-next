@@ -1,244 +1,33 @@
 ---
 title: "LLM Gateway Architecture: Routing, Rate Limits, and Cost Controls"
-description: "How to design an LLM gateway for production use cases, including multi-model routing, guardrails, quotas, usage logging, and cost-aware fallbacks."
-date: "2026-03-22"
+description: "A deep guide to LLM gateway architecture, covering unified APIs, model routing, rate limiting, and how to control costs in production LLM workflows."
+date: "2026-04-07"
 author: "Resilio Tech Team"
-category: "mlops"
-tags: ["llm-serving", "mlops", "cost-optimization", "monitoring", "ai-reliability"]
+category: "model-deployment"
+tags: ["llm-gateway", "routing", "cost-controls", "architecture", "model-deployment"]
 coverImage: "/blog-images/llm-gateway-architecture-routing-rate-limits-cost-controls.svg"
-featured: false
+featured: true
 ---
 
 # LLM Gateway Architecture: Routing, Rate Limits, and Cost Controls
 
-As soon as more than one team or product starts calling LLMs, you need a gateway.
+As you move from a single model to a [multi-model environment](/blog/multi-model-serving-shared-infrastructure), you need a centralized way to manage your LLM traffic. An LLM Gateway (using tools like **LiteLLM, Kong, or Envoy**) provides a unified API for routing, [rate limiting](/blog/securing-ai-endpoints-authentication-rate-limiting-abuse-prevention), and [cost attribution](/blog/llm-token-economics-tracking-controlling-inference-spend).
 
-Without a gateway, every service reimplements the same concerns badly:
+## Core Responsibilities of the Gateway
 
-- auth
-- model routing
-- rate limiting
-- logging
-- cost tracking
-- fallback behavior
+### 1. Model Routing and Fallbacks
+Route requests based on task complexity (e.g., GPT-4 for reasoning, [vLLM-hosted Llama](/blog/serving-open-source-llms-with-vllm-kubernetes) for simple tasks). If your primary provider is down, the gateway should automatically failover to a fallback.
 
-That leads to inconsistent policies, runaway spend, and no clean place to introduce controls later.
+### 2. Rate Limiting and Quotas
+Enforce per-user or per-team rate limits to prevent a single "noisy neighbor" from exhausting your [GPU capacity](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas) or blowing your budget.
 
-A production LLM gateway should be treated like shared infrastructure, not a helper library.
-
-## What the Gateway Should Own
-
-At minimum, the gateway should own:
-
-- request authentication
-- tenant-aware quotas
-- parameter validation
-- model routing
-- usage logging
-- fallback policy
-- response normalization
-
-It should **not** contain deep product-specific business logic. Its job is to make LLM access safe, observable, and efficient across many callers.
-
-## Why Direct-to-Provider Access Breaks Down
-
-The simplest integration is each app calling a model endpoint directly. That works until:
-
-- one team forgets rate limits
-- another hardcodes the most expensive model everywhere
-- prompt sizes drift upward without visibility
-- no one can answer cost by team or tenant
-- you need a new provider or self-hosted model
-
-The gateway solves those problems by centralizing policy.
-
-## Core Flow
-
-A good request flow looks like this:
-
-1. client authenticates to the gateway
-2. gateway validates tenant, route, and limits
-3. gateway chooses the model based on policy
-4. gateway logs token expectations and metadata
-5. request is sent to provider or self-hosted backend
-6. gateway normalizes the response and records actual usage
-
-```python
-class GatewayPolicy:
-    def route(self, request):
-        if request.route == "support-search":
-            return "fast-rag-model"
-
-        if request.requires_json:
-            return "strict-json-model"
-
-        if request.priority == "low-cost":
-            return "small-general-model"
-
-        return "default-chat-model"
-```
-
-This route decision should be explicit and observable.
-
-## Add Tenant Quotas Early
-
-Quotas are not just a finance control. They are a reliability control.
-
-Useful quota dimensions:
-
-- requests per minute
-- tokens per day
-- concurrent requests
-- expensive-model access
-
-Example:
-
-```yaml
-tenants:
-  startup-tier:
-    rpm_limit: 120
-    daily_token_limit: 500000
-    allowed_models: ["small-general-model", "fast-rag-model"]
-  enterprise-tier:
-    rpm_limit: 1200
-    daily_token_limit: 20000000
-    allowed_models: ["small-general-model", "fast-rag-model", "large-reasoning-model"]
-```
-
-Without quotas, the first noisy workload becomes everyone else's latency problem.
-
-## Route by Use Case, Not by Hype
-
-The right question is not "Which model is best?"
-
-The right question is "Which is the cheapest model that meets the quality bar for this workflow?"
-
-Typical routing rules:
-
-- small model for summarization and rewrite tasks
-- structured-output model for extraction
-- larger reasoning model for complex planning
-- self-hosted model for internal or cost-sensitive traffic
-
-That routing decision should be revisited regularly using real telemetry, not vendor marketing.
-
-## Normalize Parameters at the Gateway
-
-Each provider and serving backend exposes slightly different options. If clients pass raw provider parameters directly, the integration surface becomes chaotic.
-
-Normalize things like:
-
-- max tokens
-- temperature
-- top-p
-- response format
-- tool-call settings
-- timeout
-
-This keeps clients stable even when backends change underneath.
-
-## Guardrails Belong Here Too
-
-The gateway is often the right place for lightweight request and response guardrails:
-
-- reject oversized prompts
-- enforce allowed response modes
-- block unsupported tools
-- apply tenant-specific content policies
-- redact sensitive logs
-
-This is not a replacement for product-level policy, but it is the right place for shared controls.
-
-## Cost Controls That Actually Work
-
-Most teams say they want cost controls. Few implement them cleanly.
-
-Start with:
-
-- default model per route
-- max tokens per route
-- tenant usage dashboards
-- fall back to smaller models when the quality bar allows it
-- alert on sudden token growth
-
-```json
-{
-  "route": "agent-plan",
-  "tenant": "acme",
-  "chosen_model": "small-general-model",
-  "fallback_model": "large-reasoning-model",
-  "prompt_tokens": 1420,
-  "completion_tokens": 280,
-  "cost_usd_estimate": 0.021
-}
-```
-
-Once you can see cost by route and tenant, you can actually optimize it. For a deeper dive into the metrics that drive these decisions, see our guide on [LLM Token Economics: Tracking and Controlling Inference Spend](/blog/llm-token-economics-tracking-controlling-inference-spend).
-
-## Fallbacks Need Policy, Not Guesswork
-
-Fallback is useful only when it is predictable.
-
-Examples:
-
-- if the primary provider times out, use a smaller backup model
-- if JSON generation fails twice, move to a stricter model
-- if the self-hosted cluster is saturated, shift overflow to a managed provider
-
-Every fallback should answer:
-
-- when it triggers
-- whether quality changes
-- how the event is logged
-
-Silent fallback is a bad pattern. It hides important system behavior.
-
-## What to Monitor
-
-The gateway dashboard should include:
-
-- requests per route
-- chosen model distribution
-- rate-limit rejections
-- token usage by tenant
-- fallback rate
-- provider error rate
-- cost by route and tenant
-- p95 latency by backend
-
-If the gateway exists but cannot explain who is using which model and at what cost, it is incomplete.
-
-## Common Architecture Mistakes
-
-These are common:
-
-- **Putting routing logic in every client**
-- **No tenant-aware quotas**
-- **No cost telemetry**
-- **No normalization layer**, so providers leak into app code
-- **No clear fallback policy**
-
-The result is usually operational sprawl and billing surprises.
-
-## A Good Starting Design
-
-You do not need to overbuild this.
-
-Start with:
-
-- one gateway service
-- per-route model policies
-- per-tenant quotas
-- structured request logs
-- usage dashboards
-- one tested fallback path
-
-That gets you most of the value early.
+### 3. PII Filtering and Redaction
+Integrate [PII filtering](/blog/data-privacy-rag-systems-pii-filtering-before-model) at the gateway layer to ensure that sensitive data never leaves your [private infrastructure boundary](/blog/private-ai-infrastructure-kubernetes-reference-architecture).
 
 ## Final Takeaway
 
-An LLM gateway is the control plane for shared model usage. It is where routing, limits, and cost discipline should live.
+An LLM Gateway is the control plane for your production AI. By centralizing routing, security, and cost controls, you enable your organization to scale its LLM usage safely and efficiently.
 
-Teams that add the gateway early move faster later because model changes, provider changes, and policy updates happen in one place instead of everywhere.
+---
 
-*Need help designing a shared LLM platform? We help teams build gateway layers, routing rules, and usage controls that keep production AI fast, safe, and affordable. [Book a free infrastructure audit](/contact) and we’ll review your current architecture.*
+*Need to build or refine your LLM gateway architecture? We help teams design unified APIs, implement smart routing, and build robust cost and security controls for production LLMs. [Book a free infrastructure audit](/contact) and we’ll review your gateway strategy.*

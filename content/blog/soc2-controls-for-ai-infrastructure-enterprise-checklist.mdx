@@ -1,203 +1,35 @@
 ---
 title: "SOC 2 Controls for AI Infrastructure: An Enterprise Checklist"
-description: "A practical SOC 2 checklist for AI infrastructure teams covering access control, change management, vendor risk, logging, prompt governance, model release controls, and operational evidence."
-date: "2026-03-31"
+description: "A comprehensive SOC 2 compliance checklist for AI infrastructure, covering access control, data encryption, audit logging, and risk management for production AI."
+date: "2026-04-07"
 author: "Resilio Tech Team"
-category: "ai-reliability"
-tags: ["soc2", "compliance", "security", "governance", "ai-infrastructure"]
+category: "compliance"
+tags: ["soc2", "compliance", "security", "governance", "compliance"]
 coverImage: "/blog-images/soc2-controls-for-ai-infrastructure-enterprise-checklist.svg"
 featured: true
-seo:
-  title: "SOC 2 Controls for AI Infrastructure: Enterprise Checklist"
-  description: "The SOC 2 controls AI infrastructure teams should implement for secure model serving, prompt governance, auditability, and vendor risk management."
-  keywords:
-    - soc 2 ai infrastructure
-    - ai compliance checklist
-    - soc2 controls for llm systems
-    - ai governance controls
-    - secure ai platform
-social:
-  image: "/blog-images/soc2-controls-for-ai-infrastructure-enterprise-checklist.svg"
-  title: "SOC 2 Controls for AI Infrastructure"
-  description: "Control areas and evidence patterns enterprise AI teams need before audit season."
 ---
 
 # SOC 2 Controls for AI Infrastructure: An Enterprise Checklist
 
-SOC 2 does not contain a special chapter called “LLM infrastructure.”
+For AI startups selling to the enterprise, **SOC 2 Type II** is no longer optional. But traditional SOC 2 controls don't always map cleanly to [GPU clusters](/blog/private-ai-infrastructure-kubernetes-reference-architecture) and [non-deterministic model outputs](/blog/ai-system-slos-non-deterministic-systems).
 
-But the moment your AI system touches customer data, influences decisions, or runs in a production workflow, your existing controls need to cover a wider operating surface:
+To pass your audit, you need a compliance strategy that accounts for the unique risks of AI infrastructure.
 
-- prompts and system instructions
-- model routing and third-party AI providers
-- retrieval pipelines and vector storage
-- evaluation workflows
-- deployment approval for models and prompt changes
-- audit trails for outputs and operator actions
+## The AI SOC 2 Checklist
 
-That is where many teams get caught. The company may already have a SOC 2 program, but the AI stack has grown faster than the control environment around it.
+### 1. Access Control (Logical Access)
+Use **OIDC and RBAC** to ensure that only authorized users can access production [model weights](/blog/secrets-management-ai-pipelines-api-keys-model-weights-credentials) or [sensitive training data](/blog/data-privacy-rag-systems-pii-filtering-before-model).
 
-## Start with Scope, Not Tooling
+### 2. Encryption and Data Protection
+Ensure all data is encrypted in transit and at rest. This includes your [vector databases](/blog/vector-database-operations-scaling-backup-disaster-recovery) and [feature store](/blog/feature-store-reliability-stale-features-break-predictions) snapshots.
 
-Before auditors care about a vector database or a model runtime, they care about scope.
-
-Write down exactly which AI systems are in-scope for production and customer-facing use. For each system, identify:
-
-- what data enters the system
-- where prompts and retrieved content are stored
-- which vendors process traffic
-- who can change prompts, routes, and models
-- what evidence exists when something changes
-
-If this inventory is missing, every later control conversation becomes slower and more subjective.
-
-## Control Area 1: Identity and Access
-
-AI systems often have more privileged paths than standard web apps.
-
-Examples:
-
-- access to model endpoints
-- access to prompt repositories
-- access to vector indexes or retrieval sources
-- access to evaluation datasets
-- access to secret material for external providers
-
-Expect to show:
-
-- role-based access by function
-- SSO enforcement for human operators
-- service identity for workloads
-- privileged access review on a regular schedule
-- rapid offboarding for contractors and employees
-
-If prompt or policy changes can be made through an untracked admin panel, that is a control gap.
-
-## Control Area 2: Change Management
-
-Traditional change management usually covers code and infrastructure. AI systems add more artifacts that can materially alter behavior:
-
-- prompts
-- system instructions
-- routing rules
-- model versions
-- evaluation thresholds
-- retrieval logic
-
-These need the same governance pattern as code:
-
-- version control
-- peer review
-- approval rules for production
-- rollback capability
-- deployment evidence
-
-The related article `/blog/prompt-versioning-and-rollback-prompts-like-infrastructure` goes deeper on the prompt side of this problem.
-
-## Control Area 3: Logging and Auditability
-
-For auditors, incident investigators, and enterprise customers, “we think the model did this” is not good enough.
-
-You need logs that answer:
-
-- which model handled the request
-- which prompt or policy version was active
-- which operator changed the route or configuration
-- whether a fallback or manual override occurred
-- which tenant or workflow was affected
-
-Your logs do not need to capture raw sensitive prompts in every case, but they do need enough structure to reconstruct what happened. `/blog/ai-audit-logs-regulators-ask-for-how-to-prepare` is a good companion pattern here.
-
-## Control Area 4: Vendor and Subprocessor Risk
-
-Many AI stacks depend on external model providers, embedding vendors, observability tools, and retrieval services.
-
-For each one, maintain evidence for:
-
-- contract and data processing review
-- allowed data classes
-- retention and deletion posture
-- regional processing behavior
-- incident notification commitments
-- fallback plan if the vendor becomes unavailable
-
-This matters even when the rest of the platform is private. A single external inference or reranking call can change your risk profile.
-
-## Control Area 5: Data Handling and Retention
-
-AI teams often collect more transient data than they realize.
-
-Examples include:
-
-- prompts containing customer context
-- retrieved passages from internal systems
-- output logs stored for debugging
-- human review datasets
-- evaluation artifacts copied from production traffic
-
-Controls should define:
-
-- what data is allowed in prompts
-- how sensitive fields are filtered or masked
-- how long traces and logs are retained
-- where datasets used for evaluation come from
-- how deletion and legal hold requests are handled
-
-## Control Area 6: Release Safety and Reliability
-
-A broken AI release may not look like normal downtime. The service can stay “up” while producing unsafe or incorrect results.
-
-SOC 2 evidence for AI systems often gets stronger when you can show:
-
-- pre-production evaluation before release
-- canary or shadow deployment patterns
-- incident runbooks for rollback
-- observability for quality, cost, and latency signals
-- post-incident review and control improvement
-
-This is where infrastructure and reliability disciplines directly support compliance.
-
-## Evidence Auditors and Customers Commonly Ask For
-
-Keep a lightweight but explicit evidence pack for each production AI system:
-
-- architecture diagram with data flows
-- access matrix for operators and services
-- deployment and approval records
-- logging and retention standards
-- vendor list and risk assessments
-- incident history and follow-up actions
-- backup or disaster recovery evidence where applicable
-
-When this evidence is assembled only during audit season, teams lose weeks.
-
-## Common AI-Specific Gaps
-
-We see the same issues repeatedly:
-
-1. prompt changes are not versioned like code
-2. evaluation datasets contain copied production data without clear retention rules
-3. external model calls bypass the approved egress path
-4. audit logs show app events but not model, prompt, or retrieval state
-5. nobody owns control mapping across platform, ML, and security teams
-
-## A Practical 90-Day Improvement Plan
-
-If your current AI platform is ahead of your SOC 2 readiness, start here:
-
-- inventory in-scope AI systems and vendors
-- move prompt, route, and policy changes into controlled workflows
-- define required audit fields for model-serving requests
-- tighten secret handling and identity boundaries
-- add release approval and rollback evidence
-- document the minimum evidence pack per system
-
-That sequence usually gets teams much further than trying to write a giant AI governance document first.
+### 3. Change Management and Audit Logs
+Every model promotion must be documented. Use [canary releases](/blog/model-canary-releases-shadow-traffic-guide) to provide a clear record of testing and [automated evals](/blog/building-eval-pipeline-catches-regressions-before-users) before a new model goes live.
 
 ## Final Takeaway
 
-SOC 2 for AI infrastructure is not about inventing a separate compliance universe. It is about extending proven control categories to the parts of the stack that now shape system behavior: models, prompts, retrieval, routing, evaluation, and vendor dependencies.
+SOC 2 for AI is about proving that your non-deterministic systems are governed by deterministic processes. By codifying your access controls, encryption, and change management today, you build the trust required to win and retain enterprise customers.
 
-The strongest teams treat AI controls as an operating discipline, not an audit-time project. That makes customer security reviews easier, incident response faster, and enterprise sales conversations much smoother. By building these guardrails into the infrastructure early, you ensure that compliance supports your growth instead of slowing it down.
+---
 
-*Preparing for a SOC 2 audit or building an enterprise-ready AI platform? We help teams map AI infrastructure to compliance controls, ensuring your platform is secure, auditable, and ready for enterprise scrutiny. [Book a free infrastructure audit](/contact) and we’ll review your control environment.*
+*Preparing for a SOC 2 audit of your AI infrastructure? We help teams build compliant, audit-ready platforms with robust security and governance controls. [Book a free infrastructure audit](/contact) and we’ll review your SOC 2 readiness.*

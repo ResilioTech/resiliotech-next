@@ -1,0 +1,116 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111D" />
+      <stop offset="0.52" stop-color="#102238" />
+      <stop offset="1" stop-color="#173246" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09141F" />
+      <stop offset="1" stop-color="#13202A" />
+    </linearGradient>
+    <linearGradient id="accentLine" x1="140" y1="0" x2="430" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22C55E" />
+      <stop offset="1" stop-color="#38BDF8" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1012 96) rotate(126) scale(526 404)">
+      <stop stop-color="#22C55E" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#22C55E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(166 548) rotate(5) scale(390 260)">
+      <stop stop-color="#38BDF8" stop-opacity="0.14" />
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accentLine)" opacity="0.88" />
+
+  <rect x="168" y="126" width="180" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.35">MODEL GOVERNANCE</text>
+
+  <text x="168" y="196" fill="#F8FAFC" font-size="36" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.0">
+    <tspan x="168" dy="0">AI Model Governance:</tspan>
+    <tspan x="168" dy="41">Version Control,</tspan>
+    <tspan x="168" dy="41">Approval Workflows,</tspan>
+    <tspan x="168" dy="41">and Audit Trails in</tspan>
+    <tspan x="168" dy="41">Production</tspan>
+  </text>
+
+  <rect x="168" y="448" width="166" height="4" rx="2" fill="#22C55E" opacity="0.92" />
+  <rect x="346" y="448" width="74" height="4" rx="2" fill="#7DD3FC" opacity="0.76" />
+
+  <g transform="translate(168, 0)">
+    <rect x="0" y="474" width="118" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#22C55E" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Approval</text>
+  </g>
+
+  <g transform="translate(300, 0)">
+    <rect x="0" y="474" width="132" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#38BDF8" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Audit Logs</text>
+  </g>
+
+  <g transform="translate(446, 0)">
+    <rect x="0" y="474" width="118" height="42" rx="21" fill="rgba(10, 17, 31, 0.70)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="495" r="5" fill="#22C55E" />
+    <text x="36" y="501" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Rollback</text>
+  </g>
+
+  <g transform="translate(790 142)">
+    <rect width="292" height="344" rx="34" fill="rgba(9, 14, 26, 0.56)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="18" y="18" width="256" height="308" rx="28" fill="rgba(10, 17, 31, 0.82)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="34" y="34" width="88" height="10" rx="5" fill="#22C55E" opacity="0.88" />
+    <rect x="132" y="34" width="48" height="10" rx="5" fill="#38BDF8" opacity="0.70" />
+    <rect x="190" y="34" width="54" height="10" rx="5" fill="rgba(148, 163, 184, 0.18)" />
+
+    <rect x="34" y="72" width="84" height="86" rx="20" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="50" y="90" width="52" height="8" rx="4" fill="#22C55E" />
+    <rect x="50" y="106" width="40" height="8" rx="4" fill="rgba(148, 163, 184, 0.24)" />
+    <rect x="50" y="122" width="46" height="8" rx="4" fill="rgba(148, 163, 184, 0.20)" />
+    <text x="76" y="178" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">Model Card</text>
+
+    <rect x="156" y="72" width="90" height="86" rx="20" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <circle cx="201" cy="108" r="18" fill="rgba(12, 24, 34, 0.96)" stroke="#22C55E" stroke-width="3" />
+    <path d="M193 108 L199 114 L209 101" stroke="#BBF7D0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="201" y="178" text-anchor="middle" fill="#CBD5E1" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="650">Approval Gate</text>
+
+    <rect x="78" y="206" width="128" height="56" rx="18" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <text x="142" y="240" text-anchor="middle" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="720">Immutable Log</text>
+
+    <rect x="218" y="204" width="32" height="60" rx="14" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(148, 163, 184, 0.16)" />
+    <rect x="228" y="218" width="12" height="8" rx="4" fill="#38BDF8" />
+    <rect x="228" y="234" width="12" height="8" rx="4" fill="#7DD3FC" />
+    <rect x="228" y="250" width="12" height="8" rx="4" fill="#22C55E" />
+    <text x="234" y="284" text-anchor="middle" fill="#CBD5E1" font-size="12" font-family="Inter, Arial, sans-serif" font-weight="650">v</text>
+
+    <path d="M118 114 H156" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" />
+    <path d="M142 158 V206" stroke="#22C55E" stroke-width="4" stroke-linecap="round" />
+    <path d="M206 158 V204" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" />
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018, 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.20)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>

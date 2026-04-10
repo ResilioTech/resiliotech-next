@@ -1,226 +1,33 @@
 ---
-title: "AI Observability: Metrics and Dashboards That Actually Matter"
-description: "A practical guide to AI observability for production systems — including latency, drift, token usage, retrieval quality, and the dashboards teams actually use during incidents."
-date: "2026-03-27"
+title: "AI Observability: Metrics and Dashboards That Matter"
+description: "A deep dive into AI observability, covering top-level metrics, system health, model quality proxies, and how to build dashboards that actually support incident response."
+date: "2026-04-07"
 author: "Resilio Tech Team"
-category: "mlops"
-tags: ["observability", "mlops", "monitoring", "ai-reliability", "production-ml"]
+category: "ai-reliability"
+tags: ["observability", "monitoring", "dashboards", "sre", "ai-reliability"]
 coverImage: "/blog-images/ai-observability-metrics-dashboards-that-matter.svg"
-featured: false
+featured: true
 ---
 
-# AI Observability: Metrics and Dashboards That Actually Matter
+# AI Observability: Metrics and Dashboards That Matter
 
-A lot of AI observability dashboards look impressive and answer almost none of the questions engineers need during an incident.
+Traditional observability focuses on the "Golden Signals": latency, traffic, errors, and saturation. While these remain critical for [system SLOs](/blog/ai-system-slos-non-deterministic-systems), they are insufficient for AI systems. You need a dashboard that also tracks model-specific behavior, such as [inference latency bottlenecks](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production) and [KV cache utilization](/blog/serving-open-source-llms-with-vllm-kubernetes).
 
-You don't need fifty charts. You need the few metrics that tell you:
+## The Three Layers of AI Observability
 
-- Is the system healthy right now?
-- Is quality degrading?
-- Is a specific model, tenant, or workflow causing the problem?
-- Is cost moving in the wrong direction?
+### Layer 1: Infrastructure Health
+This is the baseline. Use **Prometheus and Grafana** to track GPU temperature, VRAM utilization, and [autoscaling events](/blog/gpu-autoscaling-right-sizing-inference-clusters). If your [incident response runbook](/blog/ai-incident-response-runbooks-production-models) starts with "is the pod alive?", this is where you build that visibility.
 
-Production AI is not just an API with higher GPU bills. The signals are different from normal backend services, and the failure modes are wider: drift, retrieval regressions, prompt changes, token spikes, model routing errors, and user-visible quality drops without hard downtime.
+### Layer 2: Model Performance
+Track Time to First Token (TTFT), tokens per second, and request queue depth. These metrics tell you whether your [batching strategy](/blog/batching-strategies-llm-inference-throughput-vs-latency) is actually working or just increasing wait times.
 
-Here's the dashboard stack we recommend.
-
-## Layer 1: Service Health
-
-Start with the basics. If you don't have strong service health telemetry, the AI-specific charts won't save you.
-
-Track:
-
-- request volume
-- success/error rate
-- p50/p95 latency
-- timeout rate
-- queue depth
-- saturation by dependency
-
-These should be broken down by:
-
-- model
-- endpoint
-- tenant
-- route type
-
-For example, "overall p95 latency" is less useful than "p95 latency for the `generate-summary` route on the 8B model for enterprise tenants."
-
-## Layer 2: Model Runtime Metrics
-
-This is the layer many teams skip.
-
-For model-serving workloads, add:
-
-- model load time
-- GPU utilization
-- GPU memory pressure
-- OOM events
-- active sequences or in-flight requests
-- tokens per second
-- prompt tokens and completion tokens
-
-```yaml
-metrics:
-  - model_request_latency_ms
-  - model_tokens_input_total
-  - model_tokens_output_total
-  - gpu_utilization_percent
-  - gpu_memory_used_bytes
-  - model_runtime_oom_total
-```
-
-These metrics explain behavior that normal HTTP metrics hide. A service can be "up" while token throughput collapses and users wait 20 seconds for responses.
-
-## Layer 3: AI Quality Signals
-
-This is where observability becomes AI-specific.
-
-Examples of quality signals:
-
-- drift score by feature
-- abstention rate
-- hallucination review rate
-- citation usage rate
-- retrieval hit rate
-- fallback model activation
-- human escalation rate
-
-These usually aren't infrastructure metrics. They come from product instrumentation, eval pipelines, and lightweight annotations.
-
-That means observability for AI needs coordination across platform, ML, and product teams.
-
-## Layer 4: Cost and Efficiency
-
-AI systems can degrade financially before they degrade technically.
-
-Track:
-
-- cost per request
-- cost per tenant
-- tokens per workflow
-- GPU-hours per model
-- cache hit rate
-- percentage of requests handled by the cheapest acceptable model
-
-If your routing rules drift and the expensive model handles every request, the problem may show up in finance before engineering notices.
-
-## Dashboards We Actually Use
-
-### 1. Executive Summary Dashboard
-
-This is the high-level view:
-
-- requests per minute
-- overall success rate
-- overall p95 latency
-- estimated daily cost
-- top failing workflows
-
-Keep it simple. This is for quickly deciding whether something is broadly wrong.
-
-### 2. Model Runtime Dashboard
-
-This is the operator dashboard during serving issues:
-
-- per-model p95 latency
-- active requests per replica
-- token throughput
-- GPU utilization and memory usage
-- pod restarts and OOMs
-- model load durations
-
-If a model rollout goes wrong, this dashboard tells you whether the issue is compute, concurrency, or bad pod behavior.
-
-### 3. Retrieval and RAG Dashboard
-
-For RAG systems, this deserves its own view:
-
-- retrieval hit rate
-- no-result rate
-- average documents retrieved
-- stale-document usage
-- reranker latency
-- citation presence
-
-Without this dashboard, RAG incidents often get misdiagnosed as model failures.
-
-### 4. Evaluation and Quality Dashboard
-
-This dashboard tracks whether the system is getting better or worse over time:
-
-- eval pass rate by release
-- human review scores
-- hallucination or policy violation counts
-- task completion rate
-- abstention rate
-
-If you change prompts or models frequently, this dashboard is essential.
-
-## Instrument the Request Path
-
-Every AI request should emit structured logs or traces with enough detail to reconstruct behavior later.
-
-```json
-{
-  "request_id": "req_8f2a",
-  "route": "customer-support-rag",
-  "model": "llama3-8b-instruct",
-  "tenant": "acme-co",
-  "prompt_tokens": 1821,
-  "completion_tokens": 264,
-  "latency_ms": 2480,
-  "retrieved_doc_count": 6,
-  "fallback_used": false,
-  "status": "success"
-}
-```
-
-This data is what makes dashboards and incident reviews useful instead of speculative.
-
-## Alert on Changes, Not Just Outages
-
-AI systems frequently degrade gradually.
-
-Useful alerts include:
-
-- p95 latency increased 30% over baseline
-- abstention rate doubled for a specific workflow
-- retrieval hit rate dropped below threshold
-- prompt token size spiked after a product release
-- GPU memory pressure stayed above safe threshold
-- fallback model usage increased unexpectedly
-
-Static "service down" alerts are necessary but not sufficient.
-
-## Common Dashboard Mistakes
-
-We see these often:
-
-- **Only tracking infrastructure metrics**, with no quality signals
-- **No breakdown by model or tenant**, so hotspots are invisible
-- **No cost telemetry**, even though spend is part of system health
-- **No link between evaluations and production releases**
-- **Too many charts**, making incident response slower instead of faster
-
-The dashboard should help someone decide what to do next. If it only looks sophisticated, it isn't doing its job.
-
-## A Practical Starting Stack
-
-For many teams, this is enough:
-
-- Prometheus for service and runtime metrics
-- Grafana for dashboards
-- OpenTelemetry for traces
-- Structured application logs
-- a lightweight eval pipeline tied to releases
-
-You can get far with that setup before you need specialized AI observability tooling.
+### Layer 3: Model Quality Proxies
+Since ground-truth accuracy is rarely available in real-time, monitor proxies like prediction distribution shifts, [feature drift](/blog/feature-store-reliability-stale-features-break-predictions), and [PII redaction rates](/blog/data-privacy-rag-systems-pii-filtering-before-model).
 
 ## Final Takeaway
 
-AI observability is not about collecting more telemetry. It's about collecting the right telemetry at the right layers: service health, model runtime, answer quality, retrieval quality, and cost.
+AI observability is not about having more charts; it's about having the right charts to support fast triage. By connecting infrastructure health with model quality proxies, you ensure that your team can identify and fix silent failures before they impact users.
 
-If your dashboards can't tell you whether a bad customer experience came from latency, drift, routing, retrieval, or cost pressure, they aren't finished yet.
+---
 
-*Need help designing observability for production AI? We help teams instrument serving stacks, RAG systems, and model pipelines so incidents are diagnosable and costs stay visible. [Book a free infrastructure audit](/contact) to review your current monitoring gaps.*
+*Need to upgrade your AI observability stack? We help teams build Prometheus/Grafana dashboards, structured logging, and automated alerting for production ML. [Book a free infrastructure audit](/contact) and we’ll review your metrics and dashboards.*

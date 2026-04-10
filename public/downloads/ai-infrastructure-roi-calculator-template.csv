@@ -1,0 +1,31 @@
+Section,Metric,Value,Unit,Notes
+Inputs,Annual AI infra tooling spend,0,USD,Enter annual software or platform spend
+Inputs,One-time implementation or consulting cost,0,USD,Enter external build or advisory cost
+Inputs,Internal engineering adoption hours,0,hours,Hours spent by internal team to implement and adopt
+Inputs,Loaded engineering rate,0,USD/hour,Fully loaded average hourly cost
+Downtime,Model-related incidents per quarter,0,count,Number of production incidents tied to AI/ML systems
+Downtime,Average incident duration,0,hours,Average incident duration in hours
+Downtime,Business cost per incident hour,0,USD/hour,Revenue loss or business impact estimate
+Downtime,Annual downtime cost baseline,=C5*4*C6*C7,USD,Estimated annual business cost from incidents
+Downtime,Expected downtime reduction percentage,0,%,Enter as decimal such as 0.4 for 40%
+Downtime,Annual downtime value recovered,=C8*C9,USD,Estimated avoided incident cost
+Productivity,Engineers affected,0,count,Number of engineers materially impacted by ML infra friction
+Productivity,Hours lost per engineer per week,0,hours,Time spent on manual deploys debugging or glue work
+Productivity,Annual productivity hours lost,=C11*C12*52,hours,Total annual hours lost
+Productivity,Annual productivity cost baseline,=C13*C4,USD,Cost of time spent on avoidable operational work
+Productivity,Expected productivity recovery percentage,0,%,Enter as decimal such as 0.35 for 35%
+Productivity,Annual productivity value recovered,=C14*C15,USD,Estimated value of engineering time recovered
+Iteration,Current production releases per quarter,0,count,How many meaningful model or AI releases reach production now
+Iteration,Target production releases per quarter,0,count,Expected release rate after infra investment
+Iteration,Estimated business value per additional release,0,USD,Conservative estimate of incremental value per extra release
+Iteration,Additional releases per year,=(C18-C17)*4,count,Annual increase in releases
+Iteration,Annual iteration value created,=C19*C20,USD,Estimated annual value from faster iteration
+Compliance,Annual compliance or governance exposure estimate,0,USD,Conservative estimate of audit remediation or deal friction cost
+Compliance,Expected compliance risk reduction percentage,0,%,Enter as decimal such as 0.25 for 25%
+Compliance,Annual compliance value recovered,=C22*C23,USD,Estimated annual value from reduced risk or remediation work
+Summary,Total annual value recovered,=SUM(C10,C16,C21,C24),USD,Total annual value created or protected
+Summary,Internal adoption cost,=C3*C4,USD,Internal implementation cost
+Summary,Total first-year investment,=C1+C2+C26,USD,Tooling plus implementation plus internal adoption cost
+Summary,First-year net value,=C25-C27,USD,Annual value minus first-year investment
+Summary,First-year ROI percentage,=IF(C27=0,0,C28/C27),ratio,Format as percentage in spreadsheet
+Summary,Payback period months,=IF(C25=0,0,C27/(C25/12)),months,Estimated months to recover investment

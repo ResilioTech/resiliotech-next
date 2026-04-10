@@ -1,313 +1,35 @@
 ---
 title: "Serving Open-Source LLMs with vLLM on Kubernetes"
 description: "A practical guide to deploying open-source LLMs with vLLM on Kubernetes — covering GPU sizing, request routing, autoscaling, batching, and safe rollouts."
-date: "2026-03-29"
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "model-deployment"
 tags: ["llm-serving", "vllm", "kubernetes", "gpu-optimization", "model-deployment"]
 coverImage: "/blog-images/serving-open-source-llms-with-vllm-kubernetes.svg"
-featured: false
+featured: true
 ---
 
 # Serving Open-Source LLMs with vLLM on Kubernetes
 
-Running an LLM in a notebook is easy. Running it in production with predictable latency, sane GPU costs, and safe deployments is where the real work starts.
+Running an LLM in a notebook is easy. Running it in production with predictable latency, [sane GPU costs](/blog/ai-infrastructure-cost-optimization), and [safe deployments](/blog/model-canary-releases-shadow-traffic-guide) is where the real work starts.
 
-For most teams serving open-source models, `vLLM + Kubernetes` is one of the best current defaults. vLLM gives you efficient inference with paged attention and continuous batching. Kubernetes gives you scheduling, autoscaling, rollout controls, and operational consistency with the rest of your platform.
+For most teams serving open-source models, **vLLM + Kubernetes** is the gold standard. vLLM provides efficient inference through paged attention and [continuous batching](/blog/batching-strategies-llm-inference-throughput-vs-latency), while Kubernetes handles the [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) and operational consistency.
 
-The mistake is treating LLM serving like a normal stateless web service. It isn't. Cold starts are expensive, VRAM is the real bottleneck, and bad routing decisions can destroy latency under load.
+## The Production vLLM Playbook
 
-Here's the production playbook we use.
+### 1. Accurate Capacity Planning
+VRAM is your primary constraint. You must right-size your nodes based on [model weights and KV cache requirements](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas) to avoid OOMs and [high latency](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production).
 
-## Why vLLM Works Well in Production
+### 2. Intelligent Routing and Gateways
+Don't expose your model servers directly. Use an [LLM Gateway](/blog/llm-gateway-architecture-routing-rate-limits-cost-controls) to manage rate limits, [token economics](/blog/llm-token-economics-tracking-controlling-inference-spend), and [PII filtering](/blog/data-privacy-rag-systems-pii-filtering-before-model).
 
-Compared to a naive Hugging Face server, vLLM is designed for throughput:
-
-- **Continuous batching** improves GPU utilization under concurrent traffic
-- **Paged attention** reduces KV cache waste
-- **OpenAI-compatible APIs** make client integration simpler
-- **Tensor parallel support** helps when a model doesn't fit on one GPU
-
-That doesn't mean you can just deploy it and walk away. You still need to answer:
-
-- Which model belongs on which GPU class? (See our guide on [Capacity Planning for LLM Inference](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas))
-- How do you handle context length explosions?
-- When do you scale replicas vs scale up GPU size?
-- How do you roll out a new model without breaking production traffic?
-
-## Step 1: Right-Size the Model to the GPU
-
-Most serving instability starts with bad sizing assumptions.
-
-Teams often choose a model first, then try to force it onto whatever GPU they already have. The better order is:
-
-1. Define latency and throughput targets
-2. Define the maximum prompt + completion length
-3. Estimate KV cache growth under concurrency
-4. Choose the smallest GPU shape that meets those targets with headroom
-
-As a rough rule:
-
-| Model Class | Good Starting GPU | Notes |
-|---|---|---|
-| 7B instruct | A10G / L4 | Good for internal copilots and RAG |
-| 13B instruct | A100 40GB / H100 slices | Needs more headroom for longer contexts |
-| 70B class | Multi-GPU | Requires tensor parallel and stricter traffic controls |
-
-If you don't know your real concurrency profile, measure it before production. LLM systems fail because teams size for average traffic while users generate bursty, long-context requests.
-
-## Step 2: Set Explicit Runtime Limits
-
-Unlimited generation is not a feature. It's a denial-of-service vector against your own GPUs.
-
-At minimum, enforce:
-
-- Maximum prompt tokens
-- Maximum completion tokens
-- Maximum concurrent requests per pod
-- Request timeout
-- Queue depth limit
-
-```yaml
-# kubernetes/vllm-deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: llama3-vllm
-spec:
-  replicas: 2
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
-  template:
-    spec:
-      nodeSelector:
-        workload: gpu-inference
-      containers:
-        - name: vllm
-          image: vllm/vllm-openai:latest
-          args:
-            - --model
-            - meta-llama/Meta-Llama-3-8B-Instruct
-            - --dtype
-            - bfloat16
-            - --max-model-len
-            - "8192"
-            - --gpu-memory-utilization
-            - "0.9"
-            - --max-num-seqs
-            - "32"
-          ports:
-            - containerPort: 8000
-          resources:
-            requests:
-              cpu: "4"
-              memory: "24Gi"
-              nvidia.com/gpu: "1"
-            limits:
-              cpu: "8"
-              memory: "32Gi"
-              nvidia.com/gpu: "1"
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 45
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 90
-            periodSeconds: 20
-```
-
-Two practical notes:
-
-- **Readiness delay must reflect model load time.** Otherwise Kubernetes routes traffic before the model is actually usable.
-- **`gpu-memory-utilization` should leave safety margin.** Running at 100% VRAM works until a slightly longer prompt arrives and crashes the pod.
-
-## Step 3: Put a Gateway in Front of the Model
-
-Do not let every client talk directly to vLLM pods.
-
-A gateway layer gives you:
-
-- Authentication and rate limiting
-- Per-tenant quotas
-- Request validation
-- Model routing
-- Fallback logic
-- Centralized logging
-
-Without that layer, your model server becomes your API gateway, your multi-tenant control plane, and your abuse boundary all at once. That's the wrong abstraction.
-
-```python
-# gateway/router.py
-class LLMRouter:
-    def __init__(self, backends):
-        self.backends = backends
-
-    def route(self, request):
-        prompt_tokens = estimate_tokens(request.messages)
-
-        if prompt_tokens > 6000:
-            raise ValueError("Prompt exceeds allowed context window")
-
-        if request.tier == "internal-tools":
-            return self.backends["fast-8b"]
-
-        if request.requires_json:
-            return self.backends["strict-json-model"]
-
-        if request.quality == "high":
-            return self.backends["large-reasoning-model"]
-
-        return self.backends["default-8b"]
-```
-
-The gateway is also where you should enforce hard protections:
-
-- reject oversized requests early
-- normalize stop sequences
-- strip unsupported parameters
-- log token counts before the call hits the GPU
-
-## Step 4: Autoscale on Queue Pressure, Not CPU
-
-CPU is the wrong signal for most LLM serving systems. GPU-bound inference pods can show low CPU while request latency is getting worse.
-
-Better scaling signals:
-
-- in-flight requests
-- queue depth
-- tokens generated per second
-- p95 latency
-- GPU utilization
-
-If you're using KEDA or a custom metrics adapter, scale on demand signals that match user pain. To understand the relationship between concurrency and GPU efficiency, see our detailed breakdown of [Batching Strategies for LLM Inference](/blog/batching-strategies-llm-inference-throughput-vs-latency).
-
-```yaml
-# keda/scaledobject.yaml
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: vllm-scaler
-spec:
-  scaleTargetRef:
-    name: llama3-vllm
-  minReplicaCount: 2
-  maxReplicaCount: 8
-  triggers:
-    - type: prometheus
-      metadata:
-        serverAddress: http://prometheus.monitoring:9090
-        metricName: vllm_active_requests
-        threshold: "24"
-        query: sum(vllm_active_requests{deployment="llama3-vllm"})
-```
-
-Also keep in mind: autoscaling GPU workloads is slower than CPU web services because new replicas need time to pull weights and warm the model. If you wait until the queue is already red, users will still feel the spike.
-
-## Step 5: Separate Interactive and Batch Traffic
-
-If embeddings, eval jobs, offline summarization, and chat requests all share the same deployment, your latency will look random.
-
-Split workloads by behavior:
-
-- **Interactive serving** for user-facing chat and copilots
-- **Batch serving** for offline enrichment and nightly jobs
-- **Experimental serving** for internal testing and prompt evaluation
-
-That separation gives you sane SLOs. A batch job can tolerate a queue. A chat product usually can't.
-
-## Step 6: Roll Out Models Like Application Releases
-
-Many teams still replace one model with another and hope for the best. That's not a rollout plan.
-
-Use staged promotion:
-
-1. Load the new model in a parallel deployment
-2. Send shadow traffic or internal traffic first
-3. Compare latency, refusal rate, output quality, and error rate
-4. Shift 5%, then 25%, then 100%
-5. Keep a rollback path ready
-
-```yaml
-# istio/virtualservice.yaml
-http:
-  - route:
-      - destination:
-          host: llm-serving
-          subset: stable
-        weight: 90
-      - destination:
-          host: llm-serving
-          subset: canary
-        weight: 10
-```
-
-Track more than uptime during rollout. A model can be perfectly available and still worse for the business because:
-
-- outputs are lower quality
-- latency regresses at longer context lengths
-- prompt formatting breaks tool calls
-- JSON mode becomes unreliable
-
-## Step 7: Monitor the Metrics That Actually Matter
-
-The minimum dashboard for LLM serving should include:
-
-- request count and error rate
-- p50/p95 latency
-- tokens in and tokens out
-- queue depth
-- GPU utilization
-- OOM events
-- model load duration
-- per-tenant usage
-
-And log enough context to answer operational questions later:
-
-- which model handled the request
-- prompt token count
-- output token count
-- request class
-- timeout vs validation vs upstream failure
-
-If you only monitor pod health, you'll miss the failure modes users actually see.
-
-## Common Production Mistakes
-
-These show up repeatedly:
-
-- **Using one large model for every use case** instead of routing by task
-- **No hard cap on context length**, which turns occasional long prompts into VRAM incidents
-- **Scaling on CPU** while queue depth and latency explode
-- **No gateway layer**, so rate limiting and policy enforcement are bolted on later
-- **No warm capacity**, causing cold-start storms during traffic spikes
-
-## A Sensible Starting Architecture
-
-If you're building from scratch, start here:
-
-- one gateway service
-- one primary instruct model on vLLM
-- one smaller fallback model
-- dedicated GPU node pool for inference
-- Prometheus + Grafana metrics
-- canary routing for model upgrades
-
-That is enough for many teams to reach production safely. You do not need a giant LLM platform on day one.
-
-The real objective is not maximum sophistication. It's predictable behavior under load.
+### 3. Integrated Observability
+A production vLLM deployment is incomplete without [deep observability](/blog/ai-observability-metrics-dashboards-that-matter). Track TTFT, tokens per second, and GPU duty cycle using [Prometheus and Grafana](/blog/setting-up-ml-model-monitoring-prometheus-grafana-complete-guide).
 
 ## Final Takeaway
 
-`vLLM + Kubernetes` is a strong production default because it gives you performance and operational control. But the value comes from the system around the model: sizing, routing, protection, rollout, and observability.
+vLLM on Kubernetes is the most powerful combination for serving open-source LLMs today. By focusing on VRAM right-sizing, gateway-level controls, and deep observability, you can build a serving stack that is both high-performing and operationally stable.
 
-Treat LLM serving as infrastructure, not as a demo wrapper around a model. The teams that do that early avoid most of the painful failures later.
+---
 
-*Need help deploying open-source LLMs in production? We help teams design GPU-efficient serving stacks, rollout strategies, and observability for real workloads. [Book a free infrastructure audit](/contact) and we'll review your current serving architecture.*
-our current serving architecture.*
+*Need help deploying or optimizing vLLM on Kubernetes? We help teams design GPU-efficient serving stacks, implement smart routing, and build production-grade observability for LLMs. [Book a free infrastructure audit](/contact) and we’ll review your serving architecture.*

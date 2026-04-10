@@ -1,185 +1,33 @@
 ---
 title: "Private AI Infrastructure on Kubernetes: A Reference Architecture for Regulated Teams"
-description: "A practical reference architecture for private AI infrastructure on Kubernetes, covering model serving, retrieval, security controls, observability, and day-2 operations for regulated environments."
-date: "2026-04-01"
+description: "A deep guide to building private AI infrastructure on Kubernetes, covering isolation, encryption, access control, and how to meet strict compliance requirements."
+date: "2026-04-07"
 author: "Resilio Tech Team"
-category: "model-deployment"
-tags: ["private-ai", "kubernetes", "enterprise-ai", "security", "llm-serving"]
+category: "compliance"
+tags: ["private-ai", "kubernetes", "compliance", "security", "infrastructure"]
 coverImage: "/blog-images/private-ai-infrastructure-kubernetes-reference-architecture.svg"
 featured: true
-seo:
-  title: "Private AI Infrastructure on Kubernetes: Reference Architecture for Regulated Teams"
-  description: "How regulated teams design private AI infrastructure on Kubernetes with secure model serving, retrieval, auditability, and reliable operations."
-  keywords:
-    - private ai infrastructure
-    - kubernetes ai platform
-    - secure llm deployment
-    - on premises ai infrastructure
-    - enterprise ai architecture
-social:
-  image: "/blog-images/private-ai-infrastructure-kubernetes-reference-architecture.svg"
-  title: "Private AI Infrastructure on Kubernetes"
-  description: "Reference architecture for regulated AI teams building secure private platforms."
 ---
 
 # Private AI Infrastructure on Kubernetes: A Reference Architecture for Regulated Teams
 
-Many AI teams start with hosted APIs, a few notebooks, and some managed vector database experiments.
+For [regulated teams](/blog/ai-infrastructure-fintech-latency-compliance-real-time-fraud-detection) in finance, healthcare, and government, the public cloud is often not an option for sensitive AI workloads. You need a **private AI infrastructure** that provides the same scale and flexibility as the cloud while maintaining absolute control over your data and [secrets](/blog/secrets-management-ai-pipelines-api-keys-model-weights-credentials).
 
-That is fine for exploration. It becomes a problem once legal, security, and platform teams ask harder questions:
+## The Private AI Reference Architecture
 
-- Where do prompts and documents live?
-- Can sensitive traffic stay inside our boundary?
-- How do we control model versions and access?
-- What happens during a regional outage?
-- Can we prove who changed the serving path?
+### 1. Network Isolation and Air-Gapping
+Use Kubernetes **NetworkPolicies and Service Mesh (Istio)** to enforce zero-trust networking. For the highest security requirements, we design [fully air-gapped clusters](/blog/deploying-ai-healthcare-hipaa-compliant-ml-infrastructure-kubernetes) that have no direct access to the public internet.
 
-That is the point where “use an API” stops being an architecture and starts becoming a risk.
+### 2. Encryption at Rest and in Transit
+Ensure that all patient or financial data is encrypted using keys that you control. This includes your [vector databases](/blog/vector-database-operations-scaling-backup-disaster-recovery) and [feature store](/blog/feature-store-reliability-stale-features-break-predictions).
 
-For regulated teams in healthcare, financial services, insurance, critical infrastructure, and enterprise B2B SaaS, a private AI platform is often the right next step. Kubernetes is not the only way to build it, but it is still one of the most practical foundations when teams need workload isolation, repeatable deployment, and a standard operating model.
-
-## What “Private AI Infrastructure” Actually Means
-
-Private AI infrastructure does not necessarily mean fully air-gapped or entirely on-prem.
-
-In practice it usually means:
-
-- model inference runs inside infrastructure you control
-- sensitive prompts, context, and documents stay in your boundary
-- identity, secrets, audit logs, and network policy follow enterprise controls
-- data access is explicit rather than hidden inside third-party tooling
-- platform teams can enforce deployment and rollback standards
-
-Some companies run this in a single cloud account. Others run it across private VPCs, colocation, or a hybrid environment. The important part is control over the execution path.
-
-## The Reference Architecture
-
-We recommend thinking in five planes rather than one giant platform diagram.
-
-### 1. Ingress and Policy Plane
-
-This is where requests enter and where tenant, identity, and policy decisions are enforced.
-
-Typical components:
-
-- API gateway or LLM gateway
-- authentication with SSO, service identity, or mTLS
-- rate limiting and quota enforcement
-- request classification for sensitive or regulated use cases
-- prompt and tool policy checks
-
-This plane should be the only public entry point. Do not let every model pod become a public API.
-
-## 2. Serving Plane
-
-The serving plane handles inference workloads.
-
-For most enterprise setups that means:
-
-- a model runtime such as `vLLM` or a custom inference server
-- GPU node pools separated from general application nodes
-- rollout controls for model versions and prompt bundles
-- a queue or buffering layer for burst protection
-- token, latency, and error telemetry per route and tenant
-
-This is also where concurrency policy lives. Many teams over-focus on raw throughput and forget that their actual business commitment is usually a latency target for specific workflows.
-
-If you are already running open-source LLMs, pair this with the patterns in `/blog/serving-open-source-llms-with-vllm-kubernetes` and `/blog/llm-gateway-architecture-routing-rate-limits-cost-controls`.
-
-## 3. Retrieval and Data Plane
-
-Private AI systems often fail because retrieval is treated as a sidecar instead of a first-class production dependency.
-
-The data plane usually includes:
-
-- document ingestion pipelines
-- chunking and embedding jobs
-- vector indexing
-- structured data connectors
-- feature or metadata stores
-- content freshness and access filters
-
-In regulated environments, retrieval must be scoped by policy. A vector search result that returns the wrong customer’s document is a security failure, not a relevance issue.
-
-## 4. Security and Governance Plane
-
-This is where many architecture diagrams get fuzzy. It should not be fuzzy.
-
-Minimum controls:
-
-- Kubernetes RBAC mapped to team responsibilities
-- namespace and workload isolation for high-risk use cases
-- secrets management outside application code (see our guide on [Secrets Management for AI Pipelines](/blog/secrets-management-ai-pipelines-api-keys-model-weights-credentials))
-- encrypted storage for prompts, weights, and indexes
-- egress controls for model and embedding workloads
-- immutable audit trails for deployment, prompt, and policy changes
-
-The governance plane is also where you decide how prompts, evaluation rubrics, policies, and model routing rules are versioned. Treating those assets like production configuration reduces chaos later.
-
-## 5. Operations Plane
-
-A private AI platform is only useful if it is operable by more than the original builders.
-
-That requires:
-
-- dashboards for service health, token usage, and GPU saturation
-- tracing across gateway, retrieval, and model runtime hops
-- deployment templates for repeatable model onboarding
-- runbooks for latency spikes, bad outputs, stale indexes, and node failures
-- disaster recovery plans for model artifacts and retrieval state
-
-If you cannot answer “how do we roll back safely at 2 AM?” the platform is not production-ready yet.
-
-## Recommended Kubernetes Boundaries
-
-We typically separate workloads into a few predictable zones:
-
-- **Shared platform services**: gateway, observability agents, CI runners, policy services
-- **GPU serving namespaces**: model runtimes and inference workers
-- **Data processing namespaces**: ingestion, embedding, indexing, ETL
-- **Restricted workloads**: sensitive retrieval or tenant-isolated inference paths
-
-This makes cost allocation, security review, and incident response much easier than one flat cluster layout.
-
-## What Teams Underestimate
-
-Private AI infrastructure usually fails for one of four reasons:
-
-1. they only plan for inference and ignore ingestion or evaluation
-2. they skip policy controls until the first security review
-3. they do not define ownership between platform, ML, and application teams
-4. they build custom everything and create an impossible day-2 burden
-
-The right goal is not a bespoke AI platform. The goal is a controlled, supportable platform with a small number of strong standards.
-
-## A Good First Phase
-
-If you are moving from prototype to a private enterprise stack, phase one should be boring on purpose.
-
-Start with:
-
-- one supported gateway pattern
-- one supported model-serving path
-- one approved retrieval pattern
-- one secrets and identity approach
-- one observability baseline
-- one rollback path for prompts, routes, and models
-
-That gives you a platform teams can actually support.
-
-## When Not to Build This Yet
-
-Do not rush into a private Kubernetes-based platform if:
-
-- you still do not know the critical workflow
-- you have no owner for day-2 operations
-- your security requirement is still “maybe” rather than concrete
-- your volume is too small to justify dedicated serving infrastructure
-
-In those cases, a narrower managed setup with better policy wrappers may be the smarter interim move.
+### 3. Forensic-Grade Audit Logging
+Implement [structured audit logs](/blog/ai-audit-logs-regulators-ask-for-how-to-prepare) that track every model decision and data access event. This is the foundation of your [SOC 2 and regulatory readiness](/blog/soc2-controls-for-ai-infrastructure-enterprise-checklist).
 
 ## Final Takeaway
 
-The best private AI infrastructure is not the most complex design. It is the one that gives regulated teams control over model execution, retrieval, identity, and operations without turning every deployment into a custom project. At Resilio Tech, we specialize in building these foundations—helping teams deploy secure, scalable AI platforms on Kubernetes that meet the most stringent regulatory requirements.
+Private AI infrastructure is about data sovereignty. By building your AI platform on a private, isolated Kubernetes foundation, you ensure that you can leverage the power of LLMs without compromising your organization's security or compliance standing.
 
-*Looking to deploy private AI infrastructure that stays secure and compliant? We help regulated teams design and build Kubernetes-based platforms for model serving, retrieval, and governance. [Book a free infrastructure audit](/contact) and we'll review your architecture.*
+---
+
+*Need help designing or building private AI infrastructure on Kubernetes? We help regulated teams build secure, isolated, and compliant AI platforms. [Book a free infrastructure audit](/contact) and we’ll review your private AI strategy.*

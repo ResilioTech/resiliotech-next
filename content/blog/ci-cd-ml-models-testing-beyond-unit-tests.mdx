@@ -1,182 +1,35 @@
 ---
 title: "CI/CD for ML Models: Testing Beyond Unit Tests"
-description: "How to build CI/CD for ML systems with data validation, schema checks, shadow evaluations, and deployment gates that go beyond ordinary application unit tests."
-date: "2026-03-03"
+description: "How to build CI/CD pipelines for ML models, covering data validation, model evaluation, and automated promotion gates for production AI."
+date: "2026-04-07"
 author: "Resilio Tech Team"
 category: "mlops"
-tags: ["ci-cd", "mlops", "testing", "model-deployment", "quality-gates"]
+tags: ["ci-cd", "testing", "mlops", "automation", "ml-platform"]
 coverImage: "/blog-images/ci-cd-ml-models-testing-beyond-unit-tests.svg"
 featured: false
 ---
 
 # CI/CD for ML Models: Testing Beyond Unit Tests
 
-Traditional CI/CD pipelines assume software behavior is mostly deterministic. If code compiles, unit tests pass, and integration tests stay green, the team has reasonable confidence in the release.
+In traditional software, [unit tests](/blog/stop-building-ml-platforms-start-shipping-ml-features) catch syntax and logic errors. In ML, a model can have perfect code while returning garbage predictions due to [data drift](/blog/feature-store-reliability-stale-features-break-predictions) or a bad training run.
 
-ML systems do not behave that way.
+To solve this, your CI/CD pipeline must include **automated evaluation gates**.
 
-A model release can pass every ordinary software test and still fail in production because:
+## The ML CI/CD Pipeline
 
-- input data shifted
-- a feature pipeline changed shape
-- prediction quality regressed
-- calibration worsened
-- latency rose under real serving conditions
+### 1. Data Validation
+Use tools like **Great Expectations** to ensure that your [feature store](/blog/feature-store-reliability-stale-features-break-predictions) data meets the schema and distribution expectations before training begins.
 
-That is why CI/CD for ML has to test more than the code around the model.
+### 2. Model Evaluation (The Quality Gate)
+Integrate your [automated eval pipeline](/blog/building-eval-pipeline-catches-regressions-before-users) into the build process. If a new model's relevancy score drops below the production baseline, the build should fail automatically.
 
-## Why Unit Tests Are Necessary but Insufficient
-
-You still need ordinary engineering checks:
-
-- unit tests
-- API contract tests
-- deployment packaging validation
-- infrastructure smoke tests
-
-But these only tell you whether the system is wired correctly. They do not tell you whether the model is still good enough to promote.
-
-That is the core difference between application CI/CD and model CI/CD.
-
-## Test the Data Contract First
-
-Many production failures start before the model is even loaded.
-
-Useful checks include:
-
-- schema validation
-- missing value thresholds
-- categorical value drift
-- feature range anomalies
-- training-serving feature parity
-
-If the data contract is broken, the model release should not proceed no matter how healthy the application tests look.
-
-```yaml
-gates:
-  - name: feature_schema
-    must_pass: true
-  - name: null_rate_threshold
-    must_pass: true
-  - name: training_serving_parity
-    must_pass: true
-```
-
-These checks are usually cheaper and more informative than debugging bad predictions after deployment.
-
-## Add Model-Specific Quality Gates
-
-Every model release pipeline should define a small number of quality checks that matter for the product.
-
-Depending on the use case, that may include:
-
-- precision / recall
-- ranking metrics
-- calibration
-- JSON validity for structured outputs
-- retrieval quality
-- hallucination or groundedness proxies
-
-The goal is not to build a giant test catalog. The goal is to prevent obvious regressions from shipping quietly.
-
-## Compare Against a Baseline, Not Just an Absolute Threshold
-
-Absolute thresholds are useful, but baseline comparisons are often more sensitive.
-
-Ask:
-
-- did accuracy drop compared with the current production model?
-- did latency increase by more than the allowed margin?
-- did token usage rise materially?
-- did one user segment degrade even if the global average stayed acceptable?
-
-This is how teams catch regressions that would pass coarse minimum thresholds.
-
-## Validate the Serving Path Too
-
-A model can be statistically fine and still fail operationally once deployed.
-
-CI/CD for ML should also test:
-
-- model load time
-- memory usage
-- inference latency
-- batch behavior
-- output schema stability
-- compatibility with the current serving runtime
-
-For LLM and generative systems, include token usage and time to first token. For classic ML services, include tail latency and resource footprint.
-
-## Shadow and Canary Releases Matter
-
-Offline evaluation is important, but it is not the whole story.
-
-A safer release flow usually includes:
-
-1. offline quality checks (using a dedicated [eval pipeline](/blog/building-eval-pipeline-catches-regressions-before-users))
-2. serving-path smoke tests
-3. [shadow traffic or replay](/blog/model-canary-releases-shadow-traffic-guide)
-4. canary deployment
-5. gradual promotion
-
-This is especially important when traffic patterns, prompt shapes, or feature freshness behave differently in production than in staging.
-
-## Treat Rollback as Part of CI/CD
-
-A release process is incomplete if it only defines promotion.
-
-Model pipelines should have:
-
-- a clear rollback target
-- one known-good model version
-- prompt or config version traceability where relevant
-- fast revert paths for serving incidents
-
-If rollback requires manual reconstruction of the previous release state, the pipeline is not production-ready.
-
-## Evaluation Coverage Matters More Than Test Count
-
-It is easy to create dozens of tests that do not actually protect users.
-
-A better strategy is to cover distinct failure modes:
-
-- broken data
-- bad output quality
-- performance regressions
-- route-specific or segment-specific failures
-- serving incompatibility
-
-That gives the release pipeline a defensible reason to block or promote changes.
-
-## A Practical ML CI/CD Stack
-
-For many teams, a solid starting release flow looks like this:
-
-1. code and packaging checks
-2. feature and schema validation
-3. offline model evaluation against baseline
-4. serving runtime smoke tests
-5. shadow or replay validation
-6. canary deployment with rollback gates
-
-This is much more effective than trying to force model releases into a conventional app-only pipeline.
-
-## Common Mistakes
-
-These show up often:
-
-- **unit tests treated as the main release signal**
-- **no data validation before model promotion**
-- **no baseline comparison to the current production model**
-- **offline evaluation with no serving-path validation**
-- **promotion defined, rollback improvised**
-
-ML CI/CD works when it treats model quality, data correctness, and serving behavior as release concerns, not afterthoughts.
+### 3. Automated Promotion
+Use [canary releases or shadow traffic](/blog/model-canary-releases-shadow-traffic-guide) to validate the new model in production before a full rollout.
 
 ## Final Takeaway
 
-CI/CD for ML models has to test the full release surface: data, quality, serving behavior, and rollback readiness. Unit tests still matter, but they are only the smallest layer of protection.
+CI/CD for ML is about more than just shipping code; it's about shipping confidence. By building automated gates for both data and model quality, you enable your team to ship [prompt updates](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure) and new models with the same speed as traditional features.
 
-Modernizing your release pipeline is the most effective way to reduce the "mean time to recovery" and "mean time to failure" for your AI products. By treating your model as a first-class citizen of your deployment infrastructure, you can ship faster and with significantly higher confidence.
+---
 
-*Need help building release gates for production model systems? At Resilio Tech, we help teams design CI/CD pipelines that combine data validation, offline evals, shadow testing, and safe rollout controls. [Book a free infrastructure audit](/contact) and we’ll review your release flow to ensure your deployments are bulletproof.*
+*Need to modernize your ML CI/CD pipelines? We help teams build automated data validation, model evaluation, and promotion workflows for production AI. [Book a free infrastructure audit](/contact) and we’ll review your CI/CD path.*
