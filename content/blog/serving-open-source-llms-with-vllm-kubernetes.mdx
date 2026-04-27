@@ -18,7 +18,7 @@ For most teams serving open-source models, **vLLM + Kubernetes** is the gold sta
 ## The Production vLLM Playbook
 
 ### 1. Accurate Capacity Planning
-VRAM is your primary constraint. You must right-size your nodes based on [model weights and KV cache requirements](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas) to avoid OOMs and [high latency](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production).
+VRAM is your primary constraint. You must right-size your nodes based on [model weights and KV cache requirements](/blog/capacity-planning-llm-inference-gpu-memory-throughput-slas) to avoid OOMs and [high latency](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production). This is especially true for [Mixture-of-Experts (MoE) models](/blog/mixture-of-experts-moe-models-production-infrastructure-challenges-solutions), which have unique memory and serving requirements.
 
 ### 2. Intelligent Routing and Gateways
 Don't expose your model servers directly. Use an [LLM Gateway](/blog/llm-gateway-architecture-routing-rate-limits-cost-controls) to manage rate limits, [token economics](/blog/llm-token-economics-tracking-controlling-inference-spend), and [PII filtering](/blog/data-privacy-rag-systems-pii-filtering-before-model).

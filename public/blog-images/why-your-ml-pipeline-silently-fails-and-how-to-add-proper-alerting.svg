@@ -1,0 +1,104 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08101d" />
+      <stop offset="0.5" stop-color="#0d2035" />
+      <stop offset="1" stop-color="#1a2738" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111722" />
+      <stop offset="1" stop-color="#1f1718" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1010 108) rotate(128) scale(500 370)">
+      <stop stop-color="#fb7185" stop-opacity="0.20" />
+      <stop offset="1" stop-color="#0f172a" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(184 526) rotate(8) scale(360 240)">
+      <stop stop-color="#38bdf8" stop-opacity="0.10" />
+      <stop offset="1" stop-color="#0f172a" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="accent" x1="140" y1="0" x2="420" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fb7185" />
+      <stop offset="1" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94a3b8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accent)" opacity="0.9" />
+
+  <rect x="168" y="128" width="210" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="155" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.5">PIPELINE ALERTING</text>
+
+  <text x="168" y="214" fill="#f8fafc" font-size="37" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.3">
+    <tspan x="168" dy="0">Why Your ML</tspan>
+    <tspan x="168" dy="41">Pipeline Silently</tspan>
+    <tspan x="168" dy="41">Fails and How to</tspan>
+    <tspan x="168" dy="41">Add Alerting</tspan>
+  </text>
+
+  <rect x="168" y="426" width="166" height="4" rx="2" fill="#fb7185" opacity="0.92" />
+  <rect x="346" y="426" width="72" height="4" rx="2" fill="#38bdf8" opacity="0.76" />
+
+  <g transform="translate(168 0)">
+    <rect x="0" y="452" width="128" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="473" r="5" fill="#fb7185" />
+    <text x="36" y="479" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Schema</text>
+  </g>
+  <g transform="translate(310 0)">
+    <rect x="0" y="452" width="108" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="473" r="5" fill="#fb7185" />
+    <text x="36" y="479" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">SLOs</text>
+  </g>
+  <g transform="translate(432 0)">
+    <rect x="0" y="452" width="104" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="473" r="5" fill="#38bdf8" />
+    <text x="36" y="479" fill="#e2e8f0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">DLQ</text>
+  </g>
+
+  <g transform="translate(714 136)">
+    <rect x="0" y="0" width="330" height="322" rx="34" fill="rgba(9, 14, 26, 0.56)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="18" y="18" width="294" height="286" rx="26" fill="rgba(10, 17, 31, 0.8)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="42" y="40" width="92" height="10" rx="5" fill="#fb7185" opacity="0.9" />
+    <rect x="146" y="40" width="52" height="10" rx="5" fill="#38bdf8" opacity="0.74" />
+    <rect x="210" y="40" width="56" height="10" rx="5" fill="rgba(148, 163, 184, 0.22)" />
+
+    <rect x="54" y="94" width="214" height="52" rx="18" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.12)" />
+    <text x="74" y="116" fill="#e2e8f0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="700">Pipeline Run</text>
+    <text x="74" y="136" fill="#94a3b8" font-size="13" font-family="Inter, Arial, sans-serif">status: success</text>
+
+    <circle cx="100" cy="206" r="18" fill="rgba(127, 29, 29, 0.38)" stroke="rgba(251, 113, 133, 0.34)" stroke-width="3" />
+    <text x="94" y="212" fill="#fecdd3" font-size="18" font-family="Inter, Arial, sans-serif" font-weight="800">!</text>
+    <text x="128" y="212" fill="#e2e8f0" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="650">row count anomaly</text>
+
+    <circle cx="100" cy="252" r="18" fill="rgba(30, 41, 59, 0.8)" stroke="rgba(56, 189, 248, 0.28)" stroke-width="3" />
+    <text x="93" y="258" fill="#bae6fd" font-size="18" font-family="Inter, Arial, sans-serif" font-weight="800">~</text>
+    <text x="128" y="258" fill="#e2e8f0" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="650">schema drift</text>
+
+    <rect x="54" y="286" width="214" height="18" rx="9" fill="rgba(30, 41, 59, 0.72)" />
+    <rect x="54" y="286" width="156" height="18" rx="9" fill="#fb7185" opacity="0.78" />
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure • Reliability • MLOps</text>
+
+  <g transform="translate(1018 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.2)" />
+    <text x="18" y="24" text-anchor="middle" fill="#ffffff" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>

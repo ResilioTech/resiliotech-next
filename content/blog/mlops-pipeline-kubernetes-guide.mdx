@@ -16,7 +16,7 @@ A production MLOps pipeline is what separates a data science experiment from a r
 ## The Pillars of K8s MLOps
 
 ### 1. Automated Training and Retraining
-Use **Kubeflow Pipelines** or **Argo Workflows** to automate your training runs. These should be triggered by [feature drift alerts](/blog/feature-store-reliability-stale-features-break-predictions) or a regular schedule.
+Use **Kubeflow Pipelines** or **Argo Workflows** to automate your training runs. If you're currently relying on simple scripts, see our guide on [replacing cron jobs with proper ML pipeline orchestration](/blog/replacing-cron-jobs-with-proper-ml-pipeline-orchestration). These should be triggered by [feature drift alerts](/blog/feature-store-reliability-stale-features-break-predictions) or a regular schedule.
 
 ### 2. Model Registry and Artifact Management
 Store your models in a central registry. Use [Terraform](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines) to manage the storage and networking required for these artifacts.

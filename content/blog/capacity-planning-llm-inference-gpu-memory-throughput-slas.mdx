@@ -11,7 +11,7 @@ featured: true
 
 # Capacity Planning for LLM Inference: GPU Memory, Throughput, and SLAs
 
-Capacity planning for LLMs is fundamentally a memory problem. If you don't understand your [KV cache requirements](/blog/serving-open-source-llms-with-vllm-kubernetes), you'll either over-provision and waste [infrastructure spend](/blog/ai-infrastructure-cost-optimization) or under-provision and fail your [latency SLOs](/blog/ai-system-slos-non-deterministic-systems).
+Capacity planning for LLMs is fundamentally a memory problem. If you don't understand your [KV cache requirements](/blog/serving-open-source-llms-with-vllm-kubernetes), you'll either over-provision and waste [infrastructure spend](/blog/ai-infrastructure-cost-optimization) or under-provision and fail your [latency SLOs](/blog/ai-system-slos-non-deterministic-systems). For unpredictable workloads, you might also consider whether [serverless inference](/blog/serverless-inference-can-it-actually-work-for-production-ai-workloads) is a viable alternative to dedicated capacity.
 
 ## The Math of GPU Memory
 

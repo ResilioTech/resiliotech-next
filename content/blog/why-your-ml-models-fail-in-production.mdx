@@ -11,12 +11,12 @@ featured: true
 
 # Why Your ML Models Fail in Production (And How to Fix It)
 
-Most ML models that perform well in a notebook environment fail within weeks of hitting production. These aren't usually model failures; they are **system failures** caused by [infrastructure gaps](/blog/mlops-pipeline-kubernetes-guide), [stale features](/blog/feature-store-reliability-stale-features-break-predictions), and a complete [lack of observability](/blog/ai-observability-metrics-dashboards-that-matter).
+Most ML models that perform well in a notebook environment fail within weeks of hitting production. These aren't usually model failures; they are **system failures** caused by [infrastructure gaps](/blog/mlops-pipeline-kubernetes-guide), [stale features](/blog/feature-store-reliability-stale-features-break-predictions), and a complete [lack of observability](/blog/ai-observability-metrics-dashboards-that-matter). One common symptom of these gaps is when [model serving returns different results in production vs. development](/blog/model-serving-returns-different-results-production-vs-development-debugging-guide).
 
 ## The Top Three Failure Modes
 
 ### 1. Data and Concept Drift
-The world changes, but your model remains static. Without [continuous monitoring](/blog/setting-up-ml-model-monitoring-prometheus-grafana-complete-guide), you won't know that your model's accuracy is plummeting until your users start complaining.
+The world changes, but your model remains static. Without [continuous monitoring](/blog/setting-up-ml-model-monitoring-prometheus-grafana-complete-guide), you won't know that your model's accuracy is plummeting until your users start complaining. To prevent this, you must understand [why ML pipelines silently fail and how to add proper alerting](/blog/why-your-ml-pipeline-silently-fails-and-how-to-add-proper-alerting).
 
 ### 2. Infrastructure Bottlenecks
 A Jupyter notebook doesn't have to worry about [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) or [KV cache pressure](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production). In production, these system constraints directly dictate your [reliability SLOs](/blog/ai-system-slos-non-deterministic-systems).

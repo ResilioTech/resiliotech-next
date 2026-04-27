@@ -1,0 +1,143 @@
+---
+title: "Setting Up a Development Environment for ML Engineers: From Laptop to Cluster"
+description: "A deep guide to setting up an ML development environment that scales from a local laptop to shared GPU clusters, covering local GPU setup, remote dev workspaces, notebook-to-IDE workflows, and dev/prod parity."
+date: "2026-04-18"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["developer-experience", "mlops", "kubernetes", "gpu", "platform-engineering"]
+coverImage: "/blog-images/setting-up-development-environment-ml-engineers-from-laptop-to-cluster.svg"
+featured: false
+seo:
+  title: "Setting Up a Development Environment for ML Engineers: From Laptop to Cluster"
+  description: "How to design an ML engineer development environment with local GPU support, remote dev workspaces, shared clusters, and strong dev/prod parity."
+  keywords:
+    - ml development environment setup
+    - ml engineer dev environment
+    - gpu development environment kubernetes
+    - remote dev environment ml
+    - dev prod parity ml
+social:
+  image: "/blog-images/setting-up-development-environment-ml-engineers-from-laptop-to-cluster.svg"
+  title: "ML Engineer Development Environment"
+  description: "A practical guide from local laptop workflows to shared GPU clusters."
+---
+
+# Setting Up a Development Environment for ML Engineers: From Laptop to Cluster
+
+Most ML environment problems are not caused by the model. They are caused by friction between how engineers develop locally and how systems actually run in shared infrastructure.
+
+One engineer is using a notebook on a MacBook. Another is attached to a remote Linux box. A third is testing against a Kubernetes cluster with a different Python version, different CUDA stack, and different model artifact layout. Eventually the team starts asking why things work in one place and break in another.
+
+That is why good `ml development environment setup` is not a matter of installing a few packages. It is about designing a path that lets ML engineers move from:
+
+- quick local iteration
+- to reproducible remote workspaces
+- to shared GPU clusters
+- without constantly changing tools, assumptions, or filesystem layout
+
+This guide is about that path. For a broader look at the infrastructure required to support these environments, see [Building an Internal ML Platform on Kubernetes](/blog/building-internal-ml-platform-kubernetes-what-actually-works) and our [Private AI Infrastructure Kubernetes Reference Architecture](/blog/private-ai-infrastructure-kubernetes-reference-architecture).
+
+## Layer 1: A Clean Local Base Environment
+
+The local laptop should be optimized for iteration, not for pretending to be production. However, it should be powerful enough to run lightweight versions of production tools. For example, using [vLLM](/blog/serving-open-source-llms-with-vllm-kubernetes) or **LiteLLM** locally can help debug model serving logic without needing a full A100 cluster.
+
+Standardizing on a tool like `uv` can significantly reduce setup time. A simple `pyproject.toml` managed by `uv` ensures that every engineer is running the exact same dependency tree:
+
+```toml
+[project]
+name = "ml-dev-environment"
+version = "0.1.0"
+dependencies = [
+    "torch>=2.2.0",
+    "transformers>=4.38.0",
+    "vllm>=0.3.0",
+    "fastapi>=0.109.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "ruff>=0.2.0",
+    "ipykernel>=6.29.0",
+]
+```
+
+## Layer 2: Containerized Development (The Environment Contract)
+
+Using VS Code's **Dev Containers** or **DevPod**, you can define your entire environment in a `devcontainer.json` file. This ensures `dev/prod parity ml` by mirroring the production base image:
+
+```json
+{
+  "name": "ML Development",
+  "build": {
+    "dockerfile": "Dockerfile.dev",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/nvidia-cuda:1": {
+      "installCudaDriver": true,
+      "cudaVersion": "12.3"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "ms-toolsai.jupyter", "nvidia.nsight-vscode-edition"]
+    }
+  },
+  "remoteUser": "vscode"
+}
+```
+
+## Layer 3: Remote GPU Workspaces on Kubernetes
+
+When local compute isn't enough, engineers should be able to spin up remote workspaces on a shared cluster. This is where `gpu development environment kubernetes` strategies become critical.
+
+Using a custom Resource Definition or a tool like **DevPod**, you can provision a Pod that looks like this:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ml-dev-workspace-shivam
+  labels:
+    user: shivam
+    type: dev-environment
+spec:
+  containers:
+  - name: workspace
+    image: resiliotech/ml-base-dev:latest
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+        memory: "32Gi"
+        cpu: "8"
+      requests:
+        nvidia.com/gpu: 1
+        memory: "16Gi"
+        cpu: "4"
+    volumeMounts:
+    - name: data-volume
+      mountPath: /home/jovyan/data
+  volumes:
+  - name: data-volume
+    persistentVolumeClaim:
+      claimName: ml-data-pvc-shivam
+```
+
+To manage costs, we recommend implementing [GPU Autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) and using tools like **KEDA** to scale down idle dev environments.
+
+## The Notebook-to-IDE Transition
+
+The goal is not to ban notebooks. The goal is to stop using them as the only execution surface. A proper `ml engineer dev environment` allows importing logic from a `src/` directory into a notebook for visualization, then promoting that same logic to a production pipeline without rewriting it. This is a key part of moving up the [MLOps Maturity Model](/blog/mlops-maturity-model-where-is-your-team-and-what-should-you-build-next).
+
+## Observability in Dev
+
+ML engineers should not first encounter logs and metrics in production. Your dev environment should include access to local or dev-cluster Prometheus/Grafana instances. Being able to see GPU utilization in real-time during a training run is essential for debugging [OOMKilled GPU Pods](/blog/kubernetes-oomkilled-gpu-pods-causes-debugging-prevention).
+
+## Final Takeaway
+
+Good `ml development environment setup` is a systems design problem, not a laptop setup checklist. By layering local speed with remote consistency and shared GPU access, you create a workflow that scales with your team.
+
+At **Resilio Tech**, we help teams design and implement these layered environments, ensuring that your engineers spend less time debugging CUDA drivers and more time shipping models. Whether you need a standardized Dev Container strategy or a full-scale Kubernetes-based remote dev platform, we can build the bridge from laptop to cluster.
+
+**Ready to modernize your ML developer experience?** [Contact Resilio Tech](/contact) for a platform assessment.

@@ -1,0 +1,90 @@
+---
+title: "Why Most Companies Don't Need a Custom ML Platform (And What to Do Instead)"
+description: "An opinionated case for why most Series A-C companies should use existing ML platform building blocks like KServe, MLflow, and managed services instead of building a custom platform from scratch."
+date: "2026-04-18"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["ml-platform", "platform-engineering", "startup-operations", "mlops", "engineering-management"]
+coverImage: "/blog-images/why-most-companies-dont-need-custom-ml-platform-and-what-to-do-instead.svg"
+featured: false
+seo:
+  title: "Why Most Companies Don't Need a Custom ML Platform"
+  description: "When to build an ML platform, when to avoid it, and why most Series A-C teams should start with KServe, MLflow, and managed services instead."
+  keywords:
+    - custom ml platform needed
+    - when to build ml platform
+    - ml platform alternatives
+    - build vs buy ml platform
+    - startup ml platform strategy
+social:
+  image: "/blog-images/why-most-companies-dont-need-custom-ml-platform-and-what-to-do-instead.svg"
+  title: "Why Most Companies Don't Need a Custom ML Platform"
+  description: "A pragmatic case for using existing tools before building platform from scratch."
+---
+
+# Why Most Companies Don't Need a Custom ML Platform (And What to Do Instead)
+
+Here is the uncomfortable truth: most companies talking about a custom ML platform do not actually need one. They need a reliable way to ship models, not a bespoke internal platform team building abstractions for the next two years.
+
+For most Series A through C companies, the answer to `custom ml platform needed` is a resounding no. What you need is a pragmatic assembly of existing tools. This is a core part of moving through the [MLOps Maturity Model](/blog/mlops-maturity-model-where-is-your-team-and-what-should-you-build-next) without getting bogged down in infrastructure debt.
+
+## What Most Companies Should Do Instead
+
+Most companies should use a composed stack of proven tools. Instead of building a custom training orchestrator, use [Argo Workflows](/blog/replacing-cron-jobs-with-proper-ml-pipeline-orchestration) for pipelining. Instead of a custom model registry, use **MLflow**.
+
+### Use MLflow for Experiment Tracking and Registry
+
+MLflow provides a standardized way to track experiments and manage the model lifecycle. It’s often all you need for `ml platform alternatives`.
+
+```python
+import mlflow
+
+mlflow.set_tracking_uri("http://mlflow.internal.company.com")
+mlflow.set_experiment("fraud-detection-v2")
+
+with mlflow.start_run():
+    mlflow.log_param("learning_rate", 0.01)
+    mlflow.log_metric("auc", 0.85)
+    mlflow.sklearn.log_model(model, "model", registered_model_name="FraudModelProd")
+```
+
+### Use KServe if you already run Kubernetes
+
+If you are already running on Kubernetes, don't build your own serving layer. `KServe` (formerly KFServing) provides a robust, production-ready way to serve models with features like canary rollouts and auto-scaling built-in.
+
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "fraud-detector"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: "s3://models/fraud-detector/v1"
+    canaryTrafficPercent: 10
+```
+
+This approach allows you to focus on [Model Canary Releases](/blog/model-canary-releases-shadow-traffic-guide) rather than the plumbing.
+
+## The Cost of Building Too Early
+
+Building a custom platform carries a heavy opportunity cost. While your team is designing abstractions for job orchestration, the business is still waiting to learn which models actually drive value.
+
+Instead of hiring 4 engineers to build a platform, consider whether you'd be better off with [Managed ML Platforms vs Self-Hosted](/blog/managed-ml-platforms-vs-self-hosted-sagemaker-vertex-ai-kubernetes-compared) solutions.
+
+## The Better Question: What Must Be Custom?
+
+For most Series A-C companies, the custom answer is usually small:
+- Internal approval workflows.
+- Integration with proprietary data sources.
+- Domain-specific [Evaluation Pipelines](/blog/building-eval-pipeline-catches-regressions-before-users).
+
+## Final Takeaway
+
+Most companies asking `custom ml platform needed` are really asking how to make ML delivery less chaotic. The right answer is not a custom platform, but a selection of sane defaults like **KServe**, **MLflow**, and **Argo Workflows**.
+
+At **Resilio Tech**, we specialize in helping companies avoid the "Platform Trap." We don't just tell you what to build; we help you integrate the right open-source and managed building blocks so you can start shipping models today, not in 2027.
+
+**Tired of building infrastructure instead of models?** [Let's talk about a pragmatic MLOps roadmap](/contact).

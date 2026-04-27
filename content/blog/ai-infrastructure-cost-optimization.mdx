@@ -11,7 +11,7 @@ featured: true
 
 # How We Cut GPU Costs by 40% Without Sacrificing Model Performance
 
-For most teams, GPU spend is the single largest line item in their AI infrastructure bill. But at high volumes, [LLM production costs](/blog/true-cost-running-llms-production-breakdown-beyond-api-pricing) often include a significant amount of wasted "warm" capacity. To justify these expenses, teams must [build a strong business case](/blog/how-to-build-business-case-ai-infrastructure-investment) for their AI infrastructure investments.
+For most teams, GPU spend is the single largest line item in their AI infrastructure bill. But at high volumes, [LLM production costs](/blog/true-cost-running-llms-production-breakdown-beyond-api-pricing) often include a significant amount of wasted "warm" capacity. To justify these expenses, teams must [build a strong business case](/blog/how-to-build-business-case-ai-infrastructure-investment) for their AI infrastructure investments. Managing this effectively requires a [FinOps approach to AI infrastructure](/blog/finops-for-ai-implementing-cost-visibility-controls-ml-workloads).
 
 To fix this, we focus on four primary cost-saving strategies: [spot instances](/blog/spot-instances-training-workloads-checkpointing-fault-tolerance), right-sizing, GPU sharing, and [intelligent autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters).
 
@@ -21,7 +21,7 @@ Instead of giving every model a full A100 or H100, we use **NVIDIA Multi-Instanc
 
 ## Strategy 2: Spot Instance Orchestration
 
-Training and asynchronous inference are perfect candidates for spot instances. By implementing robust checkpointing and automated rescheduling via [Terraform](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines), we've seen teams save up to 70% on raw compute costs.
+Training and asynchronous inference are perfect candidates for spot instances. By implementing robust checkpointing and automated rescheduling via [Terraform](/blog/terraform-for-ai-infrastructure-gpu-nodes-model-registries-pipelines), we've seen teams save up to 70% on raw compute costs. For a deeper dive into reducing inference spend, see our [GPU cost optimization playbook](/blog/gpu-cost-optimization-playbook-reduce-ai-inference-spend-40-70).
 
 ## Final Takeaway
 

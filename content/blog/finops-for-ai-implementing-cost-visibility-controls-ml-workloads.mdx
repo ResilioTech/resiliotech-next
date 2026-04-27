@@ -1,0 +1,117 @@
+---
+title: "FinOps for AI: Implementing Cost Visibility and Controls for ML Workloads"
+description: "A deep guide to implementing FinOps for AI and ML workloads, covering GPU workload tagging, chargeback models, budget alerts, cost anomaly detection, and showback dashboards."
+date: "2026-04-18"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["finops", "mlops", "cost-optimization", "gpu", "platform-engineering"]
+coverImage: "/blog-images/finops-for-ai-implementing-cost-visibility-controls-ml-workloads.svg"
+featured: false
+seo:
+  title: "FinOps for AI: Implementing Cost Visibility and Controls for ML Workloads"
+  description: "How to build cost visibility and control for ML workloads with GPU tagging, chargeback, anomaly detection, and showback dashboards."
+  keywords:
+    - finops ai ml
+    - ai cost visibility
+    - ml workload cost management
+    - gpu chargeback model
+    - ml showback dashboards
+social:
+  image: "/blog-images/finops-for-ai-implementing-cost-visibility-controls-ml-workloads.svg"
+  title: "FinOps for AI"
+  description: "A practical guide to cost visibility and control for ML workloads."
+cta:
+  badge: "FinOps Review"
+  title: "Need real cost visibility for shared GPU clusters and ML workloads?"
+  description: "We help teams implement tagging, showback, chargeback, and anomaly detection so AI infrastructure spend becomes measurable and governable."
+  primaryText: "Book a Free Infrastructure Audit"
+  primaryHref: "/contact"
+  secondaryText: "View Our Services"
+  secondaryHref: "/services"
+---
+
+# FinOps for AI: Implementing Cost Visibility and Controls for ML Workloads
+
+Most AI cost problems are not caused by one wildly expensive model. They are caused by weak visibility. A shared GPU cluster is running, but nobody can say which team is consuming the most hours or why spend jumped 35% last week.
+
+That is why `finops ai ml` is different from generic cloud cost work. In AI, the cost shape is noisier and more layered, involving GPU-heavy training, bursty inference, and [LLM token economics](/blog/llm-token-economics-tracking-controlling-inference-spend).
+
+## Tagging Is the Foundation
+
+If you do not tag workloads properly, nothing downstream works. For `ai cost visibility`, you must enforce standardized labels on every Kubernetes workload. Tools like **OpenCost** or **KubeCost** can then aggregate these into meaningful reports.
+
+### Technical Depth: Standardized FinOps Labels in Kubernetes
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-reranker
+  labels:
+    resilio.tech/team: search-platform
+    resilio.tech/feature: semantic-search
+    resilio.tech/environment: production
+    resilio.tech/workload-type: inference
+    resilio.tech/cost-center: cc-204
+spec:
+  template:
+    spec:
+      containers:
+      - name: reranker
+        image: resilio/bge-reranker:latest
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+```
+
+## Build a Cost Model That Reflects AI Reality
+
+Raw infrastructure cost rarely maps neatly to business value. A practical `ml workload cost management` model should separate:
+1. **Shared Platform Cost:** Base cluster overhead and [observability tooling](/blog/ai-observability-metrics-dashboards-that-matter).
+2. **Dedicated Workload Cost:** Reserved GPUs for specific production features.
+3. **Usage-Driven Variable Cost:** Tokens processed via an [internal LLM gateway](/blog/building-internal-llm-api-gateway-centralized-access-cost-controls-audit-logging).
+
+## Cost Anomaly Detection
+
+AI workloads are expensive enough that ignoring anomalies is a major mistake. Common causes include retry loops on batch jobs or [GPU nodes left warm](/blog/gpu-cost-optimization-playbook-reduce-ai-inference-spend-40-70) after demand drops.
+
+### Prometheus Alert Rule for Cost Anomalies
+
+```hcl
+# alert if a team's GPU spend deviates from its 7-day average by 50%
+resource "kubernetes_manifest" "gpu_cost_anomaly_alert" {
+  manifest = {
+    apiVersion = "monitoring.coreos.com/v1"
+    kind       = "PrometheusRule"
+    metadata = {
+      name = "gpu-cost-anomaly"
+    }
+    spec = {
+      groups = [{
+        name = "finops.rules"
+        rules = [{
+          alert = "GpuSpendAnomaly"
+          expr  = "sum by (team) (rate(container_gpu_usage_runtime_ms[1h])) > 1.5 * avg_over_time(sum by (team) (rate(container_gpu_usage_runtime_ms[1h]))[7d])"
+          for   = "15m"
+          labels = { severity = "critical" }
+          annotations = { summary = "GPU spend anomaly detected for team {{ $labels.team }}" }
+        }]
+      }]
+    }
+  }
+}
+```
+
+## Showback Dashboards: From Data to Action
+
+A strong `showback dashboard` answers:
+- **Leadership view:** Monthly AI spend by business unit and top cost-driving features.
+- **Engineering view:** GPU utilization by cluster, cost per training run, and [idle reserved capacity](/blog/ai-infrastructure-cost-optimization).
+
+## Final Takeaway: Mastering AI FinOps with Resilio Tech
+
+`AI cost visibility` is the prerequisite for every other optimization conversation. To manage `ml workload cost management` seriously, you need workload-level tagging, clear showback dashboards, and automated anomaly detection across both GPU clusters and API-driven usage.
+
+At **Resilio Tech**, we help enterprises implement robust FinOps frameworks for their AI initiatives. We specialize in Kubernetes cost allocation (OpenCost/KubeCost), GPU utilization tracking, and building centralized LLM gateways that provide granular token-level attribution. Our approach ensures that your AI infrastructure spend is always transparent, governable, and aligned with your business goals.
+
+**Ready to gain control over your AI infrastructure spend? [Contact Resilio Tech](/contact) for a comprehensive FinOps audit and strategy session.**

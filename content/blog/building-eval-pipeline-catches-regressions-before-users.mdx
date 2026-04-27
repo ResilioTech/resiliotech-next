@@ -16,13 +16,13 @@ In traditional software, [unit tests](/blog/ci-cd-ml-models-testing-beyond-unit-
 ## The Components of a Production Eval Pipeline
 
 ### 1. The Dataset (Gold Standard)
-You need a curated set of prompts and "ideal" responses. This dataset should be versioned alongside your [prompt templates](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure).
+You need a curated set of prompts and "ideal" responses. This dataset should be versioned alongside your [prompt templates](/blog/prompt-versioning-and-rollback-prompts-like-infrastructure). This is a key part of learning [how to run ML model benchmarks](/blog/how-to-run-ml-model-benchmarks-that-actually-predict-production-performance) that actually predict production performance.
 
 ### 2. Automated Metrics (LLM-as-a-Judge)
 Use specialized tools like **DeepEval**, **Ragas**, or **LangSmith** to score outputs on dimensions like faithfulness, relevancy, and hallucination rate. This provides a repeatable [statistical baseline](/blog/ab-testing-llm-outputs-statistical-methods-non-numeric-responses) for comparison.
 
 ### 3. CI/CD Integration
-The pipeline must run on every PR. If the "faithfulness" score drops by more than 5%, the build should fail.
+The pipeline must run on every PR. If the "faithfulness" score drops by more than 5%, the build should fail. For more advanced security testing, consider [implementing AI red team testing](/blog/implementing-ai-red-team-testing-ci-cd-pipeline) directly into your pipeline.
 
 ## Final Takeaway
 

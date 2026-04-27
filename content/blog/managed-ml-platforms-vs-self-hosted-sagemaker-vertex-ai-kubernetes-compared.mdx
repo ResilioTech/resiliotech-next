@@ -1,0 +1,111 @@
+---
+title: "Managed ML Platforms vs. Self-Hosted: SageMaker, Vertex AI, and Kubernetes Compared"
+description: "A deep guide comparing SageMaker, Vertex AI, and self-hosted Kubernetes for ML platforms, with honest tradeoffs around cost, scale, operational complexity, and when each model makes sense."
+date: "2026-04-18"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["ml-platform", "sagemaker", "vertex-ai", "kubernetes", "cost-optimization"]
+coverImage: "/blog-images/managed-ml-platforms-vs-self-hosted-sagemaker-vertex-ai-kubernetes-compared.svg"
+featured: false
+seo:
+  title: "Managed ML Platforms vs. Self-Hosted: SageMaker, Vertex AI, and Kubernetes Compared"
+  description: "An honest comparison of SageMaker, Vertex AI, and self-hosted Kubernetes, including cost projections at different scales and when managed vs self-hosted platforms make sense."
+  keywords:
+    - sagemaker vs kubernetes ml
+    - vertex ai vs self-hosted
+    - managed vs self-hosted ml platform
+    - ml platform cost comparison
+    - kubernetes ml platform economics
+social:
+  image: "/blog-images/managed-ml-platforms-vs-self-hosted-sagemaker-vertex-ai-kubernetes-compared.svg"
+  title: "Managed ML Platforms vs. Self-Hosted"
+  description: "A practical comparison of SageMaker, Vertex AI, and Kubernetes for production ML."
+cta:
+  badge: "Platform Review"
+  title: "Need an honest view of whether managed or self-hosted is right for your ML platform?"
+  description: "We help teams compare SageMaker, Vertex AI, and Kubernetes against their real model count, traffic profile, and platform maturity so they do not overbuild or overspend."
+  primaryText: "Book a Free Infrastructure Audit"
+  primaryHref: "/contact"
+  secondaryText: "View Our Services"
+  secondaryHref: "/services"
+---
+
+# Managed ML Platforms vs. Self-Hosted: SageMaker, Vertex AI, and Kubernetes Compared
+
+This decision gets framed too simply. Managed ML platforms are described as "easy," and self-hosted Kubernetes as "advanced." In reality, the choice depends on your workload shape, cost sensitivity, and operational maturity.
+
+Whether you're looking at `sagemaker vs kubernetes ml` or `vertex ai vs self-hosted`, the goal is to pick the operating model that matches your current scale without creating a massive technical debt.
+
+## SageMaker and Vertex AI: Speed Over Customization
+
+Managed platforms are strongest when speed to first production deployment is the bottleneck. They provide opinionated workflows and tight integration with cloud-native IAM and storage.
+
+### Technical Depth: Deploying a SageMaker Endpoint with Terraform
+
+For teams staying managed, Infrastructure as Code (IaC) is still essential to avoid "click-ops" sprawl.
+
+```hcl
+resource "aws_sagemaker_model" "example" {
+  name               = "nlp-classifier-v1"
+  execution_role_arn = aws_iam_role.sagemaker_role.arn
+
+  primary_container {
+    image = "763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:1.13-transformers4.26-gpu-py39-cu117-ubuntu20.04"
+    model_data_url = "s3://${var.model_bucket}/model.tar.gz"
+  }
+}
+
+resource "aws_sagemaker_endpoint_configuration" "example" {
+  name = "nlp-classifier-config"
+  production_variants {
+    variant_name           = "all-traffic"
+    model_name            = aws_sagemaker_model.example.name
+    initial_instance_count = 1
+    instance_type         = "ml.g4dn.xlarge"
+  }
+}
+```
+
+## Self-Hosted Kubernetes: Control Over Economics
+
+Kubernetes becomes attractive when you have multiple teams sharing GPU pools, or when you need [custom serving runtimes](/blog/serving-open-source-llms-with-vllm-kubernetes) that managed services don't support well.
+
+### Technical Depth: vLLM on Kubernetes (Self-Hosted)
+
+If you are [serving open-source LLMs](/blog/serving-open-source-llms-with-vllm-kubernetes), running **vLLM** on Kubernetes gives you direct control over continuous batching and quantization—features that are often restricted in managed "one-click" endpoints.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-llama-3
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: vllm-server
+        image: vllm/vllm-openai:latest
+        args: ["--model", "meta-llama/Meta-Llama-3-8B-Instruct"]
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+```
+
+For a deeper look at what it takes to run this at scale, see [Building an Internal ML Platform on Kubernetes](/blog/building-internal-ml-platform-kubernetes-what-actually-works).
+
+## The Crossover Point: When to Migrate?
+
+If you have fewer than 10 production models, managed services are usually the rational choice. However, as your estate grows to 20+ models or multiple teams, the [unit economics of Kubernetes](/blog/gpu-cost-optimization-playbook-reduce-ai-inference-spend-40-70) become undeniable.
+
+If you find yourself hitting the limits of SageMaker's abstractions, it might be time for a [step-by-step migration to Kubernetes](/blog/migrating-ml-workloads-aws-sagemaker-kubernetes-step-by-step-guide).
+
+## Final Takeaway: Choosing the Right Path with Resilio Tech
+
+`Managed vs self-hosted ml platform` is not a maturity badge; it is a fit question. SageMaker and Vertex AI are excellent for speed and early-stage development. Kubernetes, combined with tools like **KubeRay**, **Argo Workflows**, and **vLLM**, is the better long-term operating model for complex, cost-sensitive, and multi-model environments.
+
+At **Resilio Tech**, we help companies make this decision with data, not dogma. We specialize in both managed cloud ML services and self-hosted Kubernetes platforms. Whether you need to optimize your SageMaker spend or architect a custom ML platform from scratch, our team provides the engineering expertise to ensure your infrastructure scales with your business.
+
+**Not sure if you've outgrown your managed ML platform? [Contact Resilio Tech](/contact) for an architecture review and platform strategy session.**
