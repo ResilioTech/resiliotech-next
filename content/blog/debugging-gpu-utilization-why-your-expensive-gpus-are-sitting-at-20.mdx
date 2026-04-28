@@ -1,0 +1,316 @@
+---
+title: "Debugging GPU Utilization: Why Your Expensive GPUs Are Sitting at 20%"
+description: "A tactical guide to debugging low GPU utilization in ML and inference workloads, covering nvidia-smi profiling, CPU-bound preprocessing, batch-size tuning, async data loading, and model optimization."
+date: "2026-04-28"
+author: "Resilio Tech Team"
+category: "model-deployment"
+tags: ["gpu", "performance", "troubleshooting", "inference", "mlops"]
+coverImage: "/blog-images/debugging-gpu-utilization-why-your-expensive-gpus-are-sitting-at-20.svg"
+featured: false
+seo:
+  title: "Debugging GPU Utilization: Why Your Expensive GPUs Are Sitting at 20%"
+  description: "How to diagnose low GPU utilization in production ML systems with nvidia-smi, preprocessing profiling, batch tuning, async loading, and model runtime optimization."
+  keywords:
+    - low gpu utilization ml
+    - debug gpu utilization inference
+    - gpu underutilized machine learning
+    - nvidia-smi gpu utilization debugging
+    - low gpu duty cycle inference
+social:
+  image: "/blog-images/debugging-gpu-utilization-why-your-expensive-gpus-are-sitting-at-20.svg"
+  title: "Debugging GPU Utilization"
+  description: "A tactical guide to finding why ML workloads leave GPUs mostly idle."
+cta:
+  badge: "GPU Performance Audit"
+  title: "Need help figuring out why your GPU fleet is underutilized?"
+  description: "We help teams profile inference and training pipelines, isolate CPU and data bottlenecks, and turn expensive GPU capacity into real throughput."
+  primaryText: "Book a Free Infrastructure Audit"
+  primaryHref: "/contact"
+  secondaryText: "View Our Services"
+  secondaryHref: "/services"
+---
+
+# Debugging GPU Utilization: Why Your Expensive GPUs Are Sitting at 20%
+
+Low GPU utilization usually gets blamed on the wrong layer.
+
+Teams assume the model is too small, the hardware is oversized, or the cloud bill is just the price of doing ML. In practice, `low gpu utilization ml` is often a pipeline problem. The GPU is waiting on something else:
+
+- CPU preprocessing
+- tokenization
+- synchronous input loading
+- tiny batches
+- framework overhead
+- network or storage delays
+
+That is why `debug gpu utilization inference` should start with one rule:
+
+- do not optimize the GPU first; prove what the GPU is waiting on
+
+If a GPU is sitting at 20 percent, the question is not “how do I make CUDA faster?” The question is “what keeps the device idle between kernels?”
+
+This post gives you a practical debugging flow using `nvidia-smi`, system metrics, and workload profiling so you can find the real bottleneck before making expensive hardware or architecture changes.
+
+## Step 1: Confirm That the GPU Is Actually Underutilized
+
+Do not rely on one screenshot from a dashboard.
+
+You want a time series over a representative window. Start with `nvidia-smi` at short intervals:
+
+```bash
+nvidia-smi --query-gpu=timestamp,name,utilization.gpu,utilization.memory,memory.used,memory.total,power.draw --format=csv -l 1
+```
+
+What to look for:
+
+- low `utilization.gpu` with low memory usage: probably small model, small batch, or not much work
+- low `utilization.gpu` with high memory usage: model is resident, but kernels are not running consistently
+- spiky utilization pattern: the GPU is being fed in bursts, then waiting
+- high memory utilization but low compute: often batch sizing, data stalls, or inefficient kernels
+
+This matters because “20 percent utilization” can mean different things:
+
+- the workload is naturally bursty
+- one request path is too small to saturate the card
+- the model server is starved by the CPU
+- the input pipeline cannot keep up
+
+If you skip that distinction, you start tuning blind.
+
+## Step 2: Check Whether the GPU Is Waiting on the CPU
+
+This is one of the most common causes of `gpu underutilized machine learning`.
+
+The GPU can be fine while the host is overloaded by:
+
+- tokenization
+- image transforms
+- feature normalization
+- JSON parsing
+- Python overhead
+- synchronous request handling
+
+Look at host-side signals at the same time as GPU metrics:
+
+```bash
+top
+vmstat 1
+iostat -xz 1
+```
+
+In containerized environments, also check pod CPU throttling and per-container usage. A very common pattern is:
+
+- GPU utilization stays low
+- one or two CPU cores are pegged
+- request queue grows
+- throughput plateaus
+
+That usually means your “GPU problem” is a preprocessing problem.
+
+For inference systems, tokenization and request formatting are frequent culprits. For training jobs, image augmentation or data decoding often dominates.
+
+## Step 3: Identify Preprocessing Bottlenecks
+
+If the CPU is suspicious, profile preprocessing directly.
+
+Examples of expensive stages:
+
+- resizing images one at a time in Python
+- converting formats on every request
+- per-record feature joins
+- tokenization done synchronously in the web process
+- reading compressed inputs from slow object storage
+
+A fast way to validate this is to time the stages around the actual GPU call:
+
+```python
+import time
+
+def predict(request):
+    t0 = time.perf_counter()
+    features = preprocess(request)
+    t1 = time.perf_counter()
+    outputs = model_infer(features)
+    t2 = time.perf_counter()
+    result = postprocess(outputs)
+    t3 = time.perf_counter()
+
+    return {
+        "result": result,
+        "timing_ms": {
+            "preprocess": (t1 - t0) * 1000,
+            "infer": (t2 - t1) * 1000,
+            "postprocess": (t3 - t2) * 1000,
+            "total": (t3 - t0) * 1000,
+        },
+    }
+```
+
+If preprocessing is taking longer than inference, the GPU is not the bottleneck even if the workload feels “slow.”
+
+Fixes usually include:
+
+- moving transforms into compiled libraries
+- batching preprocessing instead of doing it per item
+- caching reusable intermediate outputs
+- tokenizing asynchronously
+- precomputing stable features upstream
+
+If you are serving LLMs, this often overlaps with the latency problems described in [Why Your LLM Responses Are Slow](/blog/why-your-llm-responses-are-slow-diagnosing-inference-latency-production), but the focus here is utilization: the device cannot stay busy if the host cannot prepare work fast enough.
+
+## Step 4: Tune Batch Size Before Buying More GPUs
+
+Small batches are one of the fastest ways to waste expensive hardware.
+
+If each request reaches the GPU alone, kernel launches, memory movement, and framework overhead dominate too much of the total path. You end up paying for GPU residency without giving the device enough parallel work.
+
+Start by measuring throughput and latency at multiple batch sizes:
+
+- `1`
+- `2`
+- `4`
+- `8`
+- `16`
+- `32`
+
+Track:
+
+- GPU utilization
+- latency P50/P95
+- memory usage
+- requests per second or items per second
+
+The right batch size is not “as large as possible.” It is the largest size that improves throughput without breaking latency or memory constraints.
+
+Typical signs you are under-batched:
+
+- GPU utilization stays low even under demand
+- memory headroom is still large
+- throughput increases sharply as batch size rises
+- CPU overhead per request is high relative to compute time
+
+Typical signs you are over-batched:
+
+- queueing delay jumps
+- tail latency gets much worse
+- memory pressure rises sharply
+- throughput flattens instead of improving
+
+For more on the throughput-latency tradeoff, see [Batching Strategies for LLM Inference](/blog/batching-strategies-llm-inference-throughput-vs-latency).
+
+## Step 5: Fix the Input Pipeline With Async Loading
+
+In training and offline inference, low GPU utilization often comes from the data loader, not the model runtime.
+
+Classic symptoms:
+
+- the GPU runs briefly, then waits
+- disk or network IO is uneven
+- workers spend time decoding or fetching
+- training step time has long gaps
+
+This is where asynchronous loading, prefetching, and pinned memory matter.
+
+Example in PyTorch:
+
+```python
+from torch.utils.data import DataLoader
+
+loader = DataLoader(
+    dataset,
+    batch_size=64,
+    shuffle=True,
+    num_workers=8,
+    pin_memory=True,
+    persistent_workers=True,
+    prefetch_factor=4,
+)
+```
+
+What these settings help with:
+
+- `num_workers`: parallelize input decoding and preparation
+- `pin_memory`: improve host-to-device transfer behavior
+- `persistent_workers`: avoid repeated worker startup cost
+- `prefetch_factor`: keep future batches ready
+
+This is not magic. You still need to test whether storage, decoding, or network fetch is the limiting factor. But many teams leave the defaults untouched and then wonder why the GPU spends half its time waiting for the next batch.
+
+For Kubernetes workloads, also check whether the node has enough local disk, CPU, and network bandwidth to support the loader. A powerful GPU on a weak node profile is a common waste pattern.
+
+## Step 6: Verify That the Model Runtime Is Efficient
+
+Sometimes the pipeline is fine and the runtime is the problem.
+
+Common issues:
+
+- eager execution where a compiled path would help
+- unsupported operator patterns
+- no mixed precision
+- suboptimal serving runtime
+- poor kernel fusion
+- too much framework overhead around small models
+
+Depending on the workload, useful levers include:
+
+- FP16 or BF16 inference
+- quantization
+- TorchScript or `torch.compile`
+- TensorRT or ONNX Runtime
+- `vLLM` or TensorRT-LLM for LLM serving
+
+This matters most when you have already confirmed:
+
+- preprocessing is not dominant
+- input loading is healthy
+- batching is reasonable
+- the device still does not stay busy
+
+At that point, model runtime optimization is a credible next step. Before that, it is often premature.
+
+## Step 7: Separate Utilization Problems From Sizing Problems
+
+Not every low-utilization number is a bug.
+
+Sometimes the GPU is simply too large for the workload. For example:
+
+- a small classifier on an oversized card
+- low-QPS product traffic on a dedicated A100
+- bursty internal jobs on always-on capacity
+
+That is not a tuning issue. That is a sizing issue.
+
+The distinction matters:
+
+- if the GPU is idle because the pipeline is stalled, fix the system
+- if the GPU is idle because the workload is too small, right-size the hardware or consolidate traffic
+
+This is where utilization debugging connects directly to cost work. Teams often chase runtime micro-optimizations when the better move is simply moving the workload to a smaller card or sharing infrastructure more effectively.
+
+## A Practical Debugging Order
+
+If you want a fast field checklist, use this order:
+
+1. Measure `utilization.gpu`, memory usage, and duty cycle with `nvidia-smi`.
+2. Compare GPU behavior with CPU, disk, and network metrics.
+3. Time preprocessing, inference, and postprocessing separately.
+4. Test larger batch sizes within latency and VRAM limits.
+5. Tune async data loading and prefetch behavior.
+6. Optimize the model runtime only after the feed path is healthy.
+7. Revisit hardware sizing if utilization is still naturally low.
+
+That order prevents a lot of wasted effort.
+
+## Final Takeaway
+
+Most `low gpu utilization ml` problems are not fixed by buying bigger GPUs or rewriting the model first. They are fixed by proving what the device is waiting on.
+
+If you are trying to `debug gpu utilization inference`, focus on the full path:
+
+- host preprocessing
+- batch formation
+- data loading
+- runtime efficiency
+- workload sizing
+
+Once those are measured directly, the answer is usually much less mysterious than it seemed from a single 20 percent utilization graph.

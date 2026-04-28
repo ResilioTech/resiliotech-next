@@ -1,0 +1,418 @@
+---
+title: "Model Registry Best Practices: Versioning, Lineage, and Promotion Workflows"
+description: "A deep guide to model registry best practices, covering MLflow vs custom registries, immutable model versioning, lineage tracking, and promotion workflows from staging to canary to production."
+date: "2026-04-27"
+author: "Resilio Tech Team"
+category: "mlops"
+tags: ["model-registry", "versioning", "lineage", "model-deployment", "mlops"]
+coverImage: "/blog-images/model-registry-best-practices-versioning-lineage-promotion-workflows.svg"
+featured: false
+seo:
+  title: "Model Registry Best Practices: Versioning, Lineage, and Promotion Workflows"
+  description: "How to build a production-ready model registry with immutable versions, audit-friendly lineage, and promotion gates from staging to canary to production."
+  keywords:
+    - model registry best practices
+    - ml model versioning production
+    - model promotion workflow
+    - mlflow model registry
+    - model lineage audit compliance
+social:
+  image: "/blog-images/model-registry-best-practices-versioning-lineage-promotion-workflows.svg"
+  title: "Model Registry Best Practices"
+  description: "A practical guide to versioning, lineage, and promotion workflows for production ML."
+cta:
+  badge: "Registry Review"
+  title: "Need a model registry that supports promotion gates, lineage, and audit-ready releases?"
+  description: "We help teams implement model registries, deployment controls, and audit evidence paths that work across MLflow, Kubernetes, and regulated production environments."
+  primaryText: "Book a Free Infrastructure Audit"
+  primaryHref: "/contact"
+  secondaryText: "View Our Services"
+  secondaryHref: "/services"
+---
+
+# Model Registry Best Practices: Versioning, Lineage, and Promotion Workflows
+
+Most teams think a model registry is just a better folder for artifacts. That is the wrong mental model.
+
+In production, the registry is the release control plane for ML. It decides which model is deployable, what evidence is attached to it, who approved it, and how it moves from experiment to production. If that control plane is weak, the rest of the platform becomes hard to trust.
+
+That is why `model registry best practices` are not only about storage. They are about operational discipline:
+
+- immutable model versions
+- clear lineage from code and data to deployed artifact
+- promotion gates from staging to canary to production
+- rollback paths that work under pressure
+- audit evidence that survives enterprise reviews
+
+This guide focuses on the infrastructure side of the problem: `ml model versioning production`, `model promotion workflow`, and lineage that stands up to compliance and incident review.
+
+## The Registry Is Not a Catalog. It Is a Contract.
+
+A production registry should answer five questions quickly:
+
+1. What exact artifact is currently serving traffic?
+2. What code, data snapshot, environment, and feature definitions produced it?
+3. What evaluations did it pass before promotion?
+4. Who or what approved it for each environment?
+5. How do we roll back to the previous known-good version?
+
+If your registry cannot answer those questions without digging across three systems and a Slack thread, it is not production-grade yet.
+
+This is where many teams create avoidable risk. They have:
+
+- model files in object storage
+- experiment metrics in a notebook or tracking tool
+- deployment decisions in CI logs
+- approvals in chat or ticket comments
+
+That is enough to ship one model. It is not enough to operate a model fleet safely.
+
+The registry needs to be the durable system of record tying those pieces together, much like container registries and deployment metadata do for application releases.
+
+## What a Production Model Version Must Contain
+
+A version number alone is not enough. A production model version should point to a full release bundle.
+
+At minimum, each registered version should include:
+
+- immutable model artifact URI
+- training code commit SHA
+- training dataset snapshot or partition ID
+- feature pipeline or feature definition version
+- dependency and runtime information
+- evaluation results and threshold status
+- model card or release notes
+- security and governance metadata
+
+In practice, that means a model version is closer to a signed release manifest than a loose file reference.
+
+An example manifest looks like this:
+
+```yaml
+model_name: churn-predictor
+version: 2026.04.27-rc2
+artifact_uri: s3://ml-registry/churn/2026.04.27-rc2/model.tar.gz
+git_commit: 6d92bc1
+dataset_snapshot: warehouse://features/churn_training/2026-04-20
+feature_set_version: fs-churn-v19
+runtime:
+  python: "3.11.7"
+  base_image: "ghcr.io/resiliotech/model-serving:2026-04-21"
+  framework: "xgboost==2.1.1"
+evaluation:
+  auc: 0.912
+  calibration_error: 0.019
+  bias_check: pass
+  latency_p95_ms: 43
+approval_status: staging-approved
+```
+
+That manifest is what lets you reconstruct and defend a release later. Without it, version numbers become labels with weak evidence behind them.
+
+## MLflow vs. Custom Registries: Make the Right Tradeoff
+
+The practical choice is usually not "registry or no registry." It is **MLflow vs. custom registry behavior layered on top of a base artifact system**.
+
+### When MLflow is enough
+
+MLflow is a solid default for many teams. It already gives you:
+
+- registered models and version objects
+- aliases and stage-like metadata
+- experiment links
+- run metadata and artifacts
+- a usable API for automation
+
+If you have a moderate model count and your main problem is getting consistent release discipline, MLflow is usually enough to start. For many organizations, the real issue is not missing features. It is missing process around those features.
+
+### Where MLflow starts to bend
+
+Teams eventually hit limits when they need:
+
+- environment-specific approval workflows
+- richer policy checks before promotion
+- stronger multi-team RBAC
+- custom lineage relationships across data, features, prompts, and downstream services
+- audit evidence tailored to internal risk or regulatory review
+
+At that point, a pure out-of-the-box MLflow workflow often becomes awkward. Not because MLflow is bad, but because the team is asking it to become a governance and release orchestration system.
+
+### When custom registry logic makes sense
+
+A custom registry usually should not mean "build everything from scratch." The pragmatic pattern is:
+
+- keep artifact storage and experiment tracking in proven tools
+- keep model metadata in MLflow or a metadata store
+- build a thin control layer for promotion, policy, and evidence capture
+
+That control layer can:
+
+- attach internal approval states
+- enforce promotion prerequisites
+- record environment-level deployment history
+- map registry versions to Kubernetes or serving revisions
+- export audit reports for reviewers
+
+This is the more defensible approach than trying to replace MLflow entirely on day one.
+
+## Versioning Best Practices for Production Models
+
+`ml model versioning production` breaks down when teams mix experimental naming with production release semantics.
+
+A good operating model separates three concepts:
+
+1. **Training runs**: many per week, often disposable
+2. **Registered versions**: candidate artifacts worth preserving
+3. **Deployed revisions**: versions actually serving in a real environment
+
+Those should not be conflated.
+
+### Use immutable versions, mutable aliases
+
+The version itself should never change once created. Promotion should happen by moving an alias or environment binding, not by mutating the artifact in place.
+
+For example:
+
+- immutable version: `fraud-model:2026.04.27-rc2`
+- mutable alias: `staging`
+- mutable alias: `canary`
+- mutable alias: `production`
+
+This gives you two things:
+
+- stable evidence tied to a fixed artifact
+- simple traffic control using environment aliases
+
+If a team rebuilds the same version tag with new weights, it destroys rollback confidence and makes audit trails weaker.
+
+### Keep semantic meaning out of ad hoc names
+
+Avoid loose names like:
+
+- `new-model-final`
+- `final-v2`
+- `prod-fixed`
+
+Those are not versioning schemes. They are incident artifacts.
+
+Use either monotonically increasing version numbers or timestamped release IDs. The key is that the scheme is machine-readable and predictable in automation.
+
+### Record deployment bindings explicitly
+
+The registry should also know where a version is deployed.
+
+Example:
+
+```json
+{
+  "model": "fraud-model",
+  "version": "2026.04.27-rc2",
+  "deployments": [
+    {"environment": "staging", "revision": "serving-v184"},
+    {"environment": "canary", "revision": "serving-v191", "traffic_percent": 10},
+    {"environment": "production", "revision": "serving-v177", "traffic_percent": 90}
+  ]
+}
+```
+
+That mapping matters during incidents. The registry should tell you not only what *should* be live, but what deployment revision is *actually* live.
+
+## Promotion Workflows Should Be State Machines, Not Manual Rituals
+
+The most common failure in a `model promotion workflow` is that promotion criteria live in human memory.
+
+People say things like:
+
+- "Did we run the offline eval?"
+- "I think risk signed off on this one."
+- "Canary looked fine yesterday."
+
+That is not a workflow. That is folklore.
+
+A reliable promotion path should encode states and transitions explicitly:
+
+1. `registered`
+2. `validation-passed`
+3. `staging-approved`
+4. `canary-approved`
+5. `production-approved`
+6. `retired`
+
+Each transition should have machine-checkable prerequisites.
+
+### Example promotion policy
+
+```yaml
+promotion_policy:
+  to_staging:
+    requires:
+      - artifact_signature_verified
+      - offline_eval_passed
+      - schema_compatibility_passed
+      - security_scan_passed
+  to_canary:
+    requires:
+      - staging_smoke_test_passed
+      - latency_p95_under_60ms
+      - feature_parity_verified
+  to_production:
+    requires:
+      - canary_error_rate_under_1_percent
+      - canary_business_metric_regression_under_2_percent
+      - manual_approval_from_model_owner
+      - manual_approval_from_risk_owner
+```
+
+This is the same principle behind strong [CI/CD for ML models](/blog/ci-cd-ml-models-testing-beyond-unit-tests): promotion should be blocked by policy, not merely guided by checklists.
+
+### Staging, then canary, then production
+
+The `staging → canary → prod` pattern is still the most practical route for most teams.
+
+- **Staging** verifies packaging, API compatibility, schema assumptions, and basic latency.
+- **Canary** verifies real traffic behavior under controlled exposure.
+- **Production** happens only after canary metrics and approvals pass.
+
+This is especially important for models because many failures are data-dependent. A version can look perfect in offline evaluation and still regress on live traffic because of skew, routing differences, or feature freshness problems.
+
+For more on traffic-safe rollout patterns, pair the registry with [model canary releases and shadow traffic](/blog/model-canary-releases-shadow-traffic-guide) and [zero-downtime model updates](/blog/zero-downtime-model-updates-blue-green-rolling-deployments-ml-systems).
+
+## Lineage Tracking Is What Makes the Registry Defensible
+
+Lineage is the part teams skip when they are moving fast, and then regret when an enterprise buyer, regulator, or incident review asks hard questions.
+
+At a minimum, lineage should connect:
+
+- training code
+- training data snapshot
+- feature definitions
+- preprocessing logic
+- evaluation datasets
+- generated model artifact
+- deployed serving revision
+
+If any one of those links is missing, root cause analysis slows down.
+
+### Why audit and compliance teams care
+
+Audit reviewers do not only ask, "What model is running?" They ask:
+
+- What data produced it?
+- Was that data approved for this use?
+- Did the model card match what was deployed?
+- Which thresholds were used at approval time?
+- Can you reproduce the release decision later?
+
+This is why lineage is not academic metadata. It is operational evidence.
+
+For regulated environments, the registry should be able to generate a release packet that includes:
+
+- version manifest
+- evaluation summary
+- approver identities
+- deployment timestamps
+- serving environment details
+- rollback target
+
+That packet is what turns a model registry into something compliance teams can actually trust.
+
+### Treat lineage as graph data, even if your tool does not
+
+Even if your registry UI looks tabular, the underlying relationships are graph-shaped:
+
+- run produced artifact
+- artifact evaluated on dataset
+- artifact promoted by workflow
+- workflow deployed revision
+- revision served request logs
+
+You do not necessarily need a graph database. But you do need to model the relationships explicitly instead of burying them in free-form tags.
+
+This is where custom metadata schemas often become necessary, even when MLflow remains the primary registry interface.
+
+## Approval Workflows Must Produce Evidence, Not Only Permission
+
+Manual approval is sometimes necessary. But a button click alone is weak governance.
+
+A stronger pattern is to require structured approval evidence:
+
+- approver identity
+- approval role
+- timestamp
+- version approved
+- evaluation report reference
+- exception notes, if any
+
+That record should go into an immutable audit sink, not only the CI system. If the CI tool is rotated, renamed, or deleted, the release evidence should still survive.
+
+This is one of the main overlaps between model registries and broader [AI audit logging](/blog/ai-audit-logs-regulators-ask-for-how-to-prepare). The registry owns the release object. The audit system owns the durable event trail.
+
+For a broader governance perspective, see [AI model governance in production](/blog/ai-model-governance-version-control-approval-workflows-audit-trails-production). The difference is that governance defines the policy; the registry is where the release workflow becomes enforceable.
+
+## Rollback Must Be a First-Class Registry Function
+
+If rollback requires rebuilding the previous model, your registry is not ready.
+
+A rollback-capable registry needs:
+
+- immutable prior versions
+- deployment history per environment
+- known-good alias targets
+- release evidence for the fallback version
+- compatibility metadata for serving runtime and schema
+
+The best rollback design is boring:
+
+- `production` alias points to `v184`
+- new candidate `v191` gets 10 percent canary traffic
+- canary fails
+- alias or traffic split reverts to `v184`
+
+No retraining. No artifact reconstruction. No guessing.
+
+The registry should be able to answer:
+
+- what was the last successful production version?
+- what exact rollout changed the state?
+- what evidence supported the previous version?
+
+That is what reduces incident time when the serving team is under pressure.
+
+## A Practical Reference Architecture
+
+For most teams, the pragmatic architecture looks like this:
+
+1. Train and evaluate in the existing pipeline.
+2. Register only candidates that pass baseline quality thresholds.
+3. Store immutable metadata and artifact references in MLflow or the registry layer.
+4. Run promotion checks in CI/CD.
+5. Require structured approvals for sensitive environments.
+6. Deploy by binding registry versions to serving revisions.
+7. Write all promotion and deployment events to immutable audit logs.
+
+That keeps the registry at the center without forcing it to do every job itself.
+
+The mistake is trying to make the registry own:
+
+- training orchestration
+- all lineage storage
+- every deployment primitive
+- every observability function
+
+The registry should coordinate those systems, not replace them.
+
+## Final Takeaway
+
+The goal of a model registry is not to look organized. It is to make model releases predictable, reviewable, and reversible.
+
+The best `model registry best practices` are straightforward:
+
+- keep versions immutable
+- use aliases for environment state
+- treat promotion as a policy-driven state machine
+- capture lineage all the way from data and code to serving revision
+- store approval evidence and deployment events in durable audit systems
+
+If your current registry cannot tell you what is live, why it was approved, how it got there, and what the rollback target is, then you do not have a release control plane yet. You have artifact storage with better naming.
+
+That gap is exactly where production ML systems become fragile.

@@ -1,0 +1,650 @@
+---
+title: "Designing AI Infrastructure for 99.99% Uptime: Patterns from Production Systems"
+description: "A deep guide to high availability AI infrastructure, covering multi-AZ model serving, GPU workload health checks, graceful degradation, fallback models, and circuit breakers for external LLM APIs."
+date: "2026-04-28"
+author: "Resilio Tech Team"
+category: "ai-reliability"
+tags: ["high-availability", "sre", "model-serving", "llm-serving", "ai-reliability"]
+coverImage: "/blog-images/designing-ai-infrastructure-for-99-99-uptime-patterns-from-production-systems.svg"
+featured: false
+seo:
+  title: "Designing AI Infrastructure for 99.99% Uptime"
+  description: "Production patterns for reliable AI infrastructure, including multi-AZ model serving, GPU health checks, graceful degradation, fallback models, and LLM API circuit breakers."
+  keywords:
+    - ai infrastructure high availability
+    - ml system 99.99 uptime
+    - reliable ai infrastructure patterns
+    - multi az ai model serving
+    - gpu health checks kubernetes
+social:
+  image: "/blog-images/designing-ai-infrastructure-for-99-99-uptime-patterns-from-production-systems.svg"
+  title: "Designing AI Infrastructure for 99.99% Uptime"
+  description: "A production guide to high availability patterns for AI and ML systems."
+cta:
+  badge: "Reliability Review"
+  title: "Need AI infrastructure that can meet serious uptime targets?"
+  description: "We help teams design multi-AZ serving, fallback paths, GPU health checks, and SLO-driven operations for production AI systems that need to stay up."
+  primaryText: "Book a Free Reliability Audit"
+  primaryHref: "/contact"
+  secondaryText: "View Our Services"
+  secondaryHref: "/services"
+---
+
+# Designing AI Infrastructure for 99.99% Uptime: Patterns from Production Systems
+
+Getting an AI demo to work is not the hard part. Keeping it available through node failures, model crashes, GPU pressure, dependency outages, bad releases, and provider incidents is the hard part.
+
+For a normal web service, 99.99% uptime already requires discipline. For AI systems, it requires more because the service can fail without going fully down. A model endpoint can keep returning `200 OK` while latency is unusable, outputs are degraded, feature data is stale, or every request is silently using a fallback model.
+
+That is why `ai infrastructure high availability` needs a broader definition of "up."
+
+A reliable AI system has to maintain:
+
+- endpoint availability
+- acceptable latency
+- enough model quality for the feature to remain useful
+- safe fallback behavior
+- observability that exposes degraded states
+- recovery paths that have been tested
+
+This guide covers production patterns for teams targeting `ml system 99.99 uptime`: multi-AZ model serving, GPU-aware health checks, graceful degradation, and circuit breakers for external LLM APIs.
+
+## 99.99% Uptime Is an Architecture Constraint
+
+99.99% availability leaves about 52 minutes of downtime per year. That is not much time to spend on preventable incidents.
+
+For AI infrastructure, the error budget can disappear through more than hard downtime:
+
+- model server crash loops
+- GPU nodes that stop accepting work
+- provider API timeouts
+- feature store outages
+- vector database latency spikes
+- model release regressions
+- queue buildup under burst traffic
+- fallback paths that are technically available but product-useless
+
+The first design rule is simple: a 99.99% target cannot depend on one model server, one GPU node pool, one availability zone, one vendor API, or one deployment path.
+
+The second rule is more subtle: redundancy is not enough. You also need fast detection and controlled degradation.
+
+## Define What "Available" Means for AI
+
+Before architecture, define the availability contract.
+
+For a recommendation model, available might mean:
+
+- API responds successfully
+- P95 latency stays under 150 ms
+- feature freshness is under 5 minutes
+- fallback recommendations are acceptable for short windows
+
+For an LLM assistant, available might mean:
+
+- time to first token stays under 2 seconds
+- total response time stays within product tolerance
+- answer passes safety and format checks
+- fallback provider or smaller model is available
+
+For a fraud model, available might mean:
+
+- synchronous score returns before the transaction deadline
+- rule-based fallback can enforce conservative decisions
+- every degraded decision is auditable
+
+This is why [AI system SLOs](/blog/ai-system-slos-non-deterministic-systems) matter. If you only track HTTP success rate, you will miss most AI reliability failures.
+
+Useful availability SLIs include:
+
+- request success rate
+- latency P95 and P99
+- queue wait time
+- model load status
+- GPU memory and duty cycle
+- fallback activation rate
+- stale feature rate
+- provider circuit breaker state
+- output validation failure rate
+
+These metrics let you distinguish hard outage from degraded but operational service.
+
+## Pattern 1: Multi-AZ Model Serving
+
+The baseline for serious uptime is serving across multiple availability zones.
+
+For Kubernetes-based inference, that means:
+
+- model-serving pods spread across zones
+- GPU node pools in at least two zones
+- topology spread constraints
+- zone-aware load balancing
+- replicated model artifacts
+- readiness checks that only admit actually warm replicas
+
+If all inference replicas sit on one GPU node group in one zone, a zonal issue becomes a feature outage. If the model registry or object storage path is only reachable from one zone, failover still breaks during startup.
+
+### Kubernetes topology spread example
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-model-server
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: fraud-model-server
+  template:
+    metadata:
+      labels:
+        app: fraud-model-server
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: fraud-model-server
+      containers:
+      - name: model-server
+        image: registry.internal/fraud-model-server:v184
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+```
+
+This prevents the scheduler from accidentally concentrating all replicas in one zone.
+
+### Replicate the dependencies too
+
+Multi-AZ serving does not help if every request still depends on one zonal Redis instance, one feature store endpoint, or one model artifact bucket.
+
+Check these dependencies:
+
+- model registry
+- feature store
+- vector database
+- cache
+- secrets store
+- observability sink
+- gateway
+- identity provider path
+
+High availability is only as strong as the least redundant dependency in the request path.
+
+## Pattern 2: Keep Warm Capacity, Not Just Theoretical Capacity
+
+GPU workloads are slow to recover from cold.
+
+Cold paths may include:
+
+- node provisioning
+- driver and runtime initialization
+- image pull
+- model weight download
+- model load into VRAM
+- tokenizer load
+- kernel compilation
+- first inference warm-up
+
+If your recovery plan depends on scaling from zero during an incident, you are probably not building for 99.99%.
+
+Keep warm capacity for:
+
+- current production model
+- previous stable model
+- smaller fallback model
+- provider gateway path
+
+The amount depends on business impact, but the pattern is consistent: the fallback path must already be warm enough to absorb traffic when the primary path fails.
+
+This is also why [GPU autoscaling](/blog/gpu-autoscaling-right-sizing-inference-clusters) should scale before users feel pain. For AI workloads, reactive autoscaling often arrives late because warm-up time is long.
+
+## Pattern 3: GPU-Aware Health Checks
+
+A simple `/healthz` endpoint is weak evidence for AI serving.
+
+A model server can pass a basic HTTP health check while:
+
+- model weights are not loaded
+- GPU memory is fragmented
+- tokenizer assets are missing
+- CUDA context failed
+- inference is returning invalid output
+- request queue is saturated
+
+For GPU workloads, use multiple health levels.
+
+### Liveness
+
+Liveness should answer:
+
+- is the process alive enough to be restarted if stuck?
+
+Keep this relatively simple. Do not make liveness depend on a full model inference, or transient upstream issues may restart healthy pods.
+
+### Readiness
+
+Readiness should answer:
+
+- can this replica safely receive production traffic right now?
+
+For model serving, readiness should check:
+
+- model artifact loaded
+- GPU device visible
+- required memory available
+- tokenizer or preprocessing assets loaded
+- service can run a lightweight synthetic inference
+- queue depth is below reject threshold
+
+### Startup
+
+Startup probes are useful for heavyweight models that need time to load. They prevent Kubernetes from killing a slow-starting container before it is actually broken.
+
+Example readiness shape:
+
+```python
+def readiness():
+    if not model_loaded:
+        return {"ready": False, "reason": "model_not_loaded"}, 503
+    if not gpu_available():
+        return {"ready": False, "reason": "gpu_unavailable"}, 503
+    if queue_depth() > MAX_READY_QUEUE_DEPTH:
+        return {"ready": False, "reason": "queue_saturated"}, 503
+    if synthetic_probe_latency_ms() > MAX_PROBE_LATENCY_MS:
+        return {"ready": False, "reason": "slow_inference"}, 503
+    return {"ready": True}, 200
+```
+
+This is more useful than a health endpoint that only proves the web server is listening.
+
+## Pattern 4: Use Load Shedding Before Collapse
+
+High availability does not mean accepting unlimited work.
+
+When inference capacity is saturated, the worst behavior is often to keep accepting requests until:
+
+- queues grow without bound
+- latency explodes
+- retries multiply load
+- pods OOM
+- callers time out and retry again
+
+Use load shedding before collapse.
+
+Common controls:
+
+- max queue depth
+- per-tenant rate limits
+- request size limits
+- concurrency caps
+- priority lanes for critical traffic
+- early rejection with clear retry-after behavior
+
+For LLMs, also cap:
+
+- input tokens
+- output tokens
+- concurrent sequences
+- total active KV cache usage
+
+It is better to return a controlled fallback or 429 for low-priority work than to let one traffic spike take down the whole inference fleet.
+
+## Pattern 5: Graceful Degradation Is Part of Availability
+
+If the primary model path fails, the product does not always need to disappear.
+
+Good AI systems have a fallback ladder:
+
+1. primary model
+2. smaller local model
+3. external provider or secondary provider
+4. cached or retrieval-only answer
+5. deterministic rule-based behavior
+6. feature disabled with clear product handling
+
+The exact ladder depends on the use case.
+
+For recommendation systems:
+
+- primary personalized ranker
+- simpler collaborative filter
+- trending/popular fallback
+- editorial or rule-based fallback
+
+For LLM assistants:
+
+- primary hosted or self-hosted model
+- smaller model
+- provider fallback
+- retrieval-only response
+- cached answer
+
+For fraud or risk systems:
+
+- primary ML score
+- smaller backup model
+- conservative rules
+- manual review queue
+
+This expands the uptime definition. The system may be degraded, but it can still preserve core product behavior.
+
+The key is to measure degraded states explicitly. If fallback activation jumps from 1% to 35%, that is an incident even if HTTP success remains high.
+
+## Pattern 6: Circuit Breakers for External LLM APIs
+
+External LLM APIs are useful, but they are still network dependencies. Treat them like dependencies that can fail, slow down, rate limit, or change behavior.
+
+A circuit breaker protects your system from repeatedly calling an unhealthy provider.
+
+It should track:
+
+- timeout rate
+- 5xx rate
+- rate limit responses
+- latency outliers
+- provider-specific error classes
+- budget exhaustion
+
+Circuit breaker states usually look like:
+
+- closed: calls flow normally
+- open: calls are blocked and routed to fallback
+- half-open: limited test calls check recovery
+
+Example policy:
+
+```yaml
+provider_circuit_breaker:
+  provider: primary-llm-api
+  timeout_ms: 8000
+  open_if:
+    error_rate_percent: "> 10"
+    p95_latency_ms: "> 12000"
+    consecutive_failures: "> 5"
+  half_open_after: "60s"
+  fallback_route: local-small-model
+```
+
+This belongs in an [LLM gateway](/blog/llm-gateway-architecture-routing-rate-limits-cost-controls), not scattered across application code.
+
+### Avoid retry storms
+
+Retries can make provider outages worse.
+
+Use:
+
+- capped retries
+- jittered backoff
+- per-provider concurrency limits
+- idempotency where side effects exist
+- retry budgets per caller
+
+If every application retries failed LLM calls independently, the gateway will amplify the outage instead of containing it.
+
+## Pattern 7: Separate Critical and Best-Effort Traffic
+
+Most AI platforms serve mixed traffic:
+
+- user-facing inference
+- batch enrichment
+- offline scoring
+- experiments
+- internal tools
+- shadow traffic
+
+If all of that traffic shares the same queue and GPU pool, best-effort workloads can degrade critical product paths.
+
+Separate lanes by priority:
+
+- critical synchronous traffic
+- normal user-facing traffic
+- internal interactive traffic
+- batch or async traffic
+- experiments and shadow evaluation
+
+This can be implemented with:
+
+- separate deployments
+- separate queues
+- gateway routing
+- Kubernetes priority classes
+- dedicated node pools for critical workloads
+- workload-specific rate limits
+
+The goal is not always physical separation. The goal is failure isolation. A batch job should not starve the model that handles checkout, fraud review, clinical decision support, or customer-facing chat.
+
+## Pattern 8: Make Model Releases Availability Events
+
+Bad releases are a major source of downtime.
+
+For AI systems, release risk includes:
+
+- model quality regression
+- latency regression
+- GPU memory increase
+- dependency mismatch
+- tokenizer inconsistency
+- output schema change
+- feature compatibility issue
+
+Use progressive delivery:
+
+1. staging validation
+2. synthetic inference
+3. shadow traffic
+4. canary traffic
+5. full promotion
+
+Every release should have:
+
+- automatic rollback target
+- performance baseline
+- quality gate
+- memory profile
+- fallback compatibility check
+
+This connects to [zero-downtime model updates](/blog/zero-downtime-model-updates-blue-green-rolling-deployments-ml-systems) and [model rollback in production](/blog/implementing-model-rollback-in-production-the-5-minute-recovery-guide). If a release cannot be rolled back quickly, it is not suitable for a 99.99% system.
+
+## Pattern 9: Design For Partial Dependency Failure
+
+Many AI systems have longer dependency chains than teams realize.
+
+A single inference request may touch:
+
+- gateway
+- auth service
+- feature store
+- cache
+- model server
+- vector database
+- external LLM API
+- policy service
+- logging sink
+
+At 99.99%, every nonessential dependency should be questioned.
+
+Ask:
+
+- Can this dependency be removed from the synchronous path?
+- Can its data be cached?
+- Can the request continue in degraded mode?
+- Can failures be isolated by tenant or route?
+- Can the dependency fail closed or fail open safely?
+
+Example:
+
+- if observability sink is down, do not block inference
+- if feature store is stale, use last-known-safe features only within a freshness bound
+- if vector database is slow, switch to keyword retrieval or cached context
+- if premium provider fails, route to local fallback model
+
+This is the practical form of `reliable ai infrastructure patterns`: keep critical paths short and every noncritical dependency optional or degradable.
+
+## Pattern 10: Observe The System As A State Machine
+
+For high availability, dashboards need to show state, not just charts.
+
+Useful states:
+
+- healthy
+- degraded-primary
+- degraded-fallback
+- provider-circuit-open
+- model-warming
+- canary-paused
+- rollback-active
+- feature-disabled
+
+This lets operators see what the system is doing in plain terms.
+
+Metrics should answer:
+
+- how much traffic is on the primary model?
+- how much traffic is on fallback?
+- which zones are serving?
+- which providers are open or blocked?
+- which model versions are active?
+- are GPU replicas warming or ready?
+- how much error budget remains?
+
+Without stateful observability, high-availability systems become hard to operate. You may have redundancy, but nobody knows which path users are actually on.
+
+## Pattern 11: Run Game Days For AI Failure Modes
+
+You cannot claim 99.99% reliability if failover has never been exercised.
+
+Run drills for:
+
+- one AZ losing GPU capacity
+- model registry unavailable during rollout
+- feature store latency spike
+- external LLM API timeout
+- vector database unavailable
+- bad model release
+- GPU pod readiness failures
+- fallback model cold start
+- observability sink outage
+
+For each drill, record:
+
+- time to detect
+- time to route around
+- user-visible impact
+- fallback activation behavior
+- manual steps required
+- missing alerts or dashboards
+
+The target is not drama. The target is discovering weak assumptions while the team is not already in an incident.
+
+## A Reference 99.99% AI Serving Architecture
+
+A practical architecture for high-availability AI serving looks like this:
+
+1. **Global or regional gateway**
+   Handles auth, routing, rate limits, provider failover, and circuit breaker policy.
+
+2. **Multi-AZ serving pools**
+   Runs model servers across zones with topology spread, readiness checks, and warm capacity.
+
+3. **Fallback serving lane**
+   Hosts smaller models, cached paths, or deterministic routes independent of the primary model pool.
+
+4. **Replicated state dependencies**
+   Keeps model artifacts, feature stores, caches, and vector indexes available across zones or with clear degraded behavior.
+
+5. **Progressive delivery layer**
+   Controls canary, shadow traffic, rollback, and release gates.
+
+6. **SLO and state observability**
+   Tracks primary health, fallback state, provider health, GPU readiness, and error budget.
+
+7. **Runbooks and game days**
+   Make recovery steps tested and measurable.
+
+This is the operating model behind serious AI availability. It does not assume that everything stays healthy. It assumes components fail and keeps the product useful anyway.
+
+## Capacity Planning For Failure, Not Just Normal Traffic
+
+Most capacity plans size for expected peak traffic. A 99.99% architecture has to size for expected peak traffic while something important is broken.
+
+That changes the math.
+
+If you run across three availability zones and each zone carries roughly one third of traffic, losing one zone pushes the remaining two zones from 33% each to 50% each. If those zones were already running near 70% capacity, failover will overload them.
+
+For AI workloads, this is more painful than stateless web serving because capacity is not only request count. You also have to account for:
+
+- GPU memory headroom
+- active sequence count
+- batch formation efficiency
+- warm model replicas
+- host RAM during model load
+- queue depth during failover
+- provider rate limits if using API fallback
+
+The practical target is N+1 capacity for each critical tier.
+
+For model serving, that means:
+
+- enough warm replicas to survive one replica failure without breaching latency
+- enough zonal capacity to absorb one zone loss for critical routes
+- enough fallback capacity to serve degraded traffic without cold starts
+- enough provider quota to handle failover traffic if external APIs are part of the ladder
+
+Do not size fallback for average traffic if your incident plan routes most users there during a failure. A fallback that works for 5% of traffic but collapses at 50% is only a partial recovery path.
+
+The same applies to caches and feature stores. If your cache miss rate jumps during failover, the downstream store must survive that change. Otherwise, failover moves the outage from one component to another.
+
+Capacity planning for 99.99% should answer:
+
+- what happens when one zone disappears?
+- what happens when the largest model-serving deployment rolls?
+- what happens when external provider calls route to fallback?
+- how much traffic can the degraded mode actually carry?
+- how long can the system hold that state?
+
+Those answers belong in the reliability design, not only in an incident review after the first major outage.
+
+## Common Mistakes That Break 99.99%
+
+### One fallback that is never tested
+
+A fallback path that only exists in code is not a fallback. It needs traffic, monitoring, and drills.
+
+### Readiness that only checks HTTP
+
+If readiness does not validate model load and synthetic inference, broken GPU replicas can receive production traffic.
+
+### Single-zone GPU capacity
+
+GPU capacity is often scarcer than CPU capacity. If one zone is your only real GPU pool, that zone is your availability ceiling.
+
+### External API calls without circuit breakers
+
+Provider timeouts can consume threads, queues, and retry budgets until your own system fails too.
+
+### No visibility into degraded mode
+
+If fallback usage is invisible, your system can be "up" while product quality is materially worse.
+
+## Final Takeaway
+
+`AI infrastructure high availability` is not just more replicas. It is an architecture that expects model servers, GPUs, dependencies, providers, and releases to fail.
+
+For `ml system 99.99 uptime`, the strongest patterns are:
+
+- multi-AZ model serving
+- GPU-aware readiness and warm capacity
+- load shedding before collapse
+- graceful degradation to smaller models or cached paths
+- circuit breakers for external LLM APIs
+- traffic isolation by priority
+- progressive delivery with fast rollback
+- observability that exposes degraded states
+
+The important shift is treating availability as user-visible usefulness, not only HTTP uptime. A 99.99% AI system should keep its core feature usable even when the primary model path is under stress.

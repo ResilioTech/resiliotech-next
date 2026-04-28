@@ -1,0 +1,107 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111D" />
+      <stop offset="0.5" stop-color="#102238" />
+      <stop offset="1" stop-color="#173246" />
+    </linearGradient>
+    <linearGradient id="panel" x1="96" y1="56" x2="1104" y2="574" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09141F" />
+      <stop offset="1" stop-color="#13202A" />
+    </linearGradient>
+    <linearGradient id="accent" x1="140" y1="0" x2="430" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8" />
+      <stop offset="1" stop-color="#22C55E" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1016 104) rotate(128) scale(520 396)">
+      <stop stop-color="#38BDF8" stop-opacity="0.17" />
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 542) rotate(8) scale(372 242)">
+      <stop stop-color="#22C55E" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#22C55E" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.11" stroke="#94A3B8" stroke-width="1">
+    <path d="M0 48 H1200" /><path d="M0 108 H1200" /><path d="M0 168 H1200" /><path d="M0 228 H1200" />
+    <path d="M0 288 H1200" /><path d="M0 348 H1200" /><path d="M0 408 H1200" /><path d="M0 468 H1200" /><path d="M0 528 H1200" />
+    <path d="M52 0 V630" /><path d="M112 0 V630" /><path d="M172 0 V630" /><path d="M232 0 V630" /><path d="M292 0 V630" />
+    <path d="M352 0 V630" /><path d="M412 0 V630" /><path d="M472 0 V630" /><path d="M532 0 V630" /><path d="M592 0 V630" />
+    <path d="M652 0 V630" /><path d="M712 0 V630" /><path d="M772 0 V630" /><path d="M832 0 V630" /><path d="M892 0 V630" />
+    <path d="M952 0 V630" /><path d="M1012 0 V630" /><path d="M1072 0 V630" /><path d="M1132 0 V630" />
+  </g>
+
+  <rect x="96" y="56" width="1008" height="518" rx="44" fill="url(#panel)" stroke="rgba(148, 163, 184, 0.12)" />
+  <rect x="114" y="74" width="972" height="482" rx="36" fill="none" stroke="rgba(148, 163, 184, 0.08)" />
+  <rect x="140" y="92" width="4" height="446" rx="2" fill="url(#accent)" opacity="0.9" />
+
+  <rect x="168" y="126" width="192" height="42" rx="21" fill="rgba(15, 23, 42, 0.72)" stroke="rgba(148, 163, 184, 0.14)" />
+  <text x="190" y="153" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="760" letter-spacing="1.25">FIRST DEPLOYMENT</text>
+
+  <text x="168" y="196" fill="#F8FAFC" font-size="34" font-family="Inter, Arial, sans-serif" font-weight="820" letter-spacing="-1.0">
+    <tspan x="168" dy="0">Questions to Ask</tspan>
+    <tspan x="168" dy="39">Before Your First</tspan>
+    <tspan x="168" dy="39">AI Production</tspan>
+    <tspan x="168" dy="39">Deployment</tspan>
+  </text>
+
+  <rect x="168" y="394" width="154" height="4" rx="2" fill="#38BDF8" opacity="0.92" />
+  <rect x="334" y="394" width="84" height="4" rx="2" fill="#22C55E" opacity="0.76" />
+
+  <g transform="translate(168 0)">
+    <rect x="0" y="420" width="128" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="441" r="5" fill="#38BDF8" />
+    <text x="36" y="447" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Readiness</text>
+  </g>
+  <g transform="translate(310 0)">
+    <rect x="0" y="420" width="106" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="441" r="5" fill="#22C55E" />
+    <text x="36" y="447" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">SLOs</text>
+  </g>
+  <g transform="translate(430 0)">
+    <rect x="0" y="420" width="132" height="42" rx="21" fill="rgba(10, 17, 31, 0.72)" stroke="rgba(148, 163, 184, 0.18)" />
+    <circle cx="22" cy="441" r="5" fill="#38BDF8" />
+    <text x="36" y="447" fill="#E2E8F0" font-size="16" font-family="Inter, Arial, sans-serif" font-weight="650">Fallback</text>
+  </g>
+
+  <g transform="translate(728 130)">
+    <rect width="316" height="342" rx="34" fill="rgba(9, 14, 26, 0.58)" stroke="rgba(148, 163, 184, 0.14)" />
+    <rect x="18" y="18" width="280" height="306" rx="28" fill="rgba(10, 17, 31, 0.82)" stroke="rgba(148, 163, 184, 0.08)" />
+
+    <rect x="44" y="38" width="210" height="38" rx="18" fill="rgba(15, 23, 42, 0.78)" stroke="rgba(148, 163, 184, 0.16)" />
+    <text x="149" y="62" text-anchor="middle" fill="#E2E8F0" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="720">Production Readiness</text>
+
+    <rect x="48" y="104" width="220" height="42" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(56, 189, 248, 0.32)" />
+    <circle cx="70" cy="125" r="7" fill="#38BDF8" opacity="0.9" />
+    <path d="M66 125 L69 128 L75 121" stroke="#E0F2FE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="92" y="130" fill="#E2E8F0" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="700">Artifact and schema locked</text>
+
+    <rect x="48" y="164" width="220" height="42" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(34, 197, 94, 0.32)" />
+    <circle cx="70" cy="185" r="7" fill="#22C55E" opacity="0.9" />
+    <path d="M66 185 L69 188 L75 181" stroke="#DCFCE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="92" y="190" fill="#E2E8F0" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="700">Monitoring and owner set</text>
+
+    <rect x="48" y="224" width="220" height="42" rx="16" fill="rgba(8, 14, 24, 0.94)" stroke="rgba(56, 189, 248, 0.32)" />
+    <circle cx="70" cy="245" r="7" fill="#38BDF8" opacity="0.9" />
+    <path d="M66 245 L69 248 L75 241" stroke="#E0F2FE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="92" y="250" fill="#E2E8F0" font-size="14" font-family="Inter, Arial, sans-serif" font-weight="700">Rollback path ready</text>
+
+    <rect x="58" y="294" width="190" height="12" rx="6" fill="rgba(30, 41, 59, 0.86)" />
+    <rect x="58" y="294" width="126" height="12" rx="6" fill="#38BDF8" opacity="0.84" />
+    <rect x="184" y="294" width="64" height="12" rx="6" fill="#22C55E" opacity="0.78" />
+  </g>
+
+  <text x="1002" y="522" text-anchor="end" fill="rgba(226, 232, 240, 0.72)" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="730" letter-spacing="1.8">RESILIOTECH</text>
+  <text x="1002" y="542" text-anchor="end" fill="rgba(148, 163, 184, 0.66)" font-size="13" font-family="Inter, Arial, sans-serif" font-weight="500">AI Infrastructure - Reliability - MLOps</text>
+
+  <g transform="translate(1018 506)">
+    <rect width="36" height="36" rx="10" fill="#00D4FF" />
+    <rect x="1" y="1" width="34" height="34" rx="9" fill="none" stroke="rgba(255, 255, 255, 0.2)" />
+    <text x="18" y="24" text-anchor="middle" fill="#FFFFFF" font-size="21" font-family="Inter, Arial, sans-serif" font-weight="800">R</text>
+  </g>
+</svg>
