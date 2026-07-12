@@ -179,7 +179,7 @@ export default function BastionLandingPage() {
             <h2 className="text-3xl font-extrabold text-text-primary mb-3">Get Early Access</h2>
             <p className="text-sm text-text-muted mb-7 leading-relaxed">Bastion is currently in development. Join the waitlist to be among the first to design secure cloud architectures with AI.</p>
             
-            <form name="bastion-waitlist" method="POST" data-netlify="true" className="flex flex-col sm:flex-row gap-2.5 mb-3.5">
+            <form action="/thank-you" name="bastion-waitlist" method="POST" data-netlify="true" className="flex flex-col sm:flex-row gap-2.5 mb-3.5">
               <input type="hidden" name="form-name" value="bastion-waitlist" />
               <input 
                 type="email" 
