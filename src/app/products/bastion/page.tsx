@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { WaitlistForm } from './WaitlistForm';
 
 export const metadata = {
   title: 'Bastion — AI-Powered Zero-Trust Infrastructure Architect',
@@ -179,22 +180,7 @@ export default function BastionLandingPage() {
             <h2 className="text-3xl font-extrabold text-text-primary mb-3">Get Early Access</h2>
             <p className="text-sm text-text-muted mb-7 leading-relaxed">Bastion is currently in development. Join the waitlist to be among the first to design secure cloud architectures with AI.</p>
             
-            <form action="/thank-you" name="bastion-waitlist" method="POST" data-netlify="true" className="flex flex-col sm:flex-row gap-2.5 mb-3.5">
-              <input type="hidden" name="form-name" value="bastion-waitlist" />
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="you@company.com" 
-                required 
-                className="flex-1 px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-text-primary text-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-text-muted"
-              />
-              <button 
-                type="submit" 
-                className="px-6 py-3.5 bg-primary hover:bg-primary-hover text-background font-semibold rounded-xl text-sm transition-colors whitespace-nowrap glow-effect"
-              >
-                Join Waitlist
-              </button>
-            </form>
+            <WaitlistForm />
             
             <p className="text-xs text-text-muted opacity-80">No spam. We&apos;ll email you when Bastion is ready for beta testers.</p>
           </div>
