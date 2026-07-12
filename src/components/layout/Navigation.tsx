@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 const navigationItems = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
+  { name: 'Products', href: '#', subItems: [{ name: 'Bastion', href: '/products/bastion' }] },
   { name: 'About', href: '/about' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' }
@@ -98,17 +99,39 @@ export const Navigation = memo(function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-baseline ml-10 space-x-4 lg:space-x-6 xl:space-x-8">
               {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    NAV_LINK_BASE,
-                    'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
-                    isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
-                  )}
-                >
-                  {item.name}
-                </Link>
+                item.subItems ? (
+                  <div key={item.name} className="relative group">
+                    <button className={cn(NAV_LINK_BASE, NAV_LINK_INACTIVE, 'flex items-center gap-1 focus:outline-none')}>
+                      {item.name}
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-surface-elevated border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                      <div className="py-1">
+                        {item.subItems.map(subItem => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className="block px-4 py-2 text-sm text-text-secondary hover:bg-surface hover:text-text-primary"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={cn(
+                      NAV_LINK_BASE,
+                      'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+                      isActiveLink(item.href) ? NAV_LINK_ACTIVE : NAV_LINK_INACTIVE
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
             </div>
 
@@ -166,16 +189,40 @@ export const Navigation = memo(function Navigation() {
 
           <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-5rem)]">
             {navigationItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'block py-2 text-base font-medium transition-colors',
-                  isActiveLink(item.href) ? 'text-primary' : NAV_LINK_INACTIVE
-                )}
-              >
-                {item.name}
-              </Link>
+              item.subItems ? (
+                <div key={item.name} className="space-y-2">
+                  <span className="block py-2 text-base font-medium text-text-secondary">
+                    {item.name}
+                  </span>
+                  <div className="pl-4 space-y-2">
+                    {item.subItems.map(subItem => (
+                      <Link
+                        key={subItem.name}
+                        href={subItem.href}
+                        className={cn(
+                          'block py-2 text-base font-medium transition-colors',
+                          isActiveLink(subItem.href) ? 'text-primary' : NAV_LINK_INACTIVE
+                        )}
+                        onClick={closeMobileMenu}
+                      >
+                        {subItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'block py-2 text-base font-medium transition-colors',
+                    isActiveLink(item.href) ? 'text-primary' : NAV_LINK_INACTIVE
+                  )}
+                  onClick={closeMobileMenu}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
 
             <div className="pt-6 border-t border-border">
